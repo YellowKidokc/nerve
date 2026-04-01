@@ -283,7 +283,10 @@ fn handle_ipc(
                 let mut cfg_lock = cfg.lock().unwrap();
 
                 // General settings
-                if let Some(v) = new_cfg.get("clipboard_interval_ms").and_then(|v| v.as_u64()) {
+                if let Some(v) = new_cfg
+                    .get("clipboard_interval_ms")
+                    .and_then(|v| v.as_u64())
+                {
                     cfg_lock.clipboard_interval_ms = v;
                 }
                 if let Some(v) = new_cfg.get("api_url").and_then(|v| v.as_str()) {
