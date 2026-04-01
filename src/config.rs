@@ -19,7 +19,9 @@ pub struct Hotstring {
     pub replace_trigger: bool,
 }
 
-fn default_true() -> bool { true }
+fn default_true() -> bool {
+    true
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Prompt {
@@ -47,8 +49,12 @@ pub struct PanelDef {
     pub always_on_top: bool,
 }
 
-fn default_width() -> u32 { 480 }
-fn default_height() -> u32 { 720 }
+fn default_width() -> u32 {
+    480
+}
+fn default_height() -> u32 {
+    720
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ClipSlot {
@@ -77,38 +83,141 @@ pub struct Config {
     pub panels: Vec<PanelDef>,
     #[serde(default)]
     pub clip_slots: Vec<ClipSlot>,
+    #[serde(default)]
+    pub tts: TtsConfig,
 
     /// Runtime: hotkey ID → action name mapping (not persisted)
     #[serde(skip)]
     pub hotkey_map: HashMap<u32, String>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TtsConfig {
+    #[serde(default = "default_tts_voice")]
+    pub voice: String,
+    #[serde(default = "default_tts_speed")]
+    pub speed: i32,
+    #[serde(default = "default_tts_engine")]
+    pub engine: String,
+    #[serde(default = "default_tts_volume")]
+    pub volume: u32,
+}
+
+fn default_tts_voice() -> String {
+    "Brian".into()
+}
+fn default_tts_speed() -> i32 {
+    2
+}
+fn default_tts_engine() -> String {
+    "sapi".into()
+}
+fn default_tts_volume() -> u32 {
+    100
+}
+
 fn default_api_url() -> String {
     "https://prophecy-intel-api.lowes-workers.workers.dev".into()
 }
-fn default_clip_interval() -> u64 { 500 }
-fn default_sync_interval() -> u64 { 300 }
+fn default_clip_interval() -> u64 {
+    500
+}
+fn default_sync_interval() -> u64 {
+    300
+}
 
 fn default_hotkeys() -> Vec<HotkeyBinding> {
     vec![
-        HotkeyBinding { keys: "Ctrl+Alt+C".into(), action: "toggle_clipboard".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Alt+P".into(), action: "toggle_prompts".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Alt+L".into(), action: "toggle_links".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Alt+R".into(), action: "toggle_research".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Alt+A".into(), action: "toggle_chat".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Alt+T".into(), action: "tts_read_selection".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Alt+G".into(), action: "toggle_dashboard".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Alt+S".into(), action: "toggle_settings".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+1".into(), action: "paste_slot_1".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+2".into(), action: "paste_slot_2".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+3".into(), action: "paste_slot_3".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+4".into(), action: "paste_slot_4".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+5".into(), action: "paste_slot_5".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+6".into(), action: "paste_slot_6".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+7".into(), action: "paste_slot_7".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+8".into(), action: "paste_slot_8".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+9".into(), action: "paste_slot_9".into(), runtime_id: None },
-        HotkeyBinding { keys: "Ctrl+Shift+0".into(), action: "paste_slot_10".into(), runtime_id: None },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+C".into(),
+            action: "toggle_clipboard".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+P".into(),
+            action: "toggle_prompts".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+L".into(),
+            action: "toggle_links".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+R".into(),
+            action: "toggle_research".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+A".into(),
+            action: "toggle_chat".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+T".into(),
+            action: "tts_read_selection".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+G".into(),
+            action: "toggle_dashboard".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+S".into(),
+            action: "toggle_settings".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+1".into(),
+            action: "paste_slot_1".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+2".into(),
+            action: "paste_slot_2".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+3".into(),
+            action: "paste_slot_3".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+4".into(),
+            action: "paste_slot_4".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+5".into(),
+            action: "paste_slot_5".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+6".into(),
+            action: "paste_slot_6".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+7".into(),
+            action: "paste_slot_7".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+8".into(),
+            action: "paste_slot_8".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+9".into(),
+            action: "paste_slot_9".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Shift+0".into(),
+            action: "paste_slot_10".into(),
+            runtime_id: None,
+        },
     ]
 }
 
@@ -126,39 +235,74 @@ fn default_panels() -> Vec<PanelDef> {
 
     vec![
         PanelDef {
-            name: "clipboard".into(), title: "ClipSync".into(),
-            url: to_url("clipboard.html"), width: 480, height: 720,
-            x: None, y: None, always_on_top: true,
+            name: "clipboard".into(),
+            title: "ClipSync".into(),
+            url: to_url("clipboard.html"),
+            width: 480,
+            height: 720,
+            x: None,
+            y: None,
+            always_on_top: true,
         },
         PanelDef {
-            name: "prompts".into(), title: "Prompts".into(),
-            url: to_url("prompts.html"), width: 520, height: 680,
-            x: None, y: None, always_on_top: true,
+            name: "prompts".into(),
+            title: "Prompts".into(),
+            url: to_url("prompts.html"),
+            width: 520,
+            height: 680,
+            x: None,
+            y: None,
+            always_on_top: true,
         },
         PanelDef {
-            name: "links".into(), title: "Links".into(),
-            url: to_url("links.html"), width: 500, height: 680,
-            x: None, y: None, always_on_top: true,
+            name: "links".into(),
+            title: "Links".into(),
+            url: to_url("links.html"),
+            width: 500,
+            height: 680,
+            x: None,
+            y: None,
+            always_on_top: true,
         },
         PanelDef {
-            name: "research".into(), title: "Research".into(),
-            url: to_url("research.html"), width: 600, height: 720,
-            x: None, y: None, always_on_top: true,
+            name: "research".into(),
+            title: "Research".into(),
+            url: to_url("research.html"),
+            width: 600,
+            height: 720,
+            x: None,
+            y: None,
+            always_on_top: true,
         },
         PanelDef {
-            name: "chat".into(), title: "AI Chat".into(),
-            url: to_url("chat.html"), width: 500, height: 700,
-            x: None, y: None, always_on_top: false,
+            name: "chat".into(),
+            title: "AI Chat".into(),
+            url: to_url("chat.html"),
+            width: 500,
+            height: 700,
+            x: None,
+            y: None,
+            always_on_top: false,
         },
         PanelDef {
-            name: "dashboard".into(), title: "Dashboard".into(),
-            url: to_url("dashboard.html"), width: 900, height: 700,
-            x: None, y: None, always_on_top: false,
+            name: "dashboard".into(),
+            title: "Dashboard".into(),
+            url: to_url("dashboard.html"),
+            width: 900,
+            height: 700,
+            x: None,
+            y: None,
+            always_on_top: false,
         },
         PanelDef {
-            name: "settings".into(), title: "Settings".into(),
-            url: to_url("settings.html"), width: 560, height: 680,
-            x: None, y: None, always_on_top: true,
+            name: "settings".into(),
+            title: "Settings".into(),
+            url: to_url("settings.html"),
+            width: 560,
+            height: 680,
+            x: None,
+            y: None,
+            always_on_top: true,
         },
     ]
 }
@@ -175,6 +319,12 @@ impl Default for Config {
             prompts: vec![],
             panels: default_panels(),
             clip_slots: vec![],
+            tts: TtsConfig {
+                voice: default_tts_voice(),
+                speed: default_tts_speed(),
+                engine: default_tts_engine(),
+                volume: default_tts_volume(),
+            },
             hotkey_map: HashMap::new(),
         }
     }
@@ -193,10 +343,12 @@ impl Config {
         let path = Self::config_path();
         if path.exists() {
             let data = std::fs::read_to_string(&path)?;
-            let cfg: Config = serde_json::from_str(&data)?;
+            let mut cfg: Config = serde_json::from_str(&data)?;
+            cfg.normalize();
             Ok(cfg)
         } else {
-            let cfg = Config::default();
+            let mut cfg = Config::default();
+            cfg.normalize();
             cfg.save()?;
             Ok(cfg)
         }
@@ -227,6 +379,29 @@ impl Config {
     /// HTML directory next to the executable
     pub fn html_dir() -> PathBuf {
         let exe = std::env::current_exe().unwrap_or_default();
-        exe.parent().unwrap_or_else(|| std::path::Path::new(".")).join("html")
+        exe.parent()
+            .unwrap_or_else(|| std::path::Path::new("."))
+            .join("html")
+    }
+
+    /// Ensure required defaults exist in older configs.
+    pub fn normalize(&mut self) {
+        let default_cfg = Config::default();
+
+        // Keep existing user bindings, but backfill missing required actions.
+        for required in default_cfg.hotkeys {
+            let exists = self.hotkeys.iter().any(|h| h.action == required.action);
+            if !exists {
+                self.hotkeys.push(required);
+            }
+        }
+
+        // Ensure all core panels exist so tray/hotkeys always open something.
+        for required in default_cfg.panels {
+            let exists = self.panels.iter().any(|p| p.name == required.name);
+            if !exists {
+                self.panels.push(required);
+            }
+        }
     }
 }
