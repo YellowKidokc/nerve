@@ -392,16 +392,28 @@
     }
   });
 
-  // Demo data (will be replaced by real data from the agent)
-  clips = [
-    { content: 'Welcome to ClipSync! Copy something to get started.', timestamp: 'just now', tags: ['system'], pinned: false },
-  ];
+  // Request real clip data from the Rust agent via IPC
+  function requestClips() {
+    try {
+      window.chrome.webview.postMessage(JSON.stringify({ type: 'get_clips' }));
+    } catch(e) {
+      // Agent not connected — show demo data
+      clips = [
+        { content: 'Welcome to ClipSync! Copy something to get started.', timestamp: 'just now', tags: ['system'], pinned: false },
+      ];
+      renderSlots();
+      renderClips();
+    }
+  }
 
-  renderSlots();
-  renderClips();
+  requestClips();
 
-  // Listen for messages from the Rust agent (WebView2 IPC)
-  // window.chrome.webview.addEventListener('message', (e) => { ... });
+  // Periodically refresh clips from agent (every 2s)
+  setInterval(() => {
+    try {
+      window.chrome.webview.postMessage(JSON.stringify({ type: 'get_clips' }));
+    } catch(e) {}
+  }, 2000);
 </script>
 </body>
 </html>
