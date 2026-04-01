@@ -1,31 +1,33 @@
 use crate::config::Config;
 use crate::window_mgmt;
+use crate::AppEvent;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use tao::dpi::{LogicalPosition, LogicalSize};
-use tao::event_loop::EventLoopWindowTarget;
+use tao::event_loop::{EventLoopProxy, EventLoopWindowTarget};
 use tao::window::WindowBuilder;
 use tracing::{error, info};
 use wry::WebViewBuilder;
 
-use crate::AppEvent;
-
 /// Manages open webview panel windows
 pub struct PanelManager {
-    /// Panel name → window + webview (we store the Window to control visibility)
+    /// Panel name → window + webview
     windows: HashMap<String, PanelWindow>,
+    /// Event loop proxy for IPC messages
+    proxy: EventLoopProxy<AppEvent>,
 }
 
 struct PanelWindow {
     window: tao::window::Window,
-    _webview: wry::WebView,
+    webview: wry::WebView,
     visible: bool,
 }
 
 impl PanelManager {
-    pub fn new() -> Self {
+    pub fn new(proxy: EventLoopProxy<AppEvent>) -> Self {
         Self {
             windows: HashMap::new(),
+            proxy,
         }
     }
 
@@ -65,6 +67,15 @@ impl PanelManager {
 
         // Doesn't exist yet — create and show
         self.create_panel(name, event_loop, cfg);
+    }
+
+    /// Evaluate JavaScript in a panel's webview
+    pub fn evaluate_script(&self, panel_name: &str, script: &str) {
+        if let Some(panel) = self.windows.get(panel_name) {
+            if let Err(e) = panel.webview.evaluate_script(script) {
+                error!("Script eval error in '{}': {}", panel_name, e);
+            }
+        }
     }
 
     fn create_panel(
@@ -107,10 +118,21 @@ impl PanelManager {
 
         let url = &panel_def.url;
 
+        // Set up IPC handler — routes messages to the main event loop
+        let ipc_proxy = self.proxy.clone();
+        let ipc_panel_name = name.to_string();
+
         let webview = match WebViewBuilder::new()
             .with_url(url)
             .with_devtools(cfg!(debug_assertions))
             .with_transparent(false)
+            .with_ipc_handler(move |req| {
+                let body = req.body().clone();
+                let _ = ipc_proxy.send_event(AppEvent::IpcMessage {
+                    panel: ipc_panel_name.clone(),
+                    body,
+                });
+            })
             .build(&window)
         {
             Ok(wv) => wv,
@@ -126,7 +148,7 @@ impl PanelManager {
             name.to_string(),
             PanelWindow {
                 window,
-                _webview: webview,
+                webview,
                 visible: true,
             },
         );

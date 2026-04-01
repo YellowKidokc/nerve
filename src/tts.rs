@@ -226,7 +226,6 @@ pub fn save_audio(text: &str, output_path: &str) {
 }
 
 /// List available SAPI voices
-#[allow(dead_code)]
 pub fn list_voices() -> Vec<String> {
     let output = new_hidden_command("powershell")
         .args([

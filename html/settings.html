@@ -63,6 +63,11 @@
   .field textarea { min-height: 80px; resize: vertical; }
   .field .hint { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
 
+  .speed-display {
+    font-size: 13px; color: var(--accent); font-weight: 600;
+    display: inline-block; min-width: 40px; text-align: center;
+  }
+
   /* Hotstring / Hotkey rows */
   .item-list { display: flex; flex-direction: column; gap: 6px; }
   .item-row {
@@ -168,41 +173,40 @@
     <h2>Text-to-Speech</h2>
     <div class="field">
       <label>TTS Engine</label>
-      <select id="ttsEngine">
-        <option value="windows">Windows SAPI (built-in)</option>
+      <select id="ttsEngine" onchange="onEngineChange()">
+        <option value="sapi">Windows SAPI (built-in)</option>
         <option value="edge">Edge TTS (online, natural voices)</option>
-        <option value="elevenlabs">ElevenLabs API</option>
       </select>
     </div>
     <div class="field">
       <label>Voice</label>
       <select id="ttsVoice">
-        <option value="default">Default</option>
-        <option value="david">Microsoft David</option>
-        <option value="zira">Microsoft Zira</option>
-        <option value="mark">Microsoft Mark</option>
+        <option value="default">Default (auto-select)</option>
       </select>
+      <div class="hint">Voices are loaded from the system. SAPI voices listed here.</div>
     </div>
     <div class="field">
-      <label>Speed</label>
-      <input type="range" id="ttsSpeed" min="0.5" max="3" step="0.1" value="1.0" />
-      <div class="hint">1.0 = normal speed</div>
+      <label>Speed <span class="speed-display" id="speedDisplay">2</span></label>
+      <input type="range" id="ttsSpeed" min="-10" max="10" step="1" value="2" oninput="updateSpeedDisplay()" />
+      <div class="hint">SAPI rate: -10 (slowest) to 10 (fastest), 0 = normal</div>
     </div>
     <div class="field">
-      <label>ElevenLabs API Key (optional)</label>
-      <input type="password" id="ttsApiKey" placeholder="sk-..." />
+      <label>Volume</label>
+      <input type="range" id="ttsVolume" min="0" max="100" step="5" value="100" />
+      <div class="hint">0 = mute, 100 = maximum</div>
     </div>
 
     <h3>TTS Hotkey</h3>
     <div class="field">
       <label>Read selected text aloud</label>
-      <input type="text" id="ttsHotkey" value="Ctrl+Alt+T" />
+      <input type="text" id="ttsHotkey" value="Ctrl+Alt+T" readonly />
       <div class="hint">Select text in any app, press this hotkey to read it aloud</div>
     </div>
 
-    <button class="add-btn" onclick="testTTS()" style="margin-top:12px">
-      🔊 Test Voice
-    </button>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="add-btn" onclick="testTTS()">Test Voice</button>
+      <button class="add-btn" onclick="stopTTS()">Stop</button>
+    </div>
   </div>
 
   <!-- PANELS -->
@@ -234,12 +238,15 @@
 
 <script>
   let config = {};
-  const CONFIG_PATH = getConfigPath();
+  let agentConnected = false;
 
-  function getConfigPath() {
-    // Config file lives in %APPDATA%/clipsync-agent/config.json
-    // We'll read it via the Rust agent IPC or fetch from API
-    return 'config.json';
+  function ipcPost(msg) {
+    try {
+      window.chrome.webview.postMessage(JSON.stringify(msg));
+      return true;
+    } catch(e) {
+      return false;
+    }
   }
 
   // Tab switching
@@ -248,6 +255,38 @@
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     evt.currentTarget.classList.add('active');
     document.getElementById('sec-' + name).classList.add('active');
+  }
+
+  // Speed display
+  function updateSpeedDisplay() {
+    const val = document.getElementById('ttsSpeed').value;
+    document.getElementById('speedDisplay').textContent = val;
+  }
+
+  // Engine change — request voice list
+  function onEngineChange() {
+    ipcPost({ type: 'list_voices' });
+  }
+
+  // Populate voice dropdown from Rust agent
+  function populateVoices(voices) {
+    const select = document.getElementById('ttsVoice');
+    const currentValue = config.tts ? config.tts.voice : 'default';
+    select.innerHTML = '<option value="default">Default (auto-select)</option>';
+    voices.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      // Show short name: "Microsoft Brian Online" → "Brian Online"
+      opt.textContent = v.replace('Microsoft ', '');
+      select.appendChild(opt);
+    });
+    // Restore selection if it matches an available voice
+    for (const opt of select.options) {
+      if (opt.value === currentValue || opt.value.includes(currentValue)) {
+        select.value = opt.value;
+        break;
+      }
+    }
   }
 
   // Hotkeys UI
@@ -312,35 +351,46 @@
     config.api_token = document.getElementById('apiToken').value;
     config.sync_interval_secs = parseInt(document.getElementById('syncInterval').value);
 
-    // TTS config
+    // TTS config — values match Rust TtsConfig directly
     config.tts = config.tts || {};
     config.tts.engine = document.getElementById('ttsEngine').value;
     config.tts.voice = document.getElementById('ttsVoice').value;
-    config.tts.speed = parseFloat(document.getElementById('ttsSpeed').value);
-    config.tts.api_key = document.getElementById('ttsApiKey').value;
-    config.tts.hotkey = document.getElementById('ttsHotkey').value;
+    config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
+    config.tts.volume = parseInt(document.getElementById('ttsVolume').value);
 
-    // Send to Rust agent via IPC
-    try {
-      window.chrome.webview.postMessage(JSON.stringify({ type: 'save_config', config }));
+    if (ipcPost({ type: 'save_config', config })) {
       showToast('Saved!');
-    } catch(e) {
-      // Fallback: save to localStorage
+    } else {
       localStorage.setItem('clipsync-config', JSON.stringify(config));
       showToast('Saved locally (agent not connected)');
     }
   }
 
   function testTTS() {
-    try {
-      // Use browser SpeechSynthesis as fallback demo
-      const utter = new SpeechSynthesisUtterance('ClipSync text to speech is working.');
-      utter.rate = parseFloat(document.getElementById('ttsSpeed').value);
-      speechSynthesis.speak(utter);
+    // Save current TTS settings first, then test
+    config.tts = config.tts || {};
+    config.tts.engine = document.getElementById('ttsEngine').value;
+    config.tts.voice = document.getElementById('ttsVoice').value;
+    config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
+    config.tts.volume = parseInt(document.getElementById('ttsVolume').value);
+    ipcPost({ type: 'save_config', config });
+
+    if (ipcPost({ type: 'test_tts' })) {
       showToast('Playing test...');
-    } catch(e) {
-      showToast('TTS test failed');
+    } else {
+      // Fallback: browser SpeechSynthesis
+      try {
+        const utter = new SpeechSynthesisUtterance('ClipSync text to speech is working.');
+        speechSynthesis.speak(utter);
+        showToast('Playing browser test...');
+      } catch(e) {
+        showToast('TTS test failed');
+      }
     }
+  }
+
+  function stopTTS() {
+    ipcPost({ type: 'tts_stop' });
   }
 
   function showToast(msg) {
@@ -350,12 +400,11 @@
     setTimeout(() => t.classList.remove('show'), 1500);
   }
 
-  // Load config
+  // Load config from Rust agent
   function loadConfig() {
-    try {
-      window.chrome.webview.postMessage(JSON.stringify({ type: 'get_config' }));
-    } catch(e) {
-      // Use defaults
+    agentConnected = ipcPost({ type: 'get_config' });
+    if (!agentConnected) {
+      // Use defaults if agent not connected
       config = {
         clipboard_interval_ms: 500,
         sync_interval_secs: 300,
@@ -376,10 +425,12 @@
           { trigger: '/sig', expansion: 'Best regards,\\nYour Name', replace_trigger: true },
         ],
         panels: [],
-        tts: { engine: 'windows', voice: 'default', speed: 1.0, hotkey: 'Ctrl+Alt+T' },
+        tts: { engine: 'sapi', voice: 'Brian', speed: 2, volume: 100 },
       };
       populateUI();
     }
+    // Also request voice list
+    ipcPost({ type: 'list_voices' });
   }
 
   function populateUI() {
@@ -389,28 +440,36 @@
     document.getElementById('syncInterval').value = config.sync_interval_secs || 300;
 
     if (config.tts) {
-      document.getElementById('ttsEngine').value = config.tts.engine || 'windows';
-      document.getElementById('ttsVoice').value = config.tts.voice || 'default';
-      document.getElementById('ttsSpeed').value = config.tts.speed || 1.0;
-      document.getElementById('ttsApiKey').value = config.tts.api_key || '';
-      document.getElementById('ttsHotkey').value = config.tts.hotkey || 'Ctrl+Alt+T';
+      document.getElementById('ttsEngine').value = config.tts.engine || 'sapi';
+      document.getElementById('ttsSpeed').value = config.tts.speed != null ? config.tts.speed : 2;
+      document.getElementById('ttsVolume').value = config.tts.volume != null ? config.tts.volume : 100;
+      updateSpeedDisplay();
+
+      // Set voice — try exact match first, then partial
+      const voiceSelect = document.getElementById('ttsVoice');
+      const targetVoice = config.tts.voice || 'default';
+      let found = false;
+      for (const opt of voiceSelect.options) {
+        if (opt.value === targetVoice) {
+          voiceSelect.value = targetVoice;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        for (const opt of voiceSelect.options) {
+          if (opt.value.includes(targetVoice)) {
+            voiceSelect.value = opt.value;
+            break;
+          }
+        }
+      }
     }
 
     renderHotkeys();
     renderHotstrings();
     renderPanels();
   }
-
-  // Listen for config from Rust agent
-  try {
-    window.chrome.webview.addEventListener('message', (e) => {
-      const data = JSON.parse(e.data);
-      if (data.type === 'config') {
-        config = data.config;
-        populateUI();
-      }
-    });
-  } catch(e) {}
 
   loadConfig();
 </script>
