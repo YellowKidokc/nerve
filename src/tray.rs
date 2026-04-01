@@ -1,9 +1,9 @@
 use crate::AppEvent;
 use anyhow::Result;
 use tao::event_loop::EventLoopProxy;
+use tracing::info;
 use tray_icon::menu::{Menu, MenuEvent, MenuItem};
 use tray_icon::{TrayIcon, TrayIconBuilder};
-use tracing::info;
 
 /// Create the system tray icon with menu
 pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
@@ -40,26 +40,24 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let quit_id = item_quit.id().clone();
 
     let proxy_clone = proxy.clone();
-    std::thread::spawn(move || {
-        loop {
-            if let Ok(event) = MenuEvent::receiver().recv() {
-                if event.id == clipboard_id {
-                    let _ = proxy_clone.send_event(AppEvent::TogglePanel("clipboard".into()));
-                } else if event.id == prompts_id {
-                    let _ = proxy_clone.send_event(AppEvent::TogglePanel("prompts".into()));
-                } else if event.id == links_id {
-                    let _ = proxy_clone.send_event(AppEvent::TogglePanel("links".into()));
-                } else if event.id == research_id {
-                    let _ = proxy_clone.send_event(AppEvent::TogglePanel("research".into()));
-                } else if event.id == chat_id {
-                    let _ = proxy_clone.send_event(AppEvent::TogglePanel("chat".into()));
-                } else if event.id == dashboard_id {
-                    let _ = proxy_clone.send_event(AppEvent::TogglePanel("dashboard".into()));
-                } else if event.id == settings_id {
-                    let _ = proxy_clone.send_event(AppEvent::TogglePanel("settings".into()));
-                } else if event.id == quit_id {
-                    let _ = proxy_clone.send_event(AppEvent::Quit);
-                }
+    std::thread::spawn(move || loop {
+        if let Ok(event) = MenuEvent::receiver().recv() {
+            if event.id == clipboard_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("clipboard".into()));
+            } else if event.id == prompts_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("prompts".into()));
+            } else if event.id == links_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("links".into()));
+            } else if event.id == research_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("research".into()));
+            } else if event.id == chat_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("chat".into()));
+            } else if event.id == dashboard_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("dashboard".into()));
+            } else if event.id == settings_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("settings".into()));
+            } else if event.id == quit_id {
+                let _ = proxy_clone.send_event(AppEvent::Quit);
             }
         }
     });

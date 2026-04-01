@@ -1,6 +1,7 @@
 use crate::config::Config;
 use crate::AppEvent;
 use anyhow::Result;
+use std::sync::OnceLock;
 use std::sync::{Arc, Mutex};
 use tao::event_loop::EventLoopProxy;
 use tracing::error;
@@ -38,6 +39,7 @@ pub fn monitor(proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Resu
                             },
                         );
                         c.clip_slots.truncate(10);
+                        refresh_slots_from_config(&c);
                     }
 
                     // Notify main loop
@@ -58,8 +60,8 @@ pub fn monitor(proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Resu
 /// Get current clipboard text using clipboard-win
 fn get_clipboard_text() -> Result<String> {
     use clipboard_win::{formats, get_clipboard};
-    let text: String = get_clipboard(formats::Unicode)
-        .map_err(|e| anyhow::anyhow!("clipboard read: {:?}", e))?;
+    let text: String =
+        get_clipboard(formats::Unicode).map_err(|e| anyhow::anyhow!("clipboard read: {:?}", e))?;
     Ok(text)
 }
 
@@ -73,13 +75,12 @@ fn set_clipboard_text(text: &str) -> Result<()> {
 
 /// Paste from a clip slot by index
 pub fn paste_slot(index: usize) {
-    // We can't access config here directly since this is called from the event loop.
-    // Instead we read from a static. But for now, use a simpler approach:
-    // The caller should pass the content. For the global hotkey handler,
-    // we'll use a different approach — store slots in a thread-safe global.
-    PASTE_SENDER.with(|_| {});
-    // This will be wired up properly through the event system
-    tracing::info!("Paste slot {} requested", index);
+    let slots = slot_cache().lock().unwrap();
+    if let Some(content) = slots.get(index) {
+        paste_text(content);
+    } else {
+        tracing::warn!("Paste slot {} is empty", index + 1);
+    }
 }
 
 /// Paste text by setting clipboard and sending Ctrl+V
@@ -169,7 +170,16 @@ fn chrono_now() -> String {
     format!("{}", dur.as_secs())
 }
 
-// Thread-local placeholder — paste_slot will be refactored to use Arc<Mutex<Config>>
-thread_local! {
-    static PASTE_SENDER: () = ();
+fn slot_cache() -> &'static Mutex<Vec<String>> {
+    static SLOTS: OnceLock<Mutex<Vec<String>>> = OnceLock::new();
+    SLOTS.get_or_init(|| Mutex::new(Vec::new()))
+}
+
+/// Refresh global paste slots from config.
+pub fn refresh_slots_from_config(cfg: &Config) {
+    let mut slots = slot_cache().lock().unwrap();
+    slots.clear();
+    for s in &cfg.clip_slots {
+        slots.push(s.content.clone());
+    }
 }
