@@ -51,6 +51,10 @@ fn main() -> Result<()> {
     // Load config
     let cfg = config::Config::load()?;
     let cfg = Arc::new(Mutex::new(cfg));
+    {
+        let cfg_lock = cfg.lock().unwrap();
+        clipboard::refresh_slots_from_config(&cfg_lock);
+    }
 
     // Build event loop with custom events
     let event_loop = EventLoopBuilder::<AppEvent>::with_user_event().build();
@@ -195,7 +199,10 @@ fn main() -> Result<()> {
 
                 AppEvent::ConfigReloaded => {
                     info!("Config reloaded from remote");
-                    let cfg_lock = cfg.lock().unwrap();
+                    let mut cfg_lock = cfg.lock().unwrap();
+                    cfg_lock.normalize();
+                    hotkeys::build_hotkey_map(&mut cfg_lock);
+                    clipboard::refresh_slots_from_config(&cfg_lock);
                     if let Err(e) = hotkeys::register_all(&cfg_lock) {
                         error!("Failed to re-register hotkeys: {}", e);
                     }

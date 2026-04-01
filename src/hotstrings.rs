@@ -18,9 +18,7 @@ pub fn engine(_proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Resu
     });
 
     // Install low-level keyboard hook
-    let hook = unsafe {
-        SetWindowsHookExW(WH_KEYBOARD_LL, Some(keyboard_hook_proc), None, 0)?
-    };
+    let hook = unsafe { SetWindowsHookExW(WH_KEYBOARD_LL, Some(keyboard_hook_proc), None, 0)? };
 
     info!("Hotstring keyboard hook installed");
 
@@ -50,11 +48,7 @@ thread_local! {
 }
 
 /// Low-level keyboard hook procedure
-unsafe extern "system" fn keyboard_hook_proc(
-    code: i32,
-    wparam: WPARAM,
-    lparam: LPARAM,
-) -> LRESULT {
+unsafe extern "system" fn keyboard_hook_proc(code: i32, wparam: WPARAM, lparam: LPARAM) -> LRESULT {
     if code < 0 {
         return CallNextHookEx(None, code, wparam, lparam);
     }
