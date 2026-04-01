@@ -23,7 +23,7 @@ static TTS_SETTINGS: OnceLock<Mutex<TtsSettings>> = OnceLock::new();
 fn settings() -> &'static Mutex<TtsSettings> {
     TTS_SETTINGS.get_or_init(|| {
         Mutex::new(TtsSettings {
-            voice: String::new(),  // empty = auto-pick best
+            voice: "Brian".into(),  // Microsoft Brian Online — natural male
             speed: 2,              // slightly fast
             engine: "sapi".into(), // works out of the box
             volume: 100,
