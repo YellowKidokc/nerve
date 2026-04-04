@@ -1,4 +1,5 @@
 use crate::config::Config;
+use crate::sync_client;
 use crate::tts;
 use crate::window_mgmt;
 use crate::AppEvent;
@@ -265,6 +266,75 @@ impl PanelManager {
                         parsed.volume,
                     );
                 }
+            }
+            // ── Cloudflare sync IPC ──────────────────────────────
+            "sync_push_clips" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::push_clips(&sync_cfg).await; });
+                });
+            }
+            "sync_pull_clips" => {
+                let sync_cfg = Arc::clone(cfg);
+                let proxy = self.proxy.clone();
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::pull_clips(&sync_cfg).await; });
+                    let _ = proxy.send_event(AppEvent::ConfigReloaded);
+                });
+            }
+            "sync_push_config" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::push_config(&sync_cfg).await; });
+                });
+            }
+            "sync_pull_config" => {
+                let sync_cfg = Arc::clone(cfg);
+                let proxy = self.proxy.clone();
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        let _ = crate::sync_client::pull_config(&sync_cfg).await;
+                    });
+                    let _ = proxy.send_event(AppEvent::ConfigReloaded);
+                });
+            }
+            "sync_push_prompts" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::push_prompts(&sync_cfg).await; });
+                });
+            }
+            "sync_pull_prompts" => {
+                let sync_cfg = Arc::clone(cfg);
+                let proxy = self.proxy.clone();
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::pull_prompts(&sync_cfg).await; });
+                    let _ = proxy.send_event(AppEvent::ConfigReloaded);
+                });
             }
             _ => {}
         }
