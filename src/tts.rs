@@ -1,3 +1,4 @@
+use crate::config::TtsConfig;
 use std::process::Command;
 use std::sync::Mutex;
 use std::sync::OnceLock;
@@ -42,6 +43,10 @@ pub fn configure(voice: &str, speed: i32, engine: &str, volume: u32) {
         "TTS configured: voice={}, speed={}, engine={}, vol={}",
         voice, speed, engine, volume
     );
+}
+
+pub fn apply_config(cfg: &TtsConfig) {
+    configure(&cfg.voice, cfg.speed, &cfg.engine, cfg.volume);
 }
 
 /// Read the currently selected text aloud.

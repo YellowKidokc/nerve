@@ -173,13 +173,21 @@
     <h2>Text-to-Speech</h2>
     <div class="field">
       <label>TTS Engine</label>
-      <select id="ttsEngine" onchange="onEngineChange()">
+      <select id="ttsEngine">
         <option value="sapi">Windows SAPI (built-in)</option>
         <option value="edge">Edge TTS (online, natural voices)</option>
       </select>
     </div>
     <div class="field">
       <label>Voice</label>
+<<<<<<< codex/update-tts-voice-selection-and-speed-settings-bwm8va
+      <select id="ttsVoice"></select>
+    </div>
+    <div class="field">
+      <label>Speed</label>
+      <input type="range" id="ttsSpeed" min="-10" max="10" step="1" value="2" />
+      <div class="hint">SAPI scale: -10 (slow) to +10 (fast)</div>
+=======
       <select id="ttsVoice">
         <option value="default">Default (auto-select)</option>
       </select>
@@ -189,6 +197,7 @@
       <label>Speed <span class="speed-display" id="speedDisplay">2</span></label>
       <input type="range" id="ttsSpeed" min="-10" max="10" step="1" value="2" oninput="updateSpeedDisplay()" />
       <div class="hint">SAPI rate: -10 (slowest) to 10 (fastest), 0 = normal</div>
+>>>>>>> main
     </div>
     <div class="field">
       <label>Volume</label>
@@ -356,7 +365,8 @@
     config.tts.engine = document.getElementById('ttsEngine').value;
     config.tts.voice = document.getElementById('ttsVoice').value;
     config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
-    config.tts.volume = parseInt(document.getElementById('ttsVolume').value);
+    config.tts.api_key = document.getElementById('ttsApiKey').value;
+    config.tts.hotkey = document.getElementById('ttsHotkey').value;
 
     if (ipcPost({ type: 'save_config', config })) {
       showToast('Saved!');
@@ -367,6 +377,14 @@
   }
 
   function testTTS() {
+<<<<<<< codex/update-tts-voice-selection-and-speed-settings-bwm8va
+    try {
+      // Use browser SpeechSynthesis as fallback demo
+      const utter = new SpeechSynthesisUtterance('Nerve text to speech is working.');
+      const sapiRate = parseInt(document.getElementById('ttsSpeed').value);
+      utter.rate = Math.max(0.1, 1 + (sapiRate / 10));
+      speechSynthesis.speak(utter);
+=======
     // Save current TTS settings first, then test
     config.tts = config.tts || {};
     config.tts.engine = document.getElementById('ttsEngine').value;
@@ -376,6 +394,7 @@
     ipcPost({ type: 'save_config', config });
 
     if (ipcPost({ type: 'test_tts' })) {
+>>>>>>> main
       showToast('Playing test...');
     } else {
       // Fallback: browser SpeechSynthesis
@@ -425,12 +444,29 @@
           { trigger: '/sig', expansion: 'Best regards,\\nYour Name', replace_trigger: true },
         ],
         panels: [],
-        tts: { engine: 'sapi', voice: 'Brian', speed: 2, volume: 100 },
+        tts: { engine: 'sapi', voice: 'Brian', speed: 2, volume: 100, hotkey: 'Ctrl+Alt+T' },
       };
+      populateVoices(['Brian', 'default'], 'Brian');
       populateUI();
     }
     // Also request voice list
     ipcPost({ type: 'list_voices' });
+  }
+
+  function populateVoices(voices, selected) {
+    const sel = document.getElementById('ttsVoice');
+    sel.innerHTML = '';
+    if (!voices || !voices.length) {
+      sel.innerHTML = '<option value="default">default</option>';
+      return;
+    }
+    voices.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v;
+      if (selected && selected === v) opt.selected = true;
+      sel.appendChild(opt);
+    });
   }
 
   function populateUI() {
@@ -441,35 +477,30 @@
 
     if (config.tts) {
       document.getElementById('ttsEngine').value = config.tts.engine || 'sapi';
-      document.getElementById('ttsSpeed').value = config.tts.speed != null ? config.tts.speed : 2;
-      document.getElementById('ttsVolume').value = config.tts.volume != null ? config.tts.volume : 100;
-      updateSpeedDisplay();
-
-      // Set voice — try exact match first, then partial
-      const voiceSelect = document.getElementById('ttsVoice');
-      const targetVoice = config.tts.voice || 'default';
-      let found = false;
-      for (const opt of voiceSelect.options) {
-        if (opt.value === targetVoice) {
-          voiceSelect.value = targetVoice;
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        for (const opt of voiceSelect.options) {
-          if (opt.value.includes(targetVoice)) {
-            voiceSelect.value = opt.value;
-            break;
-          }
-        }
-      }
+      document.getElementById('ttsSpeed').value = config.tts.speed ?? 2;
+      document.getElementById('ttsApiKey').value = config.tts.api_key || '';
+      document.getElementById('ttsHotkey').value = config.tts.hotkey || 'Ctrl+Alt+T';
     }
 
     renderHotkeys();
     renderHotstrings();
     renderPanels();
   }
+
+  // Listen for config from Rust agent
+  try {
+    window.chrome.webview.addEventListener('message', (e) => {
+      const data = JSON.parse(e.data);
+      if (data.type === 'config') {
+        config = data.config;
+        populateUI();
+        window.chrome.webview.postMessage(JSON.stringify({ type: 'list_voices' }));
+      } else if (data.type === 'voices') {
+        const selected = (config.tts && config.tts.voice) ? config.tts.voice : 'Brian';
+        populateVoices(data.voices, selected);
+      }
+    });
+  } catch(e) {}
 
   loadConfig();
 </script>

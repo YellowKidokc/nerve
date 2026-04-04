@@ -119,6 +119,8 @@ pub struct Config {
     pub panels: Vec<PanelDef>,
     #[serde(default)]
     pub clip_slots: Vec<ClipSlot>,
+    #[serde(default)]
+    pub tts: TtsConfig,
 
     #[serde(default)]
     pub tts: TtsConfig,
@@ -126,6 +128,31 @@ pub struct Config {
     /// Runtime: hotkey ID → action name mapping (not persisted)
     #[serde(skip)]
     pub hotkey_map: HashMap<u32, String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TtsConfig {
+    #[serde(default = "default_tts_voice")]
+    pub voice: String,
+    #[serde(default = "default_tts_speed")]
+    pub speed: i32,
+    #[serde(default = "default_tts_engine")]
+    pub engine: String,
+    #[serde(default = "default_tts_volume")]
+    pub volume: u32,
+}
+
+fn default_tts_voice() -> String {
+    "Brian".into()
+}
+fn default_tts_speed() -> i32 {
+    2
+}
+fn default_tts_engine() -> String {
+    "sapi".into()
+}
+fn default_tts_volume() -> u32 {
+    100
 }
 
 fn default_api_url() -> String {
@@ -331,7 +358,12 @@ impl Default for Config {
             prompts: vec![],
             panels: default_panels(),
             clip_slots: vec![],
-            tts: TtsConfig::default(),
+            tts: TtsConfig {
+                voice: default_tts_voice(),
+                speed: default_tts_speed(),
+                engine: default_tts_engine(),
+                volume: default_tts_volume(),
+            },
             hotkey_map: HashMap::new(),
         }
     }

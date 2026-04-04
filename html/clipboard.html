@@ -392,28 +392,33 @@
     }
   });
 
-  // Request real clip data from the Rust agent via IPC
-  function requestClips() {
-    try {
-      window.chrome.webview.postMessage(JSON.stringify({ type: 'get_clips' }));
-    } catch(e) {
-      // Agent not connected — show demo data
-      clips = [
-        { content: 'Welcome to ClipSync! Copy something to get started.', timestamp: 'just now', tags: ['system'], pinned: false },
-      ];
-      renderSlots();
-      renderClips();
-    }
+  // Listen for messages from the Rust agent (WebView2 IPC)
+  try {
+    window.chrome.webview.addEventListener('message', (e) => {
+      const data = JSON.parse(e.data);
+      if (data.type === 'clips') {
+        clips = (data.clips || []).map(c => ({
+          content: c.content,
+          timestamp: c.timestamp || 'just now',
+          tags: [],
+          pinned: false
+        }));
+        if (!clips.length) {
+          clips = [{ content: 'Clipboard is empty.', timestamp: 'now', tags: ['system'], pinned: false }];
+        }
+        renderSlots();
+        renderClips();
+      }
+    });
+    window.chrome.webview.postMessage(JSON.stringify({ type: 'get_clips' }));
+  } catch(e) {
+    // Demo fallback
+    clips = [
+      { content: 'Welcome to Nerve! Copy something to get started.', timestamp: 'just now', tags: ['system'], pinned: false },
+    ];
+    renderSlots();
+    renderClips();
   }
-
-  requestClips();
-
-  // Periodically refresh clips from agent (every 2s)
-  setInterval(() => {
-    try {
-      window.chrome.webview.postMessage(JSON.stringify({ type: 'get_clips' }));
-    } catch(e) {}
-  }, 2000);
 </script>
 </body>
 </html>
