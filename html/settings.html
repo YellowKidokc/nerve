@@ -3,118 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClipSync Settings</title>
+<title>Nerve Settings</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --bg: #0f0f0f; --surface: #1a1a2e; --surface2: #16213e;
-    --border: #2a2a4a; --text: #e0e0e0; --text-dim: #888;
-    --accent: #60d0ff; --accent2: #a78bfa; --danger: #ff6b6b;
-    --success: #4caf50;
+    --bg: #0a0a0f; --surface: #111118; --surface2: #16161f;
+    --border: #2b2b36; --text: #e5e7eb; --text-dim: #6b7280;
+    --accent: #f59e0b; --accent-dim: #b45309;
+    --danger: #ef4444; --success: #22c55e;
+    --purple: #a78bfa;
   }
   body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    font-size: 15px; line-height: 1.5;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; line-height: 1.5;
     background: var(--bg); color: var(--text);
     height: 100vh; display: flex; flex-direction: column; overflow: hidden;
   }
+
+  /* Header */
   .header {
-    padding: 14px 20px; background: var(--surface);
+    padding: 12px 16px; background: var(--surface);
     border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 10px;
   }
-  .header h1 { font-size: 18px; color: var(--accent); flex: 1; }
+  .header h1 { font-size: 16px; color: var(--accent); flex: 1; }
+  .header .brand { font-size: 11px; color: var(--text-dim); }
   .save-btn {
     padding: 6px 16px; background: var(--accent); color: var(--bg);
-    border: none; border-radius: 6px; font-size: 13px; font-weight: 600;
-    cursor: pointer;
+    border: none; border-radius: 6px; font-size: 12px; font-weight: 600;
+    font-family: inherit; cursor: pointer;
   }
-  .save-btn:hover { filter: brightness(1.1); }
+  .save-btn:hover { filter: brightness(1.15); }
 
+  /* Tabs */
   .tabs {
     display: flex; background: var(--surface); border-bottom: 1px solid var(--border);
     overflow-x: auto; flex-shrink: 0;
   }
   .tab {
-    padding: 10px 18px; font-size: 13px; font-weight: 500;
+    padding: 10px 16px; font-size: 12px; font-weight: 500;
     color: var(--text-dim); cursor: pointer; border-bottom: 2px solid transparent;
-    white-space: nowrap;
+    white-space: nowrap; transition: color 0.15s;
   }
   .tab:hover { color: var(--text); }
   .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  .content { flex: 1; overflow-y: auto; padding: 20px; }
-  .content::-webkit-scrollbar { width: 6px; }
+  /* Content */
+  .content { flex: 1; overflow-y: auto; padding: 16px; }
+  .content::-webkit-scrollbar { width: 5px; }
   .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
   .section { display: none; }
   .section.active { display: block; }
-  .section h2 { font-size: 16px; color: var(--accent); margin-bottom: 12px; }
-  .section h3 { font-size: 14px; color: var(--accent2); margin: 16px 0 8px; }
+  .section h2 { font-size: 14px; color: var(--accent); margin-bottom: 10px; }
+  .section h3 { font-size: 13px; color: var(--purple); margin: 14px 0 8px; }
+  .section p.hint { font-size: 11px; color: var(--text-dim); margin-bottom: 10px; }
 
-  .field { margin-bottom: 14px; }
-  .field label { display: block; font-size: 13px; color: var(--text-dim); margin-bottom: 4px; }
+  /* Form fields */
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
   .field input, .field select, .field textarea {
-    width: 100%; padding: 8px 12px; background: var(--surface);
+    width: 100%; padding: 7px 10px; background: var(--surface);
     border: 1px solid var(--border); border-radius: 6px;
-    color: var(--text); font-size: 14px; font-family: inherit; outline: none;
+    color: var(--text); font-size: 13px; font-family: inherit; outline: none;
   }
-  .field input:focus, .field textarea:focus { border-color: var(--accent); }
-  .field textarea { min-height: 80px; resize: vertical; }
-  .field .hint { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+  .field textarea { min-height: 60px; resize: vertical; }
+  .field .hint { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
 
-  .speed-display {
-    font-size: 13px; color: var(--accent); font-weight: 600;
-    display: inline-block; min-width: 40px; text-align: center;
-  }
+  .range-row { display: flex; align-items: center; gap: 8px; }
+  .range-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+  .range-val { min-width: 28px; text-align: center; font-size: 12px; color: var(--accent); font-weight: 600; }
 
-  /* Hotstring / Hotkey rows */
-  .item-list { display: flex; flex-direction: column; gap: 6px; }
-  .item-row {
-    display: flex; gap: 8px; align-items: center;
-    padding: 8px 12px; background: var(--surface); border-radius: 6px;
-    border: 1px solid var(--border);
-  }
-  .item-row input { flex: 1; }
-  .item-row .trigger-input { max-width: 140px; font-family: 'Consolas', monospace; }
-  .item-row .expansion-input { flex: 2; }
-  .item-row .key-input { max-width: 160px; font-family: 'Consolas', monospace; }
-  .item-row .action-input { flex: 1; }
-
-  .remove-btn {
-    background: none; border: 1px solid var(--border); border-radius: 4px;
-    color: var(--danger); padding: 4px 8px; font-size: 12px; cursor: pointer;
-  }
-  .remove-btn:hover { border-color: var(--danger); }
-
-  .add-btn {
-    padding: 6px 14px; background: var(--surface2); border: 1px dashed var(--border);
-    border-radius: 6px; color: var(--accent); font-size: 13px; cursor: pointer;
-    margin-top: 8px;
-  }
-  .add-btn:hover { border-color: var(--accent); }
-
+  /* Toggle switch */
   .toggle-row {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0; border-bottom: 1px solid var(--border);
+    padding: 8px 0; border-bottom: 1px solid var(--border);
   }
-  .toggle-row label { font-size: 14px; }
+  .toggle-row label { font-size: 13px; }
   .toggle {
-    width: 42px; height: 24px; background: var(--border); border-radius: 12px;
-    position: relative; cursor: pointer; transition: background 0.2s;
+    width: 40px; height: 22px; background: var(--border); border-radius: 11px;
+    position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0;
   }
   .toggle.on { background: var(--accent); }
   .toggle::after {
     content: ''; position: absolute; top: 2px; left: 2px;
-    width: 20px; height: 20px; background: white; border-radius: 50%;
+    width: 18px; height: 18px; background: white; border-radius: 50%;
     transition: transform 0.2s;
   }
   .toggle.on::after { transform: translateX(18px); }
 
+  /* Buttons */
+  button {
+    padding: 6px 12px; border-radius: 6px; font-family: inherit;
+    font-size: 12px; cursor: pointer; background: var(--surface);
+    color: var(--text); border: 1px solid var(--border); transition: all 0.15s;
+  }
+  button:hover { border-color: var(--text-dim); }
+  .btn-accent { border-color: var(--accent); color: var(--accent); }
+  .btn-accent:hover { background: var(--accent); color: var(--bg); }
+  .btn-danger { border-color: var(--danger); color: var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: white; }
+  .btn-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  /* Builder form */
+  .builder {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px; margin-bottom: 14px;
+  }
+  .builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .builder-grid .full { grid-column: 1 / -1; }
+
+  /* Modifier checkboxes */
+  .mod-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .mod-row label {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 12px; color: var(--text-dim); cursor: pointer;
+    padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;
+  }
+  .mod-row label:has(input:checked) { border-color: var(--accent); color: var(--accent); }
+  .mod-row input[type="checkbox"] { accent-color: var(--accent); }
+
+  /* Library table */
+  .library { display: flex; flex-direction: column; gap: 4px; }
+  .lib-row {
+    display: grid; grid-template-columns: 120px 1fr 1fr auto;
+    gap: 8px; align-items: center; padding: 8px 10px;
+    background: var(--surface); border-radius: 6px;
+    border: 1px solid var(--border); font-size: 12px;
+  }
+  .lib-row.header {
+    background: var(--surface2); color: var(--text-dim);
+    font-weight: 600; text-transform: uppercase; font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+  .lib-row .keys { color: var(--accent); font-weight: 500; }
+  .lib-row .action { color: var(--text); }
+  .lib-row .type-badge {
+    font-size: 10px; padding: 1px 6px; border-radius: 3px;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .lib-row .type-badge.hotkey { background: #1e3a5f; color: #60a5fa; }
+  .lib-row .type-badge.hotstring { background: #3b1f4b; color: var(--purple); }
+  .lib-row-actions { display: flex; gap: 4px; }
+  .lib-row-actions button { padding: 3px 8px; font-size: 11px; }
+
+  /* Panel list */
+  .panel-item {
+    display: grid; grid-template-columns: 100px 1fr auto;
+    gap: 8px; align-items: center; padding: 8px 10px;
+    background: var(--surface); border-radius: 6px;
+    border: 1px solid var(--border); margin-bottom: 4px;
+  }
+  .panel-item .name { color: var(--accent); font-weight: 500; }
+  .panel-item .url { font-size: 11px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* Sync buttons */
+  .sync-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .sync-actions button { padding: 10px; font-size: 12px; }
+
+  /* Toast */
   .toast {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px);
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%) translateY(20px);
     background: var(--success); color: white; padding: 8px 20px;
-    border-radius: 6px; font-size: 14px; opacity: 0; transition: all 0.2s;
+    border-radius: 6px; font-size: 13px; opacity: 0; transition: all 0.2s;
     pointer-events: none; z-index: 100;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -124,55 +177,110 @@
 
 <div class="header">
   <h1>Settings</h1>
+  <span class="brand">POF 2828</span>
   <button class="save-btn" onclick="saveConfig()">Save</button>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab(event, 'general')">General</div>
-  <div class="tab" onclick="showTab(event, 'hotkeys')">Hotkeys</div>
-  <div class="tab" onclick="showTab(event, 'hotstrings')">Hotstrings</div>
-  <div class="tab" onclick="showTab(event, 'tts')">TTS</div>
-  <div class="tab" onclick="showTab(event, 'panels')">Panels</div>
-  <div class="tab" onclick="showTab(event, 'sync')">Sync</div>
+  <div class="tab active" data-tab="shortcuts">Shortcuts</div>
+  <div class="tab" data-tab="hotkeys">Hotkeys</div>
+  <div class="tab" data-tab="hotstrings">Hotstrings</div>
+  <div class="tab" data-tab="tts">TTS</div>
+  <div class="tab" data-tab="sync">Sync</div>
+  <div class="tab" data-tab="panels">Panels</div>
 </div>
 
 <div class="content">
 
-  <!-- GENERAL -->
-  <div class="section active" id="sec-general">
-    <h2>General</h2>
-    <div class="field">
-      <label>Clipboard monitoring interval (ms)</label>
-      <input type="number" id="clipInterval" value="500" min="100" max="5000" />
-      <div class="hint">How often to check for clipboard changes. Lower = faster, uses more CPU.</div>
+  <!-- ═══ SHORTCUTS TAB ═══ -->
+  <div class="section active" id="sec-shortcuts">
+    <h2>Shortcut Builder</h2>
+    <p class="hint">Create hotkeys and hotstrings. Hotkeys use global key combos; hotstrings expand typed triggers.</p>
+
+    <div class="builder">
+      <div class="builder-grid">
+        <div class="field">
+          <label>Type</label>
+          <select id="bType" onchange="onBuilderTypeChange()">
+            <option value="hotkey">Hotkey</option>
+            <option value="hotstring">Hotstring</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Action / Name</label>
+          <input id="bAction" placeholder="toggle_clipboard" />
+        </div>
+        <div class="field full" id="bModWrap">
+          <label>Modifiers</label>
+          <div class="mod-row">
+            <label><input type="checkbox" id="bCtrl" /> Ctrl</label>
+            <label><input type="checkbox" id="bAlt" /> Alt</label>
+            <label><input type="checkbox" id="bShift" /> Shift</label>
+            <label><input type="checkbox" id="bWin" /> Win</label>
+          </div>
+        </div>
+        <div class="field" id="bKeyWrap">
+          <label>Key</label>
+          <input id="bKey" placeholder="C" maxlength="12" />
+        </div>
+        <div class="field" id="bDescWrap">
+          <label>Description</label>
+          <input id="bDesc" placeholder="Toggle clipboard panel" />
+        </div>
+        <div class="field full" id="bTriggerWrap" style="display:none">
+          <label>Trigger</label>
+          <input id="bTrigger" placeholder="/gm" />
+          <div class="hint">Type this anywhere to trigger expansion</div>
+        </div>
+        <div class="field full" id="bOutputWrap">
+          <label>Output / Expansion</label>
+          <textarea id="bOutput" placeholder="Good morning!"></textarea>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-accent" onclick="addFromBuilder()">+ Add</button>
+        <button onclick="clearBuilder()">Clear</button>
+      </div>
+    </div>
+
+    <!-- Enable toggles -->
+    <div class="toggle-row">
+      <label>Enable Hotkeys</label>
+      <div class="toggle on" id="toggleHotkeys" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="toggle-row">
+      <label>Enable Hotstrings</label>
+      <div class="toggle on" id="toggleHotstrings" onclick="this.classList.toggle('on')"></div>
+    </div>
+
+    <h3>Library</h3>
+    <div class="library" id="libraryList"></div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn-accent" onclick="exportAhk()">Export .ahk</button>
     </div>
   </div>
 
-  <!-- HOTKEYS -->
+  <!-- ═══ HOTKEYS TAB ═══ -->
   <div class="section" id="sec-hotkeys">
     <h2>Global Hotkeys</h2>
-    <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px">
-      Format: Ctrl+Alt+C, Ctrl+Shift+1, etc. Changes take effect after restart.
-    </p>
-    <div class="item-list" id="hotkeyList"></div>
-    <button class="add-btn" onclick="addHotkey()">+ Add Hotkey</button>
+    <p class="hint">Format: Ctrl+Alt+C, Ctrl+Shift+1, etc. Changes take effect after restart.</p>
+    <div id="hotkeyList"></div>
+    <button class="btn-accent" onclick="addHotkey()" style="margin-top:8px">+ Add Hotkey</button>
   </div>
 
-  <!-- HOTSTRINGS -->
+  <!-- ═══ HOTSTRINGS TAB ═══ -->
   <div class="section" id="sec-hotstrings">
     <h2>Hotstrings</h2>
-    <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px">
-      Type the trigger anywhere and it auto-expands. e.g. <code>/gm</code> → <code>Good morning!</code>
-    </p>
-    <div class="item-list" id="hotstringList"></div>
-    <button class="add-btn" onclick="addHotstring()">+ Add Hotstring</button>
+    <p class="hint">Type the trigger anywhere and it auto-expands. e.g. /gm → Good morning!</p>
+    <div id="hotstringList"></div>
+    <button class="btn-accent" onclick="addHotstring()" style="margin-top:8px">+ Add Hotstring</button>
   </div>
 
-  <!-- TTS -->
+  <!-- ═══ TTS TAB ═══ -->
   <div class="section" id="sec-tts">
     <h2>Text-to-Speech</h2>
     <div class="field">
-      <label>TTS Engine</label>
+      <label>Engine</label>
       <select id="ttsEngine">
         <option value="sapi">Windows SAPI (built-in)</option>
         <option value="edge">Edge TTS (online, natural voices)</option>
@@ -180,53 +288,42 @@
     </div>
     <div class="field">
       <label>Voice</label>
-<<<<<<< codex/update-tts-voice-selection-and-speed-settings-bwm8va
-      <select id="ttsVoice"></select>
-    </div>
-    <div class="field">
-      <label>Speed</label>
-      <input type="range" id="ttsSpeed" min="-10" max="10" step="1" value="2" />
-      <div class="hint">SAPI scale: -10 (slow) to +10 (fast)</div>
-=======
       <select id="ttsVoice">
         <option value="default">Default (auto-select)</option>
       </select>
-      <div class="hint">Voices are loaded from the system. SAPI voices listed here.</div>
+      <div class="hint">Voices are loaded from the system.</div>
     </div>
     <div class="field">
-      <label>Speed <span class="speed-display" id="speedDisplay">2</span></label>
-      <input type="range" id="ttsSpeed" min="-10" max="10" step="1" value="2" oninput="updateSpeedDisplay()" />
+      <label>Speed <span class="range-val" id="speedDisplay">2</span></label>
+      <input type="range" id="ttsSpeed" min="-10" max="10" step="1" value="2" oninput="speedDisplay.textContent=this.value" />
       <div class="hint">SAPI rate: -10 (slowest) to 10 (fastest), 0 = normal</div>
->>>>>>> main
     </div>
     <div class="field">
-      <label>Volume</label>
-      <input type="range" id="ttsVolume" min="0" max="100" step="5" value="100" />
-      <div class="hint">0 = mute, 100 = maximum</div>
+      <label>Volume <span class="range-val" id="volDisplay">100</span></label>
+      <input type="range" id="ttsVolume" min="0" max="100" step="5" value="100" oninput="volDisplay.textContent=this.value" />
     </div>
 
     <h3>TTS Hotkey</h3>
     <div class="field">
       <label>Read selected text aloud</label>
       <input type="text" id="ttsHotkey" value="Ctrl+Alt+T" readonly />
-      <div class="hint">Select text in any app, press this hotkey to read it aloud</div>
+      <div class="hint">Select text in any app, press this hotkey</div>
     </div>
-
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="add-btn" onclick="testTTS()">Test Voice</button>
-      <button class="add-btn" onclick="stopTTS()">Stop</button>
+    <div class="btn-row">
+      <button class="btn-accent" onclick="testTTS()">Test Voice</button>
+      <button onclick="stopTTS()">Stop</button>
     </div>
   </div>
 
-  <!-- PANELS -->
-  <div class="section" id="sec-panels">
-    <h2>Panels</h2>
-    <div class="item-list" id="panelList"></div>
-  </div>
-
-  <!-- SYNC -->
+  <!-- ═══ SYNC TAB ═══ -->
   <div class="section" id="sec-sync">
-    <h2>Cloudflare Sync</h2>
+    <h2>General</h2>
+    <div class="field">
+      <label>Clipboard Monitoring Interval (ms)</label>
+      <input type="number" id="clipInterval" value="500" min="100" max="5000" />
+      <div class="hint">How often to check for clipboard changes. Lower = faster, uses more CPU.</div>
+    </div>
+    <h2 style="margin-top:16px">Cloudflare Sync</h2>
     <div class="field">
       <label>API URL</label>
       <input type="text" id="apiUrl" placeholder="https://..." />
@@ -236,9 +333,23 @@
       <input type="password" id="apiToken" placeholder="Bearer token" />
     </div>
     <div class="field">
-      <label>Sync interval (seconds)</label>
+      <label>Sync Interval (seconds)</label>
       <input type="number" id="syncInterval" value="300" min="10" />
     </div>
+    <div class="sync-actions">
+      <button class="btn-accent" onclick="syncAction('sync_push_clips')">Push Clips</button>
+      <button onclick="syncAction('sync_pull_clips')">Pull Clips</button>
+      <button class="btn-accent" onclick="syncAction('sync_push_config')">Push Config</button>
+      <button onclick="syncAction('sync_pull_config')">Pull Config</button>
+      <button class="btn-accent" onclick="syncAction('sync_push_prompts')">Push Prompts</button>
+      <button onclick="syncAction('sync_pull_prompts')">Pull Prompts</button>
+    </div>
+  </div>
+
+  <!-- ═══ PANELS TAB ═══ -->
+  <div class="section" id="sec-panels">
+    <h2>Panels</h2>
+    <div id="panelList"></div>
   </div>
 
 </div>
@@ -247,65 +358,161 @@
 
 <script>
   let config = {};
-  let agentConnected = false;
 
   function ipcPost(msg) {
-    try {
-      window.chrome.webview.postMessage(JSON.stringify(msg));
-      return true;
-    } catch(e) {
-      return false;
-    }
+    try { window.chrome.webview.postMessage(JSON.stringify(msg)); return true; }
+    catch(e) { return false; }
   }
 
-  // Tab switching
-  function showTab(evt, name) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    evt.currentTarget.classList.add('active');
-    document.getElementById('sec-' + name).classList.add('active');
-  }
-
-  // Speed display
-  function updateSpeedDisplay() {
-    const val = document.getElementById('ttsSpeed').value;
-    document.getElementById('speedDisplay').textContent = val;
-  }
-
-  // Engine change — request voice list
-  function onEngineChange() {
-    ipcPost({ type: 'list_voices' });
-  }
-
-  // Populate voice dropdown from Rust agent
-  function populateVoices(voices) {
-    const select = document.getElementById('ttsVoice');
-    const currentValue = config.tts ? config.tts.voice : 'default';
-    select.innerHTML = '<option value="default">Default (auto-select)</option>';
-    voices.forEach(v => {
-      const opt = document.createElement('option');
-      opt.value = v;
-      // Show short name: "Microsoft Brian Online" → "Brian Online"
-      opt.textContent = v.replace('Microsoft ', '');
-      select.appendChild(opt);
+  // ── Tab switching ──────────────────────────────────────────────
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('sec-' + tab.dataset.tab).classList.add('active');
     });
-    // Restore selection if it matches an available voice
-    for (const opt of select.options) {
-      if (opt.value === currentValue || opt.value.includes(currentValue)) {
-        select.value = opt.value;
-        break;
-      }
+  });
+
+  // ── Builder ────────────────────────────────────────────────────
+  function onBuilderTypeChange() {
+    const isHotstring = bType.value === 'hotstring';
+    bModWrap.style.display = isHotstring ? 'none' : '';
+    bKeyWrap.style.display = isHotstring ? 'none' : '';
+    bDescWrap.style.display = isHotstring ? 'none' : '';
+    bTriggerWrap.style.display = isHotstring ? '' : 'none';
+    bOutputWrap.querySelector('label').textContent = isHotstring ? 'Expansion' : 'Output / Expansion';
+  }
+
+  function addFromBuilder() {
+    if (bType.value === 'hotkey') {
+      const mods = [];
+      if (bCtrl.checked) mods.push('Ctrl');
+      if (bAlt.checked) mods.push('Alt');
+      if (bShift.checked) mods.push('Shift');
+      if (bWin.checked) mods.push('Win');
+      const key = bKey.value.trim();
+      if (!key) { showToast('Key is required'); return; }
+      const keys = [...mods, key].join('+');
+      const action = bAction.value.trim() || 'custom_action';
+      config.hotkeys = config.hotkeys || [];
+      config.hotkeys.push({ keys, action });
+      renderAll();
+      clearBuilder();
+      showToast('Hotkey added');
+    } else {
+      const trigger = bTrigger.value.trim();
+      const expansion = bOutput.value;
+      if (!trigger) { showToast('Trigger is required'); return; }
+      config.hotstrings = config.hotstrings || [];
+      config.hotstrings.push({ trigger, expansion, replace_trigger: true });
+      renderAll();
+      clearBuilder();
+      showToast('Hotstring added');
     }
   }
 
-  // Hotkeys UI
+  function clearBuilder() {
+    bAction.value = ''; bKey.value = ''; bDesc.value = '';
+    bTrigger.value = ''; bOutput.value = '';
+    bCtrl.checked = false; bAlt.checked = false;
+    bShift.checked = false; bWin.checked = false;
+  }
+
+  // ── Library ────────────────────────────────────────────────────
+  function renderLibrary() {
+    const el = document.getElementById('libraryList');
+    let html = '<div class="lib-row header"><span>Keys/Trigger</span><span>Action/Expansion</span><span>Type</span><span></span></div>';
+
+    (config.hotkeys || []).forEach((hk, i) => {
+      html += `<div class="lib-row">
+        <span class="keys">${escHtml(hk.keys)}</span>
+        <span class="action">${escHtml(hk.action)}</span>
+        <span><span class="type-badge hotkey">Hotkey</span></span>
+        <span class="lib-row-actions">
+          <button onclick="editHotkey(${i})">Edit</button>
+          <button class="btn-danger" onclick="deleteHotkey(${i})">Del</button>
+        </span>
+      </div>`;
+    });
+
+    (config.hotstrings || []).forEach((hs, i) => {
+      html += `<div class="lib-row">
+        <span class="keys">${escHtml(hs.trigger)}</span>
+        <span class="action">${escHtml(hs.expansion).substring(0, 60)}</span>
+        <span><span class="type-badge hotstring">Hotstring</span></span>
+        <span class="lib-row-actions">
+          <button onclick="editHotstring(${i})">Edit</button>
+          <button class="btn-danger" onclick="deleteHotstring(${i})">Del</button>
+        </span>
+      </div>`;
+    });
+
+    el.innerHTML = html;
+  }
+
+  function editHotkey(i) {
+    const hk = config.hotkeys[i];
+    if (!hk) return;
+    bType.value = 'hotkey'; onBuilderTypeChange();
+    const parts = hk.keys.split('+');
+    bCtrl.checked = parts.includes('Ctrl');
+    bAlt.checked = parts.includes('Alt');
+    bShift.checked = parts.includes('Shift');
+    bWin.checked = parts.includes('Win');
+    bKey.value = parts.filter(p => !['Ctrl','Alt','Shift','Win'].includes(p)).join('+');
+    bAction.value = hk.action;
+    config.hotkeys.splice(i, 1);
+    renderAll();
+    // Scroll to top
+    document.querySelector('.content').scrollTop = 0;
+  }
+
+  function editHotstring(i) {
+    const hs = config.hotstrings[i];
+    if (!hs) return;
+    bType.value = 'hotstring'; onBuilderTypeChange();
+    bTrigger.value = hs.trigger;
+    bOutput.value = hs.expansion;
+    config.hotstrings.splice(i, 1);
+    renderAll();
+    document.querySelector('.content').scrollTop = 0;
+  }
+
+  function deleteHotkey(i) {
+    config.hotkeys.splice(i, 1);
+    renderAll();
+  }
+
+  function deleteHotstring(i) {
+    config.hotstrings.splice(i, 1);
+    renderAll();
+  }
+
+  function exportAhk() {
+    let ahk = '; Auto-generated by Nerve\n; Hotkeys\n';
+    (config.hotkeys || []).forEach(hk => {
+      const combo = hk.keys.replace('Ctrl+', '^').replace('Alt+', '!').replace('Shift+', '+').replace('Win+', '#');
+      ahk += `${combo}::${hk.action}\n`;
+    });
+    ahk += '\n; Hotstrings\n';
+    (config.hotstrings || []).forEach(hs => {
+      ahk += `::${hs.trigger}::${hs.expansion}\n`;
+    });
+    // Copy to clipboard
+    navigator.clipboard.writeText(ahk).then(() => showToast('Copied .ahk to clipboard'));
+  }
+
+  // ── Hotkeys tab (simple list editor) ──────────────────────────
   function renderHotkeys() {
     const list = document.getElementById('hotkeyList');
     list.innerHTML = (config.hotkeys || []).map((hk, i) => `
-      <div class="item-row">
-        <input class="key-input" value="${hk.keys}" onchange="config.hotkeys[${i}].keys=this.value" placeholder="Ctrl+Alt+C" />
-        <input class="action-input" value="${hk.action}" onchange="config.hotkeys[${i}].action=this.value" placeholder="toggle_clipboard" />
-        <button class="remove-btn" onclick="config.hotkeys.splice(${i},1);renderHotkeys()">×</button>
+      <div class="lib-row" style="grid-template-columns: 140px 1fr auto">
+        <input style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--accent);padding:4px 6px;font-family:inherit;font-size:12px"
+          value="${escHtml(hk.keys)}" onchange="config.hotkeys[${i}].keys=this.value" placeholder="Ctrl+Alt+C" />
+        <input style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:4px 6px;font-family:inherit;font-size:12px"
+          value="${escHtml(hk.action)}" onchange="config.hotkeys[${i}].action=this.value" placeholder="toggle_clipboard" />
+        <button class="btn-danger" onclick="config.hotkeys.splice(${i},1);renderAll()" style="padding:3px 8px;font-size:11px">×</button>
       </div>
     `).join('');
   }
@@ -313,17 +520,19 @@
   function addHotkey() {
     config.hotkeys = config.hotkeys || [];
     config.hotkeys.push({ keys: '', action: '' });
-    renderHotkeys();
+    renderAll();
   }
 
-  // Hotstrings UI
+  // ── Hotstrings tab (simple list editor) ───────────────────────
   function renderHotstrings() {
     const list = document.getElementById('hotstringList');
     list.innerHTML = (config.hotstrings || []).map((hs, i) => `
-      <div class="item-row">
-        <input class="trigger-input" value="${hs.trigger}" onchange="config.hotstrings[${i}].trigger=this.value" placeholder="/gm" />
-        <input class="expansion-input" value="${escHtml(hs.expansion)}" onchange="config.hotstrings[${i}].expansion=this.value" placeholder="Good morning!" />
-        <button class="remove-btn" onclick="config.hotstrings.splice(${i},1);renderHotstrings()">×</button>
+      <div class="lib-row" style="grid-template-columns: 100px 1fr auto">
+        <input style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--accent);padding:4px 6px;font-family:monospace;font-size:12px"
+          value="${escHtml(hs.trigger)}" onchange="config.hotstrings[${i}].trigger=this.value" placeholder="/gm" />
+        <input style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:4px 6px;font-family:inherit;font-size:12px"
+          value="${escHtml(hs.expansion)}" onchange="config.hotstrings[${i}].expansion=this.value" placeholder="Good morning!" />
+        <button class="btn-danger" onclick="config.hotstrings.splice(${i},1);renderAll()" style="padding:3px 8px;font-size:11px">×</button>
       </div>
     `).join('');
   }
@@ -331,144 +540,52 @@
   function addHotstring() {
     config.hotstrings = config.hotstrings || [];
     config.hotstrings.push({ trigger: '/', expansion: '', replace_trigger: true });
-    renderHotstrings();
+    renderAll();
   }
 
-  // Panels UI
+  // ── Panels tab ─────────────────────────────────────────────────
   function renderPanels() {
-    const list = document.getElementById('panelList');
-    list.innerHTML = (config.panels || []).map((p, i) => `
-      <div class="item-row" style="flex-wrap:wrap">
-        <input style="max-width:100px" value="${p.name}" onchange="config.panels[${i}].name=this.value" placeholder="name" />
-        <input style="max-width:120px" value="${p.title}" onchange="config.panels[${i}].title=this.value" placeholder="Title" />
-        <input style="flex:2" value="${p.url}" onchange="config.panels[${i}].url=this.value" placeholder="URL or file path" />
-        <label style="font-size:12px;color:var(--text-dim);white-space:nowrap">
-          <input type="checkbox" ${p.always_on_top ? 'checked' : ''} onchange="config.panels[${i}].always_on_top=this.checked" /> Pin
+    const el = document.getElementById('panelList');
+    el.innerHTML = (config.panels || []).map((p, i) => `
+      <div class="panel-item">
+        <span class="name">${escHtml(p.name)}</span>
+        <span class="url" title="${escHtml(p.url)}">${escHtml(p.title)} — ${p.width}×${p.height}</span>
+        <label style="font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:4px">
+          <input type="checkbox" ${p.always_on_top ? 'checked' : ''} onchange="config.panels[${i}].always_on_top=this.checked" style="accent-color:var(--accent)" /> Pin
         </label>
       </div>
     `).join('');
   }
 
-  function escHtml(s) {
-    return s.replace(/"/g, '&quot;').replace(/</g, '&lt;');
-  }
-
-  // Save
-  function saveConfig() {
-    config.clipboard_interval_ms = parseInt(document.getElementById('clipInterval').value);
-    config.api_url = document.getElementById('apiUrl').value;
-    config.api_token = document.getElementById('apiToken').value;
-    config.sync_interval_secs = parseInt(document.getElementById('syncInterval').value);
-
-    // TTS config — values match Rust TtsConfig directly
-    config.tts = config.tts || {};
-    config.tts.engine = document.getElementById('ttsEngine').value;
-    config.tts.voice = document.getElementById('ttsVoice').value;
-    config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
-    config.tts.api_key = document.getElementById('ttsApiKey').value;
-    config.tts.hotkey = document.getElementById('ttsHotkey').value;
-
-    if (ipcPost({ type: 'save_config', config })) {
-      showToast('Saved!');
-    } else {
-      localStorage.setItem('clipsync-config', JSON.stringify(config));
-      showToast('Saved locally (agent not connected)');
-    }
-  }
-
-  function testTTS() {
-<<<<<<< codex/update-tts-voice-selection-and-speed-settings-bwm8va
-    try {
-      // Use browser SpeechSynthesis as fallback demo
-      const utter = new SpeechSynthesisUtterance('Nerve text to speech is working.');
-      const sapiRate = parseInt(document.getElementById('ttsSpeed').value);
-      utter.rate = Math.max(0.1, 1 + (sapiRate / 10));
-      speechSynthesis.speak(utter);
-=======
-    // Save current TTS settings first, then test
-    config.tts = config.tts || {};
-    config.tts.engine = document.getElementById('ttsEngine').value;
-    config.tts.voice = document.getElementById('ttsVoice').value;
-    config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
-    config.tts.volume = parseInt(document.getElementById('ttsVolume').value);
-    ipcPost({ type: 'save_config', config });
-
-    if (ipcPost({ type: 'test_tts' })) {
->>>>>>> main
-      showToast('Playing test...');
-    } else {
-      // Fallback: browser SpeechSynthesis
-      try {
-        const utter = new SpeechSynthesisUtterance('ClipSync text to speech is working.');
-        speechSynthesis.speak(utter);
-        showToast('Playing browser test...');
-      } catch(e) {
-        showToast('TTS test failed');
+  // ── Voice list ─────────────────────────────────────────────────
+  function populateVoices(voices, selected) {
+    const sel = document.getElementById('ttsVoice');
+    const current = selected || (config.tts ? config.tts.voice : 'default');
+    sel.innerHTML = '<option value="default">Default (auto-select)</option>';
+    if (!voices || !voices.length) return;
+    voices.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v.replace('Microsoft ', '');
+      sel.appendChild(opt);
+    });
+    for (const opt of sel.options) {
+      if (opt.value === current || opt.value.includes(current)) {
+        sel.value = opt.value;
+        break;
       }
     }
   }
 
-  function stopTTS() {
-    ipcPost({ type: 'tts_stop' });
+  // ── Render all ─────────────────────────────────────────────────
+  function renderAll() {
+    renderLibrary();
+    renderHotkeys();
+    renderHotstrings();
+    renderPanels();
   }
 
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 1500);
-  }
-
-  // Load config from Rust agent
-  function loadConfig() {
-    agentConnected = ipcPost({ type: 'get_config' });
-    if (!agentConnected) {
-      // Use defaults if agent not connected
-      config = {
-        clipboard_interval_ms: 500,
-        sync_interval_secs: 300,
-        api_url: '',
-        api_token: '',
-        hotkeys: [
-          { keys: 'Ctrl+Alt+C', action: 'toggle_clipboard' },
-          { keys: 'Ctrl+Alt+P', action: 'toggle_prompts' },
-          { keys: 'Ctrl+Alt+L', action: 'toggle_links' },
-          { keys: 'Ctrl+Alt+R', action: 'toggle_research' },
-          { keys: 'Ctrl+Alt+A', action: 'toggle_chat' },
-          { keys: 'Ctrl+Alt+G', action: 'toggle_dashboard' },
-          { keys: 'Ctrl+Alt+T', action: 'tts_read_selection' },
-        ],
-        hotstrings: [
-          { trigger: '/gm', expansion: 'Good morning!', replace_trigger: true },
-          { trigger: '/ty', expansion: 'Thank you, I appreciate it!', replace_trigger: true },
-          { trigger: '/sig', expansion: 'Best regards,\\nYour Name', replace_trigger: true },
-        ],
-        panels: [],
-        tts: { engine: 'sapi', voice: 'Brian', speed: 2, volume: 100, hotkey: 'Ctrl+Alt+T' },
-      };
-      populateVoices(['Brian', 'default'], 'Brian');
-      populateUI();
-    }
-    // Also request voice list
-    ipcPost({ type: 'list_voices' });
-  }
-
-  function populateVoices(voices, selected) {
-    const sel = document.getElementById('ttsVoice');
-    sel.innerHTML = '';
-    if (!voices || !voices.length) {
-      sel.innerHTML = '<option value="default">default</option>';
-      return;
-    }
-    voices.forEach(v => {
-      const opt = document.createElement('option');
-      opt.value = v;
-      opt.textContent = v;
-      if (selected && selected === v) opt.selected = true;
-      sel.appendChild(opt);
-    });
-  }
-
+  // ── Populate UI from config ────────────────────────────────────
   function populateUI() {
     document.getElementById('clipInterval').value = config.clipboard_interval_ms || 500;
     document.getElementById('apiUrl').value = config.api_url || '';
@@ -478,31 +595,134 @@
     if (config.tts) {
       document.getElementById('ttsEngine').value = config.tts.engine || 'sapi';
       document.getElementById('ttsSpeed').value = config.tts.speed ?? 2;
-      document.getElementById('ttsApiKey').value = config.tts.api_key || '';
-      document.getElementById('ttsHotkey').value = config.tts.hotkey || 'Ctrl+Alt+T';
+      document.getElementById('ttsVolume').value = config.tts.volume ?? 100;
+      speedDisplay.textContent = config.tts.speed ?? 2;
+      volDisplay.textContent = config.tts.volume ?? 100;
     }
 
-    renderHotkeys();
-    renderHotstrings();
-    renderPanels();
+    renderAll();
   }
 
-  // Listen for config from Rust agent
-  try {
-    window.chrome.webview.addEventListener('message', (e) => {
-      const data = JSON.parse(e.data);
-      if (data.type === 'config') {
-        config = data.config;
-        populateUI();
-        window.chrome.webview.postMessage(JSON.stringify({ type: 'list_voices' }));
-      } else if (data.type === 'voices') {
-        const selected = (config.tts && config.tts.voice) ? config.tts.voice : 'Brian';
-        populateVoices(data.voices, selected);
-      }
-    });
-  } catch(e) {}
+  // ── Save config ────────────────────────────────────────────────
+  function saveConfig() {
+    config.clipboard_interval_ms = parseInt(document.getElementById('clipInterval').value);
+    config.api_url = document.getElementById('apiUrl').value;
+    config.api_token = document.getElementById('apiToken').value;
+    config.sync_interval_secs = parseInt(document.getElementById('syncInterval').value);
+    config.tts = config.tts || {};
+    config.tts.engine = document.getElementById('ttsEngine').value;
+    config.tts.voice = document.getElementById('ttsVoice').value;
+    config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
+    config.tts.volume = parseInt(document.getElementById('ttsVolume').value);
 
-  loadConfig();
+    if (ipcPost({ type: 'save_config', config })) {
+      showToast('Saved!');
+    } else {
+      localStorage.setItem('nerve-config', JSON.stringify(config));
+      showToast('Saved locally (agent not connected)');
+    }
+  }
+
+  // ── TTS test ───────────────────────────────────────────────────
+  function testTTS() {
+    config.tts = config.tts || {};
+    config.tts.engine = document.getElementById('ttsEngine').value;
+    config.tts.voice = document.getElementById('ttsVoice').value;
+    config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
+    config.tts.volume = parseInt(document.getElementById('ttsVolume').value);
+    ipcPost({ type: 'save_config', config });
+
+    if (ipcPost({ type: 'speak_text', text: 'Nerve text to speech is working.', engine: config.tts.engine, voice: config.tts.voice, speed: config.tts.speed, volume: config.tts.volume })) {
+      showToast('Playing test...');
+    } else {
+      try {
+        const utter = new SpeechSynthesisUtterance('Nerve text to speech is working.');
+        const sapiRate = parseInt(document.getElementById('ttsSpeed').value);
+        utter.rate = Math.max(0.1, 1 + (sapiRate / 10));
+        speechSynthesis.speak(utter);
+        showToast('Playing browser test...');
+      } catch(e) {
+        showToast('TTS test failed');
+      }
+    }
+  }
+
+  function stopTTS() { ipcPost({ type: 'tts_stop' }); }
+
+  // ── Sync actions ───────────────────────────────────────────────
+  function syncAction(type) {
+    if (ipcPost({ type })) {
+      showToast('Sync: ' + type.replace('sync_', ''));
+    } else {
+      showToast('Agent not connected');
+    }
+  }
+
+  // ── Utils ──────────────────────────────────────────────────────
+  function escHtml(s) {
+    if (!s) return '';
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1500);
+  }
+
+  // ── IPC listener ───────────────────────────────────────────────
+  window.addEventListener('message', (event) => {
+    let msg;
+    try { msg = typeof event.data === 'string' ? JSON.parse(event.data) : event.data; } catch { return; }
+
+    if (msg.type === 'config') {
+      config = msg.config;
+      populateUI();
+      ipcPost({ type: 'list_voices' });
+    } else if (msg.type === 'voices') {
+      const selected = config.tts ? config.tts.voice : 'Brian';
+      populateVoices(msg.voices, selected);
+    } else if (msg.type === 'saved') {
+      showToast('Saved!');
+    }
+  });
+
+  // ── Init ───────────────────────────────────────────────────────
+  (function init() {
+    // Try to load from agent
+    if (!ipcPost({ type: 'get_config' })) {
+      // Fallback defaults
+      config = {
+        clipboard_interval_ms: 500, sync_interval_secs: 300,
+        api_url: '', api_token: '',
+        hotkeys: [
+          { keys: 'Ctrl+Alt+C', action: 'toggle_clipboard' },
+          { keys: 'Ctrl+Alt+P', action: 'toggle_prompts' },
+          { keys: 'Ctrl+Alt+L', action: 'toggle_links' },
+          { keys: 'Ctrl+Alt+R', action: 'toggle_research' },
+          { keys: 'Ctrl+Alt+A', action: 'toggle_chat' },
+          { keys: 'Ctrl+Alt+G', action: 'toggle_dashboard' },
+          { keys: 'Ctrl+Alt+T', action: 'tts_read_selection' },
+          { keys: 'Ctrl+Alt+Y', action: 'toggle_tts' },
+          { keys: 'Ctrl+Alt+S', action: 'toggle_settings' },
+        ],
+        hotstrings: [
+          { trigger: '/gm', expansion: 'Good morning!', replace_trigger: true },
+          { trigger: '/ty', expansion: 'Thank you, I appreciate it!', replace_trigger: true },
+          { trigger: '/sig', expansion: 'Best regards,\nYour Name', replace_trigger: true },
+        ],
+        panels: [],
+        tts: { engine: 'sapi', voice: 'Brian', speed: 2, volume: 100 },
+      };
+      populateUI();
+    }
+    ipcPost({ type: 'list_voices' });
+  })();
+
+  // Note: the General tab's clipInterval field is in the Shortcuts tab for now
+  // We keep it simple — it's accessed via the save function
 </script>
+
 </body>
 </html>

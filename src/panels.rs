@@ -1,4 +1,5 @@
 use crate::config::Config;
+use crate::sync_client;
 use crate::tts;
 use crate::window_mgmt;
 use crate::AppEvent;
@@ -232,24 +233,24 @@ impl PanelManager {
             }
             "speak_text" => {
                 if let Some(text) = parsed.text {
-                    if let Some(engine) = parsed.engine {
+                    // Single lock acquisition for all TTS setting updates
+                    let tts_cfg = {
                         let mut lock = cfg.lock().unwrap();
-                        lock.tts.engine = engine;
-                    }
-                    if let Some(voice) = parsed.voice {
-                        let mut lock = cfg.lock().unwrap();
-                        lock.tts.voice = voice;
-                    }
-                    if let Some(speed) = parsed.speed {
-                        let mut lock = cfg.lock().unwrap();
-                        lock.tts.speed = speed;
-                    }
-                    if let Some(volume) = parsed.volume {
-                        let mut lock = cfg.lock().unwrap();
-                        lock.tts.volume = volume;
-                    }
-                    let current = { cfg.lock().unwrap().tts.clone() };
-                    tts::apply_config(&current);
+                        if let Some(engine) = parsed.engine {
+                            lock.tts.engine = engine;
+                        }
+                        if let Some(voice) = parsed.voice {
+                            lock.tts.voice = voice;
+                        }
+                        if let Some(speed) = parsed.speed {
+                            lock.tts.speed = speed;
+                        }
+                        if let Some(volume) = parsed.volume {
+                            lock.tts.volume = volume;
+                        }
+                        lock.tts.clone()
+                    };
+                    tts::apply_config(&tts_cfg);
                     std::thread::spawn(move || tts::speak(&text));
                 }
             }
@@ -266,7 +267,84 @@ impl PanelManager {
                     );
                 }
             }
+            // ── Cloudflare sync IPC ──────────────────────────────
+            "sync_push_clips" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::push_clips(&sync_cfg).await; });
+                });
+            }
+            "sync_pull_clips" => {
+                let sync_cfg = Arc::clone(cfg);
+                let proxy = self.proxy.clone();
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::pull_clips(&sync_cfg).await; });
+                    let _ = proxy.send_event(AppEvent::ConfigReloaded);
+                });
+            }
+            "sync_push_config" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::push_config(&sync_cfg).await; });
+                });
+            }
+            "sync_pull_config" => {
+                let sync_cfg = Arc::clone(cfg);
+                let proxy = self.proxy.clone();
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        let _ = crate::sync_client::pull_config(&sync_cfg).await;
+                    });
+                    let _ = proxy.send_event(AppEvent::ConfigReloaded);
+                });
+            }
+            "sync_push_prompts" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::push_prompts(&sync_cfg).await; });
+                });
+            }
+            "sync_pull_prompts" => {
+                let sync_cfg = Arc::clone(cfg);
+                let proxy = self.proxy.clone();
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async { let _ = sync_client::pull_prompts(&sync_cfg).await; });
+                    let _ = proxy.send_event(AppEvent::ConfigReloaded);
+                });
+            }
             _ => {}
+        }
+    }
+
+    /// Remove a panel by its window ID (called when the window is closed).
+    pub fn remove_by_window_id(&mut self, window_id: WindowId) {
+        if let Some(name) = self.window_to_name.remove(&window_id) {
+            self.windows.remove(&name);
+            info!("Panel '{}' closed", name);
         }
     }
 
@@ -280,9 +358,12 @@ impl PanelManager {
 
     fn send_to_panel(&self, panel_name: &str, json_payload: &str) {
         if let Some(panel) = self.windows.get(panel_name) {
+            // json_payload is already valid JSON — embed it directly.
+            // Do NOT wrap with serde_json::to_string which would double-encode it
+            // into "\"{ \\\"type\\\": ... }\"".
             let script = format!(
-                "window.dispatchEvent(new MessageEvent('message', {{ data: {} }}));",
-                serde_json::to_string(json_payload).unwrap_or_else(|_| "\"{}\"".into())
+                "window.dispatchEvent(new MessageEvent('message', {{ data: JSON.stringify({}) }}));",
+                json_payload
             );
             let _ = panel.webview.evaluate_script(&script);
         }

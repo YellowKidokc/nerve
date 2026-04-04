@@ -1,6 +1,7 @@
 use crate::config::Config;
 use crate::AppEvent;
 use anyhow::Result;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use tao::event_loop::EventLoopProxy;
 use tracing::info;
@@ -39,12 +40,15 @@ pub fn engine(_proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Resu
     Ok(())
 }
 
+/// Cross-thread flag to prevent re-entrancy when we're sending keystrokes.
+/// Must be AtomicBool because the hook runs on the hook thread while
+/// expand_hotstring runs on a spawned thread.
+static SENDING: AtomicBool = AtomicBool::new(false);
+
 thread_local! {
     static HOOK_CONFIG: std::cell::RefCell<Option<Arc<Mutex<Config>>>> =
         std::cell::RefCell::new(None);
     static TYPED_BUFFER: std::cell::RefCell<String> = std::cell::RefCell::new(String::new());
-    /// Flag to prevent re-entrancy when we're sending keystrokes
-    static SENDING: std::cell::RefCell<bool> = std::cell::RefCell::new(false);
 }
 
 /// Low-level keyboard hook procedure
@@ -54,8 +58,7 @@ unsafe extern "system" fn keyboard_hook_proc(code: i32, wparam: WPARAM, lparam: 
     }
 
     // Don't process our own injected keystrokes
-    let sending = SENDING.with(|s| *s.borrow());
-    if sending {
+    if SENDING.load(Ordering::Acquire) {
         return CallNextHookEx(None, code, wparam, lparam);
     }
 
@@ -152,7 +155,7 @@ fn vk_to_char(vk: u32) -> Option<char> {
 fn expand_hotstring(expansion: &str, trigger_len: usize, replace_trigger: bool) {
     use windows::Win32::UI::Input::KeyboardAndMouse::*;
 
-    SENDING.with(|s| *s.borrow_mut() = true);
+    SENDING.store(true, Ordering::Release);
 
     // Small delay before starting
     std::thread::sleep(std::time::Duration::from_millis(20));
@@ -178,7 +181,7 @@ fn expand_hotstring(expansion: &str, trigger_len: usize, replace_trigger: bool) 
     }
 
     std::thread::sleep(std::time::Duration::from_millis(30));
-    SENDING.with(|s| *s.borrow_mut() = false);
+    SENDING.store(false, Ordering::Release);
 }
 
 fn send_key(vk: windows::Win32::UI::Input::KeyboardAndMouse::VIRTUAL_KEY, key_up: bool) {

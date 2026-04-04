@@ -28,7 +28,7 @@ pub fn monitor(proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Resu
                 if !text.is_empty() && text != last_content {
                     last_content = text.clone();
 
-                    // Update clip slots (push to front, keep 10)
+                    // Update clip slots (push to front, keep 10) and persist to disk
                     {
                         let mut c = cfg.lock().unwrap();
                         c.clip_slots.insert(
@@ -40,6 +40,9 @@ pub fn monitor(proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Resu
                         );
                         c.clip_slots.truncate(10);
                         refresh_slots_from_config(&c);
+                        if let Err(e) = c.save() {
+                            error!("Failed to persist clips: {}", e);
+                        }
                     }
 
                     // Notify main loop

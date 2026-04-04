@@ -121,8 +121,8 @@ fn main() -> Result<()> {
     event_loop.run(move |event, event_loop, control_flow| {
         *control_flow = ControlFlow::Wait;
 
-        // Check global hotkey events
-        if let Ok(event) = global_hotkey::GlobalHotKeyEvent::receiver().try_recv() {
+        // Drain all pending hotkey events (not just one per tick)
+        while let Ok(event) = global_hotkey::GlobalHotKeyEvent::receiver().try_recv() {
             let cfg_lock = cfg.lock().unwrap();
             if let Some(action) = cfg_lock.hotkey_action(event.id()) {
                 match action.as_str() {
@@ -230,6 +230,15 @@ fn main() -> Result<()> {
 
                 _ => {}
             },
+
+            Event::WindowEvent {
+                event: WindowEvent::CloseRequested,
+                window_id,
+                ..
+            } => {
+                // Clean up the panel so dead window references don't accumulate
+                panel_mgr.remove_by_window_id(window_id);
+            }
 
             Event::WindowEvent {
                 event: WindowEvent::Moved(pos),
