@@ -16,7 +16,7 @@ mod window_mgmt;
 
 use anyhow::Result;
 use std::sync::{Arc, Mutex};
-use tao::event::{Event, StartCause};
+use tao::event::{Event, StartCause, WindowEvent};
 use tao::event_loop::{ControlFlow, EventLoopBuilder};
 use tracing::{error, info};
 
@@ -35,6 +35,8 @@ pub enum AppEvent {
     Quit,
     /// Config was reloaded from remote
     ConfigReloaded,
+    /// IPC message from webview panel
+    IpcMessage(String, String),
 }
 
 fn main() -> Result<()> {
@@ -51,6 +53,11 @@ fn main() -> Result<()> {
     // Load config
     let cfg = config::Config::load()?;
     let cfg = Arc::new(Mutex::new(cfg));
+    {
+        let cfg_lock = cfg.lock().unwrap();
+        clipboard::refresh_slots_from_config(&cfg_lock);
+        tts::apply_config(&cfg_lock.tts);
+    }
 
     // Build event loop with custom events
     let event_loop = EventLoopBuilder::<AppEvent>::with_user_event().build();
@@ -90,7 +97,7 @@ fn main() -> Result<()> {
     });
 
     // Build hotkey map and register global hotkeys
-    let _hotkey_manager = {
+    let mut hotkey_manager = {
         let mut hk_cfg = cfg.lock().unwrap();
         hotkeys::build_hotkey_map(&mut hk_cfg);
         match hotkeys::register_all(&hk_cfg) {
@@ -195,10 +202,22 @@ fn main() -> Result<()> {
 
                 AppEvent::ConfigReloaded => {
                     info!("Config reloaded from remote");
-                    let cfg_lock = cfg.lock().unwrap();
-                    if let Err(e) = hotkeys::register_all(&cfg_lock) {
-                        error!("Failed to re-register hotkeys: {}", e);
-                    }
+                    let mut cfg_lock = cfg.lock().unwrap();
+                    cfg_lock.normalize();
+                    hotkeys::build_hotkey_map(&mut cfg_lock);
+                    clipboard::refresh_slots_from_config(&cfg_lock);
+                    tts::apply_config(&cfg_lock.tts);
+                    hotkey_manager = match hotkeys::register_all(&cfg_lock) {
+                        Ok(mgr) => Some(mgr),
+                        Err(e) => {
+                            error!("Failed to re-register hotkeys: {}", e);
+                            hotkey_manager.take()
+                        }
+                    };
+                }
+
+                AppEvent::IpcMessage(panel, message) => {
+                    panel_mgr.handle_ipc(&panel, &message, &cfg);
                 }
 
                 AppEvent::Quit => {
@@ -208,6 +227,14 @@ fn main() -> Result<()> {
 
                 _ => {}
             },
+
+            Event::WindowEvent {
+                event: WindowEvent::Moved(pos),
+                window_id,
+                ..
+            } => {
+                panel_mgr.update_position(window_id, pos.x, pos.y, &cfg);
+            }
 
             _ => {}
         }

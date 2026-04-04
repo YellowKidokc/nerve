@@ -123,12 +123,12 @@
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('general')">General</div>
-  <div class="tab" onclick="showTab('hotkeys')">Hotkeys</div>
-  <div class="tab" onclick="showTab('hotstrings')">Hotstrings</div>
-  <div class="tab" onclick="showTab('tts')">TTS</div>
-  <div class="tab" onclick="showTab('panels')">Panels</div>
-  <div class="tab" onclick="showTab('sync')">Sync</div>
+  <div class="tab active" onclick="showTab(event, 'general')">General</div>
+  <div class="tab" onclick="showTab(event, 'hotkeys')">Hotkeys</div>
+  <div class="tab" onclick="showTab(event, 'hotstrings')">Hotstrings</div>
+  <div class="tab" onclick="showTab(event, 'tts')">TTS</div>
+  <div class="tab" onclick="showTab(event, 'panels')">Panels</div>
+  <div class="tab" onclick="showTab(event, 'sync')">Sync</div>
 </div>
 
 <div class="content">
@@ -169,24 +169,19 @@
     <div class="field">
       <label>TTS Engine</label>
       <select id="ttsEngine">
-        <option value="windows">Windows SAPI (built-in)</option>
+        <option value="sapi">Windows SAPI (built-in)</option>
         <option value="edge">Edge TTS (online, natural voices)</option>
         <option value="elevenlabs">ElevenLabs API</option>
       </select>
     </div>
     <div class="field">
       <label>Voice</label>
-      <select id="ttsVoice">
-        <option value="default">Default</option>
-        <option value="david">Microsoft David</option>
-        <option value="zira">Microsoft Zira</option>
-        <option value="mark">Microsoft Mark</option>
-      </select>
+      <select id="ttsVoice"></select>
     </div>
     <div class="field">
       <label>Speed</label>
-      <input type="range" id="ttsSpeed" min="0.5" max="3" step="0.1" value="1.0" />
-      <div class="hint">1.0 = normal speed</div>
+      <input type="range" id="ttsSpeed" min="-10" max="10" step="1" value="2" />
+      <div class="hint">SAPI scale: -10 (slow) to +10 (fast)</div>
     </div>
     <div class="field">
       <label>ElevenLabs API Key (optional)</label>
@@ -243,10 +238,10 @@
   }
 
   // Tab switching
-  function showTab(name) {
+  function showTab(evt, name) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    event.target.classList.add('active');
+    evt.currentTarget.classList.add('active');
     document.getElementById('sec-' + name).classList.add('active');
   }
 
@@ -316,7 +311,7 @@
     config.tts = config.tts || {};
     config.tts.engine = document.getElementById('ttsEngine').value;
     config.tts.voice = document.getElementById('ttsVoice').value;
-    config.tts.speed = parseFloat(document.getElementById('ttsSpeed').value);
+    config.tts.speed = parseInt(document.getElementById('ttsSpeed').value);
     config.tts.api_key = document.getElementById('ttsApiKey').value;
     config.tts.hotkey = document.getElementById('ttsHotkey').value;
 
@@ -334,8 +329,9 @@
   function testTTS() {
     try {
       // Use browser SpeechSynthesis as fallback demo
-      const utter = new SpeechSynthesisUtterance('ClipSync text to speech is working.');
-      utter.rate = parseFloat(document.getElementById('ttsSpeed').value);
+      const utter = new SpeechSynthesisUtterance('Nerve text to speech is working.');
+      const sapiRate = parseInt(document.getElementById('ttsSpeed').value);
+      utter.rate = Math.max(0.1, 1 + (sapiRate / 10));
       speechSynthesis.speak(utter);
       showToast('Playing test...');
     } catch(e) {
@@ -376,10 +372,27 @@
           { trigger: '/sig', expansion: 'Best regards,\\nYour Name', replace_trigger: true },
         ],
         panels: [],
-        tts: { engine: 'windows', voice: 'default', speed: 1.0, hotkey: 'Ctrl+Alt+T' },
+        tts: { engine: 'sapi', voice: 'Brian', speed: 2, volume: 100, hotkey: 'Ctrl+Alt+T' },
       };
+      populateVoices(['Brian', 'default'], 'Brian');
       populateUI();
     }
+  }
+
+  function populateVoices(voices, selected) {
+    const sel = document.getElementById('ttsVoice');
+    sel.innerHTML = '';
+    if (!voices || !voices.length) {
+      sel.innerHTML = '<option value="default">default</option>';
+      return;
+    }
+    voices.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v;
+      if (selected && selected === v) opt.selected = true;
+      sel.appendChild(opt);
+    });
   }
 
   function populateUI() {
@@ -389,9 +402,8 @@
     document.getElementById('syncInterval').value = config.sync_interval_secs || 300;
 
     if (config.tts) {
-      document.getElementById('ttsEngine').value = config.tts.engine || 'windows';
-      document.getElementById('ttsVoice').value = config.tts.voice || 'default';
-      document.getElementById('ttsSpeed').value = config.tts.speed || 1.0;
+      document.getElementById('ttsEngine').value = config.tts.engine || 'sapi';
+      document.getElementById('ttsSpeed').value = config.tts.speed ?? 2;
       document.getElementById('ttsApiKey').value = config.tts.api_key || '';
       document.getElementById('ttsHotkey').value = config.tts.hotkey || 'Ctrl+Alt+T';
     }
@@ -408,6 +420,10 @@
       if (data.type === 'config') {
         config = data.config;
         populateUI();
+        window.chrome.webview.postMessage(JSON.stringify({ type: 'list_voices' }));
+      } else if (data.type === 'voices') {
+        const selected = (config.tts && config.tts.voice) ? config.tts.voice : 'Brian';
+        populateVoices(data.voices, selected);
       }
     });
   } catch(e) {}

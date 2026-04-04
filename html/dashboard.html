@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Axiom Chain — Horizontal Mind Map</title>
+<style>
+  :root {
+    --bg: #070b12;
+    --surface: #111826;
+    --surface2: #162134;
+    --text: #e6edf3;
+    --muted: #9ca9b8;
+    --science: #4ea1ff;
+    --god: #d4a73b;
+    --bridge: #8ab4ff;
+    --danger: #ff6b6b;
+    --good: #4ad295;
+    --border: #27344b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: var(--text);
+    background: linear-gradient(180deg, #05070d 0%, #090f1b 100%);
+    overflow-y: hidden;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8, 12, 20, 0.95);
+    backdrop-filter: blur(4px);
+  }
+  .title h1 { margin: 0; font-size: 19px; }
+  .title p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+  .scores { display: flex; gap: 10px; }
+  .score {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    min-width: 175px;
+    font-size: 12px;
+  }
+  .score strong { display: block; font-size: 13px; margin-bottom: 4px; }
+
+  .board {
+    height: calc(100vh - 78px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 12px 16px 22px;
+    scroll-behavior: smooth;
+  }
+  .board-inner {
+    width: max-content;
+    min-width: 100%;
+    display: grid;
+    gap: 18px;
+  }
+  .chain {
+    background: rgba(12, 17, 28, 0.72);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .chain-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 0 2px;
+  }
+  .cards {
+    display: flex;
+    align-items: stretch;
+    gap: 30px;
+    width: max-content;
+    padding: 2px;
+  }
+  .card-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .card-wrap::after {
+    content: "→";
+    position: absolute;
+    right: -21px;
+    color: #6f8cb0;
+    font-size: 18px;
+    opacity: .9;
+  }
+  .card-wrap:last-child::after { display: none; }
+
+  .axiom-card {
+    width: 305px;
+    min-height: 205px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 10px 10px 11px;
+    cursor: pointer;
+    transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+  }
+  .axiom-card:hover {
+    transform: translateY(-2px);
+    border-color: #4b678d;
+    box-shadow: 0 8px 20px rgba(15, 24, 38, 0.55);
+  }
+  .meta { display:flex; justify-content:space-between; align-items:center; color: var(--muted); font-size: 11px; }
+  .axiom-card h3 { margin: 8px 0 6px; font-size: 16px; letter-spacing: .3px; }
+  .line { margin: 4px 0; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .line .science { color: var(--science); }
+  .line .god { color: var(--god); }
+  .line .bridge { color: var(--bridge); }
+  .line .danger { color: var(--danger); }
+  .progress {
+    margin-top: 9px;
+    height: 8px;
+    border-radius: 6px;
+    border: 1px solid #394d69;
+    background: #0b1322;
+    overflow: hidden;
+  }
+  .progress > span { display:block; height:100%; background: linear-gradient(90deg, #4874a8, #6dc8ff); }
+  .footer {
+    margin-top: 9px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .gap-chip {
+    border: 1px solid rgba(255, 107, 107, 0.45);
+    color: #ff9494;
+    border-radius: 999px;
+    padding: 1px 7px;
+    font-size: 10px;
+    margin-left: 6px;
+  }
+  .sym-ok { color: var(--good); }
+  .sym-bad { color: var(--danger); }
+
+  .detail {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 7, 12, .84);
+    display: none;
+    z-index: 40;
+  }
+  .detail.open { display:block; }
+  .detail-panel {
+    margin: 2.5vh auto;
+    width: min(1100px, 94vw);
+    max-height: 95vh;
+    overflow-y: auto;
+    background: #0d1422;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .detail-top { display:flex; justify-content:space-between; gap: 8px; }
+  .detail-top button {
+    border: 1px solid #43577a;
+    background: #1a2538;
+    color: var(--text);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .claim { color: var(--muted); margin-top: 4px; }
+  .columns { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+  .section {
+    background: #101a2a;
+    border: 1px solid #2a3a55;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13px;
+  }
+  .section h4 { margin: 0 0 8px; font-size: 13px; }
+  .science-col h4 { color: var(--science); }
+  .god-col h4 { color: var(--god); }
+  .bridge-col h4 { color: var(--bridge); }
+  .kill { color: var(--danger); font-weight: 600; }
+  .product {
+    margin-top: 10px;
+    border: 1px solid #334661;
+    border-radius: 10px;
+    padding: 10px;
+    background: #0b1321;
+    font-size: 13px;
+  }
+
+  @media (max-width: 1000px) {
+    .columns { grid-template-columns: 1fr; }
+    .axiom-card { width: 270px; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="title">
+      <h1>Axiom Chain — Horizontal Mind Map</h1>
+      <p>Scroll sideways. Click any card for full vertical detail page.</p>
+    </div>
+    <div class="scores">
+      <div class="score" id="scoreTheo"></div>
+      <div class="score" id="scoreEvo"></div>
+    </div>
+  </div>
+
+  <main class="board" id="board">
+    <div class="board-inner" id="boardInner"></div>
+  </main>
+
+  <div class="detail" id="detail">
+    <div class="detail-panel">
+      <div class="detail-top">
+        <div>
+          <div id="detailId" style="font-size:12px;color:#9ca9b8"></div>
+          <h2 id="detailTitle" style="margin:2px 0 0"></h2>
+          <div class="claim" id="detailClaim"></div>
+        </div>
+        <button onclick="closeDetail()">Close</button>
+      </div>
+
+      <div class="columns">
+        <section class="section science-col">
+          <h4>SCIENCE SIDE</h4>
+          <div id="scienceFields"></div>
+        </section>
+        <section class="section god-col">
+          <h4 id="godHeading">GOD / PHILOSOPHY SIDE</h4>
+          <div id="godFields"></div>
+        </section>
+        <section class="section bridge-col">
+          <h4>THE BRIDGE</h4>
+          <div id="bridgeFields"></div>
+        </section>
+      </div>
+
+      <div class="product" id="productFields"></div>
+    </div>
+  </div>
+
+<script>
+const theophysicsChain = [
+  { id:"A001", title:"GRACE / GRAVITY", claim:"External input and curvature are both foundation terms.", status:"candidate", science:"Spacetime curvature provides stable trajectories.", god:"Grace introduces non-merited external lift.", bridge:0.88, attestation:"124 refs / 22 authors", scienceDef:"Gravity organizes matter into persistent structures.", equation:"G ↔ Q, J = ξRχ", evidence:"GR tests, lensing, orbital persistence.", protocol:"Zero external input and test χ collapse.", scienceKill:"No measurable curvature under mass-energy.", scripture:"Ephesians 2:8", attCount:"124", authors:"22", span:"~1400 years", crossTestament:"Yes", theologyKill:"No coherent grace witness across canon.", sciencePrediction:"Without G/Grace, trajectories decohere.", theologyPrediction:"Without grace, restoration term vanishes.", convergence:"YES", notation:"if G=0 ⇒ χ=0", iso:"ISO-CONFIRMED", gaps:[] },
+  { id:"A002", title:"MASS / MEANING", claim:"Substance and significance must co-exist for durable order.", status:"candidate", science:"Mass-energy encodes persistence.", god:"Meaning encodes teleology and intent.", bridge:0.81, attestation:"101 refs / 18 authors", scienceDef:"Mass-energy supplies conserved substrate.", equation:"M ↔ F", evidence:"Conservation laws and decay channels.", protocol:"Track χ when semantic coherence is removed.", scienceKill:"Conservation violated systematically.", scripture:"Romans 8:28", attCount:"101", authors:"18", span:"~1100 years", crossTestament:"Yes", theologyKill:"No textual continuity for purpose claims.", sciencePrediction:"If M=0, no stable structure.", theologyPrediction:"If meaning=0, no coherent direction.", convergence:"YES", notation:"χ ∝ M·F", iso:"ISO-CONFIRMED", gaps:["full corpus index"] },
+  { id:"A003", title:"LIGHT / TRUTH", claim:"Signal integrity on both sides controls interpretability.", status:"provisional", science:"EM field carries information and interaction.", god:"Truth is the stable reference state.", bridge:0.79, attestation:"96 refs / 16 authors", scienceDef:"Electromagnetism transmits observable signal.", equation:"E ↔ C", evidence:"Spectra, photonics, field equations.", protocol:"Perturb coherence, measure error growth.", scienceKill:"No EM mediation for observable transfer.", scripture:"John 8:32", attCount:"96", authors:"16", span:"~1000 years", crossTestament:"Yes", theologyKill:"Truth treated as purely subjective corpus-wide.", sciencePrediction:"Zero EM yields no robust signaling.", theologyPrediction:"No truth anchor yields interpretive drift.", convergence:"PARALLEL", notation:"d(signal)/dt ↔ d(truth)/dt", iso:"ISO-PARALLEL", gaps:[] },
+  { id:"A004", title:"ENTROPY / SIN-DISORDER", claim:"Disorder terms are downward pressure on χ.", status:"stable", science:"Entropy rise degrades available order.", god:"Sin-disorder degrades moral/relational order.", bridge:0.9, attestation:"133 refs / 24 authors", scienceDef:"2nd law imposes directionality constraints.", equation:"S ↔ R", evidence:"Thermal/statistical irreversibility.", protocol:"Quantify coherence drift under disorder load.", scienceKill:"Closed systems lowering entropy without work.", scripture:"Romans 7", attCount:"133", authors:"24", span:"~1400 years", crossTestament:"Yes", theologyKill:"No doctrine of disorder/rupture in corpus.", sciencePrediction:"S↑ drives χ down unless compensated.", theologyPrediction:"Sin-disorder drives collapse without restoration.", convergence:"YES", notation:"LLC = χ·(rate)^2 - S·χ", iso:"ISO-CONFIRMED", gaps:[] },
+  { id:"A005", title:"TIME / JUDGMENT", claim:"Consequences unfold across temporal domains.", status:"stable", science:"Time orders cause-effect and decay.", god:"Judgment encodes consequence over time.", bridge:0.84, attestation:"111 refs / 19 authors", scienceDef:"Temporal ordering is required for dynamics.", equation:"T ↔ K", evidence:"Causal ordering and irreversibility.", protocol:"Remove temporal ordering in model simulation.", scienceKill:"No causal asymmetry despite measurable change.", scripture:"Hebrews 9:27", attCount:"111", authors:"19", span:"~1200 years", crossTestament:"Yes", theologyKill:"No consequence structure in scriptural narrative.", sciencePrediction:"T=0 => no derivative, no dynamics.", theologyPrediction:"No judgment => no accountability arc.", convergence:"YES", notation:"dχ/dt requires T", iso:"ISO-CONFIRMED", gaps:["expanded test protocol"] },
+  { id:"A006", title:"INFORMATION / LOGOS", claim:"Deep order must be expressible and generative.", status:"provisional", science:"Information structure constrains states.", god:"Logos supplies intelligible ordering principle.", bridge:0.77, attestation:"88 refs / 14 authors", scienceDef:"Information limits and channel capacity.", equation:"K ↔ T", evidence:"Coding theory + physical information bounds.", protocol:"Force randomization and track coherent output.", scienceKill:"Meaningful structure from pure noise repeatedly.", scripture:"John 1:1", attCount:"88", authors:"14", span:"~900 years", crossTestament:"Parallel", theologyKill:"No logos-level ordering witness.", sciencePrediction:"K=0 => state explosion/no computability.", theologyPrediction:"No Logos => no stable intelligibility.", convergence:"PARALLEL", notation:"K controls state-space compression", iso:"ISO-PARALLEL", gaps:["attestation span audit"] },
+  { id:"A007", title:"RELATION / RELATIONALITY", claim:"Connection terms outperform isolated terms.", status:"candidate", science:"Relational interactions create emergent stability.", god:"Relational ontology grounds community/order.", bridge:0.82, attestation:"92 refs / 17 authors", scienceDef:"Network coupling changes system behavior.", equation:"R ↔ S", evidence:"Coupled oscillator synchronization.", protocol:"Drop coupling coefficients in simulation.", scienceKill:"No measurable effect from coupling terms.", scripture:"John 17", attCount:"92", authors:"17", span:"~1100 years", crossTestament:"Yes", theologyKill:"No relational core across texts.", sciencePrediction:"R=0 fragments subsystem coherence.", theologyPrediction:"No relation => isolated collapse.", convergence:"YES", notation:"χ ∝ Π(connection terms)", iso:"ISO-CONFIRMED", gaps:[] },
+  { id:"A008", title:"QUANTUM OBSERVATION / FAITH", claim:"Action under incomplete compulsion affects outcomes.", status:"draft", science:"Observation basis affects state realization.", god:"Faith acts before coercive certainty.", bridge:0.69, attestation:"73 refs / 12 authors", scienceDef:"Measurement context shapes observed state.", equation:"Q ↔ G", evidence:"Interference + measurement dependence.", protocol:"Contrast model paths with/without pre-commitment.", scienceKill:"Observation never alters outcome distributions.", scripture:"Hebrews 11:1", attCount:"73", authors:"12", span:"~850 years", crossTestament:"Yes", theologyKill:"Faith framed only as post-proof certainty.", sciencePrediction:"Q=0 destroys branch resolution.", theologyPrediction:"Faith=0 stalls pre-evidence obedience.", convergence:"PARALLEL", notation:"Q·G coupling term", iso:"ISO-ANALOGY", gaps:["terminology harmonization"] },
+  { id:"A009", title:"DECAY / SIN-DECAY", claim:"Slow hidden drift degrades systems unless repaired.", status:"candidate", science:"Weak-force mediated decay transforms states.", god:"Hidden corruption accumulates over time.", bridge:0.74, attestation:"81 refs / 15 authors", scienceDef:"Decay channels alter composition.", equation:"F ↔ M", evidence:"Half-life distributions.", protocol:"Track long-run integrity with low-level decay.", scienceKill:"No measurable decay channels.", scripture:"James 1:15", attCount:"81", authors:"15", span:"~950 years", crossTestament:"Yes", theologyKill:"No progressive corruption pattern in corpus.", sciencePrediction:"F=0 freezes transformation pathways.", theologyPrediction:"No sin-decay => no inward drift.", convergence:"PARALLEL", notation:"d(state)/dt = -λF", iso:"ISO-PARALLEL", gaps:[] },
+  { id:"A010", title:"COHERENCE / CHRIST", claim:"Binding term holds multi-part reality together.", status:"canonical", science:"Coherence enables stable integrated behavior.", god:"Christ as binding center of all things.", bridge:0.93, attestation:"141 refs / 26 authors", scienceDef:"Coherence length controls collective behavior.", equation:"C ↔ E", evidence:"Phase coherence and coupled fields.", protocol:"Zero coherence term in full χ model.", scienceKill:"High-order behavior with zero coherence.", scripture:"Colossians 1:17", attCount:"141", authors:"26", span:"~1500 years", crossTestament:"Yes", theologyKill:"No christocentric integrator witness.", sciencePrediction:"C=0 => χ=0 regardless of others.", theologyPrediction:"Remove Christ center => disintegration.", convergence:"YES", notation:"χ = G×M×E×S×T×K×R×Q×F×C", iso:"ISO-CONFIRMED", gaps:[] }
+];
+
+const evolutionChain = [
+  { id:"A001_EVO", title:"ORIGIN ASSUMPTION", claim:"Universe arises from nothing or eternally self-contained origin.", status:"candidate", science:"Initial condition unresolved.", god:"Philosophy: closed-system origin assumption.", bridge:0.41, attestation:"n/a", scienceDef:"Model requires initial boundary conditions.", equation:"∂U/∂t with undefined t=0 boundary", evidence:"Competing cosmological models.", protocol:"Demand explicit source term or eternal justification.", scienceKill:"No coherent boundary/source model.", scripture:"N/A", attCount:"n/a", authors:"n/a", span:"n/a", crossTestament:"n/a", theologyKill:"Philosophical grounding self-contradicts.", sciencePrediction:"No source => unstable assumptions.", theologyPrediction:"Closed source claims brute fact.", convergence:"NO", notation:"if source=0 ?", iso:"ISO-ANALOGY", gaps:["source term"] },
+  { id:"A002_EVO", title:"RANDOM MUTATION SOURCE", claim:"Novel information can arise through mutation + selection pipeline.", status:"candidate", science:"Mutation introduces variation.", god:"Philosophy: randomness sufficient for innovation.", bridge:0.52, attestation:"n/a", scienceDef:"Mutation changes sequences; novelty debated by scale.", equation:"ΔI = f(mutation, selection)", evidence:"Observed microevolution and adaptation.", protocol:"Quantify net information gain over long horizons.", scienceKill:"No repeatable net gain in functional information.", scripture:"N/A", attCount:"n/a", authors:"n/a", span:"n/a", crossTestament:"n/a", theologyKill:"n/a", sciencePrediction:"If mutation net≤0, macro claims weaken.", theologyPrediction:"Random-only teleology remains ungrounded.", convergence:"PARALLEL", notation:"I(t+1)-I(t)", iso:"ISO-PARALLEL", gaps:["definition of novel information"] },
+  { id:"A003_EVO", title:"SELECTION FILTER", claim:"Selection preserves adaptive variants against drift.", status:"provisional", science:"Selection pressure filters fitness outcomes.", god:"Philosophy: utility defines direction.", bridge:0.61, attestation:"n/a", scienceDef:"Differential reproduction changes allele frequency.", equation:"Δp = sp(1-p)", evidence:"Population genetics observations.", protocol:"Track adaptation under varying constraints.", scienceKill:"Selection cannot retain adaptive traits.", scripture:"N/A", attCount:"n/a", authors:"n/a", span:"n/a", crossTestament:"n/a", theologyKill:"n/a", sciencePrediction:"No selection => drift dominates.", theologyPrediction:"Utility-only ethics unstable.", convergence:"PARALLEL", notation:"selection coefficient s", iso:"ISO-PARALLEL", gaps:[] },
+  { id:"A004_EVO", title:"TIME AS MULTIPLIER", claim:"Long time horizons make low-probability transitions reachable.", status:"provisional", science:"Time increases search over possibility space.", god:"Philosophy: inevitability via duration.", bridge:0.57, attestation:"n/a", scienceDef:"Expected trials scale with time.", equation:"P(success) = 1-(1-p)^n", evidence:"Simulation + evolutionary models.", protocol:"Stress-test parameter realism.", scienceKill:"Required times exceed system bounds.", scripture:"N/A", attCount:"n/a", authors:"n/a", span:"n/a", crossTestament:"n/a", theologyKill:"n/a", sciencePrediction:"If n insufficient, target unreachable.", theologyPrediction:"Duration alone does not supply meaning.", convergence:"PARALLEL", notation:"n≈t·rate", iso:"ISO-PARALLEL", gaps:["parameter uncertainty"] },
+  { id:"A005_EVO", title:"CONSCIOUSNESS EMERGENCE", claim:"Consciousness emerges from complexity thresholds.", status:"draft", science:"Hard problem unresolved.", god:"Philosophy: subjective awareness from matter only.", bridge:0.33, attestation:"n/a", scienceDef:"Correlation between neural complexity and awareness.", equation:"C* ~ f(network complexity)", evidence:"Neuroscience correlates, no full derivation.", protocol:"Predictive model from physical states to qualia.", scienceKill:"No bridge from objective states to subjective qualia.", scripture:"N/A", attCount:"n/a", authors:"n/a", span:"n/a", crossTestament:"n/a", theologyKill:"n/a", sciencePrediction:"If emergence fails, continuity breaks.", theologyPrediction:"Material-only account lacks first-person grounding.", convergence:"NO", notation:"?", iso:"ISO-ANALOGY", gaps:["qualia mechanism","formal derivation"] },
+  { id:"A006_EVO", title:"MORALITY EMERGENCE", claim:"Moral norms emerge from social fitness pressure.", status:"draft", science:"Cooperation can be fitness-stable.", god:"Philosophy: ought from adaptive utility.", bridge:0.37, attestation:"n/a", scienceDef:"Game-theory supports cooperative equilibria.", equation:"payoff matrix dynamics", evidence:"Reciprocity studies.", protocol:"Distinguish descriptive behavior vs normative obligation.", scienceKill:"No path from adaptive behavior to objective ought.", scripture:"N/A", attCount:"n/a", authors:"n/a", span:"n/a", crossTestament:"n/a", theologyKill:"n/a", sciencePrediction:"Behavioral norms vary by incentives.", theologyPrediction:"Objective moral claim underdetermined.", convergence:"NO", notation:"is ≠ ought", iso:"ISO-ANALOGY", gaps:["normative grounding"] },
+  { id:"A007_EVO", title:"CLOSED SYSTEM FINALITY", claim:"No external source term is required for meaning or destiny.", status:"candidate", science:"Physical closure assumed.", god:"Philosophy: no transcendent input.", bridge:0.29, attestation:"n/a", scienceDef:"Conservation in closed systems.", equation:"dE/dt = 0 (closed)", evidence:"Works for many local models.", protocol:"Test whether explanatory closure handles meaning/truth/morality.", scienceKill:"Observed phenomena requiring non-closed assumptions.", scripture:"N/A", attCount:"n/a", authors:"n/a", span:"n/a", crossTestament:"n/a", theologyKill:"n/a", sciencePrediction:"Closure excludes external grace/source terms.", theologyPrediction:"No external anchor for ultimate purpose.", convergence:"NO", notation:"source term J=0", iso:"ISO-ANALOGY", gaps:["ultimate grounding"] }
+];
+
+function frameworkScore(chain) {
+  return chain.reduce((acc, a) => acc * Number(a.bridge || 0), 1);
+}
+
+function symmetryStatus(chain, index) {
+  if (index === 0) return { ok: true, label: "seed" };
+  const prev = chain[index - 1];
+  const cur = chain[index];
+  const prevHasGap = (prev.gaps || []).length > 0;
+  const curHasGap = (cur.gaps || []).length > 0;
+  if (prevHasGap || curHasGap) return { ok: false, label: "gap" };
+  if (prev.convergence === "NO" || cur.convergence === "NO") return { ok: false, label: "mismatch" };
+  return { ok: true, label: "mirror" };
+}
+
+function buildCard(a, index, chain, type) {
+  const sym = symmetryStatus(chain, index);
+  const gapTag = (a.gaps || []).slice(0, 2).map(g => `<span class="gap-chip">gap: ${g}</span>`).join("");
+  const statusPct = Math.round((a.bridge || 0) * 100);
+  return `
+    <div class="card-wrap">
+      <article class="axiom-card" data-type="${type}" data-id="${a.id}" onclick="openDetail('${type}','${a.id}')">
+        <div class="meta"><span>${a.id}</span><span>${a.status.toUpperCase()}</span></div>
+        <h3>${a.title}</h3>
+        <div class="line"><span class="science">Science:</span> ${a.science}</div>
+        <div class="line"><span class="god">${type === 'theo' ? 'God' : 'Philosophy'}:</span> ${a.god}</div>
+        <div class="line"><span class="bridge">Bridge:</span> ${a.bridge.toFixed(2)} (${a.convergence})</div>
+        <div class="line">Attestation: ${a.attestation}</div>
+        <div class="progress"><span style="width:${statusPct}%"></span></div>
+        <div class="footer">
+          <span class="${sym.ok ? 'sym-ok' : 'sym-bad'}">symmetry: ${sym.label}</span>
+          <span>click to expand</span>
+        </div>
+        <div style="margin-top:6px">${gapTag}</div>
+      </article>
+    </div>
+  `;
+}
+
+function renderChain(title, subtitle, id, type, chain) {
+  return `
+    <section class="chain" id="${id}">
+      <div class="chain-head"><strong>${title}</strong><span>${subtitle}</span></div>
+      <div class="cards">
+        ${chain.map((a, i) => buildCard(a, i, chain, type)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function render() {
+  const board = document.getElementById("boardInner");
+  board.innerHTML = [
+    renderChain("Theophysics Chain", "Master Equation framework", "theo", "theo", theophysicsChain),
+    renderChain("Evolution Chain", "Naturalistic framework under same template", "evo", "evo", evolutionChain)
+  ].join("");
+
+  const theoScore = frameworkScore(theophysicsChain);
+  const evoScore = frameworkScore(evolutionChain);
+
+  document.getElementById("scoreTheo").innerHTML = `
+    <strong>Theophysics χ</strong>
+    Product form score: <b>${theoScore.toExponential(3)}</b><br/>
+    Bridge mean: ${(theophysicsChain.reduce((a,b)=>a+b.bridge,0)/theophysicsChain.length).toFixed(2)}
+  `;
+  document.getElementById("scoreEvo").innerHTML = `
+    <strong>Evolution χ</strong>
+    Product form score: <b>${evoScore.toExponential(3)}</b><br/>
+    Bridge mean: ${(evolutionChain.reduce((a,b)=>a+b.bridge,0)/evolutionChain.length).toFixed(2)}
+  `;
+}
+
+function fieldRow(label, value, extraClass="") {
+  return `<div style="margin-bottom:7px"><b>${label}:</b> <span class="${extraClass}">${value}</span></div>`;
+}
+
+function openDetail(type, id) {
+  const chain = type === "theo" ? theophysicsChain : evolutionChain;
+  const index = chain.findIndex(a => a.id === id);
+  const a = chain[index];
+  if (!a) return;
+
+  document.getElementById("detail").classList.add("open");
+  document.getElementById("detailId").textContent = `${a.id} • ${type === 'theo' ? 'Theophysics' : 'Evolution'} chain`;
+  document.getElementById("detailTitle").textContent = a.title;
+  document.getElementById("detailClaim").textContent = `${a.claim} | Status: ${a.status}`;
+  document.getElementById("godHeading").textContent = type === 'theo' ? 'GOD SIDE' : 'PHILOSOPHY SIDE';
+
+  document.getElementById("scienceFields").innerHTML = [
+    fieldRow("Definition", a.scienceDef),
+    fieldRow("Equation", a.equation),
+    fieldRow("Evidence", a.evidence),
+    fieldRow("Protocol", a.protocol),
+    fieldRow("Kill Condition", a.scienceKill, "kill")
+  ].join("");
+
+  document.getElementById("godFields").innerHTML = [
+    fieldRow(type === 'theo' ? "Primary Scripture" : "Worldview Anchor", a.scripture),
+    fieldRow("Attestation Count", a.attCount),
+    fieldRow("Independent Authors", a.authors),
+    fieldRow("Temporal Span", a.span),
+    fieldRow("Cross-Testament", a.crossTestament),
+    fieldRow("Kill Condition", a.theologyKill, "kill")
+  ].join("");
+
+  document.getElementById("bridgeFields").innerHTML = [
+    fieldRow("Science Prediction", a.sciencePrediction),
+    fieldRow("Theology/Philosophy Prediction", a.theologyPrediction),
+    fieldRow("Convergence", a.convergence),
+    fieldRow("Math Notation", a.notation),
+    fieldRow("Isomorphism", a.iso)
+  ].join("");
+
+  const prev = chain[index - 1];
+  const productStatement = `If ${a.id} = 0, then χ = 0.`;
+  const symmetry = prev ? `Adjacent check with ${prev.id}: ${symmetryStatus(chain, index).label}.` : "Seed axiom has no predecessor.";
+
+  document.getElementById("productFields").innerHTML = `
+    <b>PRODUCT ACCOUNTABILITY</b><br/>
+    ${productStatement}<br/>
+    ${symmetry}<br/>
+    Missing slots: ${(a.gaps || []).length ? a.gaps.join(", ") : "none"}
+  `;
+}
+
+function closeDetail() {
+  document.getElementById("detail").classList.remove("open");
+}
+
+document.getElementById("detail").addEventListener("click", (e) => {
+  if (e.target.id === "detail") closeDetail();
+});
+
+render();
+</script>
+</body>
+</html>

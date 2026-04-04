@@ -1,10 +1,12 @@
 use crate::config::Config;
+use crate::tts;
 use crate::window_mgmt;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use tao::dpi::{LogicalPosition, LogicalSize};
 use tao::event_loop::EventLoopWindowTarget;
 use tao::window::WindowBuilder;
+use tao::window::WindowId;
 use tracing::{error, info};
 use wry::WebViewBuilder;
 
@@ -14,6 +16,7 @@ use crate::AppEvent;
 pub struct PanelManager {
     /// Panel name → window + webview (we store the Window to control visibility)
     windows: HashMap<String, PanelWindow>,
+    window_to_name: HashMap<WindowId, String>,
 }
 
 struct PanelWindow {
@@ -26,6 +29,7 @@ impl PanelManager {
     pub fn new() -> Self {
         Self {
             windows: HashMap::new(),
+            window_to_name: HashMap::new(),
         }
     }
 
@@ -106,9 +110,27 @@ impl PanelManager {
         window_mgmt::set_dark_titlebar(&window);
 
         let url = &panel_def.url;
+        let name_owned = name.to_string();
+        let proxy = event_loop.create_proxy();
 
         let webview = match WebViewBuilder::new()
             .with_url(url)
+            .with_initialization_script(
+                r#"
+                window.chrome = window.chrome || {};
+                window.chrome.webview = {
+                  postMessage: (msg) => window.ipc.postMessage(msg),
+                  addEventListener: (name, cb) => {
+                    if (name !== 'message') return;
+                    window.addEventListener('message', (e) => cb({ data: e.data }));
+                  }
+                };
+                "#,
+            )
+            .with_ipc_handler(move |req| {
+                let payload = req.body().to_string();
+                let _ = proxy.send_event(AppEvent::IpcMessage(name_owned.clone(), payload));
+            })
             .with_devtools(cfg!(debug_assertions))
             .with_transparent(false)
             .build(&window)
@@ -122,6 +144,8 @@ impl PanelManager {
 
         info!("Panel '{}' opened → {}", name, url);
 
+        let id = window.id();
+        self.window_to_name.insert(id, name.to_string());
         self.windows.insert(
             name.to_string(),
             PanelWindow {
@@ -130,5 +154,86 @@ impl PanelManager {
                 visible: true,
             },
         );
+    }
+
+    pub fn handle_ipc(&mut self, panel_name: &str, message: &str, cfg: &Arc<Mutex<Config>>) {
+        #[derive(serde::Deserialize)]
+        struct Incoming {
+            #[serde(rename = "type")]
+            msg_type: String,
+            config: Option<Config>,
+        }
+
+        let parsed: Incoming = match serde_json::from_str(message) {
+            Ok(v) => v,
+            Err(e) => {
+                error!("IPC parse error from '{}': {}", panel_name, e);
+                return;
+            }
+        };
+
+        match parsed.msg_type.as_str() {
+            "get_config" => {
+                let current = { cfg.lock().unwrap().clone() };
+                if let Ok(json) = serde_json::to_string(&serde_json::json!({
+                    "type": "config",
+                    "config": current
+                })) {
+                    self.send_to_panel(panel_name, &json);
+                }
+            }
+            "save_config" => {
+                if let Some(mut incoming_cfg) = parsed.config {
+                    incoming_cfg.normalize();
+                    {
+                        let mut state = cfg.lock().unwrap();
+                        incoming_cfg.hotkey_map = state.hotkey_map.clone();
+                        *state = incoming_cfg.clone();
+                        if let Err(e) = state.save() {
+                            error!("Saving config failed: {}", e);
+                        }
+                        tts::apply_config(&state.tts);
+                    }
+                    self.send_to_panel(panel_name, r#"{"type":"saved"}"#);
+                }
+            }
+            "get_clips" => {
+                let clips = { cfg.lock().unwrap().clip_slots.clone() };
+                if let Ok(json) = serde_json::to_string(&serde_json::json!({
+                    "type": "clips",
+                    "clips": clips
+                })) {
+                    self.send_to_panel(panel_name, &json);
+                }
+            }
+            "list_voices" => {
+                let voices = tts::list_voices();
+                if let Ok(json) = serde_json::to_string(&serde_json::json!({
+                    "type": "voices",
+                    "voices": voices
+                })) {
+                    self.send_to_panel(panel_name, &json);
+                }
+            }
+            _ => {}
+        }
+    }
+
+    pub fn update_position(&self, window_id: WindowId, x: i32, y: i32, cfg: &Arc<Mutex<Config>>) {
+        if let Some(name) = self.window_to_name.get(&window_id) {
+            let mut c = cfg.lock().unwrap();
+            c.update_panel_position(name, x, y);
+            let _ = c.save();
+        }
+    }
+
+    fn send_to_panel(&self, panel_name: &str, json_payload: &str) {
+        if let Some(panel) = self.windows.get(panel_name) {
+            let script = format!(
+                "window.dispatchEvent(new MessageEvent('message', {{ data: {} }}));",
+                serde_json::to_string(json_payload).unwrap_or_else(|_| "\"{}\"".into())
+            );
+            let _ = panel._webview.evaluate_script(&script);
+        }
     }
 }
