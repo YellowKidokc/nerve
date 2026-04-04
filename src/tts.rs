@@ -230,6 +230,34 @@ pub fn save_audio(text: &str, output_path: &str) {
     info!("TTS: saving audio to {}", output_path);
 }
 
+pub fn download_audio(text: &str, voice: Option<&str>, speed: Option<i32>, volume: Option<u32>) {
+    let mut s = settings().lock().unwrap();
+    if let Some(v) = voice {
+        s.voice = v.to_string();
+    }
+    if let Some(spd) = speed {
+        s.speed = spd;
+    }
+    if let Some(vol) = volume {
+        s.volume = vol;
+    }
+    let voice = s.voice.clone();
+    let speed = s.speed;
+    let volume = s.volume;
+    drop(s);
+
+    let ts = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_secs())
+        .unwrap_or(0);
+    let output_path = format!("tts-{}.wav", ts);
+    info!(
+        "TTS download requested: voice={}, speed={}, volume={}, output={}",
+        voice, speed, volume, output_path
+    );
+    save_audio(text, &output_path);
+}
+
 /// List available SAPI voices
 pub fn list_voices() -> Vec<String> {
     let output = new_hidden_command("powershell")
