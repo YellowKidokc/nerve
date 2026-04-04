@@ -81,16 +81,25 @@ pub fn speak(text: &str) {
     }
 }
 
-/// Stop any currently playing speech
+/// Stop any currently playing speech.
+/// Kills all powershell processes that are running SAPI speech,
+/// and kills edge-playback if using Edge TTS.
 pub fn stop() {
+    // Kill PowerShell processes spawned for SAPI speech.
+    // The previous approach of creating a *new* SpeechSynthesizer and calling
+    // CancelAll only cancels the empty queue of that new instance — useless.
+    // Instead, find and kill the powershell.exe processes that are actually speaking.
     let _ = new_hidden_command("powershell")
         .args([
             "-NoProfile",
             "-Command",
-            "Add-Type -AssemblyName System.Speech; \
-             (New-Object System.Speech.Synthesis.SpeechSynthesizer).SpeakAsyncCancelAll()",
+            "Get-Process powershell -ErrorAction SilentlyContinue | \
+             Where-Object { $_.Id -ne $PID } | \
+             Where-Object { $_.MainWindowTitle -eq '' } | \
+             Stop-Process -Force -ErrorAction SilentlyContinue",
         ])
         .spawn();
+    // Also kill edge-playback for Edge TTS
     let _ = new_hidden_command("taskkill")
         .args(["/IM", "edge-playback.exe", "/F"])
         .output();
@@ -170,21 +179,26 @@ fn speak_edge_tts(text: &str, voice: &str, speed: i32) {
     }
 }
 
-/// Save speech to audio file
+/// Save speech to audio file using current global TTS settings.
 #[allow(dead_code)]
 pub fn save_audio(text: &str, output_path: &str) {
     let s = settings().lock().unwrap();
     let voice = s.voice.clone();
     let speed = s.speed;
+    let _volume = s.volume;
     let engine = s.engine.clone();
     drop(s);
+    save_audio_with(text, output_path, &voice, speed, _volume, &engine);
+}
 
+/// Save speech to audio file with explicit parameters (no global mutation).
+fn save_audio_with(text: &str, output_path: &str, voice: &str, speed: i32, _volume: u32, engine: &str) {
     let escaped = text
         .replace('\'', "''")
         .replace('\n', " ")
         .replace('\r', "");
 
-    match engine.as_str() {
+    match engine {
         "edge" => {
             let rate_pct = speed * 10;
             let rate_str = if rate_pct >= 0 {
@@ -193,14 +207,14 @@ pub fn save_audio(text: &str, output_path: &str) {
                 format!("{}%", rate_pct)
             };
             let v = if voice.is_empty() {
-                "en-US-GuyNeural".into()
+                "en-US-GuyNeural"
             } else {
                 voice
             };
             let _ = new_hidden_command("edge-tts")
                 .args([
                     "--voice",
-                    &v,
+                    v,
                     "--rate",
                     &rate_str,
                     "--text",
@@ -230,20 +244,15 @@ pub fn save_audio(text: &str, output_path: &str) {
     info!("TTS: saving audio to {}", output_path);
 }
 
+/// Download audio to file. Uses override params if provided, otherwise falls
+/// back to current global settings. Does NOT mutate global TTS settings.
 pub fn download_audio(text: &str, voice: Option<&str>, speed: Option<i32>, volume: Option<u32>) {
-    let mut s = settings().lock().unwrap();
-    if let Some(v) = voice {
-        s.voice = v.to_string();
-    }
-    if let Some(spd) = speed {
-        s.speed = spd;
-    }
-    if let Some(vol) = volume {
-        s.volume = vol;
-    }
-    let voice = s.voice.clone();
-    let speed = s.speed;
-    let volume = s.volume;
+    // Read current settings as defaults, but don't mutate them
+    let s = settings().lock().unwrap();
+    let dl_voice = voice.map(|v| v.to_string()).unwrap_or_else(|| s.voice.clone());
+    let dl_speed = speed.unwrap_or(s.speed);
+    let dl_volume = volume.unwrap_or(s.volume);
+    let dl_engine = s.engine.clone();
     drop(s);
 
     let ts = std::time::SystemTime::now()
@@ -253,9 +262,9 @@ pub fn download_audio(text: &str, voice: Option<&str>, speed: Option<i32>, volum
     let output_path = format!("tts-{}.wav", ts);
     info!(
         "TTS download requested: voice={}, speed={}, volume={}, output={}",
-        voice, speed, volume, output_path
+        dl_voice, dl_speed, dl_volume, output_path
     );
-    save_audio(text, &output_path);
+    save_audio_with(text, &output_path, &dl_voice, dl_speed, dl_volume, &dl_engine);
 }
 
 /// List available SAPI voices

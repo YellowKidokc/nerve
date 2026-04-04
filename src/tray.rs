@@ -9,13 +9,16 @@ use tray_icon::{TrayIcon, TrayIconBuilder};
 pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let menu = Menu::new();
 
-    let item_clipboard = MenuItem::new("Clipboard  (Ctrl+Alt+C)", true, None);
-    let item_prompts = MenuItem::new("Prompts    (Ctrl+Alt+P)", true, None);
-    let item_links = MenuItem::new("Links      (Ctrl+Alt+L)", true, None);
-    let item_research = MenuItem::new("Research   (Ctrl+Alt+R)", true, None);
-    let item_chat = MenuItem::new("AI Chat    (Ctrl+Alt+A)", true, None);
-    let item_dashboard = MenuItem::new("Dashboard  (Ctrl+Alt+G)", true, None);
-    let item_settings = MenuItem::new("Settings", true, None);
+    let item_clipboard = MenuItem::new("Clipboard     (Ctrl+Alt+C)", true, None);
+    let item_prompts = MenuItem::new("Prompts       (Ctrl+Alt+P)", true, None);
+    let item_links = MenuItem::new("Links         (Ctrl+Alt+L)", true, None);
+    let item_research = MenuItem::new("Research      (Ctrl+Alt+R)", true, None);
+    let item_chat = MenuItem::new("AI Chat       (Ctrl+Alt+A)", true, None);
+    let item_dashboard = MenuItem::new("Dashboard     (Ctrl+Alt+G)", true, None);
+    let item_tts = MenuItem::new("TTS           (Ctrl+Alt+Y)", true, None);
+    let item_task_cal = MenuItem::new("Task Calendar", true, None);
+    let item_theo = MenuItem::new("Theophysics Hub", true, None);
+    let item_settings = MenuItem::new("Settings      (Ctrl+Alt+S)", true, None);
     let item_separator = tray_icon::menu::PredefinedMenuItem::separator();
     let item_quit = MenuItem::new("Quit", true, None);
 
@@ -25,6 +28,9 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     menu.append(&item_research)?;
     menu.append(&item_chat)?;
     menu.append(&item_dashboard)?;
+    menu.append(&item_tts)?;
+    menu.append(&item_task_cal)?;
+    menu.append(&item_theo)?;
     menu.append(&item_separator)?;
     menu.append(&item_settings)?;
     menu.append(&item_separator)?;
@@ -36,6 +42,9 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let research_id = item_research.id().clone();
     let chat_id = item_chat.id().clone();
     let dashboard_id = item_dashboard.id().clone();
+    let tts_id = item_tts.id().clone();
+    let task_cal_id = item_task_cal.id().clone();
+    let theo_id = item_theo.id().clone();
     let settings_id = item_settings.id().clone();
     let quit_id = item_quit.id().clone();
 
@@ -54,6 +63,12 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("chat".into()));
             } else if event.id == dashboard_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("dashboard".into()));
+            } else if event.id == tts_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("tts".into()));
+            } else if event.id == task_cal_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("task-calendar".into()));
+            } else if event.id == theo_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("theophysics-hub".into()));
             } else if event.id == settings_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("settings".into()));
             } else if event.id == quit_id {
