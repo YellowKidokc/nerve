@@ -1,4 +1,5 @@
 use crate::config::Config;
+use crate::sync_client;
 use crate::tts;
 use crate::window_mgmt;
 use crate::AppEvent;
@@ -16,6 +17,7 @@ pub struct PanelManager {
     /// Panel name → window + webview
     windows: HashMap<String, PanelWindow>,
     window_to_name: HashMap<WindowId, String>,
+    proxy: EventLoopProxy<AppEvent>,
 }
 
 struct PanelWindow {
@@ -28,11 +30,8 @@ impl PanelManager {
     pub fn new(proxy: EventLoopProxy<AppEvent>) -> Self {
         Self {
             windows: HashMap::new(),
-<<<<<<< codex/update-tts-voice-selection-and-speed-settings-bwm8va
             window_to_name: HashMap::new(),
-=======
             proxy,
->>>>>>> main
         }
     }
 
@@ -122,10 +121,6 @@ impl PanelManager {
         window_mgmt::set_dark_titlebar(&window);
 
         let url = &panel_def.url;
-        let name_owned = name.to_string();
-        let proxy = event_loop.create_proxy();
-
-        // Set up IPC handler — routes messages to the main event loop
         let ipc_proxy = self.proxy.clone();
         let ipc_panel_name = name.to_string();
 
@@ -145,17 +140,10 @@ impl PanelManager {
             )
             .with_ipc_handler(move |req| {
                 let payload = req.body().to_string();
-                let _ = proxy.send_event(AppEvent::IpcMessage(name_owned.clone(), payload));
+                let _ = ipc_proxy.send_event(AppEvent::IpcMessage(ipc_panel_name.clone(), payload));
             })
             .with_devtools(cfg!(debug_assertions))
             .with_transparent(false)
-            .with_ipc_handler(move |req| {
-                let body = req.body().clone();
-                let _ = ipc_proxy.send_event(AppEvent::IpcMessage {
-                    panel: ipc_panel_name.clone(),
-                    body,
-                });
-            })
             .build(&window)
         {
             Ok(wv) => wv,
@@ -185,6 +173,11 @@ impl PanelManager {
             #[serde(rename = "type")]
             msg_type: String,
             config: Option<Config>,
+            text: Option<String>,
+            voice: Option<String>,
+            speed: Option<i32>,
+            volume: Option<u32>,
+            engine: Option<String>,
         }
 
         let parsed: Incoming = match serde_json::from_str(message) {
@@ -238,6 +231,125 @@ impl PanelManager {
                     self.send_to_panel(panel_name, &json);
                 }
             }
+            "speak_text" => {
+                if let Some(text) = parsed.text {
+                    {
+                        let mut lock = cfg.lock().unwrap();
+                        if let Some(engine) = parsed.engine {
+                            lock.tts.engine = engine;
+                        }
+                        if let Some(voice) = parsed.voice {
+                            lock.tts.voice = voice;
+                        }
+                        if let Some(speed) = parsed.speed {
+                            lock.tts.speed = speed;
+                        }
+                        if let Some(volume) = parsed.volume {
+                            lock.tts.volume = volume;
+                        }
+                    }
+                    let current = { cfg.lock().unwrap().tts.clone() };
+                    tts::apply_config(&current);
+                    std::thread::spawn(move || tts::speak(&text));
+                }
+            }
+            "tts_stop" | "tts_pause" => {
+                std::thread::spawn(tts::stop);
+            }
+            "tts_download" => {
+                if let Some(text) = parsed.text {
+                    tts::download_audio(
+                        &text,
+                        parsed.voice.as_deref(),
+                        parsed.speed,
+                        parsed.volume,
+                    );
+                }
+            }
+            "sync_push_clips" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        if let Err(e) = sync_client::push_clips(&sync_cfg).await {
+                            error!("sync_push_clips failed: {}", e);
+                        }
+                    });
+                });
+            }
+            "sync_pull_clips" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        if let Err(e) = sync_client::pull_clips(&sync_cfg).await {
+                            error!("sync_pull_clips failed: {}", e);
+                        }
+                    });
+                });
+            }
+            "sync_push_config" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        if let Err(e) = sync_client::push_config(&sync_cfg).await {
+                            error!("sync_push_config failed: {}", e);
+                        }
+                    });
+                });
+            }
+            "sync_pull_config" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        if let Err(e) = sync_client::pull_config_full(&sync_cfg).await {
+                            error!("sync_pull_config failed: {}", e);
+                        }
+                    });
+                });
+            }
+            "sync_push_prompts" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        if let Err(e) = sync_client::push_prompts(&sync_cfg).await {
+                            error!("sync_push_prompts failed: {}", e);
+                        }
+                    });
+                });
+            }
+            "sync_pull_prompts" => {
+                let sync_cfg = Arc::clone(cfg);
+                std::thread::spawn(move || {
+                    let rt = tokio::runtime::Builder::new_current_thread()
+                        .enable_all()
+                        .build()
+                        .unwrap();
+                    rt.block_on(async {
+                        if let Err(e) = sync_client::pull_prompts(&sync_cfg).await {
+                            error!("sync_pull_prompts failed: {}", e);
+                        }
+                    });
+                });
+            }
             _ => {}
         }
     }
@@ -256,7 +368,7 @@ impl PanelManager {
                 "window.dispatchEvent(new MessageEvent('message', {{ data: {} }}));",
                 serde_json::to_string(json_payload).unwrap_or_else(|_| "\"{}\"".into())
             );
-            let _ = panel._webview.evaluate_script(&script);
+            let _ = panel.webview.evaluate_script(&script);
         }
     }
 }

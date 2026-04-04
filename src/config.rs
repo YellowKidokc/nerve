@@ -122,37 +122,9 @@ pub struct Config {
     #[serde(default)]
     pub tts: TtsConfig,
 
-    #[serde(default)]
-    pub tts: TtsConfig,
-
     /// Runtime: hotkey ID → action name mapping (not persisted)
     #[serde(skip)]
     pub hotkey_map: HashMap<u32, String>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TtsConfig {
-    #[serde(default = "default_tts_voice")]
-    pub voice: String,
-    #[serde(default = "default_tts_speed")]
-    pub speed: i32,
-    #[serde(default = "default_tts_engine")]
-    pub engine: String,
-    #[serde(default = "default_tts_volume")]
-    pub volume: u32,
-}
-
-fn default_tts_voice() -> String {
-    "Brian".into()
-}
-fn default_tts_speed() -> i32 {
-    2
-}
-fn default_tts_engine() -> String {
-    "sapi".into()
-}
-fn default_tts_volume() -> u32 {
-    100
 }
 
 fn default_api_url() -> String {
@@ -195,6 +167,11 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
         HotkeyBinding {
             keys: "Ctrl+Alt+T".into(),
             action: "tts_read_selection".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+Y".into(),
+            action: "toggle_tts".into(),
             runtime_id: None,
         },
         HotkeyBinding {
@@ -296,7 +273,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "links".into(),
             title: "Links".into(),
-            url: to_url("links.html"),
+            url: to_url("research.html"),
             width: 500,
             height: 680,
             x: None,
@@ -342,6 +319,36 @@ fn default_panels() -> Vec<PanelDef> {
             x: None,
             y: None,
             always_on_top: true,
+        },
+        PanelDef {
+            name: "tts".into(),
+            title: "TTS".into(),
+            url: to_url("tts.html"),
+            width: 640,
+            height: 720,
+            x: None,
+            y: None,
+            always_on_top: true,
+        },
+        PanelDef {
+            name: "task-calendar".into(),
+            title: "Task Calendar".into(),
+            url: to_url("task-calendar.html"),
+            width: 760,
+            height: 720,
+            x: None,
+            y: None,
+            always_on_top: false,
+        },
+        PanelDef {
+            name: "theophysics-hub".into(),
+            title: "Theophysics Hub".into(),
+            url: to_url("theophysics-hub.html"),
+            width: 760,
+            height: 720,
+            x: None,
+            y: None,
+            always_on_top: false,
         },
     ]
 }

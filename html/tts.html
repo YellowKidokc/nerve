@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>POF 2828 - TTS</title>
+  <style>
+    body { font-family: 'IBM Plex Mono', monospace; background: #0a0a0f; color: #e5e7eb; margin: 0; }
+    .wrap { padding: 16px; display: grid; gap: 12px; }
+    h1 { margin: 0; color: #f59e0b; font-size: 18px; }
+    textarea, select, input, button { background: #13131a; color: #e5e7eb; border: 1px solid #2b2b36; border-radius: 6px; }
+    textarea { width: 100%; min-height: 180px; padding: 10px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    button { padding: 8px 10px; cursor: pointer; }
+    button.primary { border-color: #f59e0b; color: #f59e0b; }
+    details { border: 1px solid #2b2b36; border-radius: 8px; padding: 8px; }
+    label { font-size: 12px; color: #9ca3af; display:block; margin-bottom:4px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>POF 2828 // TTS</h1>
+    <textarea id="text" placeholder="Paste text to speak..."></textarea>
+
+    <details>
+      <summary>Normalization filters</summary>
+      <div class="row">
+        <label><input type="checkbox" id="f_urls" checked /> Strip URLs</label>
+        <label><input type="checkbox" id="f_hashtags" checked /> Strip hashtags</label>
+        <label><input type="checkbox" id="f_mentions" checked /> Strip @mentions</label>
+        <label><input type="checkbox" id="f_math" /> Strip math notation</label>
+        <label><input type="checkbox" id="f_code" /> Strip code blocks</label>
+        <label><input type="checkbox" id="f_emoji" /> Strip emoji/symbols</label>
+      </div>
+    </details>
+
+    <div class="row">
+      <div>
+        <label for="engine">Engine</label>
+        <select id="engine"><option value="sapi">SAPI</option><option value="edge">Edge</option></select>
+      </div>
+      <div>
+        <label for="voice">Voice</label>
+        <select id="voice"></select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="100"></div>
+      <div><label for="speed">Speed</label><input id="speed" type="range" min="-10" max="10" value="2"></div>
+    </div>
+
+    <div class="controls">
+      <button class="primary" id="speak">Speak</button>
+      <button id="pause">Pause</button>
+      <button id="stop">Stop</button>
+      <button id="download">Download audio</button>
+    </div>
+  </div>
+
+  <script>
+    const post = (msg) => window.chrome?.webview?.postMessage(JSON.stringify(msg));
+
+    function normalizeText(text) {
+      let t = text;
+      if (f_urls.checked) t = t.replace(/https?:\/\/\S+/g, ' ');
+      if (f_hashtags.checked) t = t.replace(/#[\w-]+/g, ' ');
+      if (f_mentions.checked) t = t.replace(/@[\w-]+/g, ' ');
+      if (f_code.checked) t = t.replace(/```[\s\S]*?```/g, ' ');
+      if (f_math.checked) t = t.replace(/[=+\-*/^<>~]+/g, ' ');
+      if (f_emoji.checked) t = t.replace(/[\u{1F300}-\u{1FAFF}]/gu, ' ');
+      return t.replace(/\s+/g, ' ').trim();
+    }
+
+    window.addEventListener('message', (event) => {
+      const raw = event.data;
+      const msg = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (msg.type === 'voices') {
+        voice.innerHTML = '';
+        (msg.voices || []).forEach(v => {
+          const opt = document.createElement('option');
+          opt.value = v; opt.textContent = v;
+          voice.appendChild(opt);
+        });
+      }
+      if (msg.type === 'config' && msg.config?.tts) {
+        engine.value = msg.config.tts.engine || 'sapi';
+        volume.value = msg.config.tts.volume ?? 100;
+        speed.value = msg.config.tts.speed ?? 2;
+      }
+    });
+
+    speak.onclick = () => post({ type: 'speak_text', text: normalizeText(text.value), engine: engine.value, voice: voice.value, speed: Number(speed.value), volume: Number(volume.value) });
+    pause.onclick = () => post({ type: 'tts_pause' });
+    stop.onclick = () => post({ type: 'tts_stop' });
+    download.onclick = () => post({ type: 'tts_download', text: normalizeText(text.value), engine: engine.value, voice: voice.value, speed: Number(speed.value), volume: Number(volume.value) });
+
+    post({ type: 'get_config' });
+    post({ type: 'list_voices' });
+  </script>
+</body>
+</html>
