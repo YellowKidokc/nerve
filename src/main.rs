@@ -56,7 +56,17 @@ fn main() -> Result<()> {
     {
         let cfg_lock = cfg.lock().unwrap();
         clipboard::refresh_slots_from_config(&cfg_lock);
+<<<<<<< codex/update-tts-voice-selection-and-speed-settings-bwm8va
         tts::apply_config(&cfg_lock.tts);
+=======
+        // Load TTS settings from config
+        tts::configure(
+            &cfg_lock.tts.voice,
+            cfg_lock.tts.speed,
+            &cfg_lock.tts.engine,
+            cfg_lock.tts.volume,
+        );
+>>>>>>> main
     }
 
     // Build event loop with custom events
@@ -113,7 +123,7 @@ fn main() -> Result<()> {
     let _tray = tray::create_tray(&proxy)?;
 
     // Panel manager — holds open webview windows
-    let mut panel_mgr = panels::PanelManager::new();
+    let mut panel_mgr = panels::PanelManager::new(proxy.clone());
 
     info!("ClipSync Agent ready.");
 
@@ -206,6 +216,7 @@ fn main() -> Result<()> {
                     cfg_lock.normalize();
                     hotkeys::build_hotkey_map(&mut cfg_lock);
                     clipboard::refresh_slots_from_config(&cfg_lock);
+<<<<<<< codex/update-tts-voice-selection-and-speed-settings-bwm8va
                     tts::apply_config(&cfg_lock.tts);
                     hotkey_manager = match hotkeys::register_all(&cfg_lock) {
                         Ok(mgr) => Some(mgr),
@@ -218,6 +229,29 @@ fn main() -> Result<()> {
 
                 AppEvent::IpcMessage(panel, message) => {
                     panel_mgr.handle_ipc(&panel, &message, &cfg);
+=======
+                    // Apply TTS config
+                    tts::configure(
+                        &cfg_lock.tts.voice,
+                        cfg_lock.tts.speed,
+                        &cfg_lock.tts.engine,
+                        cfg_lock.tts.volume,
+                    );
+                    // Re-register hotkeys — replace the manager so the old one
+                    // drops (unregistering old hotkeys) and the new one stays alive.
+                    match hotkeys::register_all(&cfg_lock) {
+                        Ok(mgr) => {
+                            hotkey_manager = Some(mgr);
+                        }
+                        Err(e) => {
+                            error!("Failed to re-register hotkeys: {}", e);
+                        }
+                    }
+>>>>>>> main
+                }
+
+                AppEvent::IpcMessage { panel, body } => {
+                    handle_ipc(&mut panel_mgr, &cfg, &panel, &body);
                 }
 
                 AppEvent::Quit => {
@@ -238,5 +272,166 @@ fn main() -> Result<()> {
 
             _ => {}
         }
+
+        // Suppress unused variable warning — the manager must stay alive
+        // to keep hotkeys registered.
+        let _ = &hotkey_manager;
     });
+}
+
+/// Handle an IPC message from a webview panel.
+fn handle_ipc(
+    panel_mgr: &mut panels::PanelManager,
+    cfg: &Arc<Mutex<config::Config>>,
+    panel: &str,
+    body: &str,
+) {
+    let msg: serde_json::Value = match serde_json::from_str(body) {
+        Ok(v) => v,
+        Err(e) => {
+            error!("IPC parse error: {}", e);
+            return;
+        }
+    };
+
+    let msg_type = msg.get("type").and_then(|t| t.as_str()).unwrap_or("");
+
+    match msg_type {
+        "get_config" => {
+            let cfg_lock = cfg.lock().unwrap();
+            if let Ok(json) = serde_json::to_string(&*cfg_lock) {
+                let script = format!("config = {}; populateUI();", json);
+                panel_mgr.evaluate_script(panel, &script);
+            }
+        }
+
+        "save_config" => {
+            if let Some(new_cfg) = msg.get("config") {
+                let mut cfg_lock = cfg.lock().unwrap();
+
+                // General settings
+                if let Some(v) = new_cfg
+                    .get("clipboard_interval_ms")
+                    .and_then(|v| v.as_u64())
+                {
+                    cfg_lock.clipboard_interval_ms = v;
+                }
+                if let Some(v) = new_cfg.get("api_url").and_then(|v| v.as_str()) {
+                    cfg_lock.api_url = v.into();
+                }
+                if let Some(v) = new_cfg.get("api_token").and_then(|v| v.as_str()) {
+                    cfg_lock.api_token = v.into();
+                }
+                if let Some(v) = new_cfg.get("sync_interval_secs").and_then(|v| v.as_u64()) {
+                    cfg_lock.sync_interval_secs = v;
+                }
+
+                // TTS config
+                if let Some(tts) = new_cfg.get("tts") {
+                    if let Some(v) = tts.get("engine").and_then(|v| v.as_str()) {
+                        cfg_lock.tts.engine = v.into();
+                    }
+                    if let Some(v) = tts.get("voice").and_then(|v| v.as_str()) {
+                        cfg_lock.tts.voice = v.into();
+                    }
+                    if let Some(v) = tts.get("speed").and_then(|v| v.as_i64()) {
+                        cfg_lock.tts.speed = v as i32;
+                    }
+                    if let Some(v) = tts.get("volume").and_then(|v| v.as_u64()) {
+                        cfg_lock.tts.volume = v as u32;
+                    }
+                }
+
+                // Hotkeys
+                if let Some(hks) = new_cfg.get("hotkeys").and_then(|v| v.as_array()) {
+                    cfg_lock.hotkeys = hks
+                        .iter()
+                        .filter_map(|hk| {
+                            Some(config::HotkeyBinding {
+                                keys: hk.get("keys")?.as_str()?.into(),
+                                action: hk.get("action")?.as_str()?.into(),
+                                runtime_id: None,
+                            })
+                        })
+                        .collect();
+                }
+
+                // Hotstrings
+                if let Some(hss) = new_cfg.get("hotstrings").and_then(|v| v.as_array()) {
+                    cfg_lock.hotstrings = hss
+                        .iter()
+                        .filter_map(|hs| {
+                            Some(config::Hotstring {
+                                trigger: hs.get("trigger")?.as_str()?.into(),
+                                expansion: hs.get("expansion")?.as_str()?.into(),
+                                replace_trigger: hs
+                                    .get("replace_trigger")
+                                    .and_then(|v| v.as_bool())
+                                    .unwrap_or(true),
+                            })
+                        })
+                        .collect();
+                }
+
+                // Apply TTS settings immediately
+                tts::configure(
+                    &cfg_lock.tts.voice,
+                    cfg_lock.tts.speed,
+                    &cfg_lock.tts.engine,
+                    cfg_lock.tts.volume,
+                );
+
+                // Save to disk
+                if let Err(e) = cfg_lock.save() {
+                    error!("Failed to save config: {}", e);
+                }
+
+                info!("Config saved via IPC");
+            }
+        }
+
+        "list_voices" => {
+            let voices = tts::list_voices();
+            if let Ok(json) = serde_json::to_string(&voices) {
+                let script = format!("populateVoices({});", json);
+                panel_mgr.evaluate_script(panel, &script);
+            }
+        }
+
+        "get_clips" => {
+            let cfg_lock = cfg.lock().unwrap();
+            let clips: Vec<serde_json::Value> = cfg_lock
+                .clip_slots
+                .iter()
+                .map(|s| {
+                    serde_json::json!({
+                        "content": s.content,
+                        "timestamp": s.timestamp,
+                        "tags": [],
+                        "pinned": false,
+                    })
+                })
+                .collect();
+            if let Ok(json) = serde_json::to_string(&clips) {
+                let script = format!("clips = {}; renderSlots(); renderClips();", json);
+                panel_mgr.evaluate_script(panel, &script);
+            }
+        }
+
+        "test_tts" => {
+            std::thread::spawn(|| {
+                tts::speak("ClipSync text to speech is working.");
+            });
+        }
+
+        "tts_stop" => {
+            std::thread::spawn(|| {
+                tts::stop();
+            });
+        }
+
+        _ => {
+            info!("Unknown IPC message type: '{}'", msg_type);
+        }
+    }
 }
