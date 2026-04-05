@@ -42,6 +42,167 @@ pub async fn push_clip(cfg: &Arc<Mutex<Config>>, content: &str) -> Result<()> {
     Ok(())
 }
 
+pub async fn push_clips(cfg: &Arc<Mutex<Config>>) -> Result<()> {
+    let (api_url, api_token, clips) = {
+        let c = cfg.lock().unwrap();
+        (c.api_url.clone(), c.api_token.clone(), c.clip_slots.clone())
+    };
+    if api_token.is_empty() {
+        return Ok(());
+    }
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .post(format!("{}/clipboard/push_slots", api_url))
+        .header("Authorization", format!("Bearer {}", api_token))
+        .json(&serde_json::json!({ "slots": clips, "source": "desktop" }))
+        .send()
+        .await?;
+
+    if resp.status().is_success() {
+        info!("Pushed clipboard slots");
+    } else {
+        warn!("Push clipboard slots failed: {}", resp.status());
+    }
+    Ok(())
+}
+
+pub async fn pull_clips(cfg: &Arc<Mutex<Config>>) -> Result<()> {
+    let (api_url, api_token) = {
+        let c = cfg.lock().unwrap();
+        (c.api_url.clone(), c.api_token.clone())
+    };
+    if api_token.is_empty() {
+        return Ok(());
+    }
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .get(format!("{}/clipboard/pull_slots", api_url))
+        .header("Authorization", format!("Bearer {}", api_token))
+        .send()
+        .await?;
+
+    if resp.status().is_success() {
+        let remote = resp.json::<Vec<crate::config::ClipSlot>>().await?;
+        let mut lock = cfg.lock().unwrap();
+        lock.clip_slots = remote;
+        let _ = lock.save();
+        info!("Pulled clipboard slots");
+    } else {
+        warn!("Pull clipboard slots failed: {}", resp.status());
+    }
+    Ok(())
+}
+
+pub async fn push_config(cfg: &Arc<Mutex<Config>>) -> Result<()> {
+    let (api_url, api_token, config) = {
+        let c = cfg.lock().unwrap();
+        (c.api_url.clone(), c.api_token.clone(), c.clone())
+    };
+    if api_token.is_empty() {
+        return Ok(());
+    }
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .post(format!("{}/config/push", api_url))
+        .header("Authorization", format!("Bearer {}", api_token))
+        .json(&serde_json::json!({ "config": config, "source": "desktop" }))
+        .send()
+        .await?;
+
+    if resp.status().is_success() {
+        info!("Pushed config");
+    } else {
+        warn!("Push config failed: {}", resp.status());
+    }
+    Ok(())
+}
+
+pub async fn pull_config_full(cfg: &Arc<Mutex<Config>>) -> Result<()> {
+    let (api_url, api_token) = {
+        let c = cfg.lock().unwrap();
+        (c.api_url.clone(), c.api_token.clone())
+    };
+    if api_token.is_empty() {
+        return Ok(());
+    }
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .get(format!("{}/config/pull", api_url))
+        .header("Authorization", format!("Bearer {}", api_token))
+        .send()
+        .await?;
+
+    if resp.status().is_success() {
+        let mut remote = resp.json::<crate::config::Config>().await?;
+        let mut lock = cfg.lock().unwrap();
+        remote.hotkey_map = lock.hotkey_map.clone();
+        *lock = remote;
+        lock.normalize();
+        let _ = lock.save();
+        info!("Pulled full config");
+    } else {
+        warn!("Pull config failed: {}", resp.status());
+    }
+    Ok(())
+}
+
+pub async fn push_prompts(cfg: &Arc<Mutex<Config>>) -> Result<()> {
+    let (api_url, api_token, prompts) = {
+        let c = cfg.lock().unwrap();
+        (c.api_url.clone(), c.api_token.clone(), c.prompts.clone())
+    };
+    if api_token.is_empty() {
+        return Ok(());
+    }
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .post(format!("{}/prompts/push", api_url))
+        .header("Authorization", format!("Bearer {}", api_token))
+        .json(&serde_json::json!({ "prompts": prompts, "source": "desktop" }))
+        .send()
+        .await?;
+
+    if resp.status().is_success() {
+        info!("Pushed prompts");
+    } else {
+        warn!("Push prompts failed: {}", resp.status());
+    }
+    Ok(())
+}
+
+pub async fn pull_prompts(cfg: &Arc<Mutex<Config>>) -> Result<()> {
+    let (api_url, api_token) = {
+        let c = cfg.lock().unwrap();
+        (c.api_url.clone(), c.api_token.clone())
+    };
+    if api_token.is_empty() {
+        return Ok(());
+    }
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .get(format!("{}/prompts/pull", api_url))
+        .header("Authorization", format!("Bearer {}", api_token))
+        .send()
+        .await?;
+
+    if resp.status().is_success() {
+        let remote = resp.json::<Vec<crate::config::Prompt>>().await?;
+        let mut lock = cfg.lock().unwrap();
+        lock.prompts = remote;
+        let _ = lock.save();
+        info!("Pulled prompts");
+    } else {
+        warn!("Pull prompts failed: {}", resp.status());
+    }
+    Ok(())
+}
+
 /// Background sync loop — periodically pulls config updates from Cloudflare
 pub async fn sync_loop(proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Result<()> {
     loop {
