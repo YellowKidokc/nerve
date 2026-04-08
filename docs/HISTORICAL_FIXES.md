@@ -4,6 +4,19 @@ Bugs fixed in earlier sessions. Read this before opening any issue or making any
 
 ---
 
+
+## 2026-04-08 — Phase 1 implementation landed in `src/tts.rs`
+
+**Symptom:** TTS enumeration remained fragile (3 voices in many environments), Edge voice discovery failed silently, and stale voice IDs could trigger interrupted playback behavior.
+
+**Root cause:** The module relied on `System.Speech` enumeration only, had no explicit Edge preflight checks, had no cached fallback for full enumeration failures, lacked voice ID validation before speaking, and did not apply OneCore/SAPI loudness normalization.
+
+**Fix:** Implemented the six Phase 1 changes in `src/tts.rs`: dual-hive SAPI/OneCore enumeration with dedup-by-name and `hive` tagging, Edge preflight probes (`py --version` and `import edge_tts`), 8-second timeout for `py -m edge_tts --list-voices`, persisted `%LOCALAPPDATA%\ClipSync\voice_cache.json` fallback, descriptive voice validation errors before speak, and OneCore volume normalization (`0.87` scaling).
+
+**Why it matters:** This prevents silent failure paths, preserves voice availability during transient outages using cache fallback, and reduces user-facing `interrupted`-style failures caused by stale voice selection state.
+
+---
+
 ## 2026-04-08 — TTS Engine showing 3 voices + ERROR: interrupted
 
 **Symptom:** TTS Engine standalone window shows only 3 voices (Microsoft David, Zira, Mark). "Reload Voices" button does nothing. Status bar reads `ERROR: interrupted` on speak attempts.
