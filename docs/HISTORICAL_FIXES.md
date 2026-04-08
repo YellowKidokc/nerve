@@ -4,6 +4,37 @@ Bugs fixed in earlier sessions. Read this before opening any issue or making any
 
 ---
 
+## 2026-04-08 — Phase 1 TTS dual-hive fix (all 6 changes)
+
+**Symptom:** TTS Engine dropdown showed only 3 legacy SAPI voices (David, Zira, Mark). Selecting any voice produced `ERROR: interrupted`. Edge TTS voices never appeared.
+
+**Root cause:** Two stacked bugs — (1) voice enumeration only read the legacy SAPI registry hive, missing all OneCore/Neural voices, and (2) Edge TTS subprocess failed silently with no actionable error surfaced to the user. The `interrupted` error was downstream: `speak()` attempted to use a voice name that didn't resolve to a valid token, causing the utterance to cancel.
+
+**Fix — 6 changes in `src/tts.rs` + `Cargo.toml`:**
+
+1. **Dual-hive voice enumeration (Change 1):** Replaced PowerShell-based `System.Speech.GetInstalledVoices()` with direct COM enumeration via `ISpObjectTokenCategory::SetId()` reading both `HKLM\...\Speech\Voices` and `HKLM\...\Speech_OneCore\Voices`. Deduplicates by display name (not token ID) since David/Zira/Mark exist in both hives. Added `VoiceInfo` struct with `id`, `name`, `lang`, `hive` fields.
+
+2. **Edge TTS preflight checks (Change 2):** Before spawning `py -m edge_tts --list-voices`, probes `py --version` and `py -c "import edge_tts"` with specific, actionable error messages on each failure mode (Python not on PATH, package missing, package broken).
+
+3. **Voice list cache fallback (Change 3):** Persists last successful enumeration to `%LOCALAPPDATA%\ClipSync\voice_cache.json`. If fresh enumeration fails entirely, loads and returns cached list with `stale: true` flag.
+
+4. **Token ID validation in speak (Change 4):** Before speaking, validates the configured voice name against the in-memory or file-cached voice list. Returns descriptive error `"Voice 'X' is no longer available"` instead of silent `interrupted` failure. Gracefully skips validation if voice list hasn't been populated yet.
+
+5. **8-second subprocess timeout (Change 5):** `edge_tts --list-voices` now has an 8-second timeout using a `try_wait` poll loop (no external dependency). Timeout produces specific error mentioning `speech.platform.bing.com`.
+
+6. **OneCore volume normalization (Change 6):** OneCore voices are ~10-15% louder than SAPI Desktop at the same volume value. When speaking a OneCore voice, volume is scaled by `0.87` factor. Configurable via `ONECORE_VOLUME_FACTOR` constant.
+
+**Additional changes:**
+- `speak_sapi()` now uses `SAPI.SpVoice` COM object (not `System.Speech.SpeechSynthesizer`) so OneCore voice tokens can be set via `ISpeechObjectToken::SetId()` in PowerShell.
+- Speaking subprocess PID is tracked for reliable `stop()` via `taskkill /PID`.
+- Added `Win32_System_Com` feature to `Cargo.toml` for `CoCreateInstance`/`CoInitializeEx`.
+- `speak()` now returns `Result<(), String>` to surface voice validation errors.
+- Backward-compatible `list_voices()` wrapper preserved for existing callers.
+
+**How to verify:** On Windows 11, call `get_voices()` — should return 19+ voices (3 legacy SAPI + OneCore Neural + Edge voices when py/edge-tts available). Remove `py` from PATH → Edge error message appears. Use invalid voice name → descriptive error returned. Delete `voice_cache.json`, disconnect network, restart → cache fallback activates.
+
+---
+
 ## 2026-04-08 — TTS Engine showing 3 voices + ERROR: interrupted
 
 **Symptom:** TTS Engine standalone window shows only 3 voices (Microsoft David, Zira, Mark). "Reload Voices" button does nothing. Status bar reads `ERROR: interrupted` on speak attempts.
