@@ -1,0 +1,28 @@
+# Rust build artifacts
+source/target/
+source/Cargo.lock
+
+# Node modules (worker)
+worker/node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets
+.env
+*.pem
+*.key
+
+# WebView2 runtime cache
+*.WebView2/
+
+# Voice cache (generated at runtime)
+voice_cache.json

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ClipSync</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:#0a0a0f}
+  ::-webkit-scrollbar-thumb{background:#2a2a3a;border-radius:3px}
+  ::-webkit-scrollbar-thumb:hover{background:#3a3a4a}
+  body{font-family:'IBM Plex Mono',monospace;background:#0a0a0f;color:#c8ccd4;height:100vh;display:flex;flex-direction:column;overflow:hidden;user-select:none}
+
+  /* SEARCH BAR */
+  .search-bar{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid #1e1e2e;background:#0d0d14;flex-shrink:0}
+  .search-bar input{flex:1;background:#12121c;border:1px solid #1e1e2e;border-radius:5px;padding:8px 10px 8px 30px;color:#c8ccd4;font-size:13px;font-family:inherit;outline:none}
+  .search-bar input:focus{border-color:rgba(245,158,11,.25)}
+  .search-bar input::placeholder{color:#2a2a3a;font-size:13px}
+  .search-wrap{position:relative;flex:1}
+  .search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#3a3a4a;pointer-events:none}
+  .brand-badge{font-size:12px;font-weight:700;letter-spacing:2px;color:#f59e0b;white-space:nowrap;display:flex;align-items:center;gap:6px}
+  .brand-badge .dot{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 6px rgba(16,185,129,0.5);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+  /* TABS */
+  .tab-bar{display:flex;background:#0a0a0f;border-bottom:1px solid #1e1e2e;flex-shrink:0}
+  .tab{flex:1;padding:8px 0;text-align:center;font-size:10px;letter-spacing:1.5px;font-weight:600;color:#3a3a4a;cursor:pointer;border-bottom:2px solid transparent;transition:all .1s}
+  .tab:hover{color:#666}
+  .tab.active{color:#f59e0b;border-bottom-color:#f59e0b}
+
+  /* PANELS */
+  .panel{display:none;flex:1;flex-direction:column;overflow:hidden}
+  .panel.active{display:flex}
+
+  /* SLOT GRID — 2 columns, compact cards */
+  .slot-grid{flex:1;overflow-y:auto;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:4px;align-content:start}
+
+  .slot-card{background:#111118;border:1px solid #1e1e2e;border-radius:6px;padding:7px 8px;display:flex;flex-direction:column;gap:3px;transition:border-color .1s;min-height:0}
+  .slot-card:hover{border-color:#333}
+  .slot-card.filled{border-color:#1e3a5f}
+  .slot-card.pinned{border-color:rgba(251,191,36,.32);box-shadow:inset 0 0 0 1px rgba(251,191,36,.08)}
+
+  /* Line 1: slot label + pin */
+  .slot-head{display:flex;justify-content:space-between;align-items:center}
+  .slot-label{font-size:8px;font-weight:700;color:#f59e0b;letter-spacing:.5px}
+  .slot-head-right{display:flex;align-items:center;gap:4px}
+  .slot-status{font-size:7px;font-weight:600;letter-spacing:.5px;color:#10b981;text-transform:uppercase}
+  .pin-toggle{background:transparent;border:none;color:#2a2a3a;font-size:10px;cursor:pointer;padding:0 1px;transition:color .1s;line-height:1}
+  .pin-toggle:hover{color:#f59e0b}
+  .pin-toggle.pinned{color:#f59e0b}
+
+  /* Line 2: title — bold bright white, readable */
+  .slot-title{font-size:11px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3}
+
+  /* Line 3: description — lighter grey, clear */
+  .slot-desc{font-size:9px;color:#9ca3af;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  /* Meta (dim) */
+  .slot-meta{font-size:7px;color:#555;letter-spacing:.2px}
+
+  /* Copy button at bottom */
+  .slot-btns{display:flex;gap:3px;margin-top:2px;align-items:center}
+  .copy-btn{flex:1;padding:4px 0;border:1px solid rgba(96,165,250,.35);border-radius:4px;background:rgba(96,165,250,.1);color:#60a5fa;font-size:9px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .1s;letter-spacing:.5px;text-align:center}
+  .copy-btn:hover{background:rgba(96,165,250,.2);border-color:rgba(96,165,250,.5)}
+  .clear-btn{background:transparent;border:1px solid #1e1e2e;border-radius:3px;color:#555;padding:3px 5px;font-size:9px;font-family:inherit;cursor:pointer;transition:all .1s}
+  .clear-btn:hover{color:#ef4444;border-color:rgba(239,68,68,.3)}
+  .save-to-slot-btn{flex:1;padding:4px 0;border:1px dashed #1e1e2e;border-radius:4px;background:transparent;color:#555;font-size:8px;font-weight:600;font-family:inherit;cursor:pointer;letter-spacing:.5px;transition:all .1s;text-align:center}
+  .save-to-slot-btn:hover{border-color:rgba(245,158,11,.3);color:#f59e0b;background:rgba(245,158,11,.04)}
+
+  /* CLIP LIST (history + saved) — 3 text lines */
+  .clip-list{flex:1;overflow-y:auto;padding:6px}
+  .clip-item{padding:9px 11px;margin-bottom:5px;background:#111118;border:1px solid #1e1e2e;border-radius:8px;cursor:pointer;transition:all .08s;position:relative;display:flex;flex-direction:column;gap:2px}
+  .clip-item:hover{background:#141723;border-color:#2a2f42}
+  .clip-item.pinned{border-color:rgba(251,191,36,.32);box-shadow:inset 0 0 0 1px rgba(251,191,36,.08)}
+  .clip-head{display:flex;justify-content:space-between;align-items:center}
+  /* Line 1: title — bold, bright white, stands out */
+  .clip-title{font-size:12px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;letter-spacing:.2px}
+  /* Line 2: description — normal weight, medium grey */
+  .clip-desc{font-size:10px;line-height:1.35;color:#8f96ab;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* Line 3: detail — smaller, dimmer */
+  .clip-detail{font-size:9px;line-height:1.3;color:#4f586f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .clip-meta-line{font-size:7px;color:#3a3a4a;display:flex;align-items:center;gap:6px;letter-spacing:.3px;margin-top:1px}
+  .clip-actions{display:flex;gap:4px;align-items:center}
+  .clip-actions button{background:#12121c;border:1px solid #1e1e2e;border-radius:4px;color:#70788f;padding:3px 7px;font-size:9px;font-family:inherit;cursor:pointer;transition:all .1s}
+  .clip-actions button:hover{color:#f59e0b;border-color:rgba(245,158,11,.25)}
+  .clip-actions .del-btn:hover{color:#ef4444;border-color:rgba(239,68,68,.25)}
+  .clip-copy-btn{flex:1;padding:5px 0;border:1px solid rgba(96,165,250,.35);border-radius:4px;background:rgba(96,165,250,.1);color:#60a5fa;font-size:9px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .1s;letter-spacing:1px;text-align:center;margin-top:2px}
+  .clip-copy-btn:hover{background:rgba(96,165,250,.2);border-color:rgba(96,165,250,.5)}
+
+  .empty-state{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#2a2a3a;gap:6px;padding:20px}
+  .empty-state div:first-child{font-size:14px;letter-spacing:2px}
+  .empty-state div:last-child{font-size:12px;color:#1e1e2e}
+
+  /* ── DOCK ── */
+  .dock{border-top:1px solid #1e1e2e;background:#0d0d14;flex-shrink:0}
+
+  /* Row 1: pins + actions */
+  .dock-pins{display:flex;align-items:center;gap:4px;padding:5px 8px;border-bottom:1px solid #151520}
+  .dock-icon{width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:#111118;border:1px solid #1e1e2e;border-radius:5px;color:#555;font-size:13px;cursor:pointer;transition:all .1s;position:relative}
+  .dock-icon:hover{border-color:#444;color:#aaa}
+  .dock-icon.active{color:#f59e0b;border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.08)}
+  .dock-icon.pin{cursor:grab}
+  .dock-icon.pin:active{cursor:grabbing}
+  .dock-icon.pin.dragging{opacity:.5}
+  .dock-spacer{flex:1}
+  .dock-lock{font-size:11px;padding:4px 10px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:4px;color:#f59e0b;font-weight:700;font-family:inherit;cursor:pointer;letter-spacing:.5px;transition:all .1s;font-size:9px}
+  .dock-lock:hover{background:rgba(245,158,11,.12)}
+  .dock-lock.locked{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.4)}
+
+  /* Row 2: categories */
+  .dock-cats{display:flex;gap:3px;padding:4px 8px;border-bottom:1px solid #151520}
+  .dock-cat{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:5px 2px;background:#0a0a0f;border:1px solid #1e1e2e;border-radius:4px;color:#3a3a4a;font-size:9px;font-weight:700;letter-spacing:.5px;cursor:pointer;transition:all .1s}
+  .dock-cat:hover{border-color:#333;color:#666}
+  .dock-cat.active{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.05)}
+  .dock-cat .cat-icon{font-size:12px}
+
+  /* Row 3: status bar */
+  .dock-status{display:flex;align-items:center;gap:5px;padding:4px 8px;font-size:10px;color:#2a2a3a}
+  .dock-status button{background:transparent;border:1px solid #1e1e2e;border-radius:3px;color:#555;padding:2px 8px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .1s}
+  .dock-status button:hover{border-color:#444;color:#aaa}
+  .dock-status .status-badge{padding:2px 10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:4px;color:#10b981;font-size:9px;font-weight:700;letter-spacing:1px}
+  .dock-status .status-count{margin-left:auto;font-size:11px;color:#555}
+
+  /* TOAST */
+  .toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#10b981;color:#000;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;letter-spacing:2px;z-index:9999;pointer-events:none;animation:toastPop .3s ease}
+  @keyframes toastPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.8)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+</style>
+</head>
+<body>
+
+<!-- SEARCH -->
+<div class="search-bar">
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="clipSearch" placeholder="Search clips...">
+  </div>
+  <div class="brand-badge"><span class="dot"></span> POF 2828</div>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab('slots')">SLOTS</div>
+  <div class="tab" onclick="switchTab('history')">HISTORY</div>
+  <div class="tab" onclick="switchTab('ai')">AI</div>
+  <div class="tab" onclick="switchTab('saved')" style="max-width:36px">+</div>
+</div>
+
+<!-- TAB 1: SLOTS (1-40, paginated) -->
+<div class="panel active" id="panel-slots">
+  <div class="slot-grid" id="slotGrid"></div>
+</div>
+
+<!-- TAB 2: HISTORY -->
+<div class="panel" id="panel-history">
+  <div class="clip-list" id="clipList"></div>
+</div>
+
+<!-- TAB 3: AI -->
+<div class="panel" id="panel-ai">
+  <div class="clip-list" id="aiList">
+    <div class="empty-state"><div>AI QUICK ACCESS</div><div>use Ctrl+Alt+A for full AI chat</div></div>
+  </div>
+</div>
+
+<!-- TAB 4: SAVED (+) -->
+<div class="panel" id="panel-saved">
+  <div class="clip-list" id="savedList"></div>
+</div>
+
+<!-- DOCK -->
+<div class="dock">
+  <!-- Row 1: Pins + lock -->
+  <div class="dock-pins">
+    <div class="dock-icon pin active" id="pin1" draggable="true" ondragstart="dragPin(event,1)" title="Pin 1 — stay on top">&#x1f4cc;</div>
+    <div class="dock-icon pin" id="pin2" draggable="true" ondragstart="dragPin(event,2)" title="Pin 2 — drag to another window">&#x1f4cc;</div>
+    <div class="dock-icon pin" id="pin3" draggable="true" ondragstart="dragPin(event,3)" title="Pin 3 — drag to another window">&#x1f4cc;</div>
+    <div class="dock-icon" onclick="pinExternal()" title="Click, then click a window to pin it on top">&#x270f;&#xfe0f;</div>
+    <div class="dock-spacer"></div>
+    <button class="dock-lock" id="lockBtn" onclick="toggleLock()" title="Lock window size &amp; position">&#x1f512; LOCK</button>
+  </div>
+  <!-- Row 2: Categories -->
+  <div class="dock-cats">
+    <div class="dock-cat" onclick="toggleCat('docs')" id="cat-docs"><span class="cat-icon">&#x1f4c4;</span> Docs</div>
+    <div class="dock-cat" onclick="toggleCat('video')" id="cat-video"><span class="cat-icon">&#x1f3ac;</span> Video</div>
+    <div class="dock-cat" onclick="toggleCat('music')" id="cat-music"><span class="cat-icon">&#x1f3b5;</span> Music</div>
+    <div class="dock-cat" onclick="toggleCat('pics')" id="cat-pics"><span class="cat-icon">&#x1f5bc;&#xfe0f;</span> Pics</div>
+  </div>
+  <!-- Row 3: Status + pagination -->
+  <div class="dock-status">
+    <button onclick="prevPage()">&#x25c0;</button>
+    <button onclick="nextPage()">&#x25b6;</button>
+    <span class="status-badge" id="statusBadge">Updated</span>
+    <span class="status-count" id="statusCount">1/2 &middot; 0 slots</span>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+var clips = [];
+var savedClips = [];
+var searchTerm = '';
+var config = {};
+var activeTab = 'slots';
+var MAX_SLOTS = 40;
+var SLOTS_PER_PAGE = 22;
+var currentPage = 0;
+
+// Pin state in localStorage
+var pinnedSlots = {};
+try { pinnedSlots = JSON.parse(localStorage.getItem('clipsync_pins') || '{}'); } catch(e) { pinnedSlots = {}; }
+function savePins() { try { localStorage.setItem('clipsync_pins', JSON.stringify(pinnedSlots)); } catch(e) {} }
+
+// ── IPC ──
+function sendIpc(msg) {
+  try { window.chrome.webview.postMessage(JSON.stringify(msg)); return true; }
+  catch(e) { return false; }
+}
+
+// ── TABS ──
+function switchTab(name) {
+  activeTab = name;
+  var names = ['slots','history','ai','saved'];
+  document.querySelectorAll('.tab').forEach(function(t, i) {
+    t.classList.toggle('active', names[i] === name);
+  });
+  names.forEach(function(n) {
+    var p = document.getElementById('panel-' + n);
+    if (p) p.classList.toggle('active', n === name);
+  });
+}
+
+// ── TIME AGO ──
+function timeAgo(ts) {
+  if (!ts) return '';
+  var d;
+  if (typeof ts === 'string') {
+    d = new Date(ts);
+    if (isNaN(d.getTime())) return ts;
+  } else { d = ts; }
+  var diff = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  return Math.floor(diff / 86400) + 'd ago';
+}
+
+// ── SLOT CARDS (3-line) ──
+function getSortedSlotIndices() {
+  // Build array of slot indices for current page, pinned first
+  var start = currentPage * SLOTS_PER_PAGE;
+  var end = Math.min(start + SLOTS_PER_PAGE, MAX_SLOTS);
+  var indices = [];
+  for (var i = start; i < end; i++) indices.push(i);
+
+  // Sort: pinned first, then by index
+  indices.sort(function(a, b) {
+    var pa = pinnedSlots[a] ? 1 : 0;
+    var pb = pinnedSlots[b] ? 1 : 0;
+    if (pa !== pb) return pb - pa;
+    return a - b;
+  });
+  return indices;
+}
+
+function renderSlots() {
+  var grid = document.getElementById('slotGrid');
+  var q = searchTerm.toLowerCase();
+  var indices = getSortedSlotIndices();
+  var html = '';
+  var totalFilled = 0;
+
+  for (var j = 0; j < MAX_SLOTS; j++) {
+    if (clips[j] && clips[j].content) totalFilled++;
+  }
+
+  for (var k = 0; k < indices.length; k++) {
+    var i = indices[k];
+    var clip = clips[i];
+    var hasFill = clip && clip.content;
+    var isPinned = !!pinnedSlots[i];
+
+    if (q && hasFill && !clip.content.toLowerCase().includes(q)) continue;
+    if (q && !hasFill) continue;
+
+    var title = hasFill ? clip.content.split('\n')[0].substring(0, 50) : '';
+    var desc = hasFill ? clip.content.replace(/\n/g, ' ').substring(0, 80) : '';
+    var meta = '';
+    if (hasFill) {
+      var parts = [];
+      parts.push(timeAgo(clip.timestamp) || 'Copied');
+      if (isPinned) parts.push('pinned');
+      meta = parts.join(' \u00b7 ');
+    }
+
+    html += '<div class="slot-card' + (hasFill ? ' filled' : '') + (isPinned ? ' pinned' : '') + '">' +
+      '<div class="slot-head">' +
+        '<span class="slot-label">SLOT ' + (i + 1) + '</span>' +
+        '<span class="slot-head-right">' +
+          (hasFill ? '<span class="slot-status">READY</span>' : '') +
+          '<button class="pin-toggle' + (isPinned ? ' pinned' : '') + '" onclick="event.stopPropagation();togglePin(' + i + ')" title="Pin to top">\u{1f4cc}</button>' +
+        '</span>' +
+      '</div>' +
+      (hasFill ? '<div class="slot-title">' + esc(title) + '</div>' : '') +
+      '<div class="slot-desc">' + (hasFill ? esc(desc) : '') + '</div>' +
+      (hasFill ? '<div class="slot-meta">' + esc(meta) + '</div>' : '') +
+      '<div class="slot-btns">' +
+        (hasFill
+          ? '<button class="copy-btn" onclick="copySlot(' + i + ')">COPY</button>' +
+            '<button class="clear-btn" onclick="clearSlot(' + i + ')">\u00d7</button>'
+          : '<button class="save-to-slot-btn" onclick="saveToSlot(' + i + ')">+ PASTE HERE</button>') +
+      '</div>' +
+    '</div>';
+  }
+
+  grid.innerHTML = html || '<div class="empty-state"><div>NO SLOTS</div><div>copy something to get started</div></div>';
+
+  var totalPages = Math.ceil(MAX_SLOTS / SLOTS_PER_PAGE);
+  document.getElementById('statusCount').textContent =
+    (currentPage + 1) + '/' + totalPages + ' \u00b7 ' + totalFilled + ' slots';
+}
+
+function togglePin(i) {
+  if (pinnedSlots[i]) { delete pinnedSlots[i]; }
+  else { pinnedSlots[i] = true; }
+  savePins();
+  renderSlots();
+}
+
+function copySlot(i) {
+  if (clips[i] && clips[i].content) { navigator.clipboard.writeText(clips[i].content); showToast('COPIED'); }
+}
+function clearSlot(i) {
+  if (clips[i]) { clips[i] = { content: '', timestamp: '', tags: [], pinned: false }; renderSlots(); }
+}
+function saveToSlot(i) {
+  navigator.clipboard.readText().then(function(text) {
+    if (text) {
+      clips[i] = { content: text, timestamp: new Date().toISOString(), tags: [], pinned: false };
+      renderSlots();
+      showToast('SAVED TO SLOT ' + (i + 1));
+    }
+  }).catch(function() { showToast('CLIPBOARD EMPTY'); });
+}
+
+// ── PAGINATION ──
+function prevPage() {
+  var totalPages = Math.ceil(MAX_SLOTS / SLOTS_PER_PAGE);
+  currentPage = (currentPage - 1 + totalPages) % totalPages;
+  renderSlots();
+}
+function nextPage() {
+  var totalPages = Math.ceil(MAX_SLOTS / SLOTS_PER_PAGE);
+  currentPage = (currentPage + 1) % totalPages;
+  renderSlots();
+}
+
+// ── HISTORY (3-line cards with big copy + pin) ──
+function renderHistory() {
+  var list = document.getElementById('clipList');
+  var q = searchTerm.toLowerCase();
+  var filled = clips.filter(function(c) { return c && c.content; });
+  var filtered = filled.filter(function(c) { return !q || c.content.toLowerCase().includes(q); });
+
+  // Sort: pinned first
+  filtered.sort(function(a, b) {
+    var ai = clips.indexOf(a), bi = clips.indexOf(b);
+    var pa = pinnedSlots[ai] ? 1 : 0, pb = pinnedSlots[bi] ? 1 : 0;
+    if (pa !== pb) return pb - pa;
+    return 0;
+  });
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div>NO HISTORY</div><div>clips appear as you copy</div></div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(function(clip) {
+    var i = clips.indexOf(clip);
+    var isPinned = !!pinnedSlots[i];
+    // Line 1: first line of content (bold white title)
+    var title = (clip.content || '').split('\n')[0].substring(0, 60);
+    // Line 2: rest of content flattened (normal grey)
+    var lines = (clip.content || '').split('\n');
+    var desc = lines.length > 1 ? lines.slice(1).join(' ').trim().substring(0, 100) : (clip.content || '').replace(/\n/g, ' ').substring(0, 100);
+    // Line 3: smaller detail — char count + type hint
+    var charCount = (clip.content || '').length;
+    var lineCount = lines.length;
+    var detail = charCount + ' chars \u00b7 ' + lineCount + ' line' + (lineCount !== 1 ? 's' : '');
+    if ((clip.content || '').match(/^https?:\/\//)) detail += ' \u00b7 url';
+    else if ((clip.content || '').match(/^[\{\[]/)) detail += ' \u00b7 json';
+    else if (lineCount > 5) detail += ' \u00b7 block';
+
+    var metaParts = [];
+    metaParts.push(timeAgo(clip.timestamp) || 'Copied');
+    if (isPinned) metaParts.push('pinned');
+    var meta = metaParts.join(' \u00b7 ');
+
+    return '<div class="clip-item' + (isPinned ? ' pinned' : '') + '">' +
+      '<div class="clip-head">' +
+        '<span class="clip-title">' + esc(title || 'Untitled clip') + '</span>' +
+        '<div class="clip-actions">' +
+          '<button class="pin-toggle' + (isPinned ? ' pinned' : '') + '" onclick="event.stopPropagation();togglePin(' + i + ')" title="Pin">\u{1f4cc}</button>' +
+          '<button onclick="event.stopPropagation();saveClip(clips[' + i + '].content)">SAVE</button>' +
+          '<button class="del-btn" onclick="event.stopPropagation();clearSlot(' + i + ');renderHistory()">DEL</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="clip-desc">' + esc(desc) + '</div>' +
+      '<div class="clip-detail">' + esc(detail) + '</div>' +
+      '<div class="clip-meta-line">' + esc(meta) + '</div>' +
+      '<button class="clip-copy-btn" onclick="event.stopPropagation();navigator.clipboard.writeText(clips[' + i + '].content);showToast(\'COPIED\')">COPY</button>' +
+    '</div>';
+  }).join('');
+}
+
+// ── SAVED (long-term) ──
+function renderSaved() {
+  var list = document.getElementById('savedList');
+  var q = searchTerm.toLowerCase();
+  var filtered = savedClips.filter(function(c) { return !q || c.content.toLowerCase().includes(q); });
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div>NO SAVED CLIPS</div><div>hit SAVE from History to keep items permanently</div></div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(function(clip, i) {
+    var title = (clip.content || '').split('\n')[0].substring(0, 50);
+    var desc = (clip.content || '').replace(/\n/g, ' ').substring(0, 80);
+    return '<div class="clip-item pinned">' +
+      '<div class="clip-head">' +
+        '<span class="clip-title">' + esc(title || 'Saved clip') + '</span>' +
+        '<div class="clip-actions">' +
+          '<button class="del-btn" onclick="event.stopPropagation();removeSaved(' + i + ')">DEL</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="clip-desc">' + esc(desc) + '</div>' +
+      '<div class="clip-meta-line">' + esc(timeAgo(clip.timestamp) || '') + ' \u00b7 saved</div>' +
+      '<button class="clip-copy-btn" onclick="event.stopPropagation();navigator.clipboard.writeText(savedClips[' + i + '].content);showToast(\'COPIED\')">COPY</button>' +
+    '</div>';
+  }).join('');
+}
+
+function saveClip(content) {
+  if (savedClips.some(function(s) { return s.content === content; })) { showToast('ALREADY SAVED'); return; }
+  savedClips.push({ content: content, timestamp: new Date().toISOString(), tags: ['saved'], pinned: true });
+  try { localStorage.setItem('clipsync_saved', JSON.stringify(savedClips)); } catch(e) {}
+  renderSaved();
+  showToast('SAVED');
+}
+function removeSaved(i) {
+  savedClips.splice(i, 1);
+  try { localStorage.setItem('clipsync_saved', JSON.stringify(savedClips)); } catch(e) {}
+  renderSaved();
+}
+function loadSaved() {
+  try { var d = localStorage.getItem('clipsync_saved'); if (d) savedClips = JSON.parse(d); } catch(e) {}
+  renderSaved();
+}
+
+// ── SEARCH ──
+document.getElementById('clipSearch').addEventListener('input', function(e) {
+  searchTerm = e.target.value;
+  renderAll();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 'f') { e.preventDefault(); document.getElementById('clipSearch').focus(); }
+});
+
+// ── HELPERS ──
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 600);
+}
+
+// ── DOCK: PINS ──
+var activeCat = null;
+var windowLocked = false;
+
+// Pin click toggles always-on-top
+document.getElementById('pin1').addEventListener('click', function() {
+  var el = document.getElementById('pin1');
+  var isActive = el.classList.toggle('active');
+  sendIpc({ type: 'set_always_on_top', value: isActive });
+  showToast(isActive ? 'PINNED ON TOP' : 'UNPINNED');
+});
+document.getElementById('pin2').addEventListener('click', function() {
+  var el = document.getElementById('pin2');
+  el.classList.toggle('active');
+  showToast('PIN 2 — drag to another window');
+});
+document.getElementById('pin3').addEventListener('click', function() {
+  var el = document.getElementById('pin3');
+  el.classList.toggle('active');
+  showToast('PIN 3 — drag to another window');
+});
+
+function dragPin(e, pinNum) {
+  e.dataTransfer.setData('text/plain', 'pin_' + pinNum);
+  document.getElementById('pin' + pinNum).classList.add('dragging');
+}
+document.addEventListener('dragend', function() {
+  document.querySelectorAll('.dock-icon.pin').forEach(function(el) { el.classList.remove('dragging'); });
+});
+
+// Pin external window — click then click the target window
+function pinExternal() {
+  showToast('CLICK A WINDOW TO PIN...');
+  sendIpc({ type: 'pin_external' });
+}
+
+// Lock window size & position
+function toggleLock() {
+  windowLocked = !windowLocked;
+  var btn = document.getElementById('lockBtn');
+  if (windowLocked) {
+    btn.classList.add('locked');
+    btn.innerHTML = '\u{1f512} LOCKED';
+    sendIpc({ type: 'lock_window', value: true });
+  } else {
+    btn.classList.remove('locked');
+    btn.innerHTML = '\u{1f513} LOCK';
+    sendIpc({ type: 'lock_window', value: false });
+  }
+  showToast(windowLocked ? 'LOCKED' : 'UNLOCKED');
+}
+
+// ── DOCK: CATEGORIES ──
+function toggleCat(name) {
+  activeCat = activeCat === name ? null : name;
+  document.querySelectorAll('.dock-cat').forEach(function(el) { el.classList.remove('active'); });
+  if (activeCat) document.getElementById('cat-' + activeCat).classList.add('active');
+  // Filter clips by category in future
+}
+
+// ── CONFIG ──
+function populateUI() {}
+
+// ── IPC INIT ──
+function requestClips() {
+  if (!sendIpc({ type: 'get_clips' })) {
+    clips = [{ content: 'ClipSync running. Copy something.', timestamp: new Date().toISOString(), tags: ['system'], pinned: false }];
+    renderAll();
+  }
+}
+function renderAll() { renderSlots(); renderHistory(); renderSaved(); }
+function renderClips() { renderAll(); }
+
+setInterval(function() { try { sendIpc({ type: 'get_clips' }); } catch(e) {} }, 2000);
+
+// BOOT
+sendIpc({ type: 'get_config' });
+requestClips();
+loadSaved();
+</script>
+</body>
+</html>
