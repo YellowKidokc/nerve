@@ -19,7 +19,9 @@ $installDir = "$env:LOCALAPPDATA\ClipSync"
 $startMenu  = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
 $startupDir = "$startMenu\Startup"
 $exeName    = "nerve.exe"
-$source     = "target\release\$exeName"
+# Resolved against the script's own folder rather than the caller's working
+# directory, so the install works no matter where it is invoked from.
+$source     = Join-Path $PSScriptRoot "target\release\$exeName"
 
 Write-Host "Installing Nerve..." -ForegroundColor Cyan
 
@@ -38,7 +40,7 @@ if ($running) {
 
 New-Item -ItemType Directory -Force -Path "$installDir\html" | Out-Null
 Copy-Item $source "$installDir\$exeName" -Force
-Copy-Item "html\*" "$installDir\html\" -Force -Recurse
+Copy-Item (Join-Path $PSScriptRoot "html\*") "$installDir\html\" -Force -Recurse
 
 Write-Host "  Installed to: $installDir" -ForegroundColor Green
 
