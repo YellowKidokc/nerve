@@ -20,6 +20,13 @@ const DEFAULT_SETTINGS = {
   semanticRegistryPath: ".obsidian/plugins/semantic-ai/concept-registry.json",
   useSemanticRegistry: true,
   useSemanticCanonization: false,
+  classificationProfiles: cloneClassificationProfiles(),
+  activeClassificationProfile: "candidate-pipeline",
+  postProcessing: {
+    writeJsonReceipts: true,
+    writeMarkdownProjections: true,
+    postgresHandoff: false
+  },
   underlineStatus: "candidate",
   candidateReviewRoot: "notes/AXIOM_CANONIZATION_2026-08-29",
   nerveBuilderUrl: ".obsidian/plugins/canonization-workbench/nerve/atom-builder.html"
@@ -85,6 +92,24 @@ const CANONIZATION_PASSES = {
     stage: 0
   }
 };
+
+// These are editable in the workbench settings and travel as a JSON
+// configuration. They are deliberately separate from the resulting candidate
+// packets: changing a prompt never rewrites an earlier receipt.
+const DEFAULT_CLASSIFICATION_PROFILES = [
+  { id: "candidate-pipeline", name: "Three-stage candidate pipeline", mode: "pipeline", enabled: true, semanticCategory: "Canonization", categories: ["Referent", "Identity", "Distinction", "Relation", "Operation", "Dependency", "Constraint", "Invariant", "CollapseCondition", "Consequence", "Representation", "FormalizationBoundary", "OpenQuestion", "Claim", "Definition", "EvidenceUnit", "Proof", "Bridge", "Objection", "Countermodel", "Limitation"], prompt: "Run discovery, classification, and reconciliation as separately receipted candidate-only stages." },
+  { id: "claims", name: "Claims and burden", mode: "pass", passId: "claims", enabled: true, semanticCategory: "Canonization", categories: ["Claim", "Premise", "EvidenceUnit", "Observation", "Objection", "Countermodel", "Limitation"], prompt: "Classify the smallest independently gradable assertions and their burden without upgrading warrant." },
+  { id: "definitions", name: "Definitions and boundaries", mode: "pass", passId: "definitions", enabled: true, semanticCategory: "Canonization", categories: ["Definition", "Identity", "Distinction", "Constraint", "AntiTerm"], prompt: "Open exact definitions, aliases, identity conditions, boundaries, and anti-terms." },
+  { id: "mathematics", name: "Mathematics and notation", mode: "pass", passId: "mathematics", enabled: true, semanticCategory: "Canonization", categories: ["Primitive", "Definition", "Assumption", "Dependency", "Derivation", "TheoremCandidate", "FormalizationBoundary"], prompt: "Separate mathematical objects, notation, premises, derivations, and formal boundaries from their interpretation." },
+  { id: "theology", name: "Theology and Scripture", mode: "pass", passId: "theology", enabled: true, semanticCategory: "Canonization", categories: ["TheologicalDeclaration", "ScriptureAnchor", "Interpretation", "HistoricalClaim", "Limitation"], prompt: "Keep theological declaration, interpretation, historical support, and formal claims separately addressable." },
+  { id: "bridges", name: "Bridges and translation", mode: "pass", passId: "bridges", enabled: true, semanticCategory: "Canonization", categories: ["NativeGrammar", "NeutralForm", "Mapping", "Invariant", "TranslationLoss", "ReverseMap", "RivalMapping", "NegativeControl", "BridgeTest", "DefeatCondition"], prompt: "Treat every bridge as directional and candidate-only; always print preserved and lost structure." },
+  { id: "truth", name: "Truth predicates and why closure", mode: "pass", passId: "truth", enabled: true, semanticCategory: "Canonization", categories: ["TruthCondition", "ExactNegation", "Countermodel", "KillCondition", "HiddenBorrowing", "WhyClosure", "OpenQuestion"], prompt: "Record truth conditions and defeat structure without turning an unresolved predicate into a verdict." },
+  { id: "formalization", name: "Lean and formalization", mode: "pass", passId: "mathematics", enabled: true, semanticCategory: "Canonization", categories: ["Definition", "Axiom", "Assumption", "LemmaCandidate", "TheoremCandidate", "ProofArtifact", "FormalizationBlocker", "FormalBoundary", "LeanChecked"], prompt: "Identify formalization candidates and proof artifacts. Lean may test conditionals but does not establish theological, historical, empirical, or physical instantiation claims." }
+];
+
+function cloneClassificationProfiles(profiles) {
+  return (Array.isArray(profiles) ? profiles : DEFAULT_CLASSIFICATION_PROFILES).map((profile) => ({ ...profile, categories: Array.isArray(profile.categories) ? [...profile.categories] : [] }));
+}
 
 const PROMPTS = {
   "canonical_definition.md": "Define the term precisely. Distinguish its canonical meaning from aliases, metaphorical uses, and unresolved interpretations.",
@@ -508,10 +533,12 @@ class CanonWorkbenchView extends ItemView {
     semanticBox.createEl("h3", { text: "Semantic AI / Canonization API" });
     semanticBox.createEl("p", { text: "Select this for discovery and categorization into canonization lanes. Results remain candidate intake and never become admissions." });
     new Setting(semanticBox).setName("Use Semantic AI for canonization").setDesc("Runs only when selected. Uses Semantic AI's active provider and the Canonization category.").addToggle((toggle) => toggle.setValue(this.plugin.settings.useSemanticCanonization).onChange(async (value) => { this.plugin.settings.useSemanticCanonization = value; await this.plugin.saveSettings(); }));
-    new Setting(semanticBox).setName("Canonization pass").setDesc("Run one bounded question set or the complete sequence.").addDropdown((dropdown) => {
-      for (const [id, pass] of Object.entries(CANONIZATION_PASSES)) dropdown.addOption(id, pass.label);
-      dropdown.setValue(this.plugin.selectedCanonizationPass || "full").onChange((value) => { this.plugin.selectedCanonizationPass = value; });
-    }).addButton((button) => button.setButtonText("Run selected pipeline").setCta().onClick(() => this.plugin.runSemanticCanonizationCurrentNote(null, this.plugin.selectedCanonizationPass || "full")));
+    new Setting(semanticBox).setName("Classification profile").setDesc("Each profile owns its categories and prompt. The candidate pipeline is three distinct API calls; specialized profiles run one bounded pass.").addDropdown((dropdown) => {
+      for (const profile of this.plugin.classificationProfiles()) dropdown.addOption(profile.id, profile.name);
+      dropdown.setValue(this.plugin.settings.activeClassificationProfile || "candidate-pipeline").onChange(async (value) => { this.plugin.settings.activeClassificationProfile = value; await this.plugin.saveSettings(); });
+    }).addButton((button) => button.setButtonText("Run selected profile").setCta().onClick(() => this.plugin.runClassificationProfile(null)));
+    const activeProfile = this.plugin.classificationProfile(this.plugin.settings.activeClassificationProfile);
+    if (activeProfile) semanticBox.createEl("p", { cls: "canonization-profile-summary", text: `Categories: ${activeProfile.categories.join(" · ")}` });
     new Setting(semanticBox).setName("Nerve Atom Builder").setDesc("Open the canonical HTML authoring interface in the right-side pane. Validated packets are preserved as JSON and projected into Obsidian Properties.").addButton((button) => button.setButtonText("Open Nerve interface").setCta().onClick(() => this.plugin.activateNerveBuilder()));
     new Setting(semanticBox).setName("Nerve JSON round trip").setDesc("Export Draft inside the Nerve sidebar to preserve editable JSON. Open an editable-draft JSON note here, then import it without altering a validated candidate packet.").addButton((button) => button.setButtonText("Import active draft JSON").onClick(() => this.plugin.importActiveNerveDraft()));
     new Setting(contentEl).addButton((button) => button.setButtonText("Create card").setCta().onClick(() => new CreateCanonModal(this.app, this.plugin).open()));
@@ -555,6 +582,18 @@ class CanonizationSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
     containerEl.createEl("h2", { text: "Canonization Workbench" });
+    new Setting(containerEl).setName("Classification profiles").setHeading();
+    containerEl.createEl("p", { text: "Profiles are the workbench's editable classification library. Each records its own categories and prompt, then uses Semantic AI only to propose candidate packets." });
+    for (const profile of this.plugin.settings.classificationProfiles) {
+      const row = containerEl.createDiv({ cls: "canonization-profile-settings" });
+      new Setting(row).setName(profile.name || profile.id).setDesc(profile.mode === "pipeline" ? "Three distinct API calls: discovery, classification, reconciliation." : `Runs the ${profile.passId || "claims"} pass.`).addToggle((toggle) => toggle.setValue(profile.enabled !== false).onChange(async (value) => { profile.enabled = value; await this.plugin.saveSettings(); }));
+      new Setting(row).setName("Categories").setDesc("Comma-separated classification labels carried into the API instruction and receipt.").addText((text) => text.setValue((profile.categories || []).join(", ")).onChange(async (value) => { profile.categories = value.split(",").map((item) => item.trim()).filter(Boolean); await this.plugin.saveSettings(); }));
+      new Setting(row).setName("Prompt").addTextArea((text) => { text.setValue(profile.prompt || "").onChange(async (value) => { profile.prompt = value; await this.plugin.saveSettings(); }); text.inputEl.rows = 3; });
+    }
+    new Setting(containerEl).setName("Profile JSON").setDesc("Export or import the whole classification library. Import replaces only the workbench profiles; it never changes historical receipts.").addButton((button) => button.setButtonText("Copy export").onClick(async () => { await navigator.clipboard.writeText(JSON.stringify({ format: "canonization-classification-profiles/1.0.0", profiles: this.plugin.settings.classificationProfiles }, null, 2)); new Notice("Classification profile JSON copied."); })).addButton((button) => button.setButtonText("Import from clipboard").onClick(async () => { try { const parsed = JSON.parse(await navigator.clipboard.readText()); if (!Array.isArray(parsed?.profiles) || !parsed.profiles.length) throw new Error("No profiles array found."); this.plugin.settings.classificationProfiles = cloneClassificationProfiles(parsed.profiles); this.plugin.settings.activeClassificationProfile = this.plugin.settings.classificationProfiles[0].id; await this.plugin.saveSettings(); this.display(); new Notice("Classification profiles imported. Existing receipts were not changed."); } catch (error) { new Notice(`Could not import classification profiles: ${error.message || error}`); } }));
+    new Setting(containerEl).setName("Post-processing and PostgreSQL handoff").setHeading();
+    containerEl.createEl("p", { text: "Candidate JSON and Markdown receipts are always written locally. PostgreSQL handoff writes an outbox item only; a local helper must deliberately consume it. No database credential is stored in this workbench." });
+    new Setting(containerEl).setName("Write PostgreSQL handoff outbox").setDesc("Creates a candidate-only JSON handoff for the local database helper after each completed run.").addToggle((toggle) => toggle.setValue(Boolean(this.plugin.settings.postProcessing.postgresHandoff)).onChange(async (value) => { this.plugin.settings.postProcessing.postgresHandoff = value; await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName("Canonical root folder").setDesc("All canonical cards, prompts, proposals, and receipts live under this vault folder.").addText((text) => text.setValue(this.plugin.settings.canonRoot).onChange(async (value) => { this.plugin.settings.canonRoot = value.trim() || "_CANONICAL"; await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName("Read Semantic AI concept registry").setDesc("Uses concept labels and aliases for discovery only. No provider settings or API key are read.").addToggle((toggle) => toggle.setValue(this.plugin.settings.useSemanticRegistry).onChange(async (value) => { this.plugin.settings.useSemanticRegistry = value; await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName("Semantic AI canonization box").setDesc("Allows explicit candidate discovery with Semantic AI's Canonization category. Off means no AI call from this workbench.").addToggle((toggle) => toggle.setValue(this.plugin.settings.useSemanticCanonization).onChange(async (value) => { this.plugin.settings.useSemanticCanonization = value; await this.plugin.saveSettings(); }));
@@ -618,8 +657,24 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     this.registerEditorExtension(this.buildUnderlineExtension());
   }
 
-  async loadSettings() { this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData()); }
+  async loadSettings() {
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.settings.classificationProfiles = cloneClassificationProfiles(this.settings.classificationProfiles);
+    this.settings.postProcessing = Object.assign({}, DEFAULT_SETTINGS.postProcessing, this.settings.postProcessing || {});
+  }
   async saveSettings() { await this.saveData(this.settings); }
+
+  classificationProfiles() { return this.settings.classificationProfiles.filter((profile) => profile.enabled !== false); }
+
+  classificationProfile(id) {
+    return this.classificationProfiles().find((profile) => profile.id === id) || this.classificationProfiles()[0] || null;
+  }
+
+  profileInstruction(profile) {
+    if (!profile) return "";
+    const categories = Array.isArray(profile.categories) && profile.categories.length ? `\nCLASSIFICATION CATEGORIES: ${profile.categories.join(", ")}` : "";
+    return `${profile.prompt || ""}${categories}`;
+  }
 
   resolveNerveBuilderUrl() {
     const configured = String(this.settings.nerveBuilderUrl || DEFAULT_SETTINGS.nerveBuilderUrl).trim();
@@ -771,6 +826,14 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     new Notice(`Folder canonization complete: ${passed}/${files.length} notes, ${proposals} proposals, zero admissions.`);
   }
 
+  async runClassificationProfile(forcedFile = null, options = {}) {
+    const profile = this.classificationProfile(this.settings.activeClassificationProfile);
+    if (!profile) return new Notice("No enabled classification profile is configured.");
+    const profileContext = this.profileInstruction(profile);
+    if (profile.mode === "pipeline") return this.runThreeStageCandidatePipeline(forcedFile, { ...options, profile, profileContext });
+    return this.runSemanticCanonizationCurrentNote(forcedFile, profile.passId || "claims", { ...options, profile, profileContext });
+  }
+
   async runThreeStageCandidatePipeline(forcedFile = null, options = {}) {
     const file = forcedFile || this.app.workspace.getActiveFile();
     if (!file || file.extension !== "md") return { error: "Open the Markdown note you want Semantic AI to examine." };
@@ -779,7 +842,7 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     let priorStage = null;
     const notice = options.quiet ? null : new Notice("Semantic AI: running three-stage candidate pipeline…", 0);
     for (const stage of stages) {
-      const result = await this.runSemanticCanonizationCurrentNote(file, stage, { quiet: true, openResult: false, priorStage });
+      const result = await this.runSemanticCanonizationCurrentNote(file, stage, { quiet: true, openResult: false, priorStage, profile: options.profile || null, profileContext: options.profileContext || "" });
       if (result?.error) {
         notice?.hide();
         if (!options.quiet) new Notice(`Candidate pipeline stopped at ${CANONIZATION_PASSES[stage].label}: ${result.error}`, 10000);
@@ -795,6 +858,7 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
       packet_version: "semantic-ai-three-stage-pipeline/1.0.0",
       status: CANDIDATE_STATUS,
       source_file: file.path,
+      classification_profile: options.profile?.id || "candidate-pipeline",
       stages: results.map((row) => ({ stage: row.stage, packet: row.jsonFile.path, proposals: row.proposalCount })),
       canonical_admission_performed: false,
       human_ruling_required: true
@@ -816,15 +880,17 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     if (!file || file.extension !== "md") return new Notice("Open the Markdown note you want Semantic AI to examine.");
     const semantic = this.app.plugins?.getPlugin?.("semantic-ai");
     if (!semantic?.classifier) return new Notice("Semantic AI is not loaded. Enable it in Community Plugins and try again.");
-    if (!semantic.settings?.categories?.some((entry) => entry.id === "Canonization" && entry.enabled)) return new Notice("The Semantic AI Canonization category is missing or disabled.");
+    const semanticCategory = options.profile?.semanticCategory || "Canonization";
+    if (!semantic.settings?.categories?.some((entry) => entry.id === semanticCategory && entry.enabled)) return new Notice(`The Semantic AI ${semanticCategory} category is missing or disabled.`);
     const validation = semantic.classifier.validateConfiguration();
     if (!validation.valid) return new Notice(`Semantic AI is not ready: ${validation.error}`);
     const notice = options.quiet ? null : new Notice(`Semantic AI: ${pass.label}…`, 0);
     try {
       const bundle = await this.store.sourceBundleForCard(file);
       const priorContext = options.priorStage?.packet ? `\n\nPRIOR STAGE OUTPUT — ${options.priorStage.packet.canonization_pass_label || "candidate-only"}\nThis is prior candidate output, not truth or admission. Retain its OPEN fields and correct it only by making an explicit new proposal:\n${JSON.stringify(options.priorStage.packet.proposals || [], null, 2)}` : "";
-      const directedText = `CANONIZATION PASS: ${pass.label}\nSTAGE: ${pass.stage || "specialized"}\nBOUNDARY: ${pass.instruction}\nEvery output remains CANDIDATE_DRAFT — NOT ADMITTED.${priorContext}\n\nSOURCE:\n${bundle.text}`;
-      const result = await semantic.classifier.classifySingleType(directedText, "Canonization", file.path);
+      const profileContext = options.profileContext ? `\nPROFILE: ${options.profile?.name || "Custom"}\n${options.profileContext}` : "";
+      const directedText = `CANONIZATION PASS: ${pass.label}\nSTAGE: ${pass.stage || "specialized"}\nBOUNDARY: ${pass.instruction}${profileContext}\nEvery output remains CANDIDATE_DRAFT — NOT ADMITTED.${priorContext}\n\nSOURCE:\n${bundle.text}`;
+      const result = await semantic.classifier.classifySingleType(directedText, semanticCategory, file.path);
       const allowedLanes = new Set(["definition", "mathematical_component", "theological_component", "bridge_claim", "scripture_anchor", "dependency_graph", "proposal", "review_queue", "receipt"]);
       let proposals = result.tags.map((tag, index) => {
         const metadata = tag.metadata && typeof tag.metadata === "object" ? tag.metadata : {};
@@ -874,8 +940,9 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
           if (card) updates.push({ canon_id: target, card: card.path, outcomes: await this.store.accumulateProposals(card, items, bundle.paths) });
         }
       }
-      const packet = { packet_version: "semantic-ai-canonization-intake/2.2.0", status: CANDIDATE_STATUS, canonization_pass: passId, canonization_pass_label: pass.label, canonization_stage: pass.stage || null, prior_stage_packet: options.priorStage?.jsonFile?.path || null, source_file: file.path, bundled_sources: bundle.paths, source_mtime: file.stat.mtime, semantic_category: "Canonization", provider: semantic.settings.provider, result_count: proposals.length, proposals, candidate_card_updates: updates, canonical_admission_performed: false, source_modified: false, human_ruling_required: true };
+      const packet = { packet_version: "semantic-ai-canonization-intake/2.3.0", status: CANDIDATE_STATUS, canonization_pass: passId, canonization_pass_label: pass.label, canonization_stage: pass.stage || null, classification_profile: options.profile?.id || null, classification_profile_name: options.profile?.name || null, classification_categories: options.profile?.categories || [], prior_stage_packet: options.priorStage?.jsonFile?.path || null, source_file: file.path, bundled_sources: bundle.paths, source_mtime: file.stat.mtime, semantic_category: semanticCategory, provider: semantic.settings.provider, result_count: proposals.length, proposals, candidate_card_updates: updates, canonical_admission_performed: false, source_modified: false, human_ruling_required: true };
       const jsonFile = await this.app.vault.create(normalizePath(`${root}/${base}.json`), JSON.stringify(packet, null, 2) + "\n");
+      const postgresHandoff = await this.writePostgresHandoff(packet, jsonFile);
       const lines = ["---", `title: \"Semantic AI Canonization Intake — ${escapeYaml(file.basename)}\"`, `date: ${new Date().toISOString()}`, `source: \"${escapeYaml(file.path)}\"`, `canonization_pass: \"${passId}\"`, `status: \"${CANDIDATE_STATUS}\"`, "authority: \"DISCOVERY ONLY — HUMAN REVIEW REQUIRED\"", "---", "", `# Semantic AI Canonization Intake — ${file.basename}`, "", `> [!warning] ${CANDIDATE_STATUS}`, "> Semantic AI categorized possible canonization objects. It did not validate truth, move the source, or admit anything.", "", `- **Pass:** ${pass.label}`, `- **Proposals:** ${proposals.length}`, `- **JSON receipt:** [[${jsonFile.path}]]`, ""];
       for (const item of proposals) { lines.push(`## ${item.candidate_id} — ${item.label}`, "", `- **Proposed lane:** ${item.proposed_lane}`, `- **Object type:** ${item.proposed_object_type}`, `- **Register:** ${item.register}`, `- **Warrant:** ${item.warrant}`, `- **Source span:** ${item.source_span}`, "", "### Defeat conditions", ""); if (item.defeat_conditions.length) item.defeat_conditions.forEach((value) => lines.push(`- ${value}`)); else lines.push("- OPEN"); lines.push("", "### OPEN fields", ""); item.open_fields.forEach((value) => lines.push(`- [ ] ${value}`)); lines.push(""); }
       if (updates.length) { lines.push("## Candidate-card accumulation", ""); for (const update of updates) lines.push(`- **${update.canon_id}:** ${update.outcomes.filter((row) => row.inserted).length} proposed blocks added; ${update.outcomes.filter((row) => !row.inserted).length} duplicates or blocked.`); lines.push(""); }
@@ -883,8 +950,27 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
       notice?.hide();
       if (!options.quiet) new Notice(`${pass.label}: ${proposals.length} candidate object${proposals.length === 1 ? "" : "s"}; ${updates.length} card${updates.length === 1 ? "" : "s"} accumulated. Zero admissions.`);
       if (options.openResult !== false) { if (directMeta.canon_id) new CanonCardReviewModal(this.app, this, file).open(); else await this.openFile(mdFile); }
-      return { packet, proposals, jsonFile, mdFile };
+      return { packet, proposals, jsonFile, mdFile, postgresHandoff };
     } catch (error) { notice?.hide(); if (!options.quiet) new Notice(`Semantic AI canonization failed: ${error.message || error}`, 1e4); return { error: error.message || String(error) }; }
+  }
+
+  async writePostgresHandoff(packet, sourcePacket) {
+    if (!this.settings.postProcessing?.postgresHandoff) return null;
+    const root = normalizePath(`${this.settings.candidateReviewRoot}/_postgres_handoff_outbox`);
+    await this.store.ensureFolder(root);
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    const handoff = {
+      format: "canonization-postgres-handoff/1.0.0",
+      status: CANDIDATE_STATUS,
+      source_packet: sourcePacket.path,
+      vault: this.app.vault.getName(),
+      requested_at: new Date().toISOString(),
+      operation: "UPSERT_CANDIDATE_ONLY",
+      packet,
+      canonical_admission_performed: false,
+      helper_contract: "A local helper may ingest this outbox item into a candidate table. It must reject admission, active-pointer, and source-rewrite operations."
+    };
+    return this.app.vault.create(normalizePath(`${root}/${stamp}-${crypto.randomUUID().slice(0, 8)}-candidate-handoff.json`), JSON.stringify(handoff, null, 2) + "\n");
   }
 
   async runPropagationPreview() {

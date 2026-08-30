@@ -72,6 +72,25 @@
   margin-top: 0.35rem;
 }
 
+.canonization-profile-summary {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  line-height: 1.45;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.canonization-profile-settings {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 7px;
+  margin: 0.6rem 0;
+  padding: 0.45rem 0.7rem;
+  background: var(--background-secondary);
+}
+
+.canonization-profile-settings textarea {
+  min-height: 4.5rem;
+}
+
 .canonization-nerve-view { padding: 0 !important; overflow: hidden; height: 100%; }
 .canonization-nerve-toolbar {
   display: flex; align-items: center; gap: 0.5rem;
