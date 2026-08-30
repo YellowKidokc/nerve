@@ -1,0 +1,87 @@
+.canonization-term {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.canonization-term.canonization-exact { text-decoration-color: var(--color-green); }
+.canonization-term.canonization-candidate { text-decoration-color: var(--color-yellow); }
+.canonization-term.canonization-drift { text-decoration-color: var(--color-red); }
+.canonization-term.canonization-related { text-decoration-style: dotted; text-decoration-color: var(--color-purple); }
+
+.canonization-proposed {
+  border-left: 3px solid var(--color-yellow);
+  background: color-mix(in srgb, var(--color-yellow) 10%, transparent);
+  padding: 0.45rem 0.65rem;
+}
+
+.canonization-card-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.45rem;
+  align-items: center;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  margin: 0.45rem 0;
+  padding: 0.65rem;
+  background: var(--background-secondary);
+}
+.canonization-card-row button { width: auto; margin: 0; }
+.canonization-card-summary { min-width: 0; }
+
+.canonization-card-modal { width: min(1100px, 92vw); }
+.canonization-card-modal-controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.canonization-rendered-card {
+  max-height: 72vh;
+  overflow: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  background: var(--background-primary);
+}
+
+.canonization-status {
+  color: var(--text-muted);
+  font-size: var(--font-smallest);
+}
+
+.canonization-candidate-row {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  margin: 0.5rem 0;
+  padding: 0.6rem;
+}
+
+.canonization-candidate-row button { margin: 0.4rem 0.4rem 0 0; }
+
+.canonization-semantic-box {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--interactive-accent);
+  border-radius: 8px;
+  background: var(--background-secondary);
+}
+.canonization-semantic-box h3 { margin: 0 0 0.35rem; }
+.canonization-semantic-box p { margin: 0 0 0.5rem; color: var(--text-muted); }
+
+.canonization-language-summary {
+  color: var(--text-normal);
+  font-size: var(--font-small);
+  margin-top: 0.35rem;
+}
+
+.canonization-nerve-view { padding: 0 !important; overflow: hidden; height: 100%; }
+.canonization-nerve-toolbar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+.canonization-nerve-toolbar strong { flex: 1; }
+.canonization-nerve-toolbar button { padding: 0.25rem 0.55rem; }
+.canonization-nerve-frame {
+  display: block; width: 100%; height: calc(100% - 44px);
+  border: 0; background: #0c0c0c;
+}

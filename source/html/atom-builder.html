@@ -319,6 +319,9 @@ textarea{resize:vertical;min-height:56px;line-height:1.6}
   <div class="hsp"></div>
   <span class="saved" id="savemark"></span>
   <button class="hbtn hbtn-g" onclick="location.href='workbench.html'">Canon Workbench</button>
+  <button class="hbtn hbtn-g" onclick="document.getElementById('nerve-import').click()">Import JSON</button>
+  <button class="hbtn hbtn-g" onclick="exportNerveDraft()">Export Draft</button>
+  <input id="nerve-import" type="file" accept="application/json,.json" hidden onchange="importNerveFile(this.files[0]);this.value=''">
   <button class="hbtn hbtn-g" id="jbtn" onclick="tJSON()">Show JSON</button>
   <button class="hbtn hbtn-g" onclick="expAll()">Validate Candidate Packet</button>
   <button class="hbtn hbtn-b" onclick="newAtom()">＋ New Atom</button>
@@ -1049,24 +1052,26 @@ function addTerm(aid){
 
 // ══ AUTOSAVE ════════════════════════════════════════════════════════════
 let saveT=null;
+function makeDraftSnapshot(){
+ const snap={n:N,atoms:{},html:{}};
+ Object.keys(A).forEach(aid=>{
+  snap.atoms[aid]=A[aid];
+  const el=document.getElementById('at-'+aid);if(!el)return;
+  const vals={},tg={},terms=[],ledger=[];
+  el.querySelectorAll('[data-f]').forEach(f=>{if(f.value.trim())vals[f.dataset.f]=f.value;});
+  el.querySelectorAll('.tg.on').forEach(t=>{tg[t.dataset.key]=t.dataset.val;});
+  el.querySelectorAll('.term-row').forEach(r=>terms.push({m:r.querySelector('.t-m').value,p:r.querySelector('.t-p').value,t:r.querySelector('.t-t').value}));
+  el.querySelectorAll('.le').forEach(row=>{const x={cid:row.dataset.cid};row.querySelectorAll('[data-cf]').forEach(f=>x[f.dataset.cf]=f.value);ledger.push(x);});
+  const lnks=[...el.querySelectorAll('.lnk')].map(l=>l.dataset.lnk);
+  snap.html[aid]={vals,tg,terms,ledger,lnks};
+ });
+ return snap;
+}
 function autosave(){
  clearTimeout(saveT);
  saveT=setTimeout(()=>{
   try{
-   const snap={n:N,atoms:{},html:{}};
-   Object.keys(A).forEach(aid=>{
-    snap.atoms[aid]=A[aid];
-    const el=document.getElementById('at-'+aid);
-    if(!el)return;
-    const vals={},tg={},terms=[],ledger=[];
-    el.querySelectorAll('[data-f]').forEach(f=>{if(f.value.trim())vals[f.dataset.f]=f.value;});
-    el.querySelectorAll('.tg.on').forEach(t=>{tg[t.dataset.key]=t.dataset.val;});
-    el.querySelectorAll('.term-row').forEach(r=>terms.push({
-     m:r.querySelector('.t-m').value,p:r.querySelector('.t-p').value,t:r.querySelector('.t-t').value}));
-    el.querySelectorAll('.le').forEach(row=>{const x={cid:row.dataset.cid};row.querySelectorAll('[data-cf]').forEach(f=>x[f.dataset.cf]=f.value);ledger.push(x);});
-    const lnks=[...el.querySelectorAll('.lnk')].map(l=>l.dataset.lnk);
-    snap.html[aid]={vals,tg,terms,ledger,lnks};
-   });
+    const snap=makeDraftSnapshot();
    localStorage.setItem('pof_draft',JSON.stringify(snap));
    const s=document.getElementById('savemark');
    if(s){s.textContent='saved '+new Date().toLocaleTimeString();
@@ -1461,7 +1466,28 @@ async function expAll(){
    what_this_establishes:'The candidate records passed this tool\'s schema and invariant checks.',
    what_this_does_not_establish:'Truth, proof applicability, human ruling, canonical promotion, or admission.'},
   atoms:all,validation_receipts:reports},null,2));}
-function sM(t){document.getElementById('mdb').textContent=t;document.getElementById('ov').classList.add('on');}
+function notifyHost(type,payload){
+ try{if(window.parent&&window.parent!==window)window.parent.postMessage({source:'nerve-atom-builder',type,payload},'*');}catch(e){console.warn('Obsidian bridge unavailable',e);}
+}
+function sM(t){document.getElementById('mdb').textContent=t;document.getElementById('ov').classList.add('on');
+ try{notifyHost('candidate-packet',JSON.parse(t));}catch(e){notifyHost('validation-text',t);}}
+function validDraftSnapshot(x){return x&&typeof x==='object'&&x.atoms&&typeof x.atoms==='object'&&x.html&&typeof x.html==='object';}
+function importNerveObject(data){
+ const snap=data?.nerve_draft||data?.draft_snapshot||data;
+ if(validDraftSnapshot(snap)){
+  localStorage.setItem('pof_draft',JSON.stringify(snap));
+  notifyHost('draft-imported',{atom_count:Object.keys(snap.atoms).length});
+  location.reload();return;
+ }
+ alert('This JSON is not a Nerve editable-draft snapshot. Validated candidate packets can be preserved by Obsidian, but reverse hydration requires the draft snapshot so field ownership is not guessed.');
+}
+function importNerveFile(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{importNerveObject(JSON.parse(r.result));}catch(e){alert('Invalid JSON: '+e.message);}};r.readAsText(file);}
+function exportNerveDraft(){
+ const packet={format:'nerve-editable-draft/1.0.0',exported_at:new Date().toISOString(),nerve_draft:makeDraftSnapshot(),authority:'EDITABLE DRAFT — NOT VALIDATED — NOT ADMITTED'};
+ notifyHost('editable-draft',packet);
+ const blob=new Blob([JSON.stringify(packet,null,2)],{type:'application/json'}),a=document.createElement('a');
+ a.href=URL.createObjectURL(blob);a.download='nerve-editable-draft-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
 function cM(){document.getElementById('ov').classList.remove('on');}
 function cpExp(){navigator.clipboard.writeText(document.getElementById('mdb').textContent)
  .then(()=>{const b=document.querySelector('.mf .bg');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',1400);});}
@@ -1472,6 +1498,8 @@ dl();
 if(window.innerWidth>=1400){jOn=true;document.getElementById('cj').classList.add('on');
  document.getElementById('jbtn').textContent='Hide JSON';}
 window.addEventListener('load',()=>setTimeout(restore,300));
+window.addEventListener('load',()=>notifyHost('ready',{canon:'claim-atom/1.1',interface:'atom-builder'}));
+window.addEventListener('message',e=>{if(e.data?.type==='nerve-import-draft')importNerveObject(e.data.payload);});
 window.addEventListener('beforeunload',e=>{
  if(Object.keys(A).length){e.preventDefault();e.returnValue='';}
 });
