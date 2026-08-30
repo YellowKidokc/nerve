@@ -101,7 +101,7 @@
     <span class="brand-sep">│</span>
     <span class="brand-sub">TTS ENGINE</span>
   </div>
-  <button class="pin-btn" id="pinBtn" onclick="togglePin()">📌</button>
+  <button class="pin-btn" id="pinBtn" onclick="togglePin()" aria-label="Pin TTS engine window" title="Pin TTS engine window">📌</button>
 </div>
 
 <div class="tab-bar">
@@ -116,7 +116,7 @@
   <!-- ═══ SPEAK TAB ═══ -->
   <div class="section active" id="sec-speak">
     <div class="section-label">INPUT TEXT</div>
-    <textarea class="text-area" id="inputText" placeholder="Paste or type text here... Markdown, LaTeX, equations all welcome." rows="6"></textarea>
+    <textarea class="text-area" id="inputText" aria-label="Input text" placeholder="Paste or type text here... Markdown, LaTeX, equations all welcome." rows="6"></textarea>
 
     <div class="controls">
       <button class="btn btn-primary" onclick="doSpeak()">▶ SPEAK</button>
@@ -127,7 +127,7 @@
     </div>
 
     <div class="section-label">CLEANED OUTPUT</div>
-    <textarea class="text-area" id="outputText" placeholder="Cleaned text appears here after processing..." rows="6" readonly style="color:#10b981;background:#0c0c14"></textarea>
+    <textarea class="text-area" id="outputText" aria-label="Cleaned output" placeholder="Cleaned text appears here after processing..." rows="6" readonly style="color:#10b981;background:#0c0c14"></textarea>
 
     <div class="controls">
       <button class="btn btn-ghost" onclick="copyOutput()">📋 COPY CLEANED</button>
@@ -140,35 +140,35 @@
     <div class="section-label">TEXT NORMALIZATION</div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip URLs</div><div class="toggle-desc">Remove http(s) links</div></div>
-      <label class="toggle"><input type="checkbox" id="f_urls" checked><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_urls" aria-label="Strip URLs" checked><span class="slider"></span></label>
     </div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip #hashtags</div><div class="toggle-desc">Remove hashtag tokens</div></div>
-      <label class="toggle"><input type="checkbox" id="f_hashtags" checked><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_hashtags" aria-label="Strip hashtags" checked><span class="slider"></span></label>
     </div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip @mentions</div><div class="toggle-desc">Remove @user tokens</div></div>
-      <label class="toggle"><input type="checkbox" id="f_mentions" checked><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_mentions" aria-label="Strip mentions" checked><span class="slider"></span></label>
     </div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip math</div><div class="toggle-desc">$...$ and $$...$$ blocks</div></div>
-      <label class="toggle"><input type="checkbox" id="f_math"><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_math" aria-label="Strip math"><span class="slider"></span></label>
     </div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip code blocks</div><div class="toggle-desc">``` and inline `code`</div></div>
-      <label class="toggle"><input type="checkbox" id="f_code"><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_code" aria-label="Strip code blocks"><span class="slider"></span></label>
     </div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip emoji</div><div class="toggle-desc">Unicode pictographs</div></div>
-      <label class="toggle"><input type="checkbox" id="f_emoji"><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_emoji" aria-label="Strip emoji"><span class="slider"></span></label>
     </div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip markdown</div><div class="toggle-desc">*, _, ~, headings, links</div></div>
-      <label class="toggle"><input type="checkbox" id="f_markdown"><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_markdown" aria-label="Strip markdown"><span class="slider"></span></label>
     </div>
     <div class="toggle-row">
       <div><div class="toggle-label">Strip parentheticals</div><div class="toggle-desc">(...) and [...]</div></div>
-      <label class="toggle"><input type="checkbox" id="f_parens"><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="f_parens" aria-label="Strip parentheticals"><span class="slider"></span></label>
     </div>
   </div>
 
@@ -181,7 +181,7 @@
   <div class="section" id="sec-voice">
     <div class="section-label">ENGINE</div>
     <div class="field">
-      <label>Engine</label>
+      <label for="engine">Engine</label>
       <select id="engine" onchange="onEngineChange()">
         <option value="sapi">SAPI (built-in)</option>
         <option value="edge">Edge TTS (online)</option>
@@ -190,13 +190,13 @@
     </div>
 
     <div class="field">
-      <label>Voice</label>
+      <label for="voice">Voice</label>
       <select id="voice"><option value="default">Default (auto)</option></select>
       <div class="hint">Refresh on the right rescans installed voices.</div>
     </div>
 
     <div class="field">
-      <label>Speed</label>
+      <label for="speed">Speed</label>
       <div class="range-row">
         <input id="speed" type="range" min="-10" max="10" step="1" value="2"
                oninput="document.getElementById('spdVal').textContent=this.value">
@@ -205,7 +205,7 @@
     </div>
 
     <div class="field">
-      <label>Volume</label>
+      <label for="volume">Volume</label>
       <div class="range-row">
         <input id="volume" type="range" min="0" max="100" step="5" value="100"
                oninput="document.getElementById('volVal').textContent=this.value">

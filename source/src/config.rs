@@ -970,7 +970,7 @@ fn default_panels() -> Vec<PanelDef> {
             decorations: true,
             follow_cursor: false,
         },
-        // Canon workbench surfaces, served from _canon/.
+        // Canon workbench surfaces, grouped under html/atoms/.
         PanelDef {
             name: "workbench".into(),
             title: "Canon Workbench".into(),
