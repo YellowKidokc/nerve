@@ -21,6 +21,8 @@ struct PanelWindow {
     window: tao::window::Window,
     webview: wry::WebView,
     visible: bool,
+    /// Reposition to the cursor each time this panel is shown.
+    follow_cursor: bool,
 }
 
 impl PanelManager {
@@ -39,6 +41,11 @@ impl PanelManager {
         cfg: &Arc<Mutex<Config>>,
     ) {
         if let Some(panel) = self.windows.get_mut(name) {
+            if panel.follow_cursor {
+                let size = panel.window.inner_size();
+                let (x, y) = cursor_anchor(size.width, size.height);
+                panel.window.set_outer_position(LogicalPosition::new(x, y));
+            }
             panel.window.set_visible(true);
             panel.window.set_focus();
             let _ = panel.webview.focus();
@@ -87,6 +94,14 @@ impl PanelManager {
         }
     }
 
+    /// Hide a panel by name (the toolbar dismisses itself this way)
+    pub fn hide(&mut self, name: &str) {
+        if let Some(panel) = self.windows.get_mut(name) {
+            panel.window.set_visible(false);
+            panel.visible = false;
+        }
+    }
+
     /// Evaluate JavaScript in a panel's webview
     pub fn evaluate_script(&self, panel_name: &str, script: &str) {
         if let Some(panel) = self.windows.get(panel_name) {
@@ -115,11 +130,15 @@ impl PanelManager {
         let mut builder = WindowBuilder::new()
             .with_title(&panel_def.title)
             .with_inner_size(LogicalSize::new(panel_def.width, panel_def.height))
-            .with_decorations(true)
+            .with_decorations(panel_def.decorations)
             .with_always_on_top(panel_def.always_on_top);
 
-        // Restore saved position
-        if let (Some(x), Some(y)) = (panel_def.x, panel_def.y) {
+        if panel_def.follow_cursor {
+            // Floating capture surfaces appear where the user is looking.
+            let (x, y) = cursor_anchor(panel_def.width, panel_def.height);
+            builder = builder.with_position(LogicalPosition::new(x, y));
+        } else if let (Some(x), Some(y)) = (panel_def.x, panel_def.y) {
+            // Restore saved position
             builder = builder.with_position(LogicalPosition::new(x, y));
         }
 
@@ -196,8 +215,43 @@ impl PanelManager {
                 window,
                 webview,
                 visible: true,
+                follow_cursor: panel_def.follow_cursor,
             },
         );
+    }
+}
+
+/// Position a floating surface near the mouse without letting it fall off
+/// screen. Placed slightly below-right of the cursor so it does not cover the
+/// text the user just selected.
+fn cursor_anchor(width: u32, height: u32) -> (i32, i32) {
+    use windows::Win32::Foundation::POINT;
+    use windows::Win32::UI::WindowsAndMessaging::{
+        GetCursorPos, GetSystemMetrics, SM_CXSCREEN, SM_CYSCREEN,
+    };
+
+    let mut point = POINT::default();
+    unsafe {
+        if GetCursorPos(&mut point).is_err() {
+            return (0, 0);
+        }
+
+        let screen_w = GetSystemMetrics(SM_CXSCREEN);
+        let screen_h = GetSystemMetrics(SM_CYSCREEN);
+
+        let margin = 12;
+        let mut x = point.x + margin;
+        let mut y = point.y + margin * 2;
+
+        // Flip to the other side of the cursor rather than clipping.
+        if x + width as i32 > screen_w {
+            x = (point.x - width as i32 - margin).max(0);
+        }
+        if y + height as i32 > screen_h {
+            y = (point.y - height as i32 - margin).max(0);
+        }
+
+        (x, y)
     }
 }
 

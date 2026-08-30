@@ -24,14 +24,21 @@ windows = { version = "0.58", features = [
     "Win32_UI_Input_KeyboardAndMouse",
     "Win32_System_LibraryLoader",
     "Win32_System_Threading",
+    # CreateMutexW takes SECURITY_ATTRIBUTES — needed for the single-instance lock
+    "Win32_Security",
     "Win32_Graphics_Dwm",
     "Win32_Media_Speech",
+    # GetTickCount, paired with GetLastInputInfo for idle detection
+    "Win32_System_SystemInformation",
     "Win32_System_Com",
 ] }
 
 # Async HTTP for Cloudflare API
 reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "fs"] }
+
+# Hashing for canon sidecar source identity
+sha2 = "0.10"
 
 # Serialization
 serde = { version = "1", features = ["derive"] }

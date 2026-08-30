@@ -10,6 +10,26 @@ pub struct ChatMessage {
     pub content: String,
 }
 
+/// Expand the placeholders a prompt template may use.
+///
+/// `{{input}}` is whatever the caller passed — selection or clipboard,
+/// depending on how the action was triggered. `{{selection}}` and
+/// `{{clipboard}}` name the two sources explicitly, so one prompt can refer to
+/// both at once instead of collapsing them into a single slot.
+///
+/// A placeholder whose source is empty expands to an empty string rather than
+/// being left as literal `{{clipboard}}` text, which would otherwise reach the
+/// model as an instruction-looking artefact.
+fn render_template(template: &str, user_input: &str) -> String {
+    let selection = crate::selection::last_capture().text;
+    let clipboard = crate::clipboard::current_text().unwrap_or_default();
+
+    template
+        .replace("{{input}}", user_input)
+        .replace("{{selection}}", &selection)
+        .replace("{{clipboard}}", &clipboard)
+}
+
 /// Send a message to an AI provider and get a response
 pub async fn chat(
     provider: &AiProvider,
@@ -27,7 +47,7 @@ pub async fn chat(
     // Apply user_template if workflow has one
     let final_input = if let Some(wf) = workflow {
         if !wf.user_template.is_empty() {
-            wf.user_template.replace("{{input}}", user_input)
+            render_template(&wf.user_template, user_input)
         } else {
             user_input.to_string()
         }
@@ -40,7 +60,10 @@ pub async fn chat(
             chat_claude(provider, system_prompt, messages, &final_input, max_tokens, temperature)
                 .await
         }
-        "openai" | "local" => {
+        // Ollama and LM Studio both expose an OpenAI-compatible route, so they
+        // reuse this path rather than each getting a bespoke client. They differ
+        // only in default endpoint, which `default_endpoint` resolves.
+        "openai" | "local" | "ollama" => {
             chat_openai_compat(
                 provider,
                 system_prompt,
@@ -148,6 +171,20 @@ async fn chat_claude(
 }
 
 /// OpenAI-compatible API (works with OpenAI, local LLMs like LM Studio, Ollama, etc.)
+/// Default chat endpoint for the OpenAI-compatible providers.
+///
+/// The two local runtimes listen on different ports and neither is a sensible
+/// fallback for the other: sending an Ollama request to LM Studio's port fails
+/// as a connection error, which reads like "the service is down" rather than
+/// "the wrong service was addressed".
+fn default_endpoint(provider_type: &str) -> &'static str {
+    match provider_type {
+        "ollama" => "http://127.0.0.1:11434/v1/chat/completions",
+        "local" => "http://127.0.0.1:1234/v1/chat/completions",
+        _ => "https://api.openai.com/v1/chat/completions",
+    }
+}
+
 async fn chat_openai_compat(
     provider: &AiProvider,
     system_prompt: &str,
@@ -157,10 +194,21 @@ async fn chat_openai_compat(
     temperature: f64,
 ) -> Result<String> {
     let endpoint = if provider.endpoint.is_empty() {
-        "https://api.openai.com/v1/chat/completions"
+        default_endpoint(&provider.provider_type)
     } else {
         &provider.endpoint
     };
+
+    // Ollama serves whatever has been pulled locally, so there is no sensible
+    // default model name — guessing one produces a 404 that reads like a
+    // connection fault. An empty model is reported as the configuration gap it
+    // is instead.
+    if provider.model.is_empty() && provider.provider_type == "ollama" {
+        bail!(
+            "No Ollama model set. Run `ollama list` and put one of the names \
+             (for example `gemma3:4b`) in the provider's model field."
+        );
+    }
 
     let model = if provider.model.is_empty() {
         "gpt-4o"
@@ -234,4 +282,37 @@ async fn chat_openai_compat(
         .to_string();
 
     Ok(content)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn local_runtimes_do_not_share_a_default_endpoint() {
+        // Ollama and LM Studio listen on different ports. Falling back to the
+        // wrong one surfaces as a connection error, which misreports a
+        // misconfiguration as an outage.
+        assert!(default_endpoint("ollama").contains("11434"));
+        assert!(default_endpoint("local").contains("1234"));
+        assert_ne!(default_endpoint("ollama"), default_endpoint("local"));
+    }
+
+    #[test]
+    fn unknown_provider_types_fall_back_to_openai() {
+        assert!(default_endpoint("openai").contains("api.openai.com"));
+        assert!(default_endpoint("something-else").contains("api.openai.com"));
+    }
+
+    #[test]
+    fn input_placeholder_still_expands() {
+        // {{selection}} and {{clipboard}} read live OS state, so only the
+        // caller-supplied placeholder is asserted here.
+        assert_eq!(render_template("say: {{input}}", "hello"), "say: hello");
+    }
+
+    #[test]
+    fn a_template_without_placeholders_is_unchanged() {
+        assert_eq!(render_template("no slots here", "ignored"), "no slots here");
+    }
 }
