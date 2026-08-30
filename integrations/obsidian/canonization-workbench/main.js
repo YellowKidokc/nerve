@@ -29,6 +29,24 @@ const CANDIDATE_STATUS = "CANDIDATE_DRAFT — NOT ADMITTED";
 const HUMAN_DECISIONS = ["APPROVE CANDIDATE", "REVISE", "SPLIT", "HOLD OPEN", "WITHDRAW", "REJECT"];
 
 const CANONIZATION_PASSES = {
+  discovery: {
+    label: "1. Nondiscriminatory discovery",
+    instruction: "Open the source before assigning any domain, truth status, proof class, or canon rank. Extract only referents, identities, distinctions, relations, operations, dependencies, constraints, invariants, collapse conditions, consequences, representations, formalization boundaries, and explicit OPEN questions. Preserve the source wording. Do not create a bridge or an admission claim.",
+    lanes: null,
+    stage: 1
+  },
+  classification: {
+    label: "2. Classification and burden",
+    instruction: "Using the source and any prior discovery output, classify each independently gradable object by object type, register, warrant, scope, dependencies, possible support, countermodels, defeat conditions, and OPEN fields. Do not upgrade any object to proof, evidence, truth, or admission.",
+    lanes: null,
+    stage: 2
+  },
+  reconciliation: {
+    label: "3. Reconciliation and translation",
+    instruction: "Using the prior discovery and classification outputs, reconcile duplicate or overlapping objects without erasing either source. Where a cross-register relation is proposed, state source and target, direction, preserved structure, lost structure, reverse-path limits, rivals, and tests. A bridge never propagates proof. Keep unresolved differences OPEN.",
+    lanes: null,
+    stage: 3
+  },
   claims: {
     label: "Claims only",
     instruction: "Decompose the source into the smallest separately judgeable claims. Preserve exact wording, provenance, objections, and OPEN fields. Do not perform broader section completion.",
@@ -61,9 +79,10 @@ const CANONIZATION_PASSES = {
     requireTruthPredicates: true
   },
   full: {
-    label: "Full canonization pass",
-    instruction: "Run the complete candidate discovery, classification, burden, bridge, truth-predicate, and OPEN-field pass. Keep every output candidate-only.",
-    lanes: null
+    label: "Run the three-stage candidate pipeline",
+    instruction: "Runs nondiscriminatory discovery, classification and burden, then reconciliation and translation as three separate candidate-only API calls.",
+    lanes: null,
+    stage: 0
   }
 };
 
@@ -491,9 +510,10 @@ class CanonWorkbenchView extends ItemView {
     new Setting(semanticBox).setName("Use Semantic AI for canonization").setDesc("Runs only when selected. Uses Semantic AI's active provider and the Canonization category.").addToggle((toggle) => toggle.setValue(this.plugin.settings.useSemanticCanonization).onChange(async (value) => { this.plugin.settings.useSemanticCanonization = value; await this.plugin.saveSettings(); }));
     new Setting(semanticBox).setName("Canonization pass").setDesc("Run one bounded question set or the complete sequence.").addDropdown((dropdown) => {
       for (const [id, pass] of Object.entries(CANONIZATION_PASSES)) dropdown.addOption(id, pass.label);
-      dropdown.setValue(this.plugin.selectedCanonizationPass || "claims").onChange((value) => { this.plugin.selectedCanonizationPass = value; });
-    }).addButton((button) => button.setButtonText("Run current note").setCta().onClick(() => this.plugin.runSemanticCanonizationCurrentNote(null, this.plugin.selectedCanonizationPass || "claims")));
+      dropdown.setValue(this.plugin.selectedCanonizationPass || "full").onChange((value) => { this.plugin.selectedCanonizationPass = value; });
+    }).addButton((button) => button.setButtonText("Run selected pipeline").setCta().onClick(() => this.plugin.runSemanticCanonizationCurrentNote(null, this.plugin.selectedCanonizationPass || "full")));
     new Setting(semanticBox).setName("Nerve Atom Builder").setDesc("Open the canonical HTML authoring interface in the right-side pane. Validated packets are preserved as JSON and projected into Obsidian Properties.").addButton((button) => button.setButtonText("Open Nerve interface").setCta().onClick(() => this.plugin.activateNerveBuilder()));
+    new Setting(semanticBox).setName("Nerve JSON round trip").setDesc("Export Draft inside the Nerve sidebar to preserve editable JSON. Open an editable-draft JSON note here, then import it without altering a validated candidate packet.").addButton((button) => button.setButtonText("Import active draft JSON").onClick(() => this.plugin.importActiveNerveDraft()));
     new Setting(contentEl).addButton((button) => button.setButtonText("Create card").setCta().onClick(() => new CreateCanonModal(this.app, this.plugin).open()));
     const list = contentEl.createDiv({ cls: "canonization-card-list" });
     const files = await this.plugin.store.cards();
@@ -551,7 +571,7 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     await this.loadSettings();
     this.store = new CanonStore(this.app, this);
     this.termEntries = [];
-    this.selectedCanonizationPass = "claims";
+    this.selectedCanonizationPass = "full";
     this.registerView(VIEW_TYPE_CANON, (leaf) => new CanonWorkbenchView(leaf, this));
     this.registerView(VIEW_TYPE_NERVE_BUILDER, (leaf) => new NerveBuilderView(leaf, this));
     this.addSettingTab(new CanonizationSettingTab(this.app, this));
@@ -751,7 +771,45 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     new Notice(`Folder canonization complete: ${passed}/${files.length} notes, ${proposals} proposals, zero admissions.`);
   }
 
+  async runThreeStageCandidatePipeline(forcedFile = null, options = {}) {
+    const file = forcedFile || this.app.workspace.getActiveFile();
+    if (!file || file.extension !== "md") return { error: "Open the Markdown note you want Semantic AI to examine." };
+    const stages = ["discovery", "classification", "reconciliation"];
+    const results = [];
+    let priorStage = null;
+    const notice = options.quiet ? null : new Notice("Semantic AI: running three-stage candidate pipeline…", 0);
+    for (const stage of stages) {
+      const result = await this.runSemanticCanonizationCurrentNote(file, stage, { quiet: true, openResult: false, priorStage });
+      if (result?.error) {
+        notice?.hide();
+        if (!options.quiet) new Notice(`Candidate pipeline stopped at ${CANONIZATION_PASSES[stage].label}: ${result.error}`, 10000);
+        return { error: result.error, stage, results };
+      }
+      results.push({ stage, packet: result.packet, jsonFile: result.jsonFile, mdFile: result.mdFile, proposalCount: result.proposals?.length || 0 });
+      priorStage = result;
+    }
+    const root = normalizePath(`${this.settings.candidateReviewRoot}/_semantic_ai_intake`);
+    await this.store.ensureFolder(root);
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    const receipt = {
+      packet_version: "semantic-ai-three-stage-pipeline/1.0.0",
+      status: CANDIDATE_STATUS,
+      source_file: file.path,
+      stages: results.map((row) => ({ stage: row.stage, packet: row.jsonFile.path, proposals: row.proposalCount })),
+      canonical_admission_performed: false,
+      human_ruling_required: true
+    };
+    const receiptFile = await this.app.vault.create(normalizePath(`${root}/${stamp}-three-stage-${slug(file.basename) || "NOTE"}-${crypto.randomUUID().slice(0, 8)}-receipt.json`), JSON.stringify(receipt, null, 2) + "\n");
+    notice?.hide();
+    if (!options.quiet) {
+      new Notice(`Three-stage pipeline complete: ${results.reduce((total, row) => total + row.proposalCount, 0)} candidate proposals; zero admissions.`);
+      await this.openFile(results[2].mdFile);
+    }
+    return { packet: results[2].packet, proposals: results[2].packet.proposals || [], results, receiptFile };
+  }
+
   async runSemanticCanonizationCurrentNote(forcedFile = null, passId = "full", options = {}) {
+    if (passId === "full") return this.runThreeStageCandidatePipeline(forcedFile, options);
     if (!this.settings.useSemanticCanonization) return new Notice("Select ‘Use Semantic AI for canonization’ in the Canon Workbench first.");
     const pass = CANONIZATION_PASSES[passId] || CANONIZATION_PASSES.full;
     const file = forcedFile || this.app.workspace.getActiveFile();
@@ -764,7 +822,8 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     const notice = options.quiet ? null : new Notice(`Semantic AI: ${pass.label}…`, 0);
     try {
       const bundle = await this.store.sourceBundleForCard(file);
-      const directedText = `CANONIZATION PASS: ${pass.label}\nBOUNDARY: ${pass.instruction}\nEvery output remains CANDIDATE_DRAFT — NOT ADMITTED.\n\n${bundle.text}`;
+      const priorContext = options.priorStage?.packet ? `\n\nPRIOR STAGE OUTPUT — ${options.priorStage.packet.canonization_pass_label || "candidate-only"}\nThis is prior candidate output, not truth or admission. Retain its OPEN fields and correct it only by making an explicit new proposal:\n${JSON.stringify(options.priorStage.packet.proposals || [], null, 2)}` : "";
+      const directedText = `CANONIZATION PASS: ${pass.label}\nSTAGE: ${pass.stage || "specialized"}\nBOUNDARY: ${pass.instruction}\nEvery output remains CANDIDATE_DRAFT — NOT ADMITTED.${priorContext}\n\nSOURCE:\n${bundle.text}`;
       const result = await semantic.classifier.classifySingleType(directedText, "Canonization", file.path);
       const allowedLanes = new Set(["definition", "mathematical_component", "theological_component", "bridge_claim", "scripture_anchor", "dependency_graph", "proposal", "review_queue", "receipt"]);
       let proposals = result.tags.map((tag, index) => {
@@ -815,7 +874,7 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
           if (card) updates.push({ canon_id: target, card: card.path, outcomes: await this.store.accumulateProposals(card, items, bundle.paths) });
         }
       }
-      const packet = { packet_version: "semantic-ai-canonization-intake/2.1.0", status: CANDIDATE_STATUS, canonization_pass: passId, canonization_pass_label: pass.label, source_file: file.path, bundled_sources: bundle.paths, source_mtime: file.stat.mtime, semantic_category: "Canonization", provider: semantic.settings.provider, result_count: proposals.length, proposals, candidate_card_updates: updates, canonical_admission_performed: false, source_modified: false, human_ruling_required: true };
+      const packet = { packet_version: "semantic-ai-canonization-intake/2.2.0", status: CANDIDATE_STATUS, canonization_pass: passId, canonization_pass_label: pass.label, canonization_stage: pass.stage || null, prior_stage_packet: options.priorStage?.jsonFile?.path || null, source_file: file.path, bundled_sources: bundle.paths, source_mtime: file.stat.mtime, semantic_category: "Canonization", provider: semantic.settings.provider, result_count: proposals.length, proposals, candidate_card_updates: updates, canonical_admission_performed: false, source_modified: false, human_ruling_required: true };
       const jsonFile = await this.app.vault.create(normalizePath(`${root}/${base}.json`), JSON.stringify(packet, null, 2) + "\n");
       const lines = ["---", `title: \"Semantic AI Canonization Intake — ${escapeYaml(file.basename)}\"`, `date: ${new Date().toISOString()}`, `source: \"${escapeYaml(file.path)}\"`, `canonization_pass: \"${passId}\"`, `status: \"${CANDIDATE_STATUS}\"`, "authority: \"DISCOVERY ONLY — HUMAN REVIEW REQUIRED\"", "---", "", `# Semantic AI Canonization Intake — ${file.basename}`, "", `> [!warning] ${CANDIDATE_STATUS}`, "> Semantic AI categorized possible canonization objects. It did not validate truth, move the source, or admit anything.", "", `- **Pass:** ${pass.label}`, `- **Proposals:** ${proposals.length}`, `- **JSON receipt:** [[${jsonFile.path}]]`, ""];
       for (const item of proposals) { lines.push(`## ${item.candidate_id} — ${item.label}`, "", `- **Proposed lane:** ${item.proposed_lane}`, `- **Object type:** ${item.proposed_object_type}`, `- **Register:** ${item.register}`, `- **Warrant:** ${item.warrant}`, `- **Source span:** ${item.source_span}`, "", "### Defeat conditions", ""); if (item.defeat_conditions.length) item.defeat_conditions.forEach((value) => lines.push(`- ${value}`)); else lines.push("- OPEN"); lines.push("", "### OPEN fields", ""); item.open_fields.forEach((value) => lines.push(`- [ ] ${value}`)); lines.push(""); }
