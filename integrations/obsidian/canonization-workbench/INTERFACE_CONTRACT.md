@@ -27,4 +27,4 @@ Nerve Atom Builder HTML
 
 ## Runtime copy
 
-Obsidian loads a byte-identical generated copy of `D:\GitHub\nerve\source\html\atom-builder.html`. Run `sync-nerve-interface.ps1` after changing the authoritative Nerve source. The synchronization fails unless SHA-256 hashes match.
+Obsidian loads a byte-identical generated copy of `D:\GitHub\nerve\source\html\atoms\atom-builder.html`. Run `sync-nerve-interface.ps1` after changing the authoritative Nerve source. The synchronization fails unless SHA-256 hashes match.

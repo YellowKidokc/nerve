@@ -1,10 +1,10 @@
 $ErrorActionPreference = "Stop"
 
-$repoRelativeSource = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\..\source\html\atom-builder.html"))
+$repoRelativeSource = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\..\source\html\atoms\atom-builder.html"))
 $source = if (Test-Path -LiteralPath $repoRelativeSource -PathType Leaf) {
     $repoRelativeSource
 } else {
-    "D:\GitHub\nerve\source\html\atom-builder.html"
+    "D:\GitHub\nerve\source\html\atoms\atom-builder.html"
 }
 $destinationDirectory = Join-Path $PSScriptRoot "nerve"
 $destination = Join-Path $destinationDirectory "atom-builder.html"

@@ -865,7 +865,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "review".into(),
             title: "Review Queue".into(),
-            url: to_url("review.html"),
+            url: to_url("atoms/review.html"),
             width: 1100,
             height: 720,
             x: None,
@@ -877,7 +877,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "clipboard".into(),
             title: "ClipSync".into(),
-            url: to_url("clipboard.html"),
+            url: to_url("clipboard/clipboard.html"),
             width: 380,
             height: 1000,
             x: None,
@@ -889,7 +889,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "prompts".into(),
             title: "Prompts".into(),
-            url: to_url("prompt_picker.html"),
+            url: to_url("prompts/prompt_picker.html"),
             width: 520,
             height: 680,
             x: None,
@@ -901,7 +901,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "links".into(),
             title: "Links".into(),
-            url: to_url("links.html"),
+            url: to_url("research/research_links.html"),
             width: 500,
             height: 680,
             x: None,
@@ -913,7 +913,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "research".into(),
             title: "Research".into(),
-            url: to_url("research.html"),
+            url: to_url("research/research.html"),
             width: 600,
             height: 720,
             x: None,
@@ -925,7 +925,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "chat".into(),
             title: "AI Chat".into(),
-            url: to_url("chat.html"),
+            url: to_url("prompts/chat.html"),
             width: 500,
             height: 700,
             x: None,
@@ -937,7 +937,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "dashboard".into(),
             title: "Dashboard".into(),
-            url: to_url("dashboard.html"),
+            url: to_url("hubs/dashboard.html"),
             width: 900,
             height: 700,
             x: None,
@@ -949,7 +949,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "settings".into(),
             title: "Settings".into(),
-            url: to_url("settings.html"),
+            url: to_url("system/settings.html"),
             width: 560,
             height: 680,
             x: None,
@@ -961,7 +961,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "tts".into(),
             title: "TTS Engine".into(),
-            url: to_url("tts-engine.html"),
+            url: to_url("system/tts-engine.html"),
             width: 480,
             height: 600,
             x: None,
@@ -974,7 +974,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "workbench".into(),
             title: "Canon Workbench".into(),
-            url: to_url("workbench.html"),
+            url: to_url("atoms/workbench.html"),
             width: 1100,
             height: 860,
             x: None,
@@ -986,7 +986,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "atom-builder".into(),
             title: "Claim Atom Builder".into(),
-            url: to_url("atom-builder.html"),
+            url: to_url("atoms/atom-builder.html"),
             width: 1100,
             height: 860,
             x: None,
@@ -998,7 +998,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "reconciliation".into(),
             title: "Classification Reconciliation".into(),
-            url: to_url("reconciliation.html"),
+            url: to_url("atoms/reconciliation.html"),
             width: 1000,
             height: 820,
             x: None,
@@ -1011,7 +1011,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "stratum".into(),
             title: "Stratum Actions".into(),
-            url: to_url("stratum.html"),
+            url: to_url("stratum/stratum.html"),
             width: 620,
             height: 720,
             x: None,
@@ -1024,7 +1024,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "toolbar".into(),
             title: "Nerve Toolbar".into(),
-            url: to_url("toolbar.html"),
+            url: to_url("stratum/toolbar.html"),
             width: 420,
             height: 64,
             x: None,
@@ -1037,7 +1037,7 @@ fn default_panels() -> Vec<PanelDef> {
         PanelDef {
             name: "capsule".into(),
             title: "Truth Capsule".into(),
-            url: to_url("capsule.html"),
+            url: to_url("atoms/capsule.html"),
             width: 560,
             height: 640,
             x: None,
@@ -1159,9 +1159,37 @@ impl Config {
         }
 
         // Ensure all core panels exist so tray/hotkeys always open something.
+        // Nerve originally stored every HTML surface in one flat directory.
+        // Migrate only those known legacy local URLs to the organized paths;
+        // explicit custom/http panel URLs remain user-owned.
         for required in default_cfg.panels {
-            let exists = self.panels.iter().any(|p| p.name == required.name);
-            if !exists {
+            if let Some(existing) = self.panels.iter_mut().find(|p| p.name == required.name) {
+                let legacy_file = match existing.name.as_str() {
+                    "review" => Some("review.html"),
+                    "clipboard" => Some("clipboard.html"),
+                    "prompts" => Some("prompt_picker.html"),
+                    "links" => Some("links.html"),
+                    "research" => Some("research.html"),
+                    "chat" => Some("chat.html"),
+                    "dashboard" => Some("dashboard.html"),
+                    "settings" => Some("settings.html"),
+                    "tts" => Some("tts-engine.html"),
+                    "workbench" => Some("workbench.html"),
+                    "atom-builder" => Some("atom-builder.html"),
+                    "reconciliation" => Some("reconciliation.html"),
+                    "stratum" => Some("stratum.html"),
+                    "toolbar" => Some("toolbar.html"),
+                    "capsule" => Some("capsule.html"),
+                    _ => None,
+                };
+                let normalized_url = existing.url.replace('\\', "/");
+                let is_legacy_local = legacy_file
+                    .map(|file| normalized_url.ends_with(&format!("/{file}")))
+                    .unwrap_or(false);
+                if existing.url == "about:blank" || is_legacy_local {
+                    existing.url = required.url;
+                }
+            } else {
                 self.panels.push(required);
             }
         }

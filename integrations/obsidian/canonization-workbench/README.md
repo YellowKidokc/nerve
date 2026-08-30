@@ -20,9 +20,9 @@ Copy this folder into:
 
 `.obsidian/plugins/canonization-workbench`
 
-Then run `sync-nerve-interface.ps1` to generate the byte-identical embedded copy of `source/html/atom-builder.html`. Enable or reload the plugin in Obsidian.
+Then run `sync-nerve-interface.ps1` to generate the byte-identical embedded copy of `source/html/atoms/atom-builder.html`. Enable or reload the plugin in Obsidian.
 
-Do not commit `data.json`; it contains vault-local settings. The generated `nerve/atom-builder.html` is also intentionally excluded from the integration source because the authoritative file is already tracked at `source/html/atom-builder.html`.
+Do not commit `data.json`; it contains vault-local settings. The generated `nerve/atom-builder.html` is also intentionally excluded from the integration source because the authoritative file is already tracked at `source/html/atoms/atom-builder.html`.
 
 ## Authority boundary
 
