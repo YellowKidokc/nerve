@@ -4,11 +4,17 @@
 )]
 
 mod ai;
+mod canon;
 mod clipboard;
 mod config;
 mod hotkeys;
 mod hotstrings;
+mod idle;
+mod mouse;
 mod panels;
+mod review;
+mod scripts;
+mod selection;
 mod sync_client;
 mod tray;
 mod tts;
@@ -32,12 +38,40 @@ pub enum AppEvent {
     OpenPanel(String),
     /// Toggle panel visibility
     TogglePanel(String),
+    /// Hide a panel by name (floating surfaces dismiss themselves)
+    HidePanel(String),
+    /// Mouse trigger fired — payload is the target panel name
+    MouseTrigger(String),
     /// Quit the application
     Quit,
     /// Config was reloaded from remote
     ConfigReloaded,
     /// IPC message from a webview panel
     IpcMessage { panel: String, body: String },
+}
+
+/// Claim the single-instance lock, or return `None` if another copy holds it.
+///
+/// With Start Menu, Desktop, and Startup shortcuts all pointing at the same
+/// binary, launching twice is easy — and the symptoms are confusing rather
+/// than obvious: the second process silently loses every global hotkey to the
+/// first and leaves a duplicate tray icon behind. The mutex is session-local,
+/// which is the right scope for a per-user tray app.
+///
+/// The returned handle must stay alive for the life of the process; Windows
+/// releases the mutex when the process exits, including on a crash.
+fn acquire_single_instance() -> Option<windows::Win32::Foundation::HANDLE> {
+    use windows::core::w;
+    use windows::Win32::Foundation::{GetLastError, ERROR_ALREADY_EXISTS};
+    use windows::Win32::System::Threading::CreateMutexW;
+
+    unsafe {
+        let handle = CreateMutexW(None, true, w!("NerveAgentSingleInstance")).ok()?;
+        if GetLastError() == ERROR_ALREADY_EXISTS {
+            return None;
+        }
+        Some(handle)
+    }
 }
 
 fn main() -> Result<()> {
@@ -50,6 +84,15 @@ fn main() -> Result<()> {
         .init();
 
     info!("ClipSync Agent starting...");
+
+    // Exactly one copy may own the global hotkeys and the tray icon.
+    let _instance_lock = match acquire_single_instance() {
+        Some(handle) => handle,
+        None => {
+            info!("Another instance is already running — exiting.");
+            return Ok(());
+        }
+    };
 
     // Load config
     let cfg = config::Config::load()?;
@@ -85,6 +128,40 @@ fn main() -> Result<()> {
     std::thread::spawn(move || {
         if let Err(e) = hotstrings::engine(hs_proxy, hs_cfg) {
             error!("Hotstring engine error: {}", e);
+        }
+    });
+
+    // Start mouse trigger thread (low-level mouse hook)
+    let mouse_proxy = proxy.clone();
+    let mouse_cfg = Arc::clone(&cfg);
+    std::thread::spawn(move || {
+        if let Err(e) = mouse::engine(mouse_proxy, mouse_cfg) {
+            error!("Mouse trigger engine error: {}", e);
+        }
+    });
+
+    // Open the review queue when work is waiting.
+    //
+    // Discovering what ran overnight must not require typing a command or
+    // finding a folder. If nothing is pending the panel stays closed, so an
+    // empty queue never becomes noise.
+    {
+        let root = review::output_root(&cfg.lock().unwrap());
+        match review::load(&root) {
+            Ok(q) if q.total > 0 => {
+                info!("review: {} pending, opening the queue", q.total);
+                let _ = proxy.send_event(AppEvent::OpenPanel("review".into()));
+            }
+            Ok(_) => info!("review: nothing pending"),
+            Err(e) => error!("review: could not read the queue: {}", e),
+        }
+    }
+
+    // Start idle canon worker thread (deterministic C0 capture only)
+    let idle_cfg = Arc::clone(&cfg);
+    std::thread::spawn(move || {
+        if let Err(e) = idle::engine(idle_cfg) {
+            error!("Idle canon worker error: {}", e);
         }
     });
 
@@ -166,6 +243,21 @@ fn main() -> Result<()> {
                     panel_mgr.toggle(&name, event_loop, &cfg);
                 }
 
+                AppEvent::HidePanel(name) => {
+                    panel_mgr.hide(&name);
+                }
+
+                AppEvent::MouseTrigger(target) => {
+                    // The toolbar and capsule need a selection to be useful;
+                    // the Stratum panel falls back to clipboard text.
+                    if target == "stratum" {
+                        spawn_capture_or_open(&proxy, &cfg, &target);
+                    } else {
+                        let node = if target == "capsule" { "claim" } else { "" };
+                        spawn_capture(&proxy, &cfg, node, &target);
+                    }
+                }
+
                 AppEvent::HotkeyTriggered(id) => {
                     let cfg_lock = cfg.lock().unwrap();
                     if let Some(action) = cfg_lock.hotkey_action(id) {
@@ -191,6 +283,19 @@ fn main() -> Result<()> {
                             "toggle_settings" => {
                                 let _ = proxy.send_event(AppEvent::TogglePanel("settings".into()));
                             }
+                            // Capture the selection, then raise the floating
+                            // toolbar over it. Capture blocks on a clipboard
+                            // round trip, so it runs off the event loop.
+                            "selection_toolbar" => {
+                                spawn_capture(&proxy, &cfg, "", "toolbar");
+                            }
+                            // Stratum's action popup, with the selection
+                            // already captured. Unlike the toolbar this opens
+                            // even with nothing selected, because the actions
+                            // fall back to clipboard text.
+                            "stratum_actions" => {
+                                spawn_capture_or_open(&proxy, &cfg, "stratum");
+                            }
                             "tts_read_selection" => {
                                 info!("TTS: reading selection");
                                 std::thread::spawn(|| {
@@ -208,7 +313,11 @@ fn main() -> Result<()> {
                             "paste_slot_9" => clipboard::paste_slot(8),
                             "paste_slot_10" => clipboard::paste_slot(9),
                             other => {
-                                if let Some(panel_name) = other.strip_prefix("toggle_") {
+                                // selection_claim, selection_evidence, ... jump
+                                // straight to the capsule for one node type.
+                                if let Some(node) = other.strip_prefix("selection_") {
+                                    spawn_capture(&proxy, &cfg, node, "capsule");
+                                } else if let Some(panel_name) = other.strip_prefix("toggle_") {
                                     let _ = proxy.send_event(AppEvent::TogglePanel(panel_name.into()));
                                 } else {
                                     info!("Hotkey action: {}", other);
@@ -273,6 +382,349 @@ fn main() -> Result<()> {
 }
 
 /// Handle an IPC message from a webview panel.
+/// Capture the current selection on a worker thread, then open `target_panel`.
+///
+/// Nothing opens when there is no selection — a floating window over an empty
+/// capture is just noise.
+fn spawn_capture(
+    proxy: &tao::event_loop::EventLoopProxy<AppEvent>,
+    cfg: &Arc<Mutex<config::Config>>,
+    node_type: &str,
+    target_panel: &str,
+) {
+    let proxy = proxy.clone();
+    let cfg = Arc::clone(cfg);
+    let node_type = node_type.to_string();
+    let target_panel = target_panel.to_string();
+
+    std::thread::spawn(move || {
+        let snapshot = { cfg.lock().unwrap().clone() };
+        if !snapshot.selection.enabled {
+            info!("selection: capture layer disabled in config");
+            return;
+        }
+
+        selection::set_pending_node(&node_type);
+
+        match selection::capture(&snapshot) {
+            Some(_) => {
+                let _ = proxy.send_event(AppEvent::OpenPanel(target_panel));
+            }
+            None => {
+                // Clear the pending node so a later toolbar open does not
+                // inherit an intent the user never completed.
+                selection::take_pending_node();
+            }
+        }
+    });
+}
+
+/// Capture if something is selected, then open the panel either way.
+///
+/// Stratum actions read `selection` but fall back to `clipboard`, so an empty
+/// selection is a normal case here rather than a reason to show nothing.
+fn spawn_capture_or_open(
+    proxy: &tao::event_loop::EventLoopProxy<AppEvent>,
+    cfg: &Arc<Mutex<config::Config>>,
+    target_panel: &str,
+) {
+    let proxy = proxy.clone();
+    let cfg = Arc::clone(cfg);
+    let target_panel = target_panel.to_string();
+
+    std::thread::spawn(move || {
+        let snapshot = { cfg.lock().unwrap().clone() };
+        if snapshot.selection.enabled {
+            selection::capture(&snapshot);
+        }
+        let _ = proxy.send_event(AppEvent::OpenPanel(target_panel));
+    });
+}
+
+/// Run one selection action. Returns the JS callback to fire in the panel.
+fn run_selection_action(
+    cfg: &Arc<Mutex<config::Config>>,
+    proxy: &tao::event_loop::EventLoopProxy<AppEvent>,
+    panel: &str,
+    rule: config::SelectionRule,
+    capture: selection::Capture,
+    capsule_fields: serde_json::Value,
+    request_id: String,
+) {
+    let cfg = Arc::clone(cfg);
+    let proxy = proxy.clone();
+    let panel = panel.to_string();
+
+    // The reply closure owns its own proxy handle so the outer one stays
+    // usable for actions that also need to raise a panel.
+    let reply_proxy = proxy.clone();
+    let reply = move |payload: serde_json::Value| {
+        let script = format!(
+            "onActionResult({}, {});",
+            serde_json::to_string(&request_id).unwrap(),
+            payload
+        );
+        let _ = reply_proxy.send_event(AppEvent::IpcMessage {
+            panel: panel.clone(),
+            body: serde_json::json!({ "type": "_eval", "script": script }).to_string(),
+        });
+    };
+
+    match rule.action.as_str() {
+        // Stage an immutable candidate with the local canon service.
+        "canon" => {
+            let node_type = if rule.node_type.is_empty() {
+                "claim".to_string()
+            } else {
+                rule.node_type.clone()
+            };
+            std::thread::spawn(move || {
+                let canon_cfg = { cfg.lock().unwrap().canon.clone() };
+                let request = canon::CandidateRequest::from_capture(
+                    &capture,
+                    &node_type,
+                    capsule_fields,
+                    &canon_cfg.author,
+                );
+
+                let rt = tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                    .unwrap();
+                let outcome =
+                    rt.block_on(async { canon::submit_candidate(&canon_cfg, &request).await });
+
+                reply(serde_json::to_value(&outcome).unwrap_or(serde_json::Value::Null));
+            });
+        }
+
+        // Send the selection through a configured AI workflow.
+        "ai" => {
+            let workflow_name = rule.arg.clone();
+            std::thread::spawn(move || {
+                let (provider, workflow) = {
+                    let c = cfg.lock().unwrap();
+                    let workflow = c
+                        .ai
+                        .workflows
+                        .iter()
+                        .find(|w| w.name == workflow_name)
+                        .cloned();
+                    let provider_name = workflow
+                        .as_ref()
+                        .map(|w| w.provider.clone())
+                        .unwrap_or_else(|| c.ai.default_provider.clone());
+                    let provider = c
+                        .ai
+                        .providers
+                        .iter()
+                        .find(|p| p.name == provider_name || p.provider_type == provider_name)
+                        .cloned();
+                    (provider, workflow)
+                };
+
+                let provider = match provider {
+                    Some(p) => p,
+                    None => {
+                        reply(serde_json::json!({
+                            "state": "error",
+                            "detail": format!("No AI provider configured for workflow '{}'", workflow_name),
+                        }));
+                        return;
+                    }
+                };
+
+                let rt = tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                    .unwrap();
+                let result = rt.block_on(async {
+                    ai::chat(&provider, workflow.as_ref(), &[], &capture.text).await
+                });
+
+                match result {
+                    Ok(text) => {
+                        if rule.output == "replace" {
+                            selection::replace_selection(&text);
+                        } else if rule.output == "clipboard" {
+                            selection::copy_result(&text);
+                        }
+                        reply(serde_json::json!({ "state": "ok", "text": text }));
+                    }
+                    Err(e) => reply(serde_json::json!({
+                        "state": "error",
+                        "detail": e.to_string(),
+                    })),
+                }
+            });
+        }
+
+        // Hand off to a Stratum action module.
+        "script" => {
+            let action_id = rule.arg.clone();
+            let output = rule.output.clone();
+            std::thread::spawn(move || {
+                let scripts_cfg = { cfg.lock().unwrap().scripts.clone() };
+                let clipboard = selection::clipboard_text();
+                match scripts::run_action(&scripts_cfg, &action_id, &capture.text, &clipboard) {
+                    Ok(text) => {
+                        if output == "replace" {
+                            selection::replace_selection(&text);
+                        } else if output == "clipboard" {
+                            selection::copy_result(&text);
+                        }
+                        reply(serde_json::json!({ "state": "ok", "text": text }));
+                    }
+                    Err(e) => reply(serde_json::json!({
+                        "state": "error",
+                        "detail": e.to_string(),
+                    })),
+                }
+            });
+        }
+
+        "tts" => {
+            let text = capture.text.clone();
+            std::thread::spawn(move || {
+                if let Err(e) = tts::speak(&text) {
+                    error!("selection: tts failed: {}", e);
+                }
+            });
+            reply(serde_json::json!({ "state": "ok", "detail": "Speaking" }));
+        }
+
+        "copy" => {
+            selection::copy_result(&capture.text);
+            reply(serde_json::json!({ "state": "ok", "detail": "Copied" }));
+        }
+
+        "search" => {
+            let url = build_search_url(&rule.arg, &capture.text);
+            match open_url(&url) {
+                Ok(()) => reply(serde_json::json!({ "state": "ok", "detail": url })),
+                Err(e) => reply(serde_json::json!({
+                    "state": "error",
+                    "detail": format!("Could not open '{}': {}", url, e),
+                })),
+            }
+        }
+
+        "panel" => {
+            let _ = proxy.send_event(AppEvent::OpenPanel(rule.arg.clone()));
+            reply(serde_json::json!({ "state": "ok", "detail": rule.arg }));
+        }
+
+        other => {
+            reply(serde_json::json!({
+                "state": "error",
+                "detail": format!("Unknown selection action '{}'", other),
+            }));
+        }
+    }
+}
+
+/// Substitute the selection into a search template, percent-encoding it.
+fn build_search_url(template: &str, query: &str) -> String {
+    if template.is_empty() || template == "{{q}}" {
+        // "Open" on a bare URL — normalize a scheme-less host.
+        let q = query.trim();
+        if q.starts_with("http://") || q.starts_with("https://") {
+            return q.to_string();
+        }
+        return format!("https://{}", q);
+    }
+    template.replace("{{q}}", &percent_encode(query))
+}
+
+fn percent_encode(input: &str) -> String {
+    let mut out = String::with_capacity(input.len() * 3);
+    for byte in input.as_bytes() {
+        match byte {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
+                out.push(*byte as char)
+            }
+            b' ' => out.push('+'),
+            other => out.push_str(&format!("%{:02X}", other)),
+        }
+    }
+    out
+}
+
+/// Open a URL in the default browser without going through a shell.
+fn open_url(url: &str) -> std::io::Result<()> {
+    // `cmd /c start` would interpret the URL; ShellExecute via `rundll32` keeps
+    // the argument opaque.
+    std::process::Command::new("rundll32.exe")
+        .args(["url.dll,FileProtocolHandler", url])
+        .spawn()
+        .map(|_| ())
+}
+
+/// Review-queue IPC. Returns true when the message was consumed.
+///
+/// The only mutating action reachable from here is `accept_to_candidate`,
+/// which stops at `C2`. There is deliberately no admission action: promoting
+/// to `C3_CANONICAL` is a signed individual act performed by the canon engine.
+fn handle_review_ipc(
+    panel_mgr: &mut panels::PanelManager,
+    cfg: &Arc<Mutex<config::Config>>,
+    msg: &serde_json::Value,
+) -> bool {
+    let root = { review::output_root(&cfg.lock().unwrap()) };
+
+    match msg.get("action").and_then(|a| a.as_str()).unwrap_or("") {
+        "reload" => {
+            push_queue(panel_mgr, &root);
+            true
+        }
+        "accept_to_candidate" => {
+            let ids: Vec<String> = msg
+                .get("ids")
+                .and_then(|v| v.as_array())
+                .map(|a| a.iter().filter_map(|v| v.as_str().map(String::from)).collect())
+                .unwrap_or_default();
+
+            match review::accept_to_candidate(&root, &ids) {
+                Ok(result) => {
+                    info!(
+                        "review: {} accepted to candidate, {} refused",
+                        result.accepted.len(),
+                        result.refused.len()
+                    );
+                    let json = serde_json::to_string(&result).unwrap_or_else(|_| "{}".into());
+                    panel_mgr
+                        .evaluate_script("review", &format!("window.acceptResult({})", json));
+                }
+                // A failure here is shown in the panel rather than only logged:
+                // the user is looking at the queue, not the log.
+                Err(e) => {
+                    error!("review: accept failed: {}", e);
+                    let payload = serde_json::json!({
+                        "accepted": [],
+                        "refused": [["batch", e.to_string()]],
+                    });
+                    panel_mgr.evaluate_script(
+                        "review",
+                        &format!("window.acceptResult({})", payload),
+                    );
+                }
+            }
+            true
+        }
+        _ => false,
+    }
+}
+
+/// Load the queue and hand it to the panel.
+fn push_queue(panel_mgr: &mut panels::PanelManager, root: &std::path::Path) {
+    let queue = review::load(root).unwrap_or_else(|e| {
+        error!("review: queue load failed: {}", e);
+        review::Queue::default()
+    });
+    let json = serde_json::to_string(&queue).unwrap_or_else(|_| "{}".into());
+    panel_mgr.evaluate_script("review", &format!("window.loadQueue({})", json));
+}
+
 fn handle_ipc(
     panel_mgr: &mut panels::PanelManager,
     cfg: &Arc<Mutex<config::Config>>,
@@ -288,6 +740,14 @@ fn handle_ipc(
     };
 
     let msg_type = msg.get("type").and_then(|t| t.as_str()).unwrap_or("");
+
+    // The review panel uses "action" rather than "type", and is handled first
+    // so its vocabulary cannot collide with the older panel messages.
+    if panel == "review" {
+        if handle_review_ipc(panel_mgr, cfg, &msg) {
+            return;
+        }
+    }
 
     match msg_type {
         "get_config" => {
@@ -713,6 +1173,196 @@ fn handle_ipc(
                         body: serde_json::json!({ "type": "_eval", "script": script }).to_string(),
                     });
                 }
+            });
+        }
+
+        // The toolbar and capsule both ask for the live capture plus the
+        // actions that apply to it.
+        "selection_get" => {
+            let capture = selection::last_capture();
+            let cfg_lock = cfg.lock().unwrap();
+            let rules = selection::matching_rules(&cfg_lock, &capture);
+            let canon_enabled = cfg_lock.canon.enabled;
+            let fade_ms = cfg_lock.selection.toolbar_fade_ms;
+            drop(cfg_lock);
+
+            let payload = serde_json::json!({
+                "capture": capture,
+                "rules": rules,
+                "pending_node": selection::take_pending_node(),
+                "canon_enabled": canon_enabled,
+                "fade_ms": fade_ms,
+            });
+            panel_mgr.evaluate_script(panel, &format!("onSelection({});", payload));
+        }
+
+        // Execute one toolbar/capsule action against the live capture.
+        "selection_run" => {
+            let rule_id = msg.get("rule").and_then(|v| v.as_str()).unwrap_or("");
+            let request_id = msg
+                .get("request_id")
+                .and_then(|v| v.as_str())
+                .unwrap_or("")
+                .to_string();
+            let capsule_fields = msg
+                .get("capsule")
+                .cloned()
+                .unwrap_or(serde_json::Value::Null);
+
+            let rule = {
+                let cfg_lock = cfg.lock().unwrap();
+                cfg_lock
+                    .selection
+                    .rules
+                    .iter()
+                    .find(|r| r.id == rule_id)
+                    .cloned()
+            };
+
+            match rule {
+                Some(rule) => {
+                    let capture = selection::last_capture();
+                    let proxy = panel_mgr.proxy().clone();
+                    run_selection_action(
+                        cfg,
+                        &proxy,
+                        panel,
+                        rule,
+                        capture,
+                        capsule_fields,
+                        request_id,
+                    );
+                }
+                None => {
+                    let script = format!(
+                        "onActionResult({}, {{\"state\":\"error\",\"detail\":\"Unknown rule\"}});",
+                        serde_json::to_string(&request_id).unwrap()
+                    );
+                    panel_mgr.evaluate_script(panel, &script);
+                }
+            }
+        }
+
+        // Toolbar hands off to the capsule for a chosen node type.
+        "selection_capsule" => {
+            if let Some(node) = msg.get("node_type").and_then(|v| v.as_str()) {
+                selection::set_pending_node(node);
+            }
+            panel_mgr.hide("toolbar");
+            let _ = panel_mgr
+                .proxy()
+                .send_event(AppEvent::OpenPanel("capsule".into()));
+        }
+
+        // A floating surface dismissing itself (Escape, blur, or after an action).
+        "selection_dismiss" => {
+            let target = msg
+                .get("panel")
+                .and_then(|v| v.as_str())
+                .unwrap_or(panel)
+                .to_string();
+            panel_mgr.hide(&target);
+        }
+
+        // Stratum's action catalogue, read live from its own actions.json.
+        "stratum_list" => {
+            let capture = selection::last_capture();
+            let scripts_cfg = { cfg.lock().unwrap().scripts.clone() };
+            let actions = scripts::list_actions(&scripts_cfg);
+            info!(
+                "stratum_list: {} action(s) from {}",
+                actions.len(),
+                scripts_cfg.stratum_root
+            );
+
+            let payload = serde_json::json!({
+                "capture": capture,
+                "clipboard": selection::clipboard_text(),
+                "actions": actions,
+                "enabled": scripts_cfg.enabled,
+                "stratum_root": scripts_cfg.stratum_root,
+            });
+            panel_mgr.evaluate_script(panel, &format!("onStratum({});", payload));
+        }
+
+        // Run one Stratum action against the live capture or supplied text.
+        "stratum_run" => {
+            let action_id = msg
+                .get("action")
+                .and_then(|v| v.as_str())
+                .unwrap_or("")
+                .to_string();
+            let request_id = msg
+                .get("request_id")
+                .and_then(|v| v.as_str())
+                .unwrap_or("")
+                .to_string();
+            // The panel may hand back edited text, so it wins over the capture.
+            let text = msg
+                .get("text")
+                .and_then(|v| v.as_str())
+                .map(String::from)
+                .unwrap_or_else(|| selection::last_capture().text);
+
+            let scripts_cfg = { cfg.lock().unwrap().scripts.clone() };
+            let panel_name = panel.to_string();
+            let proxy_clone = panel_mgr.proxy().clone();
+
+            std::thread::spawn(move || {
+                let clipboard = selection::clipboard_text();
+                let payload = match scripts::run_action(&scripts_cfg, &action_id, &text, &clipboard)
+                {
+                    Ok(result) => serde_json::json!({ "state": "ok", "text": result }),
+                    Err(e) => serde_json::json!({ "state": "error", "detail": e.to_string() }),
+                };
+                let script = format!(
+                    "onActionResult({}, {});",
+                    serde_json::to_string(&request_id).unwrap(),
+                    payload
+                );
+                let _ = proxy_clone.send_event(AppEvent::IpcMessage {
+                    panel: panel_name,
+                    body: serde_json::json!({ "type": "_eval", "script": script }).to_string(),
+                });
+            });
+        }
+
+        // Copy arbitrary text from a panel to the clipboard.
+        "copy_text" => {
+            if let Some(text) = msg.get("text").and_then(|v| v.as_str()) {
+                selection::copy_result(text);
+            }
+        }
+
+        // Canon-session agenda, read-only.
+        "canon_agenda" => {
+            let request_id = msg
+                .get("request_id")
+                .and_then(|v| v.as_str())
+                .unwrap_or("")
+                .to_string();
+            let canon_cfg = { cfg.lock().unwrap().canon.clone() };
+            let panel_name = panel.to_string();
+            let proxy_clone = panel_mgr.proxy().clone();
+
+            std::thread::spawn(move || {
+                let rt = tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                    .unwrap();
+                let payload = match rt.block_on(canon::fetch_agenda(&canon_cfg)) {
+                    Ok(v) => serde_json::json!({ "state": "ok", "agenda": v }),
+                    Err(e) => serde_json::json!({ "state": "error", "detail": e.to_string() }),
+                };
+                let script = format!(
+                    "onAgenda({}, {});",
+                    serde_json::to_string(&request_id).unwrap(),
+                    payload
+                );
+                let _ = proxy_clone.send_event(AppEvent::IpcMessage {
+                    panel: panel_name,
+                    body: serde_json::json!({ "type": "_eval", "script": script }).to_string(),
+                });
             });
         }
 

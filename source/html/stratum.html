@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Stratum Actions</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0f0f14; color: #e0e0e0;
+  display: flex; flex-direction: column;
+  border: 1px solid #2b2b3a; border-radius: 10px;
+}
+
+header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; border-bottom: 1px solid #22222e; flex: none;
+  user-select: none;
+}
+header .glyph { font-size: 15px; color: #c0a0ff; }
+header .title { font-size: 13px; font-weight: 700; }
+header .spacer { flex: 1; }
+header .count { font-size: 10px; color: #6d6d80; }
+header button.close {
+  background: transparent; border: none; color: #6d6d80;
+  font-size: 16px; cursor: pointer; padding: 0 4px; line-height: 1;
+}
+header button.close:hover { color: #ff8f8f; }
+
+.pane { padding: 10px 12px; flex: none; }
+label.cap {
+  display: block; font-size: 10px; color: #8a8a9e;
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;
+}
+textarea#input {
+  width: 100%; height: 92px; resize: none;
+  background: #16161f; color: #d8d8e8;
+  border: 1px solid #2b2b3a; border-radius: 6px;
+  padding: 8px; font-size: 12.5px; font-family: inherit; line-height: 1.45;
+}
+textarea#input:focus { outline: none; border-color: #3f7fbf; }
+
+.actions {
+  flex: 1; overflow-y: auto; padding: 0 12px 10px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  align-content: start;
+}
+.actions::-webkit-scrollbar { width: 8px; }
+.actions::-webkit-scrollbar-thumb { background: #2b2b3a; border-radius: 4px; }
+
+button.action {
+  text-align: left; background: #16161f; color: #d8d8e8;
+  border: 1px solid #2b2b3a; border-radius: 6px;
+  padding: 7px 9px; cursor: pointer; font-family: inherit;
+}
+button.action:hover, button.action:focus {
+  background: #1e3a5f; border-color: #2f5c8f; outline: none;
+}
+button.action .name { display: block; font-size: 12px; font-weight: 600; }
+button.action .desc {
+  display: block; font-size: 9.5px; color: #6d6d80;
+  margin-top: 2px; line-height: 1.3;
+}
+button.action:hover .desc { color: #9fc4e0; }
+button.action:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.result { border-top: 1px solid #22222e; padding: 10px 12px; flex: none; display: none; }
+.result.show { display: block; }
+.result .head {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+}
+.result .head .who { font-size: 11px; font-weight: 700; color: #7fd8ff; }
+.result .head .spacer { flex: 1; }
+.result .head button {
+  background: transparent; border: 1px solid #2b2b3a; border-radius: 5px;
+  color: #9a9ab0; font-size: 10.5px; padding: 3px 8px;
+  cursor: pointer; font-family: inherit;
+}
+.result .head button:hover { color: #e0e0e0; border-color: #3d3d50; }
+.result pre {
+  background: #12121a; border: 1px solid #22222e; border-radius: 6px;
+  padding: 8px; max-height: 190px; overflow: auto;
+  font-family: Consolas, monospace; font-size: 11px; line-height: 1.45;
+  white-space: pre-wrap; word-break: break-word; color: #d8d8e8;
+}
+.result.error .head .who { color: #ff8f8f; }
+.result.error pre { color: #ffb0b0; border-color: #5f2424; }
+
+.notice {
+  margin: 10px 12px; padding: 9px 10px; border-radius: 7px;
+  background: #2a2414; border: 1px solid #5f4f24; color: #ffd68f;
+  font-size: 11px; line-height: 1.5;
+}
+.notice code { font-family: Consolas, monospace; font-size: 10.5px; word-break: break-all; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="glyph">⌘</span>
+  <span class="title">Stratum Actions</span>
+  <span class="spacer"></span>
+  <span class="count" id="count"></span>
+  <button class="close" onclick="dismiss()" title="Close (Esc)">✕</button>
+</header>
+
+<div class="pane">
+  <label class="cap" for="input">Input <span id="source" style="color:#5c5c70"></span></label>
+  <textarea id="input" placeholder="Nothing captured — paste or type text to run an action against."></textarea>
+</div>
+
+<div class="actions" id="actions"></div>
+
+<div class="result" id="result">
+  <div class="head">
+    <span class="who" id="resultWho">Result</span>
+    <span class="spacer"></span>
+    <button onclick="copyResult()">Copy</button>
+    <button onclick="useResult()">Use as input</button>
+  </div>
+  <pre id="resultText"></pre>
+</div>
+
+<script>
+'use strict';
+
+const send = (msg) => window.ipc.postMessage(JSON.stringify(msg));
+
+let inFlight = null;
+let lastResult = '';
+let lastSeed = '';
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function dismiss() {
+  send({ type: 'selection_dismiss', panel: 'stratum' });
+}
+
+/// Called from Rust with the capture and Stratum's own action catalogue.
+function onStratum(payload) {
+  const actions = payload.actions || [];
+  const capture = payload.capture || {};
+  const box = document.getElementById('actions');
+
+  // Seed from the selection, falling back to the clipboard the way Stratum's
+  // own action contract does. Only seed when the box is empty or still holds
+  // the previous seed, so a result pulled back in with "Use as input" and any
+  // hand-typed text survive a refocus.
+  const input = document.getElementById('input');
+  const seed = capture.text || payload.clipboard || '';
+  if (seed && (!input.value.trim() || input.value === lastSeed)) {
+    input.value = seed;
+    lastSeed = seed;
+  }
+  document.getElementById('source').textContent =
+    capture.text ? 'selection' : (payload.clipboard ? 'clipboard' : 'nothing captured');
+
+  document.getElementById('count').textContent =
+    actions.length ? actions.length + ' actions' : '';
+
+  if (!actions.length) {
+    box.innerHTML = '';
+    const notice = document.createElement('div');
+    notice.className = 'notice';
+    notice.innerHTML = payload.enabled
+      ? 'No Stratum actions found. Nerve reads the catalogue from '
+        + '<code>' + esc(payload.stratum_root || '') + '\\04_config\\actions.json</code> — '
+        + 'check that path in Settings.'
+      : 'Stratum actions are disabled in settings.';
+    box.appendChild(notice);
+    return;
+  }
+
+  let html = '';
+  for (const a of actions) {
+    html += '<button class="action" data-id="' + esc(a.id) + '" title="' + esc(a.description) + '">'
+          + '<span class="name">' + esc(a.name) + '</span>'
+          + '<span class="desc">' + esc(a.description) + '</span>'
+          + '</button>';
+  }
+  box.innerHTML = html;
+
+  for (const btn of box.querySelectorAll('button.action')) {
+    btn.addEventListener('click', () => run(btn.dataset.id, btn.querySelector('.name').textContent));
+  }
+}
+
+function run(actionId, actionName) {
+  if (inFlight) return;
+
+  const text = document.getElementById('input').value;
+  inFlight = 'r' + Date.now() + Math.random().toString(36).slice(2, 7);
+
+  setBusy(true);
+  showResult(actionName, 'Running…', false);
+
+  send({ type: 'stratum_run', action: actionId, text: text, request_id: inFlight });
+}
+
+function onActionResult(requestId, result) {
+  if (requestId !== inFlight) return;
+  inFlight = null;
+  setBusy(false);
+
+  const who = document.getElementById('resultWho').textContent.replace(/ — .*$/, '');
+
+  if (!result || result.state === 'error') {
+    lastResult = '';
+    showResult(who, (result && result.detail) || 'Action failed with no detail.', true);
+    return;
+  }
+
+  lastResult = result.text || '';
+  showResult(who, lastResult || '(empty result)', false);
+}
+
+function showResult(who, text, isError) {
+  const box = document.getElementById('result');
+  box.className = 'result show' + (isError ? ' error' : '');
+  document.getElementById('resultWho').textContent = who;
+  document.getElementById('resultText').textContent = text;
+}
+
+function setBusy(busy) {
+  for (const btn of document.querySelectorAll('button.action')) btn.disabled = busy;
+}
+
+function copyResult() {
+  if (lastResult) send({ type: 'copy_text', text: lastResult });
+}
+
+/// Chain actions: feed a result back in as the next input.
+function useResult() {
+  if (!lastResult) return;
+  document.getElementById('input').value = lastResult;
+  document.getElementById('input').focus();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') dismiss();
+});
+
+function refresh() { send({ type: 'stratum_list' }); }
+window.addEventListener('focus', refresh);
+refresh();
+</script>
+
+</body>
+</html>

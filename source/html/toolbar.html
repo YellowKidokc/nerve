@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nerve Capture</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: transparent; overflow: hidden; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #e0e0e0;
+  padding: 6px;
+  user-select: none;
+}
+
+.box {
+  background: #14141c;
+  border: 1px solid #2f2f40;
+  border-radius: 9px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  padding: 8px 9px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  transition: opacity 400ms ease;
+}
+.box.fading { opacity: 0.15; }
+
+/* What was captured, so it is never a mystery what will be staged. */
+.sel {
+  font-size: 10.5px;
+  color: #8a8a9e;
+  line-height: 1.35;
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+.sel .label { color: #5c5c70; text-transform: uppercase; letter-spacing: .07em; font-size: 9px; flex: none; }
+.sel .text {
+  color: #c8c8dc;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;
+}
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+
+button.pick {
+  display: flex; align-items: center; gap: 6px;
+  background: #1b1b26;
+  border: 1px solid #2f2f40;
+  border-radius: 6px;
+  color: #d4d4e4;
+  padding: 6px 7px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+button.pick:hover, button.pick:focus {
+  background: #1e3a5f; border-color: #3f7fbf; color: #9fe0ff; outline: none;
+}
+button.pick .num {
+  flex: none;
+  width: 15px; height: 15px; line-height: 15px;
+  border-radius: 3px;
+  background: #2a2a3a; color: #8a8a9e;
+  font-size: 9px; text-align: center; font-weight: 700;
+}
+button.pick:hover .num, button.pick:focus .num { background: #2f5c8f; color: #cfefff; }
+button.pick .glyph { flex: none; font-size: 13px; color: #c0a0ff; width: 14px; text-align: center; }
+button.pick:hover .glyph { color: #9fe0ff; }
+button.pick .name { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.util { display: flex; gap: 4px; flex-wrap: wrap; }
+button.util-btn {
+  background: transparent;
+  border: 1px solid #2a2a3a;
+  border-radius: 5px;
+  color: #9a9ab0;
+  font-size: 10px; font-family: inherit;
+  padding: 4px 8px; cursor: pointer;
+  display: flex; align-items: center; gap: 4px;
+}
+button.util-btn:hover, button.util-btn:focus {
+  color: #9fe0ff; border-color: #3f7fbf; background: #1a2a3a; outline: none;
+}
+button.util-btn .num { font-size: 8.5px; color: #5c5c70; }
+button.util-btn:hover .num { color: #7fb8e0; }
+
+.foot {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 9px; color: #55556a;
+  border-top: 1px solid #22222e; padding-top: 5px;
+}
+.foot .spacer { flex: 1; }
+.foot b { color: #7a7a92; font-weight: 600; }
+.foot .warn { color: #d8a04a; }
+
+.empty { font-size: 11px; color: #6d6d80; padding: 10px; text-align: center; }
+
+.toast {
+  position: fixed; left: 8px; right: 8px; bottom: 6px;
+  background: #2a1414; border: 1px solid #5f2424; border-radius: 6px;
+  color: #ff9f9f; font-size: 10px; padding: 5px 8px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+<div class="box" id="box">
+  <div class="empty">Waiting for a selection…</div>
+</div>
+
+<script>
+'use strict';
+
+const send = (msg) => window.ipc.postMessage(JSON.stringify(msg));
+const pending = new Map();
+
+// Canon node actions are the primary purpose of this surface.
+const NODE_ACTIONS = new Set(['canon']);
+
+let fadeTimer = null;
+let fadeMs = 4000;
+let picks = [];   // number-key ordered: node picks first, then utilities
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function dismiss() {
+  send({ type: 'selection_dismiss', panel: 'toolbar' });
+}
+
+// ── Auto-fade ───────────────────────────────────────────────────────────────
+// A quick-pick surface that lingers becomes clutter. Any interaction cancels
+// the countdown and restarts it, so the popup never vanishes mid-decision.
+
+function armFade() {
+  clearFade();
+  if (!fadeMs) return;
+  const box = document.getElementById('box');
+  fadeTimer = setTimeout(() => {
+    box.classList.add('fading');
+    // Dismiss only after the fade has actually played.
+    fadeTimer = setTimeout(dismiss, 400);
+  }, fadeMs);
+}
+
+function clearFade() {
+  if (fadeTimer) { clearTimeout(fadeTimer); fadeTimer = null; }
+  document.getElementById('box').classList.remove('fading');
+}
+
+function keepAlive() { armFade(); }
+
+// ── Render ──────────────────────────────────────────────────────────────────
+
+function onSelection(payload) {
+  const box = document.getElementById('box');
+  const capture = payload.capture || {};
+  const rules = payload.rules || [];
+  fadeMs = payload.fade_ms ?? 4000;
+
+  if (!capture.text) {
+    box.innerHTML = '<div class="empty">Nothing selected.</div>';
+    armFade();
+    return;
+  }
+
+  // A direct hotkey names its node type; honour it and skip the picker.
+  if (payload.pending_node) {
+    send({ type: 'selection_capsule', node_type: payload.pending_node });
+    return;
+  }
+
+  const nodes = rules.filter((r) => NODE_ACTIONS.has(r.action));
+  const utils = rules.filter((r) => !NODE_ACTIONS.has(r.action));
+  picks = nodes.concat(utils);
+
+  const kinds = (capture.kinds || []).filter((k) => k !== 'any');
+
+  let html = '';
+
+  html += '<div class="sel">'
+        + '<span class="label">Sel</span>'
+        + '<span class="text">' + esc(capture.text) + '</span>'
+        + '</div>';
+
+  html += '<div class="grid">';
+  nodes.forEach((r, i) => {
+    html += '<button class="pick" data-i="' + i + '" title="' + esc(r.label) + '">'
+          + '<span class="num">' + (i + 1) + '</span>'
+          + '<span class="glyph">' + esc(r.glyph || '◆') + '</span>'
+          + '<span class="name">' + esc(r.label) + '</span>'
+          + '</button>';
+  });
+  html += '</div>';
+
+  if (utils.length) {
+    html += '<div class="util">';
+    utils.forEach((r, j) => {
+      const n = nodes.length + j + 1;
+      html += '<button class="util-btn" data-i="' + (nodes.length + j) + '" title="' + esc(r.label) + '">'
+            + (n <= 9 ? '<span class="num">' + n + '</span>' : '')
+            + esc(r.glyph || '') + ' ' + esc(r.label)
+            + '</button>';
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="foot">'
+        + '<span><b>' + capture.len + '</b> chars</span>'
+        + (kinds.length ? '<span>' + esc(kinds.join(' · ')) + '</span>' : '')
+        + '<span class="spacer"></span>'
+        + (payload.canon_enabled ? '' : '<span class="warn">canon offline</span>')
+        + '<span>1-9 pick · Esc</span>'
+        + '</div>';
+
+  box.innerHTML = html;
+
+  for (const btn of box.querySelectorAll('button[data-i]')) {
+    btn.addEventListener('click', () => choose(Number(btn.dataset.i)));
+  }
+  const first = box.querySelector('button[data-i]');
+  if (first) first.focus();
+
+  armFade();
+}
+
+// ── Acting ──────────────────────────────────────────────────────────────────
+
+function choose(index) {
+  const rule = picks[index];
+  if (!rule) return;
+  clearFade();
+
+  // Canon picks open the Truth Capsule rather than staging blind — nothing
+  // reaches the canon service without the user seeing what will be sent.
+  if (NODE_ACTIONS.has(rule.action)) {
+    send({ type: 'selection_capsule', node_type: rule.node_type || 'claim' });
+    return;
+  }
+
+  const requestId = 'r' + Date.now() + Math.random().toString(36).slice(2, 7);
+  pending.set(requestId, rule.id);
+  send({ type: 'selection_run', rule: rule.id, request_id: requestId });
+}
+
+function onActionResult(requestId, result) {
+  pending.delete(requestId);
+  if (result && result.state === 'error') {
+    showToast(result.detail || 'Action failed');
+    armFade();
+    return;
+  }
+  dismiss();
+}
+
+function showToast(text) {
+  const old = document.querySelector('.toast');
+  if (old) old.remove();
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = text;
+  document.body.appendChild(el);
+}
+
+// ── Input ───────────────────────────────────────────────────────────────────
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { dismiss(); return; }
+
+  // Number keys pick directly — the fast path.
+  if (e.key >= '1' && e.key <= '9') {
+    e.preventDefault();
+    choose(Number(e.key) - 1);
+    return;
+  }
+  keepAlive();
+});
+
+// Any pointer activity means the user is still deciding.
+document.addEventListener('mousemove', keepAlive);
+document.addEventListener('mousedown', keepAlive);
+
+window.addEventListener('blur', () => {
+  if (!pending.size) dismiss();
+});
+
+function refresh() { send({ type: 'selection_get' }); }
+window.addEventListener('focus', refresh);
+refresh();
+</script>
+
+</body>
+</html>

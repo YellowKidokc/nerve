@@ -58,6 +58,14 @@ pub fn monitor(proxy: EventLoopProxy<AppEvent>, cfg: Arc<Mutex<Config>>) -> Resu
 }
 
 /// Get current clipboard text using clipboard-win
+/// Current clipboard text, for prompt templates that name `{{clipboard}}`.
+///
+/// Returns `None` rather than an error when the clipboard holds no text: for a
+/// template placeholder, "nothing copied" is an ordinary state, not a fault.
+pub fn current_text() -> Option<String> {
+    get_clipboard_text().ok().filter(|t| !t.is_empty())
+}
+
 fn get_clipboard_text() -> Result<String> {
     use clipboard_win::{formats, get_clipboard};
     let text: String =
