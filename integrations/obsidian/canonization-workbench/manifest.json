@@ -1,7 +1,7 @@
 {
   "id": "canonization-workbench",
   "name": "Canonization Workbench",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "minAppVersion": "1.4.0",
   "description": "Nerve-backed atom authoring, focused note and folder canonization passes, candidate JSON projections, and human-gated review staging.",
   "author": "David Lowe",

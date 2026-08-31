@@ -29,6 +29,7 @@ const DEFAULT_SETTINGS = {
   },
   underlineStatus: "candidate",
   candidateReviewRoot: "notes/AXIOM_CANONIZATION_2026-08-29",
+  candidateBatchRoot: "__CANDIDATE_DRAFTS_NOT_ADMITTED",
   nerveBuilderUrl: ".obsidian/plugins/canonization-workbench/nerve/atom-builder.html"
 };
 
@@ -60,8 +61,8 @@ const CANONIZATION_PASSES = {
     lanes: null
   },
   definitions: {
-    label: "Definitions and boundaries",
-    instruction: "Return only canonical-definition candidates, aliases, identity conditions, semantic boundaries, and anti-terms.",
+    label: "Define — definitions and boundaries",
+    instruction: "Return definition candidates classified by definition category: canonical, native-domain, operational, stipulative, alias, identity condition, inclusion boundary, exclusion boundary, anti-term, ambiguity, definition conflict, or OPEN definition. Preserve the source wording and provenance. Do not resolve ambiguity by guessing, and do not treat a proposed definition as admitted canon.",
     lanes: ["definition"]
   },
   mathematics: {
@@ -99,7 +100,7 @@ const CANONIZATION_PASSES = {
 const DEFAULT_CLASSIFICATION_PROFILES = [
   { id: "candidate-pipeline", name: "Three-stage candidate pipeline", mode: "pipeline", enabled: true, semanticCategory: "Canonization", categories: ["Referent", "Identity", "Distinction", "Relation", "Operation", "Dependency", "Constraint", "Invariant", "CollapseCondition", "Consequence", "Representation", "FormalizationBoundary", "OpenQuestion", "Claim", "Definition", "EvidenceUnit", "Proof", "Bridge", "Objection", "Countermodel", "Limitation"], prompt: "Run discovery, classification, and reconciliation as separately receipted candidate-only stages." },
   { id: "claims", name: "Claims and burden", mode: "pass", passId: "claims", enabled: true, semanticCategory: "Canonization", categories: ["Claim", "Premise", "EvidenceUnit", "Observation", "Objection", "Countermodel", "Limitation"], prompt: "Classify the smallest independently gradable assertions and their burden without upgrading warrant." },
-  { id: "definitions", name: "Definitions and boundaries", mode: "pass", passId: "definitions", enabled: true, semanticCategory: "Canonization", categories: ["Definition", "Identity", "Distinction", "Constraint", "AntiTerm"], prompt: "Open exact definitions, aliases, identity conditions, boundaries, and anti-terms." },
+  { id: "definitions", name: "Define", mode: "pass", passId: "definitions", enabled: true, semanticCategory: "Canonization", categories: ["CanonicalDefinition", "NativeDomainDefinition", "OperationalDefinition", "StipulativeDefinition", "Alias", "IdentityCondition", "InclusionBoundary", "ExclusionBoundary", "AntiTerm", "Ambiguity", "DefinitionConflict", "OpenDefinition"], prompt: "Classify every definition candidate by definition species. Preserve exact wording, provenance, scope, and unresolved ambiguity; never guess an absent definition or promote a proposal to canon." },
   { id: "mathematics", name: "Mathematics and notation", mode: "pass", passId: "mathematics", enabled: true, semanticCategory: "Canonization", categories: ["Primitive", "Definition", "Assumption", "Dependency", "Derivation", "TheoremCandidate", "FormalizationBoundary"], prompt: "Separate mathematical objects, notation, premises, derivations, and formal boundaries from their interpretation." },
   { id: "theology", name: "Theology and Scripture", mode: "pass", passId: "theology", enabled: true, semanticCategory: "Canonization", categories: ["TheologicalDeclaration", "ScriptureAnchor", "Interpretation", "HistoricalClaim", "Limitation"], prompt: "Keep theological declaration, interpretation, historical support, and formal claims separately addressable." },
   { id: "bridges", name: "Bridges and translation", mode: "pass", passId: "bridges", enabled: true, semanticCategory: "Canonization", categories: ["NativeGrammar", "NeutralForm", "Mapping", "Invariant", "TranslationLoss", "ReverseMap", "RivalMapping", "NegativeControl", "BridgeTest", "DefeatCondition"], prompt: "Treat every bridge as directional and candidate-only; always print preserved and lost structure." },
@@ -541,6 +542,7 @@ class CanonWorkbenchView extends ItemView {
     if (activeProfile) semanticBox.createEl("p", { cls: "canonization-profile-summary", text: `Categories: ${activeProfile.categories.join(" · ")}` });
     new Setting(semanticBox).setName("Nerve Atom Builder").setDesc("Open the canonical HTML authoring interface in the right-side pane. Validated packets are preserved as JSON and projected into Obsidian Properties.").addButton((button) => button.setButtonText("Open Nerve interface").setCta().onClick(() => this.plugin.activateNerveBuilder()));
     new Setting(semanticBox).setName("Nerve JSON round trip").setDesc("Export Draft inside the Nerve sidebar to preserve editable JSON. Open an editable-draft JSON note here, then import it without altering a validated candidate packet.").addButton((button) => button.setButtonText("Import active draft JSON").onClick(() => this.plugin.importActiveNerveDraft()));
+    new Setting(semanticBox).setName("Pipeline batch intake").setDesc("Import preserved capsule, receipt, and projection batches into this human-review queue. Source files remain untouched; no admission event is created.").addButton((button) => button.setButtonText("Import pipeline batches").setCta().onClick(() => this.plugin.importCandidatePipelineBatches()));
     new Setting(contentEl).addButton((button) => button.setButtonText("Create card").setCta().onClick(() => new CreateCanonModal(this.app, this.plugin).open()));
     const list = contentEl.createDiv({ cls: "canonization-card-list" });
     const files = await this.plugin.store.cards();
@@ -600,6 +602,7 @@ class CanonizationSettingTab extends PluginSettingTab {
     new Setting(containerEl).setName("Semantic AI registry path").addText((text) => text.setValue(this.plugin.settings.semanticRegistryPath).onChange(async (value) => { this.plugin.settings.semanticRegistryPath = value.trim(); await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName("Canon Engine API").setDesc("Local engine used for index-driven drift and propagation previews. It remains the authority; Semantic AI is discovery-only.").addText((text) => text.setValue(this.plugin.settings.engineUrl).onChange(async (value) => { this.plugin.settings.engineUrl = value.replace(/\/$/, ""); await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName("Candidate review root").setDesc("Vault-relative Ground Trial / fundamental-axiom review queue.").addText((text) => text.setValue(this.plugin.settings.candidateReviewRoot).onChange(async (value) => { this.plugin.settings.candidateReviewRoot = normalizePath(value.trim()); await this.plugin.saveSettings(); }));
+    new Setting(containerEl).setName("Candidate pipeline batch root").setDesc("Vault-relative folder containing preserved batch_* capsule, receipt, and projection outputs. Imports are additive and candidate-only.").addText((text) => text.setValue(this.plugin.settings.candidateBatchRoot).onChange(async (value) => { this.plugin.settings.candidateBatchRoot = normalizePath(value.trim()) || "__CANDIDATE_DRAFTS_NOT_ADMITTED"; await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName("Nerve Atom Builder location").setDesc("Vault path to the generated Nerve interface copy, or an explicit URL. Nerve remains the authoring source; Obsidian consumes its JSON.").addText((text) => text.setValue(this.plugin.settings.nerveBuilderUrl).onChange(async (value) => { this.plugin.settings.nerveBuilderUrl = value.trim() || ".obsidian/plugins/canonization-workbench/nerve/atom-builder.html"; await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName("Create canonical folders and default prompts").setDesc("Safe setup: creates only missing folders and prompt files.").addButton((button) => button.setButtonText("Initialize").onClick(async () => { await this.plugin.store.ensureLayout(); new Notice("Canonical folders and prompt files are ready."); }));
   }
@@ -621,6 +624,7 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     this.addCommand({ id: "open-nerve-atom-builder", name: "Open Nerve Atom Builder", callback: () => this.activateNerveBuilder() });
     this.addCommand({ id: "import-active-nerve-draft", name: "Import active Nerve draft JSON into Atom Builder", callback: () => this.importActiveNerveDraft() });
     this.addCommand({ id: "open-ground-trial-candidate-review", name: "Open Ground Trial candidate review", callback: () => this.activateView() });
+    this.addCommand({ id: "import-candidate-pipeline-batches", name: "Import candidate pipeline batches", callback: () => this.importCandidatePipelineBatches() });
     this.addCommand({ id: "open-canonical-card", name: "Open canonical card", callback: () => this.activateView() });
     for (const [passId, pass] of Object.entries(CANONIZATION_PASSES)) {
       this.addCommand({ id: `canonize-current-note-${passId}`, name: `Canonize current note — ${pass.label}`, callback: () => this.runSemanticCanonizationCurrentNote(null, passId) });
@@ -663,6 +667,137 @@ module.exports = class CanonizationWorkbenchPlugin extends Plugin {
     this.settings.postProcessing = Object.assign({}, DEFAULT_SETTINGS.postProcessing, this.settings.postProcessing || {});
   }
   async saveSettings() { await this.saveData(this.settings); }
+
+  async sha256Text(text) {
+    const bytes = new TextEncoder().encode(text);
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    return `sha256:${Array.from(new Uint8Array(digest)).map((value) => value.toString(16).padStart(2, "0")).join("")}`;
+  }
+
+  canonicalJson(value) {
+    if (Array.isArray(value)) return `[${value.map((item) => this.canonicalJson(item)).join(",")}]`;
+    if (value && typeof value === "object") return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${this.canonicalJson(value[key])}`).join(",")}}`;
+    return JSON.stringify(value);
+  }
+
+  safePacketName(value) {
+    return String(value || "candidate").replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "") || "candidate";
+  }
+
+  async importCandidatePipelineBatches() {
+    const batchRoot = normalizePath(this.settings.candidateBatchRoot || DEFAULT_SETTINGS.candidateBatchRoot);
+    const files = this.app.vault.getFiles().filter((file) => file.path.startsWith(`${batchRoot}/batch_`));
+    const capsuleFiles = files.filter((file) => file.path.includes("/capsules/") && file.path.endsWith(".capsule.json"));
+    if (!capsuleFiles.length) {
+      new Notice(`No capsule batches found under ${batchRoot}.`);
+      return { imported: 0, skipped: 0, failed: 0 };
+    }
+
+    let imported = 0, skipped = 0, failed = 0;
+    for (const capsuleFile of capsuleFiles) {
+      try {
+        const capsuleRaw = await this.app.vault.read(capsuleFile);
+        const capsule = JSON.parse(capsuleRaw);
+        if (capsule.candidate_label !== CANDIDATE_STATUS || capsule.canonical_promotion_requested !== false) throw new Error("Unsafe capsule authority fields");
+        const batchPath = capsuleFile.path.split("/capsules/")[0];
+        const batchName = batchPath.split("/").pop();
+        const batchFiles = files.filter((file) => file.path.startsWith(`${batchPath}/`));
+        const receiptFiles = batchFiles.filter((file) => file.path.includes("/receipts/") && file.path.endsWith(".json"));
+        let receipt = null, receiptFile = null, receiptRaw = null;
+        for (const possible of receiptFiles) {
+          const raw = await this.app.vault.read(possible);
+          const parsed = JSON.parse(raw);
+          if (parsed.capsule_hash === await this.sha256Text(this.canonicalJson(capsule))) { receipt = parsed; receiptFile = possible; receiptRaw = raw; break; }
+        }
+        if (!receipt) throw new Error("No hash-matched pipeline receipt");
+        if (receipt.canonical_promotion_performed !== false) throw new Error("Receipt claims a canonical promotion");
+
+        const stage = (name) => receipt.stages?.find((item) => item.name === name)?.output || {};
+        const discovery = stage("discovery"), classification = stage("classification"), reconciliation = stage("reconciliation");
+        const projectionFile = batchFiles.find((file) => file.path.endsWith(`/projections/${receipt.run_id}.projection.md`)) || null;
+        const candidateId = capsule.source_governance?.declared_id || receipt.run_id;
+        const destinationFolder = normalizePath(`${this.settings.candidateReviewRoot}/_candidate_packets/PIPELINE_IMPORTS/${batchName}`);
+        await this.store.ensureFolder(destinationFolder);
+        const destination = normalizePath(`${destinationFolder}/${this.safePacketName(candidateId)}.${receipt.run_id}.candidate.json`);
+        if (await this.app.vault.adapter.exists(destination)) { skipped += 1; continue; }
+
+        const openMatters = [...new Set([...(classification.unresolved || []), ...(discovery.open_questions || []), ...(capsule.source_governance?.limitations || [])])];
+        const packet = {
+          packet_version: "candidate-review-packet/1.1.0",
+          status: CANDIDATE_STATUS,
+          id: candidateId,
+          candidate_version: "1.0-candidate",
+          title: capsule.claim,
+          declared_warrant_intent: classification.warrant_class || capsule.claim_type || "OPEN",
+          depends_on: capsule.source_governance?.depends_on || discovery.dependencies || [],
+          lifecycle: "candidate",
+          admission_event: null,
+          canonical_admission: false,
+          review_card: {
+            exact_claim: capsule.claim,
+            plain_language_meaning: capsule.plain_language || reconciliation.safe_public_wording || capsule.claim,
+            object_type_and_register: {
+              declared_claim_type: capsule.claim_type || "OPEN",
+              declared_warrant_intent: classification.warrant_class || "OPEN",
+              automated_object_type: classification.object_type || "OPEN",
+              automated_register: classification.register || "OPEN"
+            },
+            warrant: classification.warrant_class || "OPEN",
+            dependencies: capsule.source_governance?.depends_on || discovery.dependencies || [],
+            supporting_material: [],
+            defeat_conditions: capsule.source_governance?.defeat_conditions || [capsule.defeat_condition].filter(Boolean),
+            open_matters: openMatters,
+            countermodels_and_objections: discovery.countermodels || [],
+            automated_review_results: {
+              provider: receipt.provider,
+              model: receipt.model,
+              final_status: receipt.final_status,
+              stage_statuses: Object.fromEntries((receipt.stages || []).map((item) => [item.name, item.status])),
+              receipt_path: receiptFile.path,
+              capsule_path: capsuleFile.path,
+              projection_path: projectionFile?.path || null
+            },
+            kimi_exact_criticism: [],
+            proposed_response: [],
+            human_decision: null,
+            reconciliation: {
+              recommended_operation: reconciliation.recommended_operation || capsule.operation || "OPEN",
+              preserved: reconciliation.preserved || [],
+              lost: reconciliation.lost || [],
+              bridge_statement: reconciliation.bridge_statement || null,
+              bridge_propagates_proof: false
+            }
+          },
+          kimi_review: { state: "NOT_SUPPLIED", affected: false, objection_ids: [], finalization_blocked: false },
+          candidate_approval: null,
+          review_receipt: {
+            import_type: "PRESERVED_PIPELINE_BATCH",
+            imported_at: new Date().toISOString(),
+            batch_path: batchPath,
+            source_path: capsule.source?.path_or_uri || null,
+            source_hash: capsule.source?.source_hash || null,
+            capsule_path: capsuleFile.path,
+            capsule_hash: await this.sha256Text(capsuleRaw),
+            receipt_path: receiptFile.path,
+            receipt_hash: await this.sha256Text(receiptRaw),
+            projection_path: projectionFile?.path || null,
+            originals_modified: false,
+            canonical_admission_performed: false
+          }
+        };
+        packet.candidate_packet_hash = await this.sha256Text(JSON.stringify(packet));
+        await this.app.vault.create(destination, JSON.stringify(packet, null, 2) + "\n");
+        imported += 1;
+      } catch (error) {
+        failed += 1;
+        console.warn("Candidate pipeline import failed", capsuleFile.path, error);
+      }
+    }
+    new Notice(`Pipeline import complete: ${imported} new, ${skipped} already present, ${failed} blocked. No admissions.`);
+    const leaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_CANON);
+    for (const leaf of leaves) await leaf.view.render();
+    return { imported, skipped, failed };
+  }
 
   classificationProfiles() { return this.settings.classificationProfiles.filter((profile) => profile.enabled !== false); }
 

@@ -15,7 +15,11 @@ It provides focused Semantic AI passes for:
 - truth predicates and Why-Closure;
 - full canonization.
 
+The **Define** profile is one bounded pass with explicit categories: canonical, native-domain, operational, and stipulative definitions; aliases; identity conditions; inclusion and exclusion boundaries; anti-terms; ambiguity; conflicts; and OPEN definitions.
+
 The **Run the three-stage candidate pipeline** choice makes three distinct API calls in order: discovery, classification, then reconciliation. Each later stage receives the prior candidate output as non-authoritative context. The same passes are available for the current note and from the Obsidian file/folder context menu. Folder work is bounded to two concurrent calls and produces candidate-only receipts.
+
+The **Import candidate pipeline batches** command discovers preserved `batch_*` outputs under `__CANDIDATE_DRAFTS_NOT_ADMITTED`, verifies each capsule against its pipeline receipt, and creates additive human-review packets under the configured candidate review root. It never edits the capsules, receipts, projections, or source axioms, and it cannot create an admission event.
 
 ## Install
 
