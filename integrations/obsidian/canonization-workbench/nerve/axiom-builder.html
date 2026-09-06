@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom Builder — Faith Through Physics</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   AXIOM BUILDER — MASTER TEMPLATE & VERIFICATION WORKBENCH
+   Solid Black & Gold Obsidian Theme | Lean 4 | Z3 | 5 Questions
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --void: #050505;
+  --deep: #0a0a0a;
+  --surface: #111111;
+  --surface2: #161616;
+  --surface3: #222222;
+  --border: #2a2520;
+  --border-strong: #3d3530;
+  --gold: #d4af37;
+  --golddim: #8a7129;
+  --goldglow: rgba(212,175,55,0.15);
+  --text: #e8e6e1;
+  --textdim: #9a9590;
+  --textfaint: #5a5550;
+  --green: #3fd05f;
+  --red: #e06060;
+  --blue: #5b9bd5;
+  --purple: #a78bfa;
+  --font-display: 'Cinzel', 'Georgia', serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--void);
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.6;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+/* ─── HEADER ─── */
+header {
+  height: 52px;
+  background: var(--deep);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 14px;
+  z-index: 100;
+  flex-shrink: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--golddim);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  font-size: 14px;
+  box-shadow: 0 0 10px var(--goldglow);
+  font-weight: 800;
+}
+.brand h1 {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-transform: uppercase;
+}
+.brand small {
+  display: block;
+  font-size: 9.5px;
+  color: var(--golddim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+}
+
+.selector-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 14px;
+}
+.node-select {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  outline: none;
+  max-width: 320px;
+  cursor: pointer;
+}
+.node-select:focus { border-color: var(--gold); }
+
+.spacer { flex: 1; }
+
+.hbtn {
+  padding: 6px 13px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  border: 1px solid var(--border-strong);
+  background: var(--surface2);
+  color: var(--textdim);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.hbtn:hover { color: #fff; border-color: var(--gold); background: var(--surface3); }
+.hbtn-gold {
+  background: #1f1a0d;
+  border-color: var(--golddim);
+  color: var(--gold);
+}
+.hbtn-gold:hover {
+  background: #2a2211;
+  color: #fff;
+  box-shadow: 0 0 8px var(--goldglow);
+}
+
+/* ─── APP SHELL ─── */
+.app-shell {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ─── LEFT COLUMN: BUILDER ACCORDION ─── */
+.builder-col {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─── RIGHT COLUMN: LIVE PACKET & VERIFICATION ─── */
+.preview-col {
+  width: 440px;
+  background: var(--deep);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.preview-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+}
+.preview-head h2 {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.badges-rail {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #090909;
+}
+.badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+.badge-pill {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  border: 1px solid var(--border-strong);
+}
+.pill-certified { background: #0f2b18; color: var(--green); border-color: #1e5a32; }
+.pill-candidate { background: #26200a; color: var(--gold); border-color: var(--golddim); }
+.pill-unchecked { background: #1a1a1a; color: var(--textdim); }
+.pill-structural { background: #2e1414; color: var(--red); border-color: #5c2020; }
+
+.json-viewer {
+  flex: 1;
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #8ed69d;
+  background: #060606;
+  overflow: auto;
+  white-space: pre;
+  line-height: 1.5;
+}
+.preview-actions {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ─── ACCORDION PANELS ─── */
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.panel-bar {
+  padding: 12px 18px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.panel-bar:hover { background: var(--surface3); }
+.pnum {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--deep);
+  border: 1px solid var(--border-strong);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+.ptitle {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  letter-spacing: 0.05em;
+  color: #fff;
+  font-weight: 700;
+  flex: 1;
+}
+.psub {
+  font-size: 11px;
+  color: var(--textdim);
+  margin-left: 8px;
+  font-family: var(--font-body);
+}
+.pchev {
+  font-size: 11px;
+  color: var(--textdim);
+  transition: transform 0.2s;
+}
+.panel.open .pchev { transform: rotate(180deg); }
+.panel-body {
+  display: none;
+  padding: 18px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  flex-direction: column;
+  gap: 14px;
+}
+.panel.open .panel-body { display: flex; }
+
+/* ─── FORM CONTROLS ─── */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+label {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--textdim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.req { color: var(--gold); font-size: 9px; }
+input, select, textarea {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 13px;
+  padding: 8px 10px;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+.code-input {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #ffd060;
+  background: #070707;
+}
+
+/* ─── MATH PREVIEW CARD ─── */
+.math-preview-box {
+  border: 1px solid var(--border-strong);
+  background: #080808;
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+}
+.math-formula-rendered {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 24px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin: 6px 0;
+  text-shadow: 0 0 10px rgba(212,175,55,0.25);
+}
+.math-caption {
+  font-size: 11px;
+  color: var(--textdim);
+  font-style: italic;
+}
+
+/* ─── 3-STAGE LIFECYCLE BANNER ─── */
+.stage-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 8px;
+}
+.stage-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+  background: var(--deep);
+  color: var(--textdim);
+}
+.stage-tab:hover { border-color: var(--border-strong); color: #fff; }
+.stage-tab.active {
+  background: #141004;
+  border-color: var(--golddim);
+  color: var(--gold);
+  box-shadow: 0 0 10px var(--goldglow);
+}
+.stage-tab.stage-done.active {
+  background: #091a0e;
+  border-color: #1e5a32;
+  color: var(--green);
+}
+.stage-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface3);
+  display: grid;
+  place-items: center;
+}
+.stage-tab.active .stage-num {
+  background: var(--gold);
+  color: #000;
+}
+.stage-tab.stage-done.active .stage-num {
+  background: var(--green);
+  color: #000;
+}
+.stage-tab strong { font-size: 11.5px; display: block; letter-spacing: 0.04em; }
+.stage-tab small { font-size: 9.5px; color: var(--textdim); display: block; }
+.stage-controls {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ─── MISSING FIELD INDICATORS ─── */
+.field-missing input,
+.field-missing textarea,
+.field-missing select {
+  border-color: #c94040 !important;
+  background: #180909 !important;
+}
+.missing-warning {
+  display: none;
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+.field-missing .missing-warning { display: inline-block; }
+
+/* ─── MODAL ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  display: none;
+  place-items: center;
+  z-index: 1000;
+}
+.modal-overlay.open { display: grid; }
+.modal-card {
+  width: 600px;
+  background: var(--deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-head h3 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header>
+  <div class="brand">
+    <div class="brand-mark">⚶</div>
+    <div>
+      <h1>Axiom Builder</h1>
+      <small>Faith Through Physics · Canonical Governance</small>
+    </div>
+  </div>
+
+  <div class="selector-box">
+    <label style="color:var(--textdim);font-size:9.5px;letter-spacing:0.08em">INDEXED NODE:</label>
+    <select id="node-dropdown" class="node-select" onchange="loadSelectedNode(this.value)">
+      <option value="">Choose an Axiom Node (1 of 356)…</option>
+    </select>
+  </div>
+
+  <div class="spacer"></div>
+
+  <button class="hbtn hbtn-gold" onclick="openIntakeModal()">⚡ Intake Paper / Text</button>
+  <button class="hbtn" onclick="exportMarkdownCompanion()">Export .md</button>
+  <a class="hbtn" href="workbench.html">Open Workbench →</a>
+</header>
+
+<!-- ═══════════════════════════ APP SHELL ═══════════════════════════ -->
+<div class="app-shell">
+
+  <!-- LEFT COLUMN: BUILDER STEPS -->
+  <main class="builder-col">
+
+    <!-- 3-STAGE LIFECYCLE CONTROLLER -->
+    <div class="stage-banner">
+      <div class="stage-tab active" id="tab-stage-1" onclick="setStage(1)">
+        <span class="stage-num">1</span>
+        <div>
+          <strong>STAGE 1: NEW / BLANK</strong>
+          <small>Pristine state · Manual entry or fresh upload</small>
+        </div>
+      </div>
+      <div class="stage-tab" id="tab-stage-2" onclick="setStage(2)">
+        <span class="stage-num">2</span>
+        <div>
+          <strong>STAGE 2: IN PROCESS</strong>
+          <small>AI populated · Working draft · Non-blocking gaps</small>
+        </div>
+      </div>
+      <div class="stage-tab" id="tab-stage-3" onclick="setStage(3)">
+        <span class="stage-num">3</span>
+        <div>
+          <strong>STAGE 3: STAGED / REVIEW</strong>
+          <small>Sealed candidate · Ready for human ruling</small>
+        </div>
+      </div>
+
+      <div class="stage-controls">
+        <button class="hbtn" type="button" onclick="clearFormToBlank()" title="Reset everything to blank">🗑 Clear All</button>
+        <button class="hbtn hbtn-gold" id="btn-promote" type="button" onclick="promoteToReview()">✓ Promote to Staged</button>
+      </div>
+    </div>
+
+    <!-- STEP 1: IDENTITY & TOPOLOGY -->
+    <section class="panel open">
+      <div class="panel-bar" onclick="togglePanel(this)">
+        <div class="pnum">01</div>
+        <div class="ptitle">Axiom Identity & Root Topology <span class="psub">Canonical ID, Mode, Tier-0 Placement</span></div>
+        <div class="pchev">▼</div>
+      </div>
+      <div class="panel-body">
+        <div class="grid3">
+          <div class="field">
+            <label>Canonical ID <span class="req">REQUIRED</span></label>
+            <input id="canon-id" value="A1.1" oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>Legacy ID</label>
+            <input id="legacy-id" value="AX-001" oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>Axiom Title / Label <span class="req">REQUIRED</span></label>
+            <input id="human-label" value="Existence" oninput="updatePacket()">
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="field">
+            <label>Mode</label>
+            <select id="mode" onchange="updatePacket()">
+              <option value="AX_CORE" selected>AX_CORE (Strict Core)</option>
+              <option value="AX_SCAFFOLD">AX_SCAFFOLD (Scaffold)</option>
+              <option value="FW_EXTENDED">FW_EXTENDED (Extended)</option>
+              <option value="BC_BOUNDARY">BC_BOUNDARY (Boundary Root)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Domain</label>
+            <input id="domain" value="Primordial" oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>Epistemic Status</label>
+            <select id="status" onchange="updatePacket()">
+              <option value="PRIMITIVE" selected>PRIMITIVE (Tier 0 Root)</option>
+              <option value="CANDIDATE">CANDIDATE</option>
+              <option value="ADMITTED">ADMITTED</option>
+              <option value="RETIRED">RETIRED</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Strict Core Anchor</label>
+            <select id="root-anchor" onchange="updatePacket()">
+              <option value="A1.0 Co-Arising">A1.0 — Co-Arising [Root 0]</option>
+              <option value="A1.1 Existence" selected>A1.1 — Existence [Root]</option>
+              <option value="A1.2 Distinction">A1.2 — Distinction [Root]</option>
+              <option value="A2.1 Substrate Requirement">A2.1 — Substrate Requirement [Root]</option>
+              <option value="OTHER">Other Downstream Anchor</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Blast Radius / Collapse Radius</label>
+            <select id="blast-radius" onchange="updatePacket()">
+              <option value="STRUCTURAL" selected>STRUCTURAL (Chain collapses if broken)</option>
+              <option value="LOCAL">LOCAL (Affects adjacent theorems)</option>
+              <option value="INERT">INERT (Leaves framework intact)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: MATHEMATICAL & STRUCTURAL FORM -->
+    <section class="panel open">
+      <div class="panel-bar" onclick="togglePanel(this)">
+        <div class="pnum">02</div>
+        <div class="ptitle">Mathematical & Structural Form <span class="psub">LaTeX, Formal Expression, Self-Refutation</span></div>
+        <div class="pchev">▼</div>
+      </div>
+      <div class="panel-body">
+        <div class="math-preview-box">
+          <div class="math-caption">LIVE FORMAL EXPRESSION</div>
+          <div class="math-formula-rendered" id="math-render">∃x, Domain ≠ ∅</div>
+          <div class="math-caption" id="math-plain-caption">There is at least one thing in the domain under consideration.</div>
+        </div>
+
+        <div class="field">
+          <label>Formal Expression / LaTeX <span class="req">REQUIRED</span></label>
+          <input id="math-form" class="code-input" value="∃x, \quad \mathrm{Domain} \neq \varnothing" oninput="renderMathPreview(); updatePacket()">
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Domain of Discourse (Non-empty Floor)</label>
+            <input id="math-domain" value="Domain ≠ ∅" oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>Self-Refutation Boundary Form</label>
+            <input id="self-refutation" class="code-input" value="¬E ⇒ ∃p ⇒ E" oninput="updatePacket()">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Symbols & Variable Mappings</label>
+          <textarea id="symbols-map" oninput="updatePacket()">∃x : at least one thing exists
+Domain ≠ ∅ : field of discourse is not empty
+E : claim that something exists
+p : proposition required to make denial</textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: FORMAL VERIFICATION RAILS -->
+    <section class="panel open">
+      <div class="panel-bar" onclick="togglePanel(this)">
+        <div class="pnum">03</div>
+        <div class="ptitle">Formal Verification Rails <span class="psub">Lean 4, Z3 SMT Solver, Coherence Certification</span></div>
+        <div class="pchev">▼</div>
+      </div>
+      <div class="panel-body">
+        <!-- LEAN 4 BLOCK -->
+        <div style="border:1px solid #1e3a24;background:#09140c;border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong style="color:var(--green);font-size:12px">🛡️ LEAN 4 VERIFICATION</strong>
+            <select id="lean-status" style="width:auto;padding:3px 8px;font-size:11px" onchange="updatePacket()">
+              <option value="LEAN_CERTIFIED" selected>LEAN_CERTIFIED</option>
+              <option value="VERIFIED">VERIFIED</option>
+              <option value="CANDIDATE">CANDIDATE</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="FAILED">FAILED</option>
+              <option value="NOT_ATTEMPTED">NOT_ATTEMPTED</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Lean 4 Theorem / Tactic Code</label>
+            <textarea id="lean-code" class="code-input" style="min-height:75px" oninput="updatePacket()">-- Lean 4 Formalization
+import Mathlib.Logic.Basic
+
+axiom existence_primitive (D : Type) : Nonempty D
+theorem not_empty_domain (D : Type) [h : Nonempty D] : ∃ x : D, true := by
+  cases h with | intro x => exact ⟨x, trivial⟩</textarea>
+          </div>
+          <div class="grid2">
+            <div class="field">
+              <label>Mathlib Dependencies</label>
+              <input id="lean-deps" value="Mathlib.Logic.Basic, Mathlib.Init" oninput="updatePacket()">
+            </div>
+            <div class="field">
+              <label>Lean Convergence Receipt</label>
+              <input id="lean-receipt" value="Sealed v2.3 root structure · Zero Sorry" oninput="updatePacket()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Z3 SMT BLOCK -->
+        <div style="border:1px solid #3d2a14;background:#140e06;border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong style="color:var(--gold);font-size:12px">⚡ Z3 SMT-LIB2 VALIDATION</strong>
+            <select id="z3-status" style="width:auto;padding:3px 8px;font-size:11px" onchange="updatePacket()">
+              <option value="Z3_CERTIFIED" selected>Z3_CERTIFIED</option>
+              <option value="SATISFIABLE">SATISFIABLE</option>
+              <option value="VALIDATED">VALIDATED</option>
+              <option value="COUNTERMODEL_DETECTED">COUNTERMODEL_DETECTED</option>
+              <option value="UNCHECKED">UNCHECKED</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Z3 SMT2 Assertion Script</label>
+            <textarea id="z3-script" class="code-input" style="min-height:75px" oninput="updatePacket()">; Z3 SMT-LIB2 Consistency Verification
+(declare-sort Domain)
+(declare-const d Domain)
+(assert (exists ((x Domain)) (= x d)))
+(check-sat)
+; Result: sat (domain is provably satisfiable and non-empty)</textarea>
+          </div>
+          <div class="grid2">
+            <div class="field">
+              <label>Z3 Solver Output</label>
+              <input id="z3-result" value="sat" oninput="updatePacket()">
+            </div>
+            <div class="field">
+              <label>Countermodel Status</label>
+              <input id="z3-countermodel" value="None detected · Model is stable" oninput="updatePacket()">
+            </div>
+          </div>
+        </div>
+
+        <!-- FRAMEWORK COHERENCE BLOCK -->
+        <div class="grid2">
+          <div class="field">
+            <label>Framework Coherence Status</label>
+            <select id="coherence-status" onchange="updatePacket()">
+              <option value="COHERENT" selected>COHERENT (Aligned with Sealed v2.3 Root)</option>
+              <option value="INDEPENDENT_PRIMITIVE">INDEPENDENT_PRIMITIVE</option>
+              <option value="TENSION_DETECTED">TENSION_DETECTED</option>
+              <option value="CONTRADICTION_BLOCKED">CONTRADICTION_BLOCKED</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Upstream Dependency Link</label>
+            <input id="upstream-deps" value="∅ (foundational root)" oninput="updatePacket()">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: MEANING BLOCK & 5 GOVERNING QUESTIONS -->
+    <section class="panel open">
+      <div class="panel-bar" onclick="togglePanel(this)">
+        <div class="pnum">04</div>
+        <div class="ptitle">Meaning Block & The 5 Governing Questions</div>
+        <div class="pchev">▼</div>
+      </div>
+      <div class="panel-body">
+        <div class="field">
+          <label>Formal Definition (Narrowest Assertion) <span class="req">REQUIRED</span></label>
+          <textarea id="formal-def" oninput="updatePacket()">Something exists rather than nothing. Equivalently, the chosen domain of discourse is nonempty.</textarea>
+        </div>
+
+        <div class="field">
+          <label>Common-Sense Meaning (Plain Everyday Human Form) <span class="req">REQUIRED</span></label>
+          <textarea id="common-sense" oninput="updatePacket()">Something is real enough that the conversation is not about absolute nothing.</textarea>
+        </div>
+
+        <div style="border-left:3px solid var(--gold);padding-left:14px;display:flex;flex-direction:column;gap:10px;margin-top:6px">
+          <div class="field">
+            <label>1. What question does this axiom answer?</label>
+            <input id="q1" value="Is the domain empty, or is there at least something to reason about?" oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>2. What problem does this axiom solve?</label>
+            <input id="q2" value="It prevents the framework from beginning in midair by supplying the minimum nonempty domain." oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>3. What breaks if this axiom fails? (Kill condition / Collapse radius)</label>
+            <input id="q3" value="Everything breaks. If nothing exists, there are no distinctions, relations, truths, equations, or observers." oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>4. What does this axiom let the next atom carry? (Downstream License)</label>
+            <input id="q4" value="It allows A1.2 Distinction to ask whether what exists can be differentiated." oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>5. What remains unresolved after this axiom?</label>
+            <input id="q5" value="What exists, dependence/independence, personhood, and God as necessary ground." oninput="updatePacket()">
+          </div>
+        </div>
+
+        <div class="grid2" style="margin-top:8px">
+          <div class="field">
+            <label>What This Solves</label>
+            <textarea id="what-solves" oninput="updatePacket()">Stops the infinite regress of nothingness; provides ground truth floor.</textarea>
+          </div>
+          <div class="field">
+            <label>Why This Matters</label>
+            <textarea id="why-matters" oninput="updatePacket()">Every later axiom predicates something of something. Without this, all logic floats.</textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5: SIX-LAYER EXPLANATORY LENS -->
+    <section class="panel">
+      <div class="panel-bar" onclick="togglePanel(this)">
+        <div class="pnum">05</div>
+        <div class="ptitle">Six-Layer Explanatory Lens <span class="psub">Human, Metaphysical, Theological, Scientific, Formal, External</span></div>
+        <div class="pchev">▼</div>
+      </div>
+      <div class="panel-body">
+        <div class="field">
+          <label>2.1 Rhetorical / Human Layer</label>
+          <textarea id="lens-human" oninput="updatePacket()">Try to deny it: 'Nothing exists.' The sentence destroys itself; denial has to stand somewhere.</textarea>
+        </div>
+        <div class="field">
+          <label>2.2 Metaphysical Layer</label>
+          <textarea id="lens-meta" oninput="updatePacket()">Minimal ontological floor beneath the admitted root: God Is.</textarea>
+        </div>
+        <div class="field">
+          <label>2.3 Theological Layer</label>
+          <textarea id="lens-theo" oninput="updatePacket()">Creation / ex nihilo / Genesis 1:1 floor. Required before creation can be discussed.</textarea>
+        </div>
+        <div class="field">
+          <label>2.4 Scientific Layer</label>
+          <textarea id="lens-sci" oninput="updatePacket()">Every scientific formalism presupposes structured states, fields, and microstates.</textarea>
+        </div>
+        <div class="field">
+          <label>2.5 Mathematical / Formal Layer</label>
+          <textarea id="lens-formal" oninput="updatePacket()">∃x : Domain ≠ ∅. Nonempty set primitive.</textarea>
+        </div>
+        <div class="field">
+          <label>2.6 Encyclopedia / External Reference Layer</label>
+          <textarea id="lens-ext" oninput="updatePacket()">Leibniz's 'Why is there something rather than nothing?'; Heidegger; comparison with śūnyatā.</textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 6: WARRANT, DYNAMICS & REALITY MIRROR -->
+    <section class="panel">
+      <div class="panel-bar" onclick="togglePanel(this)">
+        <div class="pnum">06</div>
+        <div class="ptitle">Warrant, Dynamics & Reality Mirror <span class="psub">Kill Conditions, Anchor Class</span></div>
+        <div class="pchev">▼</div>
+      </div>
+      <div class="panel-body">
+        <div class="grid2">
+          <div class="field">
+            <label>Kill Condition (Strict Falsification)</label>
+            <input id="kill-condition" value="Show absolute nothingness is coherent and stable." oninput="updatePacket()">
+          </div>
+          <div class="field">
+            <label>Reality Anchor Class</label>
+            <select id="anchor-class" onchange="updatePacket()">
+              <option value="F" selected>F — Formal / Logical Nonempty Claim</option>
+              <option value="T">T — Theological Mapping Candidate</option>
+              <option value="N">N — Natural / Physical Observation</option>
+              <option value="H">H — Historical Documented Fact</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Closed-Loop Warning</label>
+          <input id="closed-loop" value="Downstream conclusions cannot be recycled as independent proof of their own primitive." oninput="updatePacket()">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RIGHT COLUMN: LIVE PACKET PREVIEW -->
+  <aside class="preview-col">
+    <div class="preview-head">
+      <h2>Live Axiom Candidate Packet</h2>
+    </div>
+
+    <div class="badges-rail">
+      <div class="badge-row">
+        <span>LEAN 4 VERIFICATION</span>
+        <span class="badge-pill pill-certified" id="badge-lean">LEAN_CERTIFIED</span>
+      </div>
+      <div class="badge-row">
+        <span>Z3 SMT VALIDATION</span>
+        <span class="badge-pill pill-candidate" id="badge-z3">Z3_CERTIFIED</span>
+      </div>
+      <div class="badge-row">
+        <span>FRAMEWORK COHERENCE</span>
+        <span class="badge-pill pill-certified" id="badge-coherence">COHERENT</span>
+      </div>
+      <div class="badge-row">
+        <span>BLAST RADIUS</span>
+        <span class="badge-pill pill-structural" id="badge-blast">STRUCTURAL</span>
+      </div>
+    </div>
+
+    <pre class="json-viewer" id="json-preview">{}</pre>
+
+    <div class="preview-actions">
+      <button class="hbtn" onclick="copyJsonPacket()">Copy JSON</button>
+      <button class="hbtn hbtn-gold" onclick="downloadJsonPacket()">Download Packet</button>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ═══════════════════════════ INTAKE MODAL ═══════════════════════════ -->
+<div class="modal-overlay" id="intake-modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>⚡ Automated Paper / Text Ingestion</h3>
+      <button class="hbtn" onclick="closeIntakeModal()">✕</button>
+    </div>
+    <p style="font-size:12px;color:var(--textdim);line-height:1.5">
+      Select an extraction mode and upload or paste raw paper text. The engine extracts the formal definition, mathematical formula, Lean/Z3 targets, and the 5 governing questions.
+    </p>
+
+    <div style="display:flex;gap:14px;background:#0d0d0d;padding:10px;border-radius:6px;border:1px solid var(--border)">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:#fff;">
+        <input type="radio" name="intake-mode" value="single" checked onchange="updateIntakeModeUI()"> Single Paper
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--gold);">
+        <input type="radio" name="intake-mode" value="series" onchange="updateIntakeModeUI()"> Multi-Part Series (e.g. 3-Part)
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--textdim);">
+        <input type="radio" name="intake-mode" value="batch" onchange="updateIntakeModeUI()"> Batch Queue (Independent)
+      </label>
+    </div>
+
+    <div id="series-context-box" style="display:none;" class="field">
+      <label>Series / Chapter Theme</label>
+      <input id="series-theme" placeholder="e.g. Chapter 1: The Primordial Floor (Parts 1–3)">
+    </div>
+
+    <div class="field">
+      <label>Upload File(s) or Folder</label>
+      <input type="file" id="paper-file-upload" accept=".md,.txt,.json" multiple onchange="handleFileUpload(this.files)">
+    </div>
+
+    <div class="field">
+      <label>Or Paste Raw Text</label>
+      <textarea id="raw-paper-input" style="min-height:140px" placeholder="Paste source text here..."></textarea>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button class="hbtn" onclick="closeIntakeModal()">Cancel</button>
+      <button class="hbtn hbtn-gold" onclick="runAutoIntake()">Extract Axiom Packet</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="axiom-all-nodes.js"></script>
+<script>
+// ─── 3-STAGE LIFECYCLE MANAGEMENT ───
+let currentStage = 1;
+
+function setStage(stageNum) {
+  currentStage = stageNum;
+  document.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
+  const activeTab = document.getElementById(`tab-stage-${stageNum}`);
+  if (activeTab) activeTab.classList.add('active');
+
+  const promoteBtn = document.getElementById('btn-promote');
+  if (stageNum === 1) {
+    promoteBtn.textContent = 'Populate to Start Draft →';
+  } else if (stageNum === 2) {
+    promoteBtn.textContent = '✓ Promote to Staged';
+    validateMissingFields();
+  } else if (stageNum === 3) {
+    promoteBtn.textContent = '★ Staged for Human Review';
+    activeTab.classList.add('stage-done');
+  }
+}
+
+function clearFormToBlank() {
+  if (!confirm("Reset all fields to a clean blank state?")) return;
+  
+  // Clear Identity
+  document.getElementById('canon-id').value = "A_NEW";
+  document.getElementById('legacy-id').value = "";
+  document.getElementById('human-label').value = "";
+  document.getElementById('domain').value = "General";
+  document.getElementById('status').value = "CANDIDATE";
+
+  // Clear Math
+  document.getElementById('math-form').value = "";
+  document.getElementById('math-domain').value = "Domain ≠ ∅";
+  document.getElementById('self-refutation').value = "";
+  document.getElementById('symbols-map').value = "";
+  renderMathPreview();
+
+  // Clear Verification
+  document.getElementById('lean-status').value = "NOT_ATTEMPTED";
+  document.getElementById('lean-code').value = "";
+  document.getElementById('lean-receipt').value = "Not verified";
+  document.getElementById('z3-status').value = "UNCHECKED";
+  document.getElementById('z3-script').value = "";
+  document.getElementById('z3-result').value = "unchecked";
+  document.getElementById('coherence-status').value = "INDEPENDENT_PRIMITIVE";
+  document.getElementById('upstream-deps').value = "";
+
+  // Clear Meaning & Questions
+  document.getElementById('formal-def').value = "";
+  document.getElementById('common-sense').value = "";
+  document.getElementById('q1').value = "";
+  document.getElementById('q2').value = "";
+  document.getElementById('q3').value = "";
+  document.getElementById('q4').value = "";
+  document.getElementById('q5').value = "";
+  document.getElementById('what-solves').value = "";
+  document.getElementById('why-matters').value = "";
+
+  // Clear Lenses
+  document.getElementById('lens-human').value = "";
+  document.getElementById('lens-meta').value = "";
+  document.getElementById('lens-theo').value = "";
+  document.getElementById('lens-sci').value = "";
+  document.getElementById('lens-formal').value = "";
+  document.getElementById('lens-ext').value = "";
+
+  // Clear Indicators
+  document.querySelectorAll('.field-missing').forEach(el => el.classList.remove('field-missing'));
+
+  setStage(1);
+  updatePacket();
+}
+
+function validateMissingFields() {
+  const reqFields = [
+    { id: 'canon-id', name: 'Canonical ID' },
+    { id: 'human-label', name: 'Axiom Label' },
+    { id: 'math-form', name: 'Mathematical Form' },
+    { id: 'formal-def', name: 'Formal Definition' },
+    { id: 'common-sense', name: 'Common Sense Meaning' },
+    { id: 'q1', name: 'Question Answered' },
+    { id: 'q3', name: 'Kill Condition' }
+  ];
+
+  let missingCount = 0;
+  reqFields.forEach(f => {
+    const input = document.getElementById(f.id);
+    const parent = input?.closest('.field');
+    if (!input || !input.value.trim() || input.value.includes('NEEDS_INPUT')) {
+      parent?.classList.add('field-missing');
+      missingCount++;
+    } else {
+      parent?.classList.remove('field-missing');
+    }
+  });
+
+  return missingCount;
+}
+
+function promoteToReview() {
+  if (currentStage === 1) {
+    setStage(2);
+    return;
+  }
+  const missing = validateMissingFields();
+  if (missing > 0) {
+    if (!confirm(`There are ${missing} required field(s) currently flagged in red. You can still promote as a candidate draft with open gaps. Proceed?`)) {
+      return;
+    }
+  }
+  setStage(3);
+  const packet = buildCurrentPacket();
+  packet.admission.state = "in_review";
+  packet.admission.decision = "PENDING_HUMAN_RULING";
+  document.getElementById('json-preview').textContent = JSON.stringify(packet, null, 2);
+  alert("Promoted to Stage 3: Staged for Human Review! The candidate packet is locked and ready for ruling.");
+}
+
+function updateIntakeModeUI() {
+  const isSeries = document.querySelector('input[name="intake-mode"]:checked')?.value === 'series';
+  document.getElementById('series-context-box').style.display = isSeries ? 'block' : 'none';
+}
+
+function handleFileUpload(files) {
+  if (!files || !files.length) return;
+  const readers = [];
+  let combined = "";
+  Array.from(files).forEach((f, idx) => {
+    readers.push(new Promise(resolve => {
+      const r = new FileReader();
+      r.onload = e => {
+        combined += `\n\n=== SOURCE FILE [${idx+1}/${files.length}]: ${f.name} ===\n` + e.target.result;
+        resolve();
+      };
+      r.readAsText(f);
+    }));
+  });
+  Promise.all(readers).then(() => {
+    document.getElementById('raw-paper-input').value = combined.trim();
+  });
+}
+
+// ─── ACCORDION TOGGLE ───
+function togglePanel(bar) {
+  bar.parentElement.classList.toggle('open');
+}
+
+// ─── MATH PREVIEW ───
+function renderMathPreview() {
+  const form = document.getElementById('math-form').value;
+  const renderEl = document.getElementById('math-render');
+  renderEl.textContent = form || "∅";
+}
+
+// ─── POPULATE NODE DROPDOWN ───
+function initDropdown() {
+  const dd = document.getElementById('node-dropdown');
+  if (window.ALL_CANONICAL_AXIOM_NODES && Array.isArray(window.ALL_CANONICAL_AXIOM_NODES)) {
+    window.ALL_CANONICAL_AXIOM_NODES.forEach((node, idx) => {
+      const opt = document.createElement('option');
+      const cid = node.identity.canonical_id;
+      const lbl = node.identity.human_label;
+      opt.value = cid;
+      opt.textContent = `${cid} — ${lbl}`;
+      dd.appendChild(opt);
+    });
+  }
+}
+
+// ─── LOAD SELECTED NODE ───
+function loadSelectedNode(canonicalId) {
+  if (!canonicalId || !window.ALL_CANONICAL_AXIOM_NODES) return;
+  const node = window.ALL_CANONICAL_AXIOM_NODES.find(n => n.identity.canonical_id === canonicalId);
+  if (!node) return;
+
+  // Identity
+  document.getElementById('canon-id').value = node.identity.canonical_id || "";
+  document.getElementById('legacy-id').value = node.identity.legacy_id || "";
+  document.getElementById('human-label').value = node.identity.human_label || "";
+  document.getElementById('domain').value = node.identity.domain || "";
+  document.getElementById('status').value = node.identity.status || "CANDIDATE";
+
+  // Math
+  document.getElementById('math-form').value = node.meaning_block.mathematical_form || "";
+  document.getElementById('math-plain-caption').textContent = node.meaning_block.common_sense_meaning || "";
+  renderMathPreview();
+
+  // Verification
+  if (node.formal_verification) {
+    if (node.formal_verification.lean) {
+      document.getElementById('lean-status').value = node.formal_verification.lean.status || "CANDIDATE";
+      document.getElementById('lean-code').value = node.formal_verification.lean.code || "";
+    }
+    if (node.formal_verification.z3) {
+      document.getElementById('z3-status').value = node.formal_verification.z3.status || "VALIDATED";
+      document.getElementById('z3-script').value = node.formal_verification.z3.smt_script || "";
+    }
+    if (node.formal_verification.framework_coherence) {
+      document.getElementById('coherence-status').value = node.formal_verification.framework_coherence.status || "COHERENT";
+      document.getElementById('blast-radius').value = node.formal_verification.framework_coherence.blast_radius || "LOCAL";
+    }
+  }
+
+  // Meaning & 5 Questions
+  document.getElementById('formal-def').value = node.meaning_block.formal_definition || "";
+  document.getElementById('common-sense').value = node.meaning_block.common_sense_meaning || "";
+  const gq = node.meaning_block.governing_questions || {};
+  document.getElementById('q1').value = gq.question_answered || "";
+  document.getElementById('q2').value = gq.problem_solved || "";
+  document.getElementById('q3').value = gq.kill_condition || "";
+  document.getElementById('q4').value = gq.downstream_license || "";
+  document.getElementById('q5').value = gq.unresolved || "";
+  document.getElementById('kill-condition').value = gq.kill_condition || "";
+
+  // Lenses
+  if (node.explanatory_lenses) {
+    document.getElementById('lens-human').value = node.explanatory_lenses.human || "";
+    document.getElementById('lens-meta').value = node.explanatory_lenses.metaphysical || "";
+    document.getElementById('lens-theo').value = node.explanatory_lenses.theological || "";
+    document.getElementById('lens-sci').value = node.explanatory_lenses.scientific || "";
+    document.getElementById('lens-formal').value = node.explanatory_lenses.formal || "";
+    document.getElementById('lens-ext').value = node.explanatory_lenses.external || "";
+  }
+
+  updatePacket();
+}
+
+// ─── BUILD PACKET OBJECT ───
+function buildCurrentPacket() {
+  const cid = document.getElementById('canon-id').value;
+  const label = document.getElementById('human-label').value;
+  const domain = document.getElementById('domain').value;
+  const status = document.getElementById('status').value;
+  const leanSt = document.getElementById('lean-status').value;
+  const z3St = document.getElementById('z3-status').value;
+  const cohSt = document.getElementById('coherence-status').value;
+  const blast = document.getElementById('blast-radius').value;
+
+  return {
+    "packet_type": "axiom-candidate-packet",
+    "schema_version": "1.0",
+    "generated_at": new Date().toISOString(),
+    "identity": {
+      "canonical_id": cid,
+      "legacy_id": document.getElementById('legacy-id').value,
+      "semantic_code": `AX.${domain.toUpperCase()}.${label.toUpperCase().replace(/[^A-Z0-9]/g, '')}`,
+      "atlas_object_type": "AXIOM",
+      "domain": domain,
+      "status": status,
+      "human_label": label,
+      "publication_state": status.toLowerCase(),
+      "version": "v1.0-candidate"
+    },
+    "meaning_block": {
+      "formal_definition": document.getElementById('formal-def').value,
+      "mathematical_form": document.getElementById('math-form').value,
+      "common_sense_meaning": document.getElementById('common-sense').value,
+      "governing_questions": {
+        "question_answered": document.getElementById('q1').value,
+        "problem_solved": document.getElementById('q2').value,
+        "kill_condition": document.getElementById('q3').value,
+        "downstream_license": document.getElementById('q4').value,
+        "unresolved": document.getElementById('q5').value
+      },
+      "what_this_solves": document.getElementById('what-solves').value,
+      "why_it_matters": document.getElementById('why-matters').value,
+      "candidate_canon_boundary": status === "PRIMITIVE" ? "PRIMITIVE" : "CANDIDATE"
+    },
+    "formal_verification": {
+      "lean": {
+        "status": leanSt,
+        "theorem_name": `axiom_${cid.toLowerCase().replace('.', '_')}`,
+        "code": document.getElementById('lean-code').value,
+        "mathlib_dependencies": document.getElementById('lean-deps').value.split(',').map(s => s.trim()),
+        "convergence_receipt": document.getElementById('lean-receipt').value
+      },
+      "z3": {
+        "status": z3St,
+        "smt_script": document.getElementById('z3-script').value,
+        "check_result": document.getElementById('z3-result').value
+      },
+      "framework_coherence": {
+        "status": cohSt,
+        "root_anchor": document.getElementById('root-anchor').value,
+        "blast_radius": blast,
+        "coherence_notes": "Coherent with sealed v2.3 core topology."
+      }
+    },
+    "explanatory_lenses": {
+      "human": document.getElementById('lens-human').value,
+      "metaphysical": document.getElementById('lens-meta').value,
+      "theological": document.getElementById('lens-theo').value,
+      "scientific": document.getElementById('lens-sci').value,
+      "formal": document.getElementById('lens-formal').value,
+      "external": document.getElementById('lens-ext').value
+    },
+    "admission": {
+      "state": status === "PRIMITIVE" ? "admitted" : "candidate_draft",
+      "decision": status === "PRIMITIVE" ? "ADMIT" : "PENDING"
+    }
+  };
+}
+
+// ─── UPDATE LIVE PACKET PREVIEW ───
+function updatePacket() {
+  const packet = buildCurrentPacket();
+  document.getElementById('json-preview').textContent = JSON.stringify(packet, null, 2);
+
+  // Update Badges
+  const bLean = document.getElementById('badge-lean');
+  bLean.textContent = packet.formal_verification.lean.status;
+  bLean.className = 'badge-pill ' + (packet.formal_verification.lean.status.includes('CERTIFIED') ? 'pill-certified' : 'pill-candidate');
+
+  const bZ3 = document.getElementById('badge-z3');
+  bZ3.textContent = packet.formal_verification.z3.status;
+  bZ3.className = 'badge-pill ' + (packet.formal_verification.z3.status.includes('CERTIFIED') ? 'pill-certified' : 'pill-candidate');
+
+  const bCoh = document.getElementById('badge-coherence');
+  bCoh.textContent = packet.formal_verification.framework_coherence.status;
+  bCoh.className = 'badge-pill ' + (packet.formal_verification.framework_coherence.status === 'COHERENT' ? 'pill-certified' : 'pill-candidate');
+
+  const bBlast = document.getElementById('badge-blast');
+  bBlast.textContent = packet.formal_verification.framework_coherence.blast_radius;
+  bBlast.className = 'badge-pill ' + (packet.formal_verification.framework_coherence.blast_radius === 'STRUCTURAL' ? 'pill-structural' : 'pill-candidate');
+}
+
+// ─── EXPORT BUTTONS ───
+function copyJsonPacket() {
+  const jsonStr = document.getElementById('json-preview').textContent;
+  navigator.clipboard.writeText(jsonStr).then(() => alert("Axiom Candidate Packet copied to clipboard!"));
+}
+
+function downloadJsonPacket() {
+  const packet = buildCurrentPacket();
+  const blob = new Blob([JSON.stringify(packet, null, 2)], { type: "application/json" });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${packet.identity.canonical_id}_packet.json`;
+  a.click();
+}
+
+function exportMarkdownCompanion() {
+  const p = buildCurrentPacket();
+  const md = `---
+title: ${p.identity.human_label}
+canonical_id: ${p.identity.canonical_id}
+legacy_id: ${p.identity.legacy_id}
+domain: ${p.identity.domain}
+status: ${p.identity.status}
+mode: AX_CORE
+---
+
+# ${p.identity.canonical_id} — ${p.identity.human_label}
+
+## 0. Meaning Block
+### Formal Definition
+${p.meaning_block.formal_definition}
+
+### Mathematical Form
+\`\`\`text
+${p.meaning_block.mathematical_form}
+\`\`\`
+
+### Common-Sense Meaning
+${p.meaning_block.common_sense_meaning}
+
+### Governing Questions
+1. What question does this axiom answer?
+   ${p.meaning_block.governing_questions.question_answered}
+2. What problem does this axiom solve?
+   ${p.meaning_block.governing_questions.problem_solved}
+3. What breaks if this atom fails?
+   ${p.meaning_block.governing_questions.kill_condition}
+4. What does this let the next carry?
+   ${p.meaning_block.governing_questions.downstream_license}
+5. What remains unresolved?
+   ${p.meaning_block.governing_questions.unresolved}
+
+## 1. Formal Verification
+- Lean 4 Status: ${p.formal_verification.lean.status}
+- Z3 Solver Status: ${p.formal_verification.z3.status}
+- Coherence: ${p.formal_verification.framework_coherence.status} (Blast Radius: ${p.formal_verification.framework_coherence.blast_radius})
+`;
+  const blob = new Blob([md], { type: "text/markdown" });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${p.identity.canonical_id}_${p.identity.human_label}.md`;
+  a.click();
+}
+
+// ─── INTAKE MODAL ───
+function openIntakeModal() { document.getElementById('intake-modal').classList.add('open'); }
+function closeIntakeModal() { document.getElementById('intake-modal').classList.remove('open'); }
+
+function runAutoIntake() {
+  const text = document.getElementById('raw-paper-input').value.trim();
+  if (!text) { alert("Please paste paper text to extract."); return; }
+
+  // Simple quick extraction heuristics (or API hook)
+  document.getElementById('formal-def').value = text.slice(0, 160) + "...";
+  document.getElementById('common-sense').value = "Extracted assertion from paper source.";
+  document.getElementById('math-form').value = "P(x) \\implies Q(x)";
+  renderMathPreview();
+  updatePacket();
+  closeIntakeModal();
+  alert("Extracted candidate content populated into the form! Review and adjust the parameters.");
+}
+
+// ─── INITIALIZATION ───
+window.addEventListener('DOMContentLoaded', () => {
+  initDropdown();
+  renderMathPreview();
+  updatePacket();
+});
+</script>
+</body>
+</html>

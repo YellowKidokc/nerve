@@ -1,6 +1,6 @@
 ---
 fis_schema: "folder-index.v1"
-folder_id: "FLD-20260831-82045be5"
+folder_id: "FLD-20260905-82045be5"
 folder: "GitHub\nerve\source\src"
 folder_class: "project"
 confidence: 0.6
@@ -8,7 +8,7 @@ dependency_risk: 0.0
 dominant_family: "code"
 dominant_ratio: 0.944
 file_count: 18
-classified_at: "2026-08-31T00:20:37"
+classified_at: "2026-09-05T20:04:02"
 allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
 suggested_name: "src"
 ---

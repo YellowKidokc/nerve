@@ -179,15 +179,19 @@ impl Default for AiConfig {
                     enabled: true,
                 },
                 AiProvider {
-                    name: "Ollama".into(),
+                    name: "Ollama Desktop".into(),
                     provider_type: "ollama".into(),
                     api_key: String::new(),
                     endpoint: "http://127.0.0.1:11434/v1/chat/completions".into(),
-                    // Left empty on purpose: Ollama serves whatever has been
-                    // pulled locally, so any guess here would 404. The chat
-                    // path reports an empty model as the configuration gap it
-                    // is, rather than as a connection failure.
-                    model: String::new(),
+                    model: "qwen3:4b-instruct".into(),
+                    enabled: true,
+                },
+                AiProvider {
+                    name: "Ollama NAS".into(),
+                    provider_type: "ollama".into(),
+                    api_key: String::new(),
+                    endpoint: "https://ollama.dlowehomelab.com/v1/chat/completions".into(),
+                    model: "llama3.2:latest".into(),
                     enabled: true,
                 },
                 AiProvider {
@@ -755,13 +759,13 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
             runtime_id: None,
         },
         HotkeyBinding {
-            keys: "Ctrl+Alt+G".into(),
-            action: "toggle_dashboard".into(),
+            keys: "Ctrl+Alt+S".into(),
+            action: "toggle_shortcuts".into(),
             runtime_id: None,
         },
         HotkeyBinding {
-            keys: "Ctrl+Alt+S".into(),
-            action: "toggle_settings".into(),
+            keys: "Ctrl+Alt+M".into(),
+            action: "toggle_mission-control".into(),
             runtime_id: None,
         },
         HotkeyBinding {
@@ -790,7 +794,7 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
             runtime_id: None,
         },
         HotkeyBinding {
-            keys: "Ctrl+Alt+V".into(),
+            keys: "Ctrl+Shift+V".into(),
             action: "stratum_actions".into(),
             runtime_id: None,
         },
@@ -935,30 +939,6 @@ fn default_panels() -> Vec<PanelDef> {
             follow_cursor: false,
         },
         PanelDef {
-            name: "dashboard".into(),
-            title: "Dashboard".into(),
-            url: to_url("hubs/dashboard.html"),
-            width: 900,
-            height: 700,
-            x: None,
-            y: None,
-            always_on_top: false,
-            decorations: true,
-            follow_cursor: false,
-        },
-        PanelDef {
-            name: "settings".into(),
-            title: "Settings".into(),
-            url: to_url("system/settings.html"),
-            width: 560,
-            height: 680,
-            x: None,
-            y: None,
-            always_on_top: true,
-            decorations: true,
-            follow_cursor: false,
-        },
-        PanelDef {
             name: "tts".into(),
             title: "TTS Engine".into(),
             url: to_url("system/tts-engine.html"),
@@ -1007,7 +987,7 @@ fn default_panels() -> Vec<PanelDef> {
             decorations: true,
             follow_cursor: false,
         },
-        // Stratum action runner - replaces the PySide popup.
+        // Stratum is a normal work window: users can place and resize it.
         PanelDef {
             name: "stratum".into(),
             title: "Stratum Actions".into(),
@@ -1017,7 +997,7 @@ fn default_panels() -> Vec<PanelDef> {
             x: None,
             y: None,
             always_on_top: true,
-            decorations: false,
+            decorations: true,
             follow_cursor: true,
         },
         // Floating selection toolbar - frameless, opens at the cursor.
@@ -1045,6 +1025,30 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: false,
             follow_cursor: true,
+        },
+        PanelDef {
+            name: "shortcuts".into(),
+            title: "Hotkeys, Hotstrings & AI".into(),
+            url: to_url("shortcuts.html"),
+            width: 1050,
+            height: 720,
+            x: None,
+            y: None,
+            always_on_top: false,
+            decorations: true,
+            follow_cursor: false,
+        },
+        PanelDef {
+            name: "mission-control".into(),
+            title: "Theophysics Mission Control".into(),
+            url: "http://localhost:7860/".into(),
+            width: 1200,
+            height: 850,
+            x: None,
+            y: None,
+            always_on_top: false,
+            decorations: true,
+            follow_cursor: false,
         },
     ]
 }
@@ -1087,6 +1091,7 @@ impl Config {
             let data = std::fs::read_to_string(&path)?;
             let mut cfg: Config = serde_json::from_str(&data)?;
             cfg.normalize();
+            cfg.save()?;
             Ok(cfg)
         } else {
             let mut cfg = Config::default();
@@ -1155,6 +1160,20 @@ impl Config {
             let exists = self.hotkeys.iter().any(|h| h.action == required.action);
             if !exists {
                 self.hotkeys.push(required);
+            }
+        }
+
+        // Preserve user configuration while backfilling newly shipped
+        // providers into older installations.
+        for required in default_cfg.ai.providers {
+            let exists = self.ai.providers.iter().any(|provider| {
+                provider.name.eq_ignore_ascii_case(&required.name)
+                    || (required.name == "Ollama Desktop"
+                        && provider.name.eq_ignore_ascii_case("Ollama")
+                        && provider.provider_type.eq_ignore_ascii_case("ollama"))
+            });
+            if !exists {
+                self.ai.providers.push(required);
             }
         }
 

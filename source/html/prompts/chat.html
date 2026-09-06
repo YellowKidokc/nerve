@@ -88,9 +88,11 @@ function onProvidersLoaded(list, defaultProvider) {
   list.forEach(p => {
     if (!p.enabled) return;
     const opt = document.createElement('option');
-    opt.value = p.provider_type;
+      // Names are instance identities. Provider types are not unique because
+      // the same UI can address both the desktop and NAS Ollama servers.
+      opt.value = p.name;
     opt.textContent = p.name + (p.model ? ' (' + p.model + ')' : '');
-    if (p.provider_type === defaultProvider) opt.selected = true;
+    if (p.name === defaultProvider || p.provider_type === defaultProvider) opt.selected = true;
     sel.appendChild(opt);
   });
 }

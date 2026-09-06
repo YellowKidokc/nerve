@@ -311,8 +311,6 @@ textarea{resize:vertical;min-height:56px;line-height:1.6}
 .intro p{font-size:12.5px;color:#7e7e7e;line-height:1.8;margin-bottom:9px}
 .intro strong{color:#a8a8a8}
 </style>
-<link rel="stylesheet" href="prompt-rail.css">
-<link rel="stylesheet" href="prompt-target.css?v=20260904d">
 </head>
 <body>
 
@@ -320,23 +318,13 @@ textarea{resize:vertical;min-height:56px;line-height:1.6}
   <div><h1>Claim Atom Builder</h1><div class="sub">POF 2828 · Canon v1.1 · Four-Object Full Edition</div></div>
   <div class="hsp"></div>
   <span class="saved" id="savemark"></span>
-  <label class="hbtn hbtn-g" style="display:flex;align-items:center;gap:6px;cursor:default;">AI
-    <select id="atom-provider" onchange="updateAtomProvider()" style="width:auto;padding:3px 5px;font-size:11px;">
-      <option value="deepseek">DeepSeek</option>
-      <option value="ollama">Ollama NAS</option>
-    </select>
-    <select id="atom-model" onchange="saveAtomProvider()" style="width:auto;max-width:155px;padding:3px 5px;font-size:11px;"></select>
-  <button class="hbtn hbtn-b" style="background:#4a7fd4;color:#fff;font-weight:700;" onclick="newAtom()">＋ New Atom</button>
-  <button class="hbtn" style="background:#2a200a;border:1px solid #d0a030;color:#ffd060;font-weight:700;" onclick="openAxiomBuilder()">⚡ Axiom</button>
-  <button class="hbtn" style="background:#2a200a;border:1px solid #d0a030;color:#ffd060;font-weight:700;" onclick="openCanonWorkbench()">⚡ Canon Workbench</button>
-  <button class="hbtn hbtn-gold" type="button" onclick="openBatchModal()">⚡ Batch Intake &amp; Export</button>
+  <button class="hbtn hbtn-g" onclick="location.href='workbench.html'">Canon Workbench</button>
   <button class="hbtn hbtn-g" onclick="document.getElementById('nerve-import').click()">Import JSON</button>
   <button class="hbtn hbtn-g" onclick="exportNerveDraft()">Export Draft</button>
-  <button class="hbtn hbtn-g" onclick="exportNerveMarkdown()">Export MD</button>
   <input id="nerve-import" type="file" accept="application/json,.json" hidden onchange="importNerveFile(this.files[0]);this.value=''">
   <button class="hbtn hbtn-g" id="jbtn" onclick="tJSON()">Show JSON</button>
   <button class="hbtn hbtn-g" onclick="expAll()">Validate Candidate Packet</button>
-  <button class="hbtn" style="background:#111111;border:1px solid #d4af37;color:#e8e6e1;font-weight:700;" onclick="openConsilienceAtlas()">🏛 Consilience Atlas</button>
+  <button class="hbtn hbtn-b" onclick="newAtom()">＋ New Atom</button>
 </header>
 
 <div class="app">
@@ -362,91 +350,7 @@ textarea{resize:vertical;min-height:56px;line-height:1.6}
 </div>
 
 <div id="ov"><div id="md"><h2>Candidate Packet / Validation Report</h2><div id="mdb"></div>
-<div class="mf"><button class="bg" onclick="cpExp()">Copy</button><button class="bp" style="background:#2a200a;border:1px solid #d0a030;color:#ffd060;" onclick="sendCandidateToWorkbench()">Open in Canon Workbench →</button><button class="bp" style="background:#111111;border:1px solid #d4af37;color:#e8e6e1;" onclick="sendCandidateToAtlas()">Open in Consilience Atlas →</button><button class="bp" onclick="cM()">Close</button></div></div></div>
-
-<!-- BATCH INTAKE & GOVERNED EXPORT MODAL -->
-<div id="batch-modal">
-  <div id="bm-dialog">
-    <div class="bm-head">
-      <h2>⚡ BATCH INTAKE &amp; GOVERNED EXPORT · <span style="color:#ffc36a;font-size:12px;">CANDIDATE_DRAFT</span></h2>
-      <button class="bg" type="button" onclick="closeBatchModal()" style="padding:4px 10px;">✕</button>
-    </div>
-    <div class="bm-body">
-      <div class="bm-section">
-        <span class="bm-label">1. AI Provider Engine</span>
-        <div style="display:flex;gap:18px;align-items:center;">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:#7fb0ff;font-weight:600;">
-            <input type="radio" name="bm-provider" value="ollama" checked onchange="updateModelOptions()"> Ollama (NAS @ 192.168.2.50)
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:#7fd090;font-weight:600;">
-            <input type="radio" name="bm-provider" value="deepseek" onchange="updateModelOptions()"> DeepSeek Chat (Cloud API)
-          </label>
-          <select id="bm-model" style="max-width:200px;font-size:12px;padding:4px 8px;">
-            <option value="llama3.2:latest">llama3.2:latest</option>
-            <option value="mistral:latest">mistral:latest</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="bm-section">
-        <span class="bm-label">2. Source Input (Upload Files or Pick Vault Folder)</span>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div class="bm-dropzone" onclick="document.getElementById('bm-file-input').click()">
-            <div style="font-size:22px;margin-bottom:4px;">📂</div>
-            <div style="font-weight:600;color:#e2e2e2;font-size:12px;">Pick Several Files (.md, .txt, .json)</div>
-            <div style="font-size:10px;color:#8a8a8a;margin-top:2px;">JSON drafts imported directly without AI re-run</div>
-            <input id="bm-file-input" type="file" multiple accept=".md,.txt,.json" hidden onchange="handleBatchFilesSelected(this.files)">
-          </div>
-          <div>
-            <div style="font-size:11px;color:#8a8a8a;margin-bottom:4px;">Or select an allowlisted Vault folder:</div>
-            <select id="bm-vault-folder" style="font-size:12px;margin-bottom:8px;">
-              <option value="">-- Select Subfolder --</option>
-            </select>
-            <button class="bg" type="button" style="width:100%;" onclick="runVaultFolderIntake()">Intake Vault Folder</button>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:8px;">
-          <button class="bg" type="button" onclick="document.getElementById('bm-folder-input').click()">Pick Local Folder</button>
-          <input id="bm-folder-input" type="file" webkitdirectory directory multiple accept=".md,.txt,.json" hidden onchange="handleBatchFilesSelected(this.files)">
-          <button class="bg" type="button" onclick="clearBatchQueue()">Clear Saved Queue</button>
-        </div>
-        <div id="bm-file-count" style="font-size:11px;color:#f5d070;margin-top:8px;"></div>
-      </div>
-
-      <div class="bm-section">
-        <span class="bm-label">3. Governed Destination Category</span>
-        <select id="bm-destination-category" style="font-size:12px;">
-          <option value="">Loading categories from 02_CANONIZATION...</option>
-        </select>
-      </div>
-
-      <div class="bm-section" id="bm-results-section" style="display:none;">
-        <span class="bm-label">Candidate Results (Human Gate: Review before Export)</span>
-        <div style="max-height:200px;overflow-y:auto;">
-          <table class="bm-table">
-            <thead>
-              <tr>
-                <th style="width:24px;"><input type="checkbox" id="bm-select-all" checked onchange="toggleAllBatchCandidates(this.checked)"></th>
-                <th>Document</th>
-                <th>Status</th>
-                <th>Lean Candidate Matches</th>
-                <th>SHA-256</th>
-              </tr>
-            </thead>
-            <tbody id="bm-candidate-rows"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="bm-foot">
-      <div id="bm-status-msg" style="font-size:11px;color:#8a8a8a;font-family:monospace;">Ready</div>
-      <div style="display:flex;gap:8px;">
-        <button class="bp" id="bm-run-btn" type="button" onclick="runBatchIntake()">Run / Resume Batch Intake</button>
-        <button class="bg" id="bm-export-btn" type="button" style="display:none;color:#a9f3bf;border-color:#2a5035;" onclick="exportSelectedCandidates()">Export Selected to Vault</button>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="mf"><button class="bg" onclick="cpExp()">Copy</button><button class="bp" onclick="cM()">Close</button></div></div></div>
 
 <script>
 // ══════════════════════════════════════════════════════════════════════════
@@ -1175,23 +1079,13 @@ function autosave(){
   }catch(e){console.warn('autosave failed',e);}
  },600);
 }
-function saveAllNow(){
- clearTimeout(saveT);
- try{
-  const snap=makeDraftSnapshot();
-  localStorage.setItem('pof_draft',JSON.stringify(snap));
-  const s=document.getElementById('savemark');
-  if(s)s.textContent='saved '+new Date().toLocaleTimeString();
-  return snap;
- }catch(e){console.warn('immediate save failed',e);throw e;}
-}
-globalThis.saveAllNow=saveAllNow;
 
 function restore(){
  let snap;
  try{snap=JSON.parse(localStorage.getItem('pof_draft')||'null');}catch(e){return;}
  if(!snap||!snap.atoms||!Object.keys(snap.atoms).length)return;
- if(!confirm('Restore '+Object.keys(snap.atoms).length+' unsaved atom(s) from your last session?'))return;
+ if(!confirm('Restore '+Object.keys(snap.atoms).length+' unsaved atom(s) from your last session?')){
+  localStorage.removeItem('pof_draft');return;}
  Object.entries(snap.atoms).forEach(([aid,meta])=>{
   newAtom();
   const nid='A'+String(N).padStart(3,'0');
@@ -1594,276 +1488,20 @@ function exportNerveDraft(){
  const blob=new Blob([JSON.stringify(packet,null,2)],{type:'application/json'}),a=document.createElement('a');
  a.href=URL.createObjectURL(blob);a.download='nerve-editable-draft-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
-function mdLabel(key){return String(key||'').replace(/[_-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());}
-function mdValue(value){
- if(Array.isArray(value))return value.length?value.map(v=>`- ${typeof v==='object'?Object.entries(v).map(([k,x])=>`${mdLabel(k)}: ${x||'not recorded'}`).join('; '):v}`).join('\n'):'_None recorded._';
- if(value&&typeof value==='object')return Object.entries(value).map(([k,x])=>`- **${mdLabel(k)}:** ${x||'_Not recorded._'}`).join('\n');
- return String(value??'').trim()||'_Not recorded._';
-}
-function mdTable(rows,columns){
- if(!rows.length)return '_None recorded._';
- const clean=v=>String(v??'').replace(/\|/g,'\\|').replace(/\r?\n/g,'<br>')||'—';
- return [`| ${columns.map(c=>c.label).join(' | ')} |`,`| ${columns.map(()=> '---').join(' | ')} |`,...rows.map(row=>`| ${columns.map(c=>clean(row[c.key])).join(' | ')} |`)].join('\n');
-}
-function exportNerveMarkdown(){
- const snap=makeDraftSnapshot(),stamp=new Date().toISOString(),ids=Object.keys(snap.atoms);
- const lines=['---','type: canonization_atom_draft','status: CANDIDATE_DRAFT','admitted_to_canon: false',`exported_at: "${stamp}"`,`atom_count: ${ids.length}`,'json_authority: "Companion nerve-editable-draft JSON remains authoritative."','---','','# ATOM Builder Candidate Draft','',
-  '> [!warning] Candidate only','> This Markdown is a readable projection of the current ATOM Builder draft. It is not validation, proof, a human ruling, or admission to canon.',''];
- const originals=[];
- for(const aid of ids){
-  const meta=snap.atoms[aid]||{},view=snap.html[aid]||{},vals=view.vals||{},toggles=view.tg||{};
-  lines.push(`## ${aid} — ${meta.otype||'TYPE NOT SELECTED'}`,'',`- **Application UUID:** \`${meta.uuid||'not assigned'}\``,`- **Register:** ${meta.reg||'not selected'}`,'- **Admission state:** CANDIDATE_DRAFT — NOT ADMITTED','');
-  for(const [key,value] of Object.entries(vals)){
-   if(key==='raw'){if(String(value).trim())originals.push({aid,text:String(value)});continue;}
-   const def=window.AtomPromptRegistry?.fieldDefinition?.(key,0,mdLabel(key));
-   lines.push(`### ${def?.label||mdLabel(key)}`,'',`**Question:** ${def?.question||`What should ${mdLabel(key)} contain?`}`,'',`**ANSWER:** ${mdValue(value)}`,'');
-  }
-  if(Object.keys(toggles).length){lines.push('### Controlled Fields','');for(const [key,value] of Object.entries(toggles))lines.push(`- **${mdLabel(key)}:** ${value}`);lines.push('');}
-  if((view.terms||[]).length)lines.push('### Mathematical Terms','',mdTable(view.terms,[{key:'m',label:'Term'},{key:'p',label:'Plain meaning'},{key:'t',label:'Theological meaning'}]),'');
-  if((view.ledger||[]).length){const keys=[...new Set(view.ledger.flatMap(x=>Object.keys(x||{})))];lines.push('### Claim Ledger','',mdTable(view.ledger,keys.map(key=>({key,label:mdLabel(key)}))), '');}
- }
- lines.push('## Preserved Original Source','');
- const seen=new Set();
- for(const source of originals){const text=source.text.trim();if(seen.has(text))continue;seen.add(text);lines.push(`### Source carried by ${source.aid}`,'',text,'');}
- lines.push('## Editable Source of Record','',
-  'The separately exported `nerve-editable-draft` JSON is the lossless machine-editable record. This file is intentionally reader-facing Markdown and does not embed a JSON copy.','');
- const title=(ids.map(id=>snap.html[id]?.vals?.title||snap.html[id]?.vals?.statement).find(Boolean)||'atom-builder-candidate').toString().slice(0,80).replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase();
- const blob=new Blob([lines.join('\n')],{type:'text/markdown;charset=utf-8'}),a=document.createElement('a');
- a.href=URL.createObjectURL(blob);a.download=`${title||'atom-builder-candidate'}-${stamp.replace(/[:.]/g,'-')}.md`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
- notifyHost('markdown-projection',{exported_at:stamp,atom_count:ids.length,authority:'CANDIDATE_DRAFT — NOT ADMITTED'});
-}
 function cM(){document.getElementById('ov').classList.remove('on');}
- function cpExp(){navigator.clipboard.writeText(document.getElementById('mdb').textContent)
+function cpExp(){navigator.clipboard.writeText(document.getElementById('mdb').textContent)
  .then(()=>{const b=document.querySelector('.mf .bg');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',1400);});}
- document.getElementById('ov').onclick=e=>{if(e.target.id==='ov')cM();};
- const ATOM_PROVIDER_PREF='canonization.atom-provider.v1';
- const ATOM_PROVIDER_MODELS={deepseek:['deepseek-chat'],ollama:['llama3.2:latest','mistral:latest','moondream:latest']};
- function getAtomProviderSelection(){return {provider:document.getElementById('atom-provider')?.value||'deepseek',model:document.getElementById('atom-model')?.value||'deepseek-chat'};}
- function saveAtomProvider(){localStorage.setItem(ATOM_PROVIDER_PREF,JSON.stringify(getAtomProviderSelection()));}
- function updateAtomProvider(){const provider=document.getElementById('atom-provider').value,model=document.getElementById('atom-model'),saved=JSON.parse(localStorage.getItem(ATOM_PROVIDER_PREF)||'{}');model.innerHTML=(ATOM_PROVIDER_MODELS[provider]||[]).map(x=>`<option value="${x}">${x}</option>`).join('');if(saved.provider===provider&&ATOM_PROVIDER_MODELS[provider].includes(saved.model))model.value=saved.model;saveAtomProvider();}
- function initAtomProvider(){let saved={};try{saved=JSON.parse(localStorage.getItem(ATOM_PROVIDER_PREF)||'{}')}catch{}const provider=document.getElementById('atom-provider');provider.value=ATOM_PROVIDER_MODELS[saved.provider]?saved.provider:'deepseek';updateAtomProvider();if(saved.model&&ATOM_PROVIDER_MODELS[provider.value].includes(saved.model))document.getElementById('atom-model').value=saved.model;saveAtomProvider();}
- globalThis.getAtomProviderSelection=getAtomProviderSelection;
+document.getElementById('ov').onclick=e=>{if(e.target.id==='ov')cM();};
 document.onkeydown=e=>{if(e.key==='Escape')cM();};
 dl();
 // open JSON by default on wide screens — the live record is the point
 if(window.innerWidth>=1400){jOn=true;document.getElementById('cj').classList.add('on');
  document.getElementById('jbtn').textContent='Hide JSON';}
- window.addEventListener('load',()=>setTimeout(restore,300));
- window.addEventListener('load',initAtomProvider);
+window.addEventListener('load',()=>setTimeout(restore,300));
 window.addEventListener('load',()=>notifyHost('ready',{canon:'claim-atom/1.1',interface:'atom-builder'}));
 window.addEventListener('message',e=>{if(e.data?.type==='nerve-import-draft')importNerveObject(e.data.payload);});
-
-function openConsilienceAtlas(){
-  saveAllNow();
-  location.href='consilience-atlas.html';
-}
-function sendCandidateToAtlas(){
-  const t = document.getElementById('mdb').textContent;
-  try {
-    const data = JSON.parse(t);
-    if(data){
-      localStorage.setItem('ftp_atlas_incoming', JSON.stringify(data));
-    }
-  } catch(e){}
-  saveAllNow();
-  location.href='consilience-atlas.html';
-}
-
-function openCanonWorkbench(){
-  saveAllNow();
-  location.href='workbench.html';
-}
-function openAxiomBuilder(){
-  saveAllNow();
-  location.href='axiom-builder.html';
-}
-function openConsilienceAtlas(){
-  saveAllNow();
-  location.href='AtomBALCK.html';
-}
-function sendCandidateToWorkbench(){
-  const t = document.getElementById('mdb').textContent;
-  try {
-    const data = JSON.parse(t);
-    if(data && (data.atoms || data.atom || data.schema_version || data._packet)){
-      localStorage.setItem('ftp_canon_workbench_incoming', JSON.stringify(data));
-    }
-  } catch(e){}
-  saveAllNow();
-  location.href='workbench.html';
-}
-
 window.addEventListener('beforeunload',e=>{
- if(Object.keys(A).length){saveAllNow();e.preventDefault();e.returnValue='';}
+ if(Object.keys(A).length){e.preventDefault();e.returnValue='';}
 });
-</script>
-<script src="field-registry.js"></script>
-<script src="prompt-rail.js"></script>
-
-<script>
-// ══ BATCH INTAKE & GOVERNED EXPORT LOGIC ══
-let batchSelectedFiles = [];
-let batchCandidatePackets = [];
-const BATCH_DB='nerve-atom-batch-v1', BATCH_CHUNK_SIZE=4;
-function batchDb(){return new Promise((resolve,reject)=>{const q=indexedDB.open(BATCH_DB,1);q.onupgradeneeded=()=>{const db=q.result;if(!db.objectStoreNames.contains('files'))db.createObjectStore('files',{keyPath:'id'});if(!db.objectStoreNames.contains('state'))db.createObjectStore('state');};q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error);});}
-async function batchStore(store,mode,work){const db=await batchDb();return new Promise((resolve,reject)=>{const tx=db.transaction(store,mode),os=tx.objectStore(store);let value;try{value=work(os);}catch(e){db.close();reject(e);return;}tx.oncomplete=()=>{db.close();resolve(value);};tx.onerror=()=>{db.close();reject(tx.error);};});}
-async function persistBatchFiles(files){await batchStore('files','readwrite',os=>{os.clear();files.forEach((file,index)=>os.put({id:index,name:file.name,path:file.webkitRelativePath||file.name,type:file.type,lastModified:file.lastModified,blob:file,status:'pending'}));});}
-async function loadBatchFiles(){const rows=await new Promise(async(resolve,reject)=>{const db=await batchDb(),tx=db.transaction('files','readonly'),q=tx.objectStore('files').getAll();q.onsuccess=()=>{db.close();resolve(q.result||[]);};q.onerror=()=>{db.close();reject(q.error);};});return rows.sort((a,b)=>a.id-b.id).map(r=>Object.assign(new File([r.blob],r.name,{type:r.type,lastModified:r.lastModified}),{_batchId:r.id,_batchPath:r.path,_batchStatus:r.status}));}
-async function setBatchFileStatus(ids,status){await batchStore('files','readwrite',os=>ids.forEach(id=>{const q=os.get(id);q.onsuccess=()=>{if(q.result){q.result.status=status;os.put(q.result);}};}));}
-async function saveBatchCandidates(){await batchStore('state','readwrite',os=>os.put(batchCandidatePackets,'candidates'));}
-async function restoreBatchSession(){try{batchSelectedFiles=await loadBatchFiles();const db=await batchDb();batchCandidatePackets=await new Promise((resolve,reject)=>{const tx=db.transaction('state','readonly'),q=tx.objectStore('state').get('candidates');q.onsuccess=()=>{db.close();resolve(q.result||[]);};q.onerror=()=>{db.close();reject(q.error);};});updateBatchFileCount();if(batchCandidatePackets.length)renderBatchCandidates();}catch(e){console.warn('Batch session restore failed',e);}}
-function updateBatchFileCount(){const pending=batchSelectedFiles.filter(f=>f._batchStatus!=='complete').length,el=document.getElementById('bm-file-count');if(el)el.textContent=batchSelectedFiles.length?`${batchSelectedFiles.length} saved file(s); ${pending} waiting. `+batchSelectedFiles.slice(0,3).map(f=>f._batchPath||f.name).join(', ')+(batchSelectedFiles.length>3?'…':''):'No saved files in queue.';}
-
-function openBatchModal() {
-  document.getElementById('batch-modal').classList.add('on');
-  loadBatchCategories();
-}
-window.addEventListener('DOMContentLoaded',()=>{loadBatchCategories();restoreBatchSession();});
-function closeBatchModal() {
-  document.getElementById('batch-modal').classList.remove('on');
-}
-function updateModelOptions() {
-  const provider = document.querySelector('input[name="bm-provider"]:checked')?.value || 'ollama';
-  const sel = document.getElementById('bm-model');
-  sel.innerHTML = '';
-  if (provider === 'ollama') {
-    sel.innerHTML = '<option value="llama3.2:latest">llama3.2:latest</option><option value="mistral:latest">mistral:latest</option>';
-  } else {
-    sel.innerHTML = '<option value="deepseek-chat">deepseek-chat</option>';
-  }
-}
-async function loadBatchCategories() {
-  try {
-    const res = await fetch('/api/atom-builder/batch/categories');
-    if (res.ok) {
-      const data = await res.json();
-      if (data.categories && data.categories.length) {
-        const selDest = document.getElementById('bm-destination-category');
-        const selVf = document.getElementById('bm-vault-folder');
-        selDest.innerHTML = '';
-        selVf.innerHTML = '<option value="">-- Select Subfolder --</option>';
-        for (const cat of data.categories) {
-          selDest.insertAdjacentHTML('beforeend', `<option value="${cat}">${cat}</option>`);
-          selVf.insertAdjacentHTML('beforeend', `<option value="${cat}">${cat}</option>`);
-        }
-      }
-    }
-  } catch (e) {
-    console.warn('Could not load dynamic vault categories', e);
-  }
-}
-async function handleBatchFilesSelected(files) {
-  batchSelectedFiles = Array.from(files || []);
-  await persistBatchFiles(batchSelectedFiles);
-  batchSelectedFiles=await loadBatchFiles();batchCandidatePackets=[];await saveBatchCandidates();updateBatchFileCount();
-}
-async function clearBatchQueue(){if(!confirm('Clear the saved upload queue and extracted batch candidates?'))return;await batchStore('files','readwrite',os=>os.clear());await batchStore('state','readwrite',os=>os.clear());batchSelectedFiles=[];batchCandidatePackets=[];updateBatchFileCount();document.getElementById('bm-results-section').style.display='none';document.getElementById('bm-export-btn').style.display='none';
-}
-async function runBatchIntake() {
-  if (!batchSelectedFiles.length) {
-    alert('Please select files or choose a vault subfolder to intake.');
-    return;
-  }
-  const provider = document.querySelector('input[name="bm-provider"]:checked')?.value || 'ollama';
-  const model = document.getElementById('bm-model').value;
-  const statusMsg = document.getElementById('bm-status-msg');
-  const runBtn = document.getElementById('bm-run-btn');
-
-  const pending=batchSelectedFiles.filter(f=>f._batchStatus!=='complete');
-  if(!pending.length){statusMsg.textContent='Every saved file has completed. Add files or clear the queue to begin another run.';return;}
-  statusMsg.textContent = `Running ${provider} on ${pending.length} waiting file(s)…`;
-  runBtn.disabled = true;
-  try {
-    for(let offset=0;offset<pending.length;offset+=BATCH_CHUNK_SIZE){
-      const chunk=pending.slice(offset,offset+BATCH_CHUNK_SIZE),form=new FormData();
-      chunk.forEach(f=>form.append('files',f,f._batchPath||f.name));form.append('provider',provider);form.append('model',model);
-      statusMsg.textContent=`Processing ${offset+1}–${Math.min(offset+chunk.length,pending.length)} of ${pending.length}; completed work is saved after every group.`;
-      const res=await fetch('/api/atom-builder/batch/intake-files',{method:'POST',body:form});
-      if(!res.ok)throw new Error(`Batch intake stopped at file ${offset+1}: ${res.status} ${res.statusText}`);
-      const data=await res.json();batchCandidatePackets.push(...(data.candidates||[]));
-      await setBatchFileStatus(chunk.map(f=>f._batchId),'complete');await saveBatchCandidates();renderBatchCandidates();
-    }
-    batchSelectedFiles=await loadBatchFiles();updateBatchFileCount();
-    statusMsg.textContent = `Completed ${batchCandidatePackets.length} candidate extraction(s). The queue can be resumed after refresh; human review is required before export.`;
-  } catch (e) {
-    batchSelectedFiles=await loadBatchFiles();updateBatchFileCount();statusMsg.textContent = `Paused safely: ${e.message}. Choose Run / Resume to continue.`;
-  } finally {
-    runBtn.disabled = false;
-  }
-}
-async function runVaultFolderIntake() {
-  const subfolder = document.getElementById('bm-vault-folder').value;
-  if (!subfolder) { alert('Please pick a vault subfolder.'); return; }
-  const provider = document.querySelector('input[name="bm-provider"]:checked')?.value || 'ollama';
-  const model = document.getElementById('bm-model').value;
-  const statusMsg = document.getElementById('bm-status-msg');
-
-  statusMsg.textContent = `Scanning & processing vault folder: ${subfolder}…`;
-  try {
-    const res = await fetch(`/api/atom-builder/batch/intake-vault-folder?subfolder=${encodeURIComponent(subfolder)}&provider=${provider}&model=${encodeURIComponent(model)}`, { method: 'POST' });
-    if (!res.ok) throw new Error(`Vault folder intake failed: ${res.statusText}`);
-    const data = await res.json();
-    batchCandidatePackets = data.candidates || [];
-    renderBatchCandidates();
-    statusMsg.textContent = `Completed ${batchCandidatePackets.length} candidate extraction(s). Human review required before export.`;
-  } catch (e) {
-    statusMsg.textContent = `Error: ${e.message}`;
-    alert(e.message);
-  }
-}
-function renderBatchCandidates() {
-  const sec = document.getElementById('bm-results-section');
-  const tbody = document.getElementById('bm-candidate-rows');
-  const exportBtn = document.getElementById('bm-export-btn');
-  sec.style.display = 'block';
-  tbody.innerHTML = '';
-
-  batchCandidatePackets.forEach((pkt, idx) => {
-    const leanCount = (pkt.lean_candidate_matches || []).length;
-    const title = pkt.extracted?.title || pkt.filename;
-    tbody.insertAdjacentHTML('beforeend', `
-      <tr>
-        <td><input type="checkbox" class="bm-cand-check" data-idx="${idx}" checked></td>
-        <td><b>${title}</b><br><small style="color:#888;">${pkt.filename}</small></td>
-        <td><span style="color:#f5d070;font-size:10px;">${pkt.status || 'CANDIDATE_DRAFT'}</span></td>
-        <td><span style="color:#7fb0ff;font-size:10px;">${leanCount} LEAN_CANDIDATE_MATCH</span></td>
-        <td style="font-family:monospace;font-size:10px;color:#888;">${(pkt.sha256||'').substring(0,8)}<br><button class="bg" type="button" style="margin-top:5px;font-size:9px" onclick="openBatchCandidateInBuilder(${idx})">Open in Builder</button></td>
-      </tr>
-    `);
-  });
-  exportBtn.style.display = batchCandidatePackets.length ? 'inline-block' : 'none';
-}
-function candidateSource(pkt){return String(pkt?.raw_statement||pkt?.raw||pkt?.source_text||pkt?.preserved_source||pkt?.extracted?.raw_statement||pkt?.extracted?.raw||pkt?.extracted?.source_text||'').trim();}
-async function openBatchCandidateInBuilder(idx){const pkt=batchCandidatePackets[idx];let text=candidateSource(pkt);if(!text){const source=batchSelectedFiles.find(f=>(f._batchPath||f.name)===pkt.filename||f.name===pkt.filename);if(source)text=(await source.text()).trim();}if(!text){alert('This candidate packet does not contain preserved source text and its queued source file was not found. Re-add the source before using the API.');return;}newAtom();const aid='A'+String(N).padStart(3,'0'),el=document.getElementById('at-'+aid),raw=el?.querySelector('[data-f="raw"]'),uri=el?.querySelector('[data-f="src_uri"]');if(raw)raw.value=text;if(uri)uri.value=pkt.filename||pkt.source_uri||'';onStmt(aid);refresh(aid);saveAllNow();document.getElementById('at-'+aid)?.scrollIntoView({behavior:'smooth',block:'start'});closeBatchModal();}
-function toggleAllBatchCandidates(val) {
-  document.querySelectorAll('.bm-cand-check').forEach(cb => cb.checked = val);
-}
-async function exportSelectedCandidates() {
-  const selected = [];
-  document.querySelectorAll('.bm-cand-check:checked').forEach(cb => {
-    const idx = parseInt(cb.dataset.idx, 10);
-    if (batchCandidatePackets[idx]) selected.push(batchCandidatePackets[idx]);
-  });
-  if (!selected.length) { alert('No candidates selected for export.'); return; }
-
-  const dest = document.getElementById('bm-destination-category').value;
-  const statusMsg = document.getElementById('bm-status-msg');
-  statusMsg.textContent = `Exporting ${selected.length} approved candidate(s) to ${dest}…`;
-
-  try {
-    const res = await fetch('/api/atom-builder/batch/export-selected', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ candidate_packets: selected, destination_category: dest })
-    });
-    if (!res.ok) throw new Error(`Export failed: ${res.statusText}`);
-    const data = await res.json();
-    statusMsg.textContent = `Successfully exported ${data.total_exported} documents to ${dest}! Rebuilt CANON_INTAKE_CATALOG.json`;
-    alert(`Successfully exported ${data.total_exported} candidate documents into:\\n${dest}\\n\\nUpdated projection: CANON_INTAKE_CATALOG.json`);
-  } catch (e) {
-    statusMsg.textContent = `Export error: ${e.message}`;
-    alert(e.message);
-  }
-}
 </script>
 </body></html>

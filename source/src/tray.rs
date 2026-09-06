@@ -14,44 +14,43 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let item_links = MenuItem::new("Links      (Ctrl+Alt+L)", true, None);
     let item_research = MenuItem::new("Research   (Ctrl+Alt+R)", true, None);
     let item_chat = MenuItem::new("AI Chat    (Ctrl+Alt+A)", true, None);
-    let item_dashboard = MenuItem::new("Dashboard  (Ctrl+Alt+G)", true, None);
     let item_tts_read = MenuItem::new("TTS Read     (Ctrl+Alt+T)", true, None);
     let item_tts_stop = MenuItem::new("TTS Stop", true, None);
     let item_tts_panel = MenuItem::new("TTS Engine", true, None);
+    let item_shortcuts = MenuItem::new("Shortcuts & Hotstrings (Ctrl+Alt+S)", true, None);
+    let item_mission_control = MenuItem::new("Mission Control   (Ctrl+Alt+M)", true, None);
     let item_workbench = MenuItem::new("Canon Workbench   (Ctrl+Alt+U)", true, None);
     let item_atom_builder = MenuItem::new("Atom Builder      (Ctrl+Alt+B)", true, None);
     let item_reconciliation = MenuItem::new("Reconciliation    (Ctrl+Alt+N)", true, None);
-    let item_stratum = MenuItem::new("Stratum Actions   (Ctrl+Alt+V)", true, None);
-    let item_settings = MenuItem::new("Settings", true, None);
-    let item_separator = tray_icon::menu::PredefinedMenuItem::separator();
+    let item_stratum = MenuItem::new("Stratum Actions   (Ctrl+Shift+V)", true, None);
     let item_quit = MenuItem::new("Quit", true, None);
 
+    menu.append(&item_shortcuts)?;
+    menu.append(&item_mission_control)?;
     menu.append(&item_clipboard)?;
     menu.append(&item_prompts)?;
     menu.append(&item_links)?;
     menu.append(&item_research)?;
     menu.append(&item_chat)?;
-    menu.append(&item_dashboard)?;
-    menu.append(&item_separator)?;
+    menu.append(&tray_icon::menu::PredefinedMenuItem::separator())?;
     menu.append(&item_tts_read)?;
     menu.append(&item_tts_stop)?;
     menu.append(&item_tts_panel)?;
-    menu.append(&item_separator)?;
+    menu.append(&tray_icon::menu::PredefinedMenuItem::separator())?;
     menu.append(&item_workbench)?;
     menu.append(&item_atom_builder)?;
     menu.append(&item_reconciliation)?;
     menu.append(&item_stratum)?;
-    menu.append(&item_separator)?;
-    menu.append(&item_settings)?;
-    menu.append(&item_separator)?;
+    menu.append(&tray_icon::menu::PredefinedMenuItem::separator())?;
     menu.append(&item_quit)?;
 
+    let shortcuts_id = item_shortcuts.id().clone();
+    let mission_control_id = item_mission_control.id().clone();
     let clipboard_id = item_clipboard.id().clone();
     let prompts_id = item_prompts.id().clone();
     let links_id = item_links.id().clone();
     let research_id = item_research.id().clone();
     let chat_id = item_chat.id().clone();
-    let dashboard_id = item_dashboard.id().clone();
     let tts_read_id = item_tts_read.id().clone();
     let tts_stop_id = item_tts_stop.id().clone();
     let tts_panel_id = item_tts_panel.id().clone();
@@ -59,13 +58,16 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let atom_builder_id = item_atom_builder.id().clone();
     let reconciliation_id = item_reconciliation.id().clone();
     let stratum_id = item_stratum.id().clone();
-    let settings_id = item_settings.id().clone();
     let quit_id = item_quit.id().clone();
 
     let proxy_clone = proxy.clone();
     std::thread::spawn(move || loop {
         if let Ok(event) = MenuEvent::receiver().recv() {
-            if event.id == clipboard_id {
+            if event.id == shortcuts_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("shortcuts".into()));
+            } else if event.id == mission_control_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("mission-control".into()));
+            } else if event.id == clipboard_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("clipboard".into()));
             } else if event.id == prompts_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("prompts".into()));
@@ -75,8 +77,6 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("research".into()));
             } else if event.id == chat_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("chat".into()));
-            } else if event.id == dashboard_id {
-                let _ = proxy_clone.send_event(AppEvent::TogglePanel("dashboard".into()));
             } else if event.id == tts_read_id {
                 std::thread::spawn(|| { crate::tts::read_selection(); });
             } else if event.id == tts_stop_id {
@@ -91,8 +91,6 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("reconciliation".into()));
             } else if event.id == stratum_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("stratum".into()));
-            } else if event.id == settings_id {
-                let _ = proxy_clone.send_event(AppEvent::TogglePanel("settings".into()));
             } else if event.id == quit_id {
                 let _ = proxy_clone.send_event(AppEvent::Quit);
             }

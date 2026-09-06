@@ -8,6 +8,19 @@
  *   config:tts         — JSON object of TTS settings
  *   clipboard:history  — JSON array of recent clips (newest first)
  *   clipboard:slots    — JSON array of clip slots
+ *   atoms:all          — JSON object map of canon/candidate atoms (keyed by canonical id)
+ *   axioms:all         — JSON object map of axiom candidate packets (keyed by canonical id)
+ *
+ * API (atoms & axioms):
+ *   GET  /api/atoms                 — list atoms (?q= ?status= ?limit=)
+ *   GET  /api/atoms/:id             — one atom
+ *   POST /api/atoms/batch           — intake batch { atoms: [...] } or single packet
+ *   GET  /api/axioms                — list axiom packets (?q= ?status= ?limit=)
+ *   GET  /api/axioms/:id            — one axiom packet
+ *   POST /api/axioms/batch          — intake batch { axioms: [...] } or { packet_type:"axiom-batch" }
+ *
+ * Intake rule (NO SILENT CANON WRITE): packets arrive as candidate_draft only.
+ * Any packet claiming admitted status is rejected with 422.
  *
  * Auth: Bearer token in Authorization header, checked against NERVE_API_TOKEN secret.
  */

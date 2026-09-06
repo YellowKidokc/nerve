@@ -1,0 +1,394 @@
+{
+  "packet_type": "axiom-batch",
+  "schema_version": "1.0",
+  "generated_at": "2026-09-05T07:30:00Z",
+  "source": {
+    "pipeline": "manual-seed",
+    "run_id": "SEED-2026-09-05-AXIOM-TRIAL",
+    "generator": "kimi-code"
+  },
+  "axioms": [
+    {
+      "packet_type": "axiom-candidate-packet",
+      "schema_version": "1.0",
+      "generated_at": "2026-09-05T07:30:00Z",
+      "identity": {
+        "canonical_id": "A1.0",
+        "uuid": "3f2c1a90-7b4e-4c1d-9a08-111111111110",
+        "legacy_id": "AX_CORE_000",
+        "semantic_code": "AX.CORE.COARISING",
+        "atlas_object_type": "AXIOM",
+        "domain": "AXIOMATIC_CORE",
+        "status": "PRIMITIVE",
+        "human_label": "Co-Arising",
+        "publication_state": "primitive",
+        "version": "v0.1-candidate"
+      },
+      "meaning_block": {
+        "formal_definition": "Existence and distinction are co-primitive: neither is derivable from the other, and each is a necessary condition for the articulation of the other.",
+        "mathematical_form": "¬(∃x ∧ ¬∃D) ∧ ¬(∃D ∧ ¬∃x), where D is a distinction operator on a domain; Domain ≠ ∅ ⟺ Distinction ≠ ∅",
+        "common_sense_meaning": "There is no 'something' without 'not-something', and no difference that exists in total vacuum. Being and difference arrive together — you cannot state one without already using the other.",
+        "governing_questions": {
+          "question_answered": "Which comes first: being or difference? (Answer: the question is malformed — they co-arise.)",
+          "problem_solved": "Prevents a regress of priority between existence (A1.1) and distinction (A1.2); blocks both monism-without-content and pluralism-without-ground.",
+          "kill_condition": "If a coherent semantics can state existence with zero distinction structure (or distinction with zero domain), the co-arising claim collapses and A1.1/A1.2 revert to competing primitives.",
+          "downstream_license": "Licenses the typed relation grammar: because being and difference co-arise, typed relations R(x,y) over a non-empty domain are well-formed without further primitive.",
+          "unresolved": "Does co-arising itself require a ground (a Source), or is co-arising the terminal explanation? This axiom cannot answer its own grounding question."
+        },
+        "why_it_matters": "Every later axiom predicates something of something. If being/difference priority were unsettled, the entire typed grammar of the atlas would rest on an unresolved fork.",
+        "candidate_canon_boundary": "REVIEW_REQUIRED"
+      },
+      "nabla": {
+        "address": "AXIOMATIC_CORE/ROOT/A1.0",
+        "coordinate": "Periodic-15 · position 0 / 191",
+        "breadcrumb": "Global > Axiomatic Core > Root > A1.0 Co-Arising",
+        "vector": { "G": 3, "M": 2, "E": 0, "S": 3, "T": 0, "K": 2, "R": 1, "Q": 0, "F": 1, "C": 3 },
+        "hash": "[C·S][G·K][M·R][E·Q][T·F]"
+      },
+      "dependency_spine": {
+        "upstream": [],
+        "downstream": ["A1.1", "A1.2"],
+        "graph_degree": 2,
+        "blast_radius": "STRUCTURAL"
+      },
+      "claim": {
+        "statement": "Existence and distinction are co-primitive; neither is prior to the other.",
+        "register": "FORMAL",
+        "scope": "Meta-axiomatic: governs the grammar of every downstream axiom."
+      },
+      "warrant": {
+        "claim": "Existence and distinction are co-primitive.",
+        "evidence": [
+          { "id": "EVD-A1.0-001", "type": "STRUCTURAL", "summary": "Any statement of existence (∃x) already deploys the x / not-x distinction; any deployment of distinction presupposes a domain of items distinguishable.", "source": "internal-derivation" }
+        ],
+        "proof_test": "Attempt to formalize ∃x with no partition structure, or D with empty domain; show each attempt smuggles in the other primitive (regress test).",
+        "counterevidence": ["Structuralist accounts (category-theoretic ontology) sometimes claim objects are fully determined by relational distinction alone, weakening the existence side of the pairing."],
+        "kill_conditions": ["A semantics is exhibited in which existence is expressible with zero distinction structure, or vice versa."],
+        "assumptions": ["Classical bivalent articulation is admissible for the statement of the axiom itself."],
+        "evidence_strength": 0.7,
+        "evidence_coverage": 0.6
+      },
+      "dynamics": {
+        "coherence": "Coherent if every downstream axiom's statement can be parsed as typed predication over a non-empty domain.",
+        "degradation": "Degrades if downstream nodes must silently choose a priority (existence-first or distinction-first) to be stated.",
+        "measurement": "Count downstream axioms whose statements parse without a priority fork.",
+        "threshold": "Degradation declared if >5% of downstream axioms require an unstated priority assumption.",
+        "asymmetry": "Asymmetric in consequence: violating it affects grammar globally, not locally.",
+        "restoration": { "self": "None — this is a primitive layer; it cannot be restored from within.", "external": "Revision at the root: re-seat A1.1/A1.2 as independent primitives and retire A1.0." },
+        "counterexample": "None known within the system; open in rival ontologies."
+      },
+      "orientation": {
+        "ascent": ["Why is there something rather than nothing, and why is that something structured rather than undifferentiated?"],
+        "translation": {
+          "preserved": ["Mutual necessity", "Non-derivability"],
+          "lost": ["Any claim of temporal priority"],
+          "introduced": ["Typed-relation well-formedness"],
+          "forbidden": ["Deriving existence from logic alone (idealism) or distinction from pure chaos alone (materialism)"]
+        },
+        "descent": ["Domain ≠ ∅", "Distinction operator D well-formed"],
+        "meeting_state": "CANDIDATE"
+      },
+      "bridges": [
+        {
+          "id": "BR-A1.0-001",
+          "source_domain": "AXIOMATIC_CORE",
+          "target_domain": "LOGIC",
+          "direction": "AXIOM_TO_RAIL",
+          "state": "CANDIDATE",
+          "preserved": ["Non-emptiness of domain", "Distinguishability"],
+          "lost": ["Theological loading"],
+          "introduced": ["Set-theoretic skeleton"],
+          "negative_controls": ["Empty-domain models (free logic)"],
+          "ablation": "Remove distinction operator: all downstream typed relations become ill-formed."
+        }
+      ],
+      "reality_mirror": {
+        "class": "T",
+        "status": "Provisional",
+        "anchor_object": "Co-Arising",
+        "provenance": "Root layer of the 191-axiom production set; position 0/191.",
+        "closed_loop_warning": "Yes — the axiom is stated using the very grammar it licenses; treat self-application as definitional, not evidentiary.",
+        "identification_state": "IDENTIFIED_CANDIDATE"
+      },
+      "receipts": {
+        "human": { "lane": "H", "result": "Pending", "timestamp": "2026-09-05" },
+        "python": { "lane": "P", "result": "NotRun", "timestamp": "2026-09-05" },
+        "api": { "lane": "A", "result": "Seeded", "timestamp": "2026-09-05" },
+        "model_engine": "kimi-code",
+        "input_hash": "sha256:pending",
+        "output_hash": "sha256:pending",
+        "lean_convergence": "NOT_ATTEMPTED",
+        "review_state": "HUMAN_REVIEW_REQUIRED"
+      },
+      "crosswalk": {
+        "public_paper_link": "",
+        "generated_node_record": "",
+        "lean_derivation_record": "",
+        "related_upstream": [],
+        "related_downstream": ["A1.1", "A1.2"]
+      },
+      "admission": {
+        "state": "candidate_draft",
+        "include": "PENDING",
+        "decision": "PENDING",
+        "import_status": "PENDING_REVIEW"
+      }
+    },
+
+    {
+      "packet_type": "axiom-candidate-packet",
+      "schema_version": "1.0",
+      "generated_at": "2026-09-05T07:30:00Z",
+      "identity": {
+        "canonical_id": "A1.1",
+        "uuid": "3f2c1a90-7b4e-4c1d-9a08-111111111111",
+        "legacy_id": "0001_A1_1_Existence",
+        "semantic_code": "AX.CORE.EXISTENCE",
+        "atlas_object_type": "AXIOM",
+        "domain": "AXIOMATIC_CORE",
+        "status": "PRIMITIVE",
+        "human_label": "Existence",
+        "publication_state": "primitive",
+        "version": "v0.1-candidate"
+      },
+      "meaning_block": {
+        "formal_definition": "Something exists rather than nothing: the domain of discourse is non-empty. ∃x (x = x).",
+        "mathematical_form": "∃x : x ∈ D, with D ≠ ∅; in Lean 4: Nonempty D as a typed instance at the root of the derivation tree.",
+        "common_sense_meaning": "There is not nothing. Before any law, equation, or argument can be true of anything, there has to be a 'something' for it to be true of. Existence is the floor under every other claim.",
+        "governing_questions": {
+          "question_answered": "Why is there something rather than nothing?",
+          "problem_solved": "Closes the zero-domain regress: without a non-empty domain, no predication, measurement, or relation can be stated at all.",
+          "kill_condition": "If the system can be coherently formalized over an empty domain (free logic without existential import at the root), A1.1 fails as a primitive and demotes to a convention.",
+          "downstream_license": "Licenses every existential claim in the atlas: A1.2 (distinction needs items to distinguish), the relation grammar, and all anchor classes N/F/H/T (each asserts something exists to anchor).",
+          "unresolved": "Existence is asserted, not derived. The further question — why existence is ordered, intelligible, or sourced rather than brute — is NOT answered here and is deferred to the derivation series."
+        },
+        "why_it_matters": "This is position 1 of 191: one of four irreducible primitives. Every atom, bridge, and receipt in the Consilience Atlas silently assumes a non-empty domain; A1.1 makes that assumption explicit and auditable.",
+        "candidate_canon_boundary": "REVIEW_REQUIRED"
+      },
+      "nabla": {
+        "address": "AXIOMATIC_CORE/ROOT/A1.1",
+        "coordinate": "Periodic-15 · position 1 / 191",
+        "breadcrumb": "Global > Axiomatic Core > Root > A1.1 Existence",
+        "vector": { "G": 3, "M": 1, "E": 1, "S": 2, "T": 0, "K": 1, "R": 1, "Q": 0, "F": 1, "C": 2 },
+        "hash": "[C·Q][G·S][K·E][M·F][T·R]"
+      },
+      "dependency_spine": {
+        "upstream": ["A1.0"],
+        "downstream": ["A1.2"],
+        "graph_degree": 2,
+        "blast_radius": "STRUCTURAL"
+      },
+      "claim": {
+        "statement": "Something exists rather than nothing.",
+        "register": "FORMAL",
+        "scope": "The domain of discourse is non-empty."
+      },
+      "warrant": {
+        "claim": "∃x (x = x); the domain is non-empty.",
+        "evidence": [
+          { "id": "EVD-A1.1-001", "type": "STRUCTURAL", "summary": "Any act of analysis (including denial) exhibits an existing analyzer and an existing denial — the cost of denying the axiom is performing it.", "source": "internal-derivation" },
+          { "id": "EVD-A1.1-002", "type": "EMPIRICAL", "summary": "All observation is of something; no instrument registers an empty universe.", "source": "reality-mirror" }
+        ],
+        "proof_test": "Performative-consistency test: formalize the denial of ∃x and check whether the denial's own tokens exist as marks in the formal system.",
+        "counterevidence": ["Substructural and free-logic frameworks can be developed over empty domains; they are coherent but produce no applied mathematics and no physics."],
+        "kill_conditions": ["A working applied science (predictive, measurement-connected) is exhibited on a genuinely empty-domain foundation."],
+        "assumptions": ["The law of identity x = x is admissible at the root."],
+        "evidence_strength": 0.85,
+        "evidence_coverage": 0.75
+      },
+      "dynamics": {
+        "coherence": "Coherent as long as every downstream existential is traceable to the root non-emptiness.",
+        "degradation": "Degrades silently when downstream nodes introduce existentials with no source (phantom entities).",
+        "measurement": "Audit downstream packets for unlicensed existential imports.",
+        "threshold": "Any unlicensed existential in an admitted atom triggers review.",
+        "asymmetry": "Asymmetric: existence cannot be 'un-asserted' locally; failure is global.",
+        "restoration": { "self": "Re-derive the offending downstream node's existential from A1.1.", "external": "If the entity resists derivation, retire the downstream node." },
+        "counterexample": "None admitted; the burden of exhibiting an empty-domain applied science has never been met."
+      },
+      "orientation": {
+        "ascent": ["What must be true before any claim can be true at all?"],
+        "translation": {
+          "preserved": ["Non-emptiness", "Existential import"],
+          "lost": ["Any claim about the character of what exists"],
+          "introduced": ["Domain floor for measurement"],
+          "forbidden": ["Deriving existence from non-existence; treating nothingness as a rival existent"]
+        },
+        "descent": ["Domain ≠ ∅", "Anchors exist (classes N/F/H/T)"],
+        "meeting_state": "CANDIDATE"
+      },
+      "bridges": [
+        {
+          "id": "BR-A1.1-001",
+          "source_domain": "AXIOMATIC_CORE",
+          "target_domain": "PHYSICS",
+          "direction": "AXIOM_TO_RAIL",
+          "state": "CANDIDATE",
+          "preserved": ["Non-empty domain"],
+          "lost": ["Necessity (physics treats existence as contingent)"],
+          "introduced": ["Contingent existence of physical states"],
+          "negative_controls": ["Vacuum states in QFT are not nothing — they retain structure and observables."],
+          "ablation": "Remove A1.1: all measurement claims lose their object; the physics rail cannot state that anything was observed."
+        }
+      ],
+      "reality_mirror": {
+        "class": "N",
+        "status": "Anchored",
+        "anchor_object": "Existence of the observable universe (one actual world at minimum)",
+        "provenance": "Root layer of the 191-axiom production set; position 1/191.",
+        "closed_loop_warning": "No",
+        "identification_state": "IDENTIFIED_CANDIDATE"
+      },
+      "receipts": {
+        "human": { "lane": "H", "result": "Pending", "timestamp": "2026-09-05" },
+        "python": { "lane": "P", "result": "NotRun", "timestamp": "2026-09-05" },
+        "api": { "lane": "A", "result": "Seeded", "timestamp": "2026-09-05" },
+        "model_engine": "kimi-code",
+        "input_hash": "sha256:pending",
+        "output_hash": "sha256:pending",
+        "lean_convergence": "NOT_ATTEMPTED",
+        "review_state": "HUMAN_REVIEW_REQUIRED"
+      },
+      "crosswalk": {
+        "public_paper_link": "",
+        "generated_node_record": "",
+        "lean_derivation_record": "",
+        "related_upstream": ["A1.0"],
+        "related_downstream": ["A1.2"]
+      },
+      "admission": {
+        "state": "candidate_draft",
+        "include": "PENDING",
+        "decision": "PENDING",
+        "import_status": "PENDING_REVIEW"
+      }
+    },
+
+    {
+      "packet_type": "axiom-candidate-packet",
+      "schema_version": "1.0",
+      "generated_at": "2026-09-05T07:30:00Z",
+      "identity": {
+        "canonical_id": "A1.2",
+        "uuid": "3f2c1a90-7b4e-4c1d-9a08-111111111112",
+        "legacy_id": "0002_A1_2_Distinction",
+        "semantic_code": "AX.CORE.DISTINCTION",
+        "atlas_object_type": "AXIOM",
+        "domain": "AXIOMATIC_CORE",
+        "status": "PRIMITIVE",
+        "human_label": "Distinction",
+        "publication_state": "primitive",
+        "version": "v0.1-candidate"
+      },
+      "meaning_block": {
+        "formal_definition": "Things are distinguishable: for items in the domain, identity and difference are well-defined. ∀x∀y (x = y ∨ x ≠ y), with x ≠ y realizable.",
+        "mathematical_form": "D(x, y) ∈ {0, 1} (distinction function) with ∃x∃y : D(x, y) = 1; in Lean 4: DecidableEq D as a typed instance over the root domain.",
+        "common_sense_meaning": "A thing is itself and not another thing. If nothing could be told apart, there would be no information, no language, no '2+2', no science — one undifferentiated blob. Distinction is what makes content possible.",
+        "governing_questions": {
+          "question_answered": "How can one thing be different from another — and why is there more than one thing to talk about?",
+          "problem_solved": "Closes the monism regress: without realizable difference, the domain guaranteed by A1.1 contains exactly one indistinguishable item and no predication can discriminate anything.",
+          "kill_condition": "If a coherent information-bearing system is exhibited in which nothing is ever distinguishable (no partitions, no decidable equality, zero channel capacity), A1.2 collapses.",
+          "downstream_license": "Licenses identity and difference throughout the atlas: taxonomy, classification, the 15 markers (each marker is a distinction), measurement (which requires discriminated outcomes), and all bridge directionality (source vs. target).",
+          "unresolved": "Distinction guarantees difference but not its kind, degree, or stability. Continua, vagueness boundaries, and the identity of composite objects over time are downstream burdens this axiom does not carry."
+        },
+        "why_it_matters": "Every classification act in the atlas — every grade, register, marker, and rail — is a distinction. A1.2 is the license for the entire taxonomy layer.",
+        "candidate_canon_boundary": "REVIEW_REQUIRED"
+      },
+      "nabla": {
+        "address": "AXIOMATIC_CORE/ROOT/A1.2",
+        "coordinate": "Periodic-15 · position 2 / 191",
+        "breadcrumb": "Global > Axiomatic Core > Root > A1.2 Distinction",
+        "vector": { "G": 2, "M": 2, "E": 1, "S": 3, "T": 0, "K": 3, "R": 2, "Q": 0, "F": 0, "C": 3 },
+        "hash": "[C·Q][G·S][K·E][M·F][T·R]"
+      },
+      "dependency_spine": {
+        "upstream": ["A1.0", "A1.1"],
+        "downstream": [],
+        "graph_degree": 2,
+        "blast_radius": "STRUCTURAL"
+      },
+      "claim": {
+        "statement": "Distinction is realizable in the domain: identity and difference are well-defined.",
+        "register": "FORMAL",
+        "scope": "Decidable identity over the non-empty domain licensed by A1.1."
+      },
+      "warrant": {
+        "claim": "∃x∃y : D(x, y) = 1 over the root domain.",
+        "evidence": [
+          { "id": "EVD-A1.2-001", "type": "STRUCTURAL", "summary": "Any statement — including this one — distinguishes itself from its negation; distinction is performed by every mark in every formal system.", "source": "internal-derivation" },
+          { "id": "EVD-A1.2-002", "type": "EMPIRICAL", "summary": "Measurement outcomes are discriminable; information channels have non-zero capacity; physical states are addressable (position, momentum, charge eigenbases).", "source": "reality-mirror" }
+        ],
+        "proof_test": "Channel-capacity test: attempt to transmit one bit through a system in which no distinction is realizable; show the capacity is identically zero and therefore no science (which transmits results) can run on it.",
+        "counterevidence": ["Quantum contexts where properties are not jointly decidable; vagueness at continuum boundaries; these bound the axiom's scope but do not eliminate decidable distinction — they presuppose it to state the problem."],
+        "kill_conditions": ["A working measurement-bearing science is exhibited with identically zero discriminable structure."],
+        "assumptions": ["A1.1 (non-empty domain) — you cannot distinguish within nothing."],
+        "evidence_strength": 0.85,
+        "evidence_coverage": 0.7
+      },
+      "dynamics": {
+        "coherence": "Coherent as long as every classification in the atlas applies decidable criteria.",
+        "degradation": "Degrades when classification boundaries become unprincipled (distinction without criterion).",
+        "measurement": "Audit marker definitions m01–m15 for decidable application rules.",
+        "threshold": "Any marker whose application requires an unstated judgment call triggers review.",
+        "asymmetry": "Symmetric in form (x≠y iff y≠x) but asymmetric in consequence at bridges: source and target domains lose/gain differently.",
+        "restoration": { "self": "Sharpen the criterion for the failing distinction.", "external": "If no criterion exists, collapse the distinction and merge the classes." },
+        "counterexample": "None admitted; quantum non-joint-decidability restricts simultaneous distinctions, not distinction itself."
+      },
+      "orientation": {
+        "ascent": ["How can there be information, language, or number unless things can be told apart?"],
+        "translation": {
+          "preserved": ["Decidable identity", "Realizable difference"],
+          "lost": ["Continuum texture at boundaries"],
+          "introduced": ["Taxonomy, classification, measurement outcomes"],
+          "forbidden": ["Equivocation (treating distincts as identical without a bridge)"]
+        },
+        "descent": ["15 markers decidable", "Grades A–F computable", "Bridge directionality"],
+        "meeting_state": "CANDIDATE"
+      },
+      "bridges": [
+        {
+          "id": "BR-A1.2-001",
+          "source_domain": "AXIOMATIC_CORE",
+          "target_domain": "INFORMATION_THEORY",
+          "direction": "AXIOM_TO_RAIL",
+          "state": "CANDIDATE",
+          "preserved": ["Decidability", "Non-zero channel capacity"],
+          "lost": ["Necessity (channels are contingent artifacts)"],
+          "introduced": ["Entropy as degree of distinction"],
+          "negative_controls": ["Perfectly symmetric states with zero accessible information — distinguished from 'no distinction' by the system's own addressability."],
+          "ablation": "Remove A1.2: channel capacity is identically zero; no measurement result can be communicated; the information rail is void."
+        }
+      ],
+      "reality_mirror": {
+        "class": "N",
+        "status": "Anchored",
+        "anchor_object": "Discriminable physical states (addressable degrees of freedom)",
+        "provenance": "Root layer of the 191-axiom production set; position 2/191.",
+        "closed_loop_warning": "No",
+        "identification_state": "IDENTIFIED_CANDIDATE"
+      },
+      "receipts": {
+        "human": { "lane": "H", "result": "Pending", "timestamp": "2026-09-05" },
+        "python": { "lane": "P", "result": "NotRun", "timestamp": "2026-09-05" },
+        "api": { "lane": "A", "result": "Seeded", "timestamp": "2026-09-05" },
+        "model_engine": "kimi-code",
+        "input_hash": "sha256:pending",
+        "output_hash": "sha256:pending",
+        "lean_convergence": "NOT_ATTEMPTED",
+        "review_state": "HUMAN_REVIEW_REQUIRED"
+      },
+      "crosswalk": {
+        "public_paper_link": "",
+        "generated_node_record": "",
+        "lean_derivation_record": "",
+        "related_upstream": ["A1.0", "A1.1"],
+        "related_downstream": []
+      },
+      "admission": {
+        "state": "candidate_draft",
+        "include": "PENDING",
+        "decision": "PENDING",
+        "import_status": "PENDING_REVIEW"
+      }
+    }
+  ]
+}

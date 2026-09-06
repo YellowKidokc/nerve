@@ -1,21 +1,21 @@
 ---
 fis_schema: "folder-index.v1"
-folder_id: "FLD-20260831-05f2090b"
+folder_id: "FLD-20260905-05f2090b"
 folder: "GitHub\nerve\integrations\obsidian\canonization-workbench\nerve"
 folder_class: "project"
 confidence: 0.6
 dependency_risk: 0.0
 dominant_family: "code"
-dominant_ratio: 0.5
-file_count: 2
-classified_at: "2026-08-31T00:20:37"
+dominant_ratio: 0.8
+file_count: 10
+classified_at: "2026-09-05T20:04:02"
 allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
 suggested_name: "nerve"
 ---
 
 # FIS Folder Index: nerve
 
-**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 2  ·  **Dominant**: code (50%)
+**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 10  ·  **Dominant**: code (80%)
 
 ## Allowed actions
 - index

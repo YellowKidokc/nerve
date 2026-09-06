@@ -1,21 +1,21 @@
 ---
 fis_schema: "folder-index.v1"
-folder_id: "FLD-20260905-2bdd3bb8"
-folder: "GitHub\nerve\source\html\atoms"
+folder_id: "FLD-20260905-24f113c2"
+folder: "GitHub\nerve\source\assets"
 folder_class: "project"
 confidence: 0.6
 dependency_risk: 0.0
-dominant_family: "code"
-dominant_ratio: 0.824
-file_count: 17
+dominant_family: "media"
+dominant_ratio: 0.5
+file_count: 2
 classified_at: "2026-09-05T20:04:02"
 allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
-suggested_name: "atoms"
+suggested_name: "assets"
 ---
 
-# FIS Folder Index: atoms
+# FIS Folder Index: assets
 
-**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 17  ·  **Dominant**: code (82%)
+**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 2  ·  **Dominant**: media (50%)
 
 ## Allowed actions
 - index
@@ -23,6 +23,6 @@ suggested_name: "atoms"
 - subfolder_sort
 - archive_exports
 
-**Suggested name**: `atoms`  (not applied — review before use)
+**Suggested name**: `assets`  (not applied — review before use)
 
 <!-- FIS folder-index.v1: parseable note; safe to regenerate. -->

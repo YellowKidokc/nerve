@@ -74,6 +74,46 @@ fn acquire_single_instance() -> Option<windows::Win32::Foundation::HANDLE> {
     }
 }
 
+/// Keep the local Mission Control surface behind its tray/hotkey entry alive.
+/// If another process already owns 7860, it is left untouched.
+fn ensure_mission_control_running() {
+    use std::net::{SocketAddr, TcpStream};
+    use std::process::Command;
+    use std::time::Duration;
+    use windows::Win32::System::Threading::CREATE_NO_WINDOW;
+    use std::os::windows::process::CommandExt;
+
+    let address: SocketAddr = "127.0.0.1:7860".parse().expect("static socket address");
+    if TcpStream::connect_timeout(&address, Duration::from_millis(200)).is_ok() {
+        info!("Mission Control already listening on 127.0.0.1:7860");
+        return;
+    }
+
+    let Some(script) = std::env::current_exe()
+        .ok()
+        .and_then(|exe| exe.parent().map(|dir| dir.join("mission-control").join("mission_control_gui.py")))
+        .filter(|path| path.exists())
+    else {
+        error!("Mission Control script is not installed; tray entry will remain available for an externally started service.");
+        return;
+    };
+
+    for interpreter in ["pythonw.exe", "python.exe"] {
+        match Command::new(interpreter)
+            .arg(&script)
+            .arg("--no-browser")
+            .creation_flags(CREATE_NO_WINDOW.0)
+            .spawn()
+        {
+            Ok(_) => {
+                info!("Mission Control started with {}", interpreter);
+                return;
+            }
+            Err(e) => error!("Could not start Mission Control with {}: {}", interpreter, e),
+        }
+    }
+}
+
 fn main() -> Result<()> {
     // Initialize logging
     tracing_subscriber::fmt()
@@ -97,6 +137,7 @@ fn main() -> Result<()> {
     // Load config
     let cfg = config::Config::load()?;
     let cfg = Arc::new(Mutex::new(cfg));
+    ensure_mission_control_running();
     {
         let cfg_lock = cfg.lock().unwrap();
         clipboard::refresh_slots_from_config(&cfg_lock);
@@ -193,8 +234,10 @@ fn main() -> Result<()> {
         }
     };
 
-    // Create system tray
-    let _tray = tray::create_tray(&proxy)?;
+    // tray-icon's tao integration requires creation after the event loop has
+    // actually started. Creating it before `run` can make Shell_NotifyIconW
+    // return E_FAIL on Windows.
+    let mut tray_icon: Option<tray_icon::TrayIcon> = None;
 
     // Forward global hotkey events into the tao event loop so shortcuts work
     // even when the app is otherwise idle.
@@ -217,6 +260,17 @@ fn main() -> Result<()> {
         match event {
             Event::NewEvents(StartCause::Init) => {
                 info!("Event loop initialized");
+                if tray_icon.is_none() {
+                    match tray::create_tray(&proxy) {
+                        Ok(icon) => {
+                            info!("System tray icon registered successfully.");
+                            tray_icon = Some(icon);
+                        }
+                        Err(e) => {
+                            error!("Failed to create system tray icon: {}. App will continue running without tray.", e);
+                        }
+                    }
+                }
             }
 
             Event::UserEvent(app_event) => match app_event {
@@ -277,11 +331,11 @@ fn main() -> Result<()> {
                             "toggle_research" => {
                                 let _ = proxy.send_event(AppEvent::TogglePanel("research".into()));
                             }
-                            "toggle_dashboard" => {
-                                let _ = proxy.send_event(AppEvent::TogglePanel("dashboard".into()));
+                            "toggle_shortcuts" => {
+                                let _ = proxy.send_event(AppEvent::TogglePanel("shortcuts".into()));
                             }
-                            "toggle_settings" => {
-                                let _ = proxy.send_event(AppEvent::TogglePanel("settings".into()));
+                            "toggle_mission-control" => {
+                                let _ = proxy.send_event(AppEvent::TogglePanel("mission-control".into()));
                             }
                             // Capture the selection, then raise the floating
                             // toolbar over it. Capture blocks on a clipboard
@@ -313,9 +367,20 @@ fn main() -> Result<()> {
                             "paste_slot_9" => clipboard::paste_slot(8),
                             "paste_slot_10" => clipboard::paste_slot(9),
                             other => {
-                                // selection_claim, selection_evidence, ... jump
-                                // straight to the capsule for one node type.
-                                if let Some(node) = other.strip_prefix("selection_") {
+                                if let Some(text) = other.strip_prefix("send_text:") {
+                                    clipboard::paste_text(text);
+                                } else if let Some(cmd) = other.strip_prefix("run_command:") {
+                                    let cmd_str = cmd.to_string();
+                                    std::thread::spawn(move || {
+                                        info!("Launching hotkey command: {}", cmd_str);
+                                        #[cfg(windows)]
+                                        {
+                                            let _ = std::process::Command::new("cmd")
+                                                .args(["/C", &cmd_str])
+                                                .spawn();
+                                        }
+                                    });
+                                } else if let Some(node) = other.strip_prefix("selection_") {
                                     spawn_capture(&proxy, &cfg, node, "capsule");
                                 } else if let Some(panel_name) = other.strip_prefix("toggle_") {
                                     let _ = proxy.send_event(AppEvent::TogglePanel(panel_name.into()));
@@ -358,6 +423,7 @@ fn main() -> Result<()> {
 
                 AppEvent::Quit => {
                     info!("Quit requested");
+                    tray_icon.take();
                     *control_flow = ControlFlow::Exit;
                 }
 
@@ -858,6 +924,93 @@ fn handle_ipc(
                 });
 
                 info!("Config saved via IPC");
+            }
+        }
+
+        "get_shortcuts" => {
+            let cfg_lock = cfg.lock().unwrap();
+            let mut items: Vec<serde_json::Value> = Vec::new();
+            for hk in &cfg_lock.hotkeys {
+                items.push(serde_json::json!({
+                    "type": "hotkey",
+                    "trigger": hk.keys,
+                    "action": hk.action,
+                    "output": hk.action,
+                    "description": ""
+                }));
+            }
+            for hs in &cfg_lock.hotstrings {
+                items.push(serde_json::json!({
+                    "type": "hotstring",
+                    "trigger": hs.trigger,
+                    "output": hs.expansion,
+                    "description": hs.description
+                }));
+            }
+            if let Ok(json) = serde_json::to_string(&items) {
+                let script = format!("items = {}; renderLibrary();", json);
+                panel_mgr.evaluate_script(panel, &script);
+            }
+        }
+
+        "save_shortcuts" => {
+            if let Some(items) = msg.get("items").and_then(|v| v.as_array()) {
+                let mut cfg_lock = cfg.lock().unwrap();
+                let mut new_hotkeys = Vec::new();
+                let mut new_hotstrings = Vec::new();
+
+                for it in items {
+                    let it_type = it.get("type").and_then(|v| v.as_str()).unwrap_or("");
+                    let desc = it.get("description").and_then(|v| v.as_str()).unwrap_or("").to_string();
+                    let output = it.get("output").and_then(|v| v.as_str()).unwrap_or("").to_string();
+
+                    if it_type == "hotkey" {
+                        let trigger = it.get("trigger").and_then(|v| v.as_str()).unwrap_or("");
+                        let action = it.get("action").and_then(|v| v.as_str()).unwrap_or("");
+                        let resolved_action = if action == "send_text" {
+                            format!("send_text:{}", output)
+                        } else if action == "run_command" {
+                            format!("run_command:{}", output)
+                        } else if !action.is_empty() {
+                            action.to_string()
+                        } else {
+                            output
+                        };
+
+                        if !trigger.is_empty() {
+                            new_hotkeys.push(config::HotkeyBinding {
+                                keys: trigger.to_string(),
+                                action: resolved_action,
+                                runtime_id: None,
+                            });
+                        }
+                    } else if it_type == "hotstring" {
+                        let trigger = it.get("trigger").and_then(|v| v.as_str()).unwrap_or("");
+                        if !trigger.is_empty() {
+                            new_hotstrings.push(config::Hotstring {
+                                trigger: trigger.to_string(),
+                                description: desc,
+                                expansion: output,
+                                replace_trigger: true,
+                            });
+                        }
+                    }
+                }
+
+                if !new_hotkeys.is_empty() {
+                    cfg_lock.hotkeys = new_hotkeys;
+                }
+                cfg_lock.hotstrings = new_hotstrings;
+
+                if let Err(e) = cfg_lock.save() {
+                    error!("Failed to save shortcuts: {}", e);
+                } else {
+                    info!("Shortcuts saved via IPC ({} hotkeys, {} hotstrings)", cfg_lock.hotkeys.len(), cfg_lock.hotstrings.len());
+                }
+                drop(cfg_lock);
+
+                // Notify event loop to rebuild hotkeys
+                let _ = panel_mgr.proxy().send_event(AppEvent::ConfigReloaded);
             }
         }
 

@@ -39,8 +39,14 @@ if ($running) {
 }
 
 New-Item -ItemType Directory -Force -Path "$installDir\html" | Out-Null
+New-Item -ItemType Directory -Force -Path "$installDir\mission-control" | Out-Null
 Copy-Item $source "$installDir\$exeName" -Force
 Copy-Item (Join-Path $PSScriptRoot "html\*") "$installDir\html\" -Force -Recurse
+Copy-Item (Join-Path $PSScriptRoot "mission-control\*") "$installDir\mission-control\" -Force -Recurse
+$iconSource = Join-Path $PSScriptRoot "assets\nerve.ico"
+if (Test-Path $iconSource) {
+    Copy-Item $iconSource "$installDir\nerve.ico" -Force
+}
 
 Write-Host "  Installed to: $installDir" -ForegroundColor Green
 
@@ -61,6 +67,8 @@ function New-NerveShortcut {
     $sc.TargetPath = "$installDir\$exeName"
     $sc.WorkingDirectory = $installDir
     $sc.Description = "Nerve - selection capture, clipboard, canon workbench"
+    $shortcutIcon = "$installDir\nerve.ico"
+    $sc.IconLocation = if (Test-Path $shortcutIcon) { "$shortcutIcon,0" } else { "$installDir\$exeName,0" }
     $sc.Save()
     Write-Host "  $Label" -ForegroundColor Green
 }
@@ -81,8 +89,9 @@ Write-Host "Config: $env:APPDATA\clipsync-agent\config.json" -ForegroundColor Gr
 Write-Host ""
 Write-Host "Hotkeys:" -ForegroundColor Gray
 Write-Host "  Ctrl+Alt+J  selection toolbar     Ctrl+Alt+Q  claim capsule" -ForegroundColor DarkGray
-Write-Host "  Ctrl+Alt+V  Stratum actions       Ctrl+Alt+U  canon workbench" -ForegroundColor DarkGray
+Write-Host "  Ctrl+Shift+V Stratum actions      Ctrl+Alt+U  canon workbench" -ForegroundColor DarkGray
 Write-Host "  Ctrl+Alt+B  atom builder          Ctrl+Alt+N  reconciliation" -ForegroundColor DarkGray
+Write-Host "  Ctrl+Alt+S  shortcuts studio      Ctrl+Alt+M  mission control" -ForegroundColor DarkGray
 
 if ($Launch) {
     Start-Process "$installDir\$exeName" -WorkingDirectory $installDir

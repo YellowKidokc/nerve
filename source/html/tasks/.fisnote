@@ -1,21 +1,21 @@
 ---
 fis_schema: "folder-index.v1"
-folder_id: "FLD-20260831-dda0d824"
+folder_id: "FLD-20260905-dda0d824"
 folder: "GitHub\nerve\source\html\tasks"
 folder_class: "project"
 confidence: 0.6
 dependency_risk: 0.0
 dominant_family: "code"
-dominant_ratio: 1.0
-file_count: 6
-classified_at: "2026-08-31T00:20:37"
+dominant_ratio: 0.857
+file_count: 7
+classified_at: "2026-09-05T20:04:02"
 allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
 suggested_name: "tasks"
 ---
 
 # FIS Folder Index: tasks
 
-**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 6  ·  **Dominant**: code (100%)
+**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 7  ·  **Dominant**: code (86%)
 
 ## Allowed actions
 - index

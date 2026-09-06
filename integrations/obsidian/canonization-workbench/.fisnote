@@ -1,21 +1,21 @@
 ---
 fis_schema: "folder-index.v1"
-folder_id: "FLD-20260831-f36126e5"
+folder_id: "FLD-20260905-f36126e5"
 folder: "GitHub\nerve\integrations\obsidian\canonization-workbench"
 folder_class: "project"
 confidence: 0.6
 dependency_risk: 0.0
 dominant_family: "code"
-dominant_ratio: 0.571
-file_count: 7
-classified_at: "2026-08-31T00:20:37"
+dominant_ratio: 0.5
+file_count: 8
+classified_at: "2026-09-05T20:04:02"
 allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
 suggested_name: "canonization-workbench"
 ---
 
 # FIS Folder Index: canonization-workbench
 
-**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 7  ·  **Dominant**: code (57%)
+**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 8  ·  **Dominant**: code (50%)
 
 ## Allowed actions
 - index

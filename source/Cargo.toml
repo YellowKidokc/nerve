@@ -51,6 +51,9 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 # Error handling
 anyhow = "1"
 
+# Decode the embedded ATOM artwork for its dedicated Windows taskbar icon.
+image = { version = "0.25", default-features = false, features = ["png"] }
+
 # For config file paths
 dirs = "6"
 

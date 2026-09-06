@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotkeys, Hotstrings & AI — ATOM Studio</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-base: #0c0c0c;
+    --bg-surface: #121212;
+    --bg-surface2: #181818;
+    --border: #242424;
+    --border-bright: #3a3a3a;
+    --text: #e6e6e6;
+    --text-dim: #888888;
+    --accent: #f5d070;
+    --accent-glow: rgba(245, 208, 112, 0.18);
+    --accent2: #4ade80;
+    --danger: #ef4444;
+    --row-hover: #1e1b12;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px; line-height: 1.4;
+    background: var(--bg-base); color: var(--text);
+    height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+  }
+
+  /* Tab Bar */
+  .tab-bar {
+    display: flex; background: var(--bg-surface);
+    border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto;
+    padding: 0 4px;
+  }
+  .tab-bar .tab {
+    padding: 9px 16px; font-size: 12px; font-weight: 600; cursor: pointer;
+    color: var(--text-dim); border: 1px solid transparent;
+    border-bottom: none; background: transparent; white-space: nowrap;
+    border-radius: 4px 4px 0 0; transition: all 0.15s ease;
+  }
+  .tab-bar .tab:hover { color: var(--text); background: var(--bg-surface2); }
+  .tab-bar .tab.active {
+    background: var(--bg-base); color: var(--accent);
+    border-color: var(--border); border-bottom: 1px solid var(--bg-base);
+    box-shadow: 0 -2px 8px rgba(245, 208, 112, 0.08);
+  }
+
+  /* Main layout */
+  .main { display: flex; flex: 1; overflow: hidden; }
+
+  /* Left Editor */
+  .editor {
+    width: 390px; min-width: 330px; padding: 18px;
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border); overflow-y: auto;
+    flex-shrink: 0; display: flex; flex-direction: column; gap: 14px;
+  }
+
+  .field label {
+    display: block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--accent); margin-bottom: 6px;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 8px 12px; background: var(--bg-base);
+    border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text); font-size: 13px; font-family: inherit; outline: none;
+    transition: all 0.15s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
+  .field textarea {
+    min-height: 95px; resize: vertical;
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    font-size: 12px;
+  }
+
+  .modifiers {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    background: var(--bg-base); padding: 8px 12px; border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .modifiers label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; cursor: pointer; color: var(--text);
+    margin: 0; text-transform: none; font-weight: 500;
+  }
+  .modifiers input[type="checkbox"] {
+    width: auto; accent-color: var(--accent); cursor: pointer;
+  }
+
+  .btn-row { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+  .btn {
+    padding: 8px 14px; border: 1px solid var(--border-bright); border-radius: 6px;
+    background: var(--bg-surface2); color: var(--text); font-size: 12px;
+    cursor: pointer; font-weight: 600; transition: all 0.15s ease;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .btn.primary {
+    background: var(--accent); color: #000; border-color: var(--accent);
+  }
+  .btn.primary:hover {
+    filter: brightness(1.1); box-shadow: 0 0 12px var(--accent-glow); color: #000;
+  }
+  .btn.danger { color: var(--danger); border-color: rgba(239, 68, 68, 0.4); }
+  .btn.danger:hover { background: rgba(239, 68, 68, 0.12); border-color: var(--danger); }
+
+  /* Toggles at bottom of editor */
+  .toggle-row {
+    display: flex; gap: 16px; margin-top: auto; padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .toggle-row label {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer;
+    color: var(--text-dim);
+  }
+  .toggle-row input[type="checkbox"] { accent-color: var(--accent); }
+
+  /* Right Library Table */
+  .library {
+    flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    background: var(--bg-base);
+  }
+  .library-header {
+    padding: 12px 18px; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent); background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .library-badge {
+    background: var(--bg-base); padding: 3px 8px; border-radius: 12px;
+    border: 1px solid var(--border); font-size: 10px; color: var(--text-dim);
+  }
+
+  .table-wrap { flex: 1; overflow-y: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    background: var(--bg-surface2); color: var(--text-dim);
+    padding: 10px 14px; text-align: left; font-weight: 700;
+    text-transform: uppercase; font-size: 10px; letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border); position: sticky; top: 0;
+  }
+  td {
+    padding: 9px 14px; border-bottom: 1px solid var(--border);
+    max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  tr { cursor: pointer; transition: background 0.1s ease; }
+  tr:hover { background: var(--row-hover); }
+  tr.selected {
+    background: var(--row-hover);
+    border-left: 3px solid var(--accent);
+  }
+  .badge-tag {
+    display: inline-block; padding: 2px 6px; border-radius: 4px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+  }
+  .badge-hotkey { background: rgba(96, 208, 255, 0.15); color: #60d0ff; border: 1px solid rgba(96, 208, 255, 0.3); }
+  .badge-hotstring { background: rgba(245, 208, 112, 0.15); color: #f5d070; border: 1px solid rgba(245, 208, 112, 0.3); }
+
+  /* Status bar */
+  .status-bar {
+    padding: 8px 18px; background: var(--bg-surface);
+    border-top: 1px solid var(--border); font-size: 11px;
+    color: var(--accent2); flex-shrink: 0; display: flex; justify-content: space-between;
+  }
+
+  .toast {
+    position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--accent); color: #000; font-weight: 700; padding: 7px 20px;
+    border-radius: 6px; font-size: 12px; opacity: 0; transition: all 0.2s;
+    pointer-events: none; z-index: 100; box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="tab-bar">
+  <div class="tab active" data-tab="shortcuts">Shortcuts & Hotstrings</div>
+  <div class="tab" data-tab="prompts">Prompts & Templates</div>
+  <div class="tab" data-tab="mission-control">Mission Control & Scheduler</div>
+  <div class="tab" data-tab="atom-builder">ATOM Builder</div>
+  <div class="tab" data-tab="clipboard">Clipboard History</div>
+  <div class="tab" data-tab="ai-chat">AI Chat</div>
+  <div class="tab" data-tab="settings">Settings</div>
+</div>
+
+<div class="main">
+  <!-- Left: Editor -->
+  <div class="editor">
+    <div class="field">
+      <label>Type</label>
+      <select id="itemType" onchange="onTypeChange()">
+        <option value="hotkey">Hotkey (OS-Wide Shortcut)</option>
+        <option value="hotstring">Hotstring (Text Expansion / Slash Command)</option>
+      </select>
+    </div>
+
+    <!-- Hotkey-specific fields -->
+    <div id="hotkeyFields">
+      <div class="field">
+        <label>Action Mode</label>
+        <select id="hotkeyAction">
+          <option value="send_text">Send / Paste Text (Email, Code, Token)</option>
+          <option value="run_command">Run Command / Batch Script / Program</option>
+          <option value="open_panel">Open Nerve Panel (Prompts, ATOM, etc.)</option>
+          <option value="tts_read_selection">TTS Read Selection</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Modifiers</label>
+        <div class="modifiers">
+          <label><input type="checkbox" id="modCtrl" checked> Ctrl</label>
+          <label><input type="checkbox" id="modAlt" checked> Alt</label>
+          <label><input type="checkbox" id="modShift"> Shift</label>
+          <label><input type="checkbox" id="modWin"> Win</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Key</label>
+        <input type="text" id="hotkeyKey" placeholder="e.g. Y, L, D, Space" maxlength="10" />
+      </div>
+    </div>
+
+    <!-- Hotstring-specific fields -->
+    <div id="hotstringFields" style="display:none">
+      <div class="field">
+        <label>Trigger Keyword (or /slash command)</label>
+        <input type="text" id="hsTrigger" placeholder="e.g. DEER, /deep, SHELL" style="font-family:monospace; font-weight:bold" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Description / Name</label>
+      <input type="text" id="itemDesc" placeholder="e.g. Launch YouTube Downloader or Email Signature" />
+    </div>
+
+    <div class="field">
+      <label>Output Text / Command Path</label>
+      <textarea id="itemOutput" placeholder="Enter text to send, or script path: D:\GitHub\AHK\YT-Transcript\START-YT-Transcript-GUI.bat"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="addOrSave()">Add / Save</button>
+      <button class="btn" onclick="testItem()">Test Output</button>
+      <button class="btn danger" onclick="deleteItem()">Delete</button>
+      <button class="btn" onclick="exportConfig()">Export .json</button>
+    </div>
+
+    <div class="toggle-row">
+      <label><input type="checkbox" id="enableHotkeys" checked> Hotkeys Active</label>
+      <label><input type="checkbox" id="enableHotstrings" checked> Hotstrings Active</label>
+    </div>
+  </div>
+
+  <!-- Right: Library -->
+  <div class="library">
+    <div class="library-header">
+      <span>Active Shortcuts & Hotstrings</span>
+      <span class="library-badge" id="libraryCount">0 Loaded</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Trigger</th>
+            <th>Description</th>
+            <th>Action / Output Preview</th>
+          </tr>
+        </thead>
+        <tbody id="libraryBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="status-bar">
+  <span id="statusBar">Ready — Nerve Rust Engine Active</span>
+  <span>Endpoints: Desktop :11434 | NAS :11434 | CF Tunnel</span>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  // The installed config is authoritative. Personal values and secrets must
+  // never be embedded in a distributable HTML asset.
+  let items = [];
+  let selectedIndex = -1;
+
+  function onTypeChange() {
+    const type = document.getElementById('itemType').value;
+    document.getElementById('hotkeyFields').style.display = type === 'hotkey' ? 'block' : 'none';
+    document.getElementById('hotstringFields').style.display = type === 'hotstring' ? 'block' : 'none';
+  }
+
+  function renderLibrary() {
+    const tbody = document.getElementById('libraryBody');
+    tbody.innerHTML = items.map((item, i) => {
+      const isHk = item.type === 'hotkey';
+      const trigger = isHk ? (item.trigger || formatHotkeyTrigger(item)) : item.trigger;
+      const badge = isHk 
+        ? '<span class="badge-tag badge-hotkey">Hotkey</span>' 
+        : '<span class="badge-tag badge-hotstring">Hotstring</span>';
+      const preview = (item.output || '').substring(0, 50);
+
+      return `<tr class="${i === selectedIndex ? 'selected' : ''}" onclick="selectItem(${i})">
+        <td>${badge}</td>
+        <td style="font-family:monospace; font-weight:600; color:var(--accent);">${escHtml(trigger)}</td>
+        <td>${escHtml(item.description || '')}</td>
+        <td style="font-family:monospace; color:var(--text-dim);">${escHtml(preview)}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('libraryCount').textContent = `${items.length} Loaded`;
+    document.getElementById('statusBar').textContent = `Ready — ${items.length} Active Shortcuts Registered`;
+  }
+
+  function formatHotkeyTrigger(item) {
+    let parts = [];
+    if (item.mods?.ctrl) parts.push('Ctrl');
+    if (item.mods?.alt) parts.push('Alt');
+    if (item.mods?.shift) parts.push('Shift');
+    if (item.mods?.win) parts.push('Win');
+    parts.push((item.key || '').toUpperCase());
+    return parts.join('+');
+  }
+
+  function selectItem(index) {
+    selectedIndex = index;
+    const item = items[index];
+
+    document.getElementById('itemType').value = item.type;
+    onTypeChange();
+
+    if (item.type === 'hotkey') {
+      document.getElementById('modCtrl').checked = item.mods ? !!item.mods.ctrl : item.trigger.includes('Ctrl');
+      document.getElementById('modAlt').checked = item.mods ? !!item.mods.alt : item.trigger.includes('Alt');
+      document.getElementById('modShift').checked = item.mods ? !!item.mods.shift : item.trigger.includes('Shift');
+      document.getElementById('modWin').checked = item.mods ? !!item.mods.win : item.trigger.includes('Win');
+      document.getElementById('hotkeyKey').value = item.key || item.trigger.split('+').pop() || '';
+      document.getElementById('hotkeyAction').value = item.action || 'send_text';
+    } else {
+      document.getElementById('hsTrigger').value = item.trigger || '';
+    }
+
+    document.getElementById('itemDesc').value = item.description || '';
+    document.getElementById('itemOutput').value = item.output || '';
+    renderLibrary();
+  }
+
+  function addOrSave() {
+    const type = document.getElementById('itemType').value;
+    const desc = document.getElementById('itemDesc').value;
+    const output = document.getElementById('itemOutput').value;
+
+    let newItem = { type, description: desc, output };
+
+    if (type === 'hotkey') {
+      const mods = {
+        ctrl: document.getElementById('modCtrl').checked,
+        alt: document.getElementById('modAlt').checked,
+        shift: document.getElementById('modShift').checked,
+        win: document.getElementById('modWin').checked,
+      };
+      const key = document.getElementById('hotkeyKey').value.trim();
+      if (!key) {
+        showToast('Please enter a key!');
+        return;
+      }
+      newItem.mods = mods;
+      newItem.key = key;
+      newItem.action = document.getElementById('hotkeyAction').value;
+      newItem.trigger = formatHotkeyTrigger(newItem);
+    } else {
+      const trigger = document.getElementById('hsTrigger').value.trim();
+      if (!trigger) {
+        showToast('Please enter a trigger word!');
+        return;
+      }
+      newItem.trigger = trigger;
+    }
+
+    if (selectedIndex >= 0) {
+      items[selectedIndex] = newItem;
+      showToast('Shortcut Updated & Live!');
+    } else {
+      items.push(newItem);
+      showToast('Shortcut Added & Registered!');
+    }
+
+    renderLibrary();
+    saveToAgent();
+  }
+
+  function deleteItem() {
+    if (selectedIndex >= 0) {
+      items.splice(selectedIndex, 1);
+      selectedIndex = -1;
+      clearEditor();
+      renderLibrary();
+      showToast('Deleted');
+      saveToAgent();
+    }
+  }
+
+  function testItem() {
+    const output = document.getElementById('itemOutput').value;
+    if (output) {
+      navigator.clipboard.writeText(output);
+      showToast('Copied output to clipboard!');
+    }
+  }
+
+  function clearEditor() {
+    document.getElementById('itemDesc').value = '';
+    document.getElementById('itemOutput').value = '';
+    document.getElementById('hsTrigger').value = '';
+    document.getElementById('hotkeyKey').value = '';
+  }
+
+  function exportConfig() {
+    const blob = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nerve_shortcuts.json';
+    a.click();
+    showToast('Exported to JSON!');
+  }
+
+  function saveToAgent() {
+    try {
+      window.chrome.webview.postMessage(JSON.stringify({
+        type: 'save_shortcuts',
+        items: items
+      }));
+    } catch(e) {
+      localStorage.setItem('clipsync-shortcuts', JSON.stringify(items));
+    }
+  }
+
+  function requestShortcutsFromAgent() {
+    try {
+      window.chrome.webview.postMessage(JSON.stringify({ type: 'get_shortcuts' }));
+    } catch(e) {}
+  }
+
+  function escHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1400);
+  }
+
+  document.querySelectorAll('.tab-bar .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const name = tab.dataset.tab;
+      if (name === 'shortcuts') return;
+      try {
+        window.chrome.webview.postMessage(JSON.stringify({ type: 'open_panel', name }));
+      } catch(e) {}
+    });
+  });
+
+  // Load from agent on startup
+  requestShortcutsFromAgent();
+  renderLibrary();
+</script>
+</body>
+</html>

@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use tao::dpi::{LogicalPosition, LogicalSize};
 use tao::event_loop::{EventLoopProxy, EventLoopWindowTarget};
-use tao::window::WindowBuilder;
+use tao::window::{Icon, WindowBuilder};
 use tracing::{error, info};
 use wry::WebViewBuilder;
 
@@ -133,6 +133,13 @@ impl PanelManager {
             .with_decorations(panel_def.decorations)
             .with_always_on_top(panel_def.always_on_top);
 
+        // Give ATOM, Shortcuts, and Mission Control their dedicated gold identity in Alt+Tab and taskbar.
+        if name == "atom-builder" || name == "shortcuts" || name == "mission-control" {
+            if let Some(icon) = atom_builder_window_icon() {
+                builder = builder.with_window_icon(Some(icon));
+            }
+        }
+
         if panel_def.follow_cursor {
             // Floating capture surfaces appear where the user is looking.
             let (x, y) = cursor_anchor(panel_def.width, panel_def.height);
@@ -219,6 +226,15 @@ impl PanelManager {
             },
         );
     }
+}
+
+fn atom_builder_window_icon() -> Option<Icon> {
+    let source = include_bytes!("../assets/atom-builder-icon.png");
+    let decoded = image::load_from_memory_with_format(source, image::ImageFormat::Png).ok()?;
+    let rgba = decoded
+        .resize_exact(64, 64, image::imageops::FilterType::Lanczos3)
+        .into_rgba8();
+    Icon::from_rgba(rgba.into_raw(), 64, 64).ok()
 }
 
 /// Position a floating surface near the mouse without letting it fall off
