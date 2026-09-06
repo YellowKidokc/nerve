@@ -20,7 +20,8 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let item_shortcuts = MenuItem::new("Shortcuts & Hotstrings (Ctrl+Alt+S)", true, None);
     let item_mission_control = MenuItem::new("Mission Control   (Ctrl+Alt+M)", true, None);
     let item_workbench = MenuItem::new("Canon Workbench   (Ctrl+Alt+U)", true, None);
-    let item_atom_builder = MenuItem::new("Atom Builder      (Ctrl+Alt+B)", true, None);
+    let item_atom_builder = MenuItem::new("Axiom Builder     (Ctrl+Alt+B)", true, None);
+    let item_lean_registry = MenuItem::new("Lean 4 Registry   (Port 8989)", true, None);
     let item_reconciliation = MenuItem::new("Reconciliation    (Ctrl+Alt+N)", true, None);
     let item_stratum = MenuItem::new("Stratum Actions   (Ctrl+Shift+V)", true, None);
     let item_quit = MenuItem::new("Quit", true, None);
@@ -39,6 +40,7 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     menu.append(&tray_icon::menu::PredefinedMenuItem::separator())?;
     menu.append(&item_workbench)?;
     menu.append(&item_atom_builder)?;
+    menu.append(&item_lean_registry)?;
     menu.append(&item_reconciliation)?;
     menu.append(&item_stratum)?;
     menu.append(&tray_icon::menu::PredefinedMenuItem::separator())?;
@@ -56,6 +58,7 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let tts_panel_id = item_tts_panel.id().clone();
     let workbench_id = item_workbench.id().clone();
     let atom_builder_id = item_atom_builder.id().clone();
+    let lean_registry_id = item_lean_registry.id().clone();
     let reconciliation_id = item_reconciliation.id().clone();
     let stratum_id = item_stratum.id().clone();
     let quit_id = item_quit.id().clone();
@@ -87,6 +90,8 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("workbench".into()));
             } else if event.id == atom_builder_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("atom-builder".into()));
+            } else if event.id == lean_registry_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("lean-registry".into()));
             } else if event.id == reconciliation_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("reconciliation".into()));
             } else if event.id == stratum_id {
