@@ -169,7 +169,7 @@ forwards the CapsLock chords to ordinary nerve hotkeys:
 | Chord | Forwards to | Action |
 |---|---|---|
 | CapsLock+C | Ctrl+Alt+T | read selection |
-| CapsLock+S | Ctrl+Alt+F8 | stop |
+| CapsLock+S | Ctrl+Alt+F9 | stop |
 | CapsLock+P | Ctrl+Alt+F7 | pause / resume |
 
 AutoHotkey already runs a hook for the rest of this setup, so this costs nothing

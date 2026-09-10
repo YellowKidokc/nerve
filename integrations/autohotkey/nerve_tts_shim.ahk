@@ -21,7 +21,7 @@
 ; nerve's corresponding bindings, from its config.json "hotkeys" list.
 ; Change these here if you rebind them in nerve.
 NERVE_READ  := "^!t"    ; Ctrl+Alt+T  → tts_read_selection
-NERVE_STOP  := "^!{F8}" ; Ctrl+Alt+F8 → tts_stop
+NERVE_STOP  := "^!{F9}" ; Ctrl+Alt+F9 → tts_stop
 NERVE_PAUSE := "^!{F7}" ; Ctrl+Alt+F7 → tts_pause
 
 ; CapsLock alone stays neutral: without this, every chord below would also

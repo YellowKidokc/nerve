@@ -799,7 +799,8 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
             runtime_id: None,
         },
         HotkeyBinding {
-            keys: "Ctrl+Alt+F8".into(),
+            // F8 is taken by something else on this machine; F9 was free.
+            keys: "Ctrl+Alt+F9".into(),
             action: "tts_stop".into(),
             runtime_id: None,
         },
