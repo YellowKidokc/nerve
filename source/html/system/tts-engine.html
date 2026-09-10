@@ -28,16 +28,30 @@
   .tab.active{color:#f59e0b;border-bottom-color:#f59e0b}
 
   /* MAIN SCROLL */
-  .main{flex:1;overflow-y:auto;padding:10px 14px}
+  .main{flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;min-height:0}
 
   /* SECTIONS */
   .section{display:none}
   .section.active{display:block}
+  /* The speak tab is a column so the reading area can absorb the spare
+     height — including whatever the collapsed cleaned output gives back. */
+  #sec-speak.active{display:flex;flex-direction:column;flex:1;min-height:0}
   .section-label{font-size:9px;font-weight:700;letter-spacing:2px;color:#f59e0b;margin:12px 0 8px;padding-bottom:4px;border-bottom:1px solid #1e1e2e}
   .section-label:first-child{margin-top:0}
 
   /* TEXT AREA */
   .text-area{width:100%;min-height:120px;background:#0a0a0f;border:1px solid #1e1e2e;border-radius:4px;color:#c8ccd4;font-size:11px;font-family:inherit;padding:8px;resize:vertical;outline:none;line-height:1.6}
+  /* The reading area is the one that matters: give it every spare pixel. */
+  #inputText{flex:1;min-height:160px}
+  #outputText{min-height:90px;max-height:30vh}
+
+  /* COLLAPSIBLE SECTION */
+  .section-label.collapsible{cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none;flex-shrink:0}
+  .section-label.collapsible:hover{color:#fbbf24}
+  .section-label.collapsible .caret{display:inline-block;transition:transform .12s;font-size:8px}
+  .section-label.collapsible.open .caret{transform:rotate(90deg)}
+  .collapse-body{display:none;flex-shrink:0}
+  .collapse-body.open{display:block}
   .text-area:focus{border-color:rgba(245,158,11,.25)}
   .text-area::placeholder{color:#2a2a3a}
 
@@ -115,10 +129,10 @@
 
   <!-- ═══ SPEAK TAB ═══ -->
   <div class="section active" id="sec-speak">
-    <div class="section-label">INPUT TEXT</div>
+    <div class="section-label" style="flex-shrink:0">INPUT TEXT</div>
     <textarea class="text-area" id="inputText" aria-label="Input text" placeholder="Paste or type text here... Markdown, LaTeX, equations all welcome." rows="6"></textarea>
 
-    <div class="controls">
+    <div class="controls" style="flex-shrink:0">
       <button class="btn btn-primary" onclick="doSpeak()">▶ SPEAK</button>
       <button class="btn btn-ghost" onclick="doPause()">⏸ PAUSE</button>
       <button class="btn btn-danger" onclick="doStop()">⏹ STOP</button>
@@ -126,12 +140,18 @@
       <button class="btn btn-ghost" onclick="doDownload()">⬇ DOWNLOAD</button>
     </div>
 
-    <div class="section-label">CLEANED OUTPUT</div>
-    <textarea class="text-area" id="outputText" aria-label="Cleaned output" placeholder="Cleaned text appears here after processing..." rows="6" readonly style="color:#10b981;background:#0c0c14"></textarea>
+    <div class="section-label collapsible" id="cleanedToggle" role="button" tabindex="0"
+         aria-expanded="false" aria-controls="cleanedBody"
+         onclick="toggleCleaned()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCleaned()}">
+      <span class="caret">▶</span><span>CLEANED OUTPUT</span>
+    </div>
+    <div class="collapse-body" id="cleanedBody">
+      <textarea class="text-area" id="outputText" aria-label="Cleaned output" placeholder="Cleaned text appears here after processing..." rows="4" readonly style="color:#10b981;background:#0c0c14"></textarea>
 
-    <div class="controls">
-      <button class="btn btn-ghost" onclick="copyOutput()">📋 COPY CLEANED</button>
-      <button class="btn btn-ghost" onclick="pasteFromClipboard()">📥 PASTE FROM CLIPBOARD</button>
+      <div class="controls">
+        <button class="btn btn-ghost" onclick="copyOutput()">📋 COPY CLEANED</button>
+        <button class="btn btn-ghost" onclick="pasteFromClipboard()">📥 PASTE FROM CLIPBOARD</button>
+      </div>
     </div>
   </div>
 
@@ -260,6 +280,43 @@
   }
 
   // ── Toast ───────────────────────────────────────────────────────
+  // ── Cleaned output disclosure ───────────────────────────────────────────
+  //
+  // Collapsed by default: cleaning is occasional, while the reading area is
+  // used on every read, so the space belongs to the reading area unless asked
+  // for. The choice is remembered per viewer.
+  function setCleanedOpen(open) {
+    const head = document.getElementById('cleanedToggle');
+    const body = document.getElementById('cleanedBody');
+    if (!head || !body) return;
+    head.classList.toggle('open', open);
+    body.classList.toggle('open', open);
+    head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    try { localStorage.setItem('tts.cleanedOpen', open ? '1' : '0'); } catch (e) {}
+  }
+
+  function toggleCleaned() {
+    const body = document.getElementById('cleanedBody');
+    setCleanedOpen(body ? !body.classList.contains('open') : true);
+  }
+
+  // Restore the remembered state; default closed when storage is unavailable.
+  (function initCleaned() {
+    let open = false;
+    try { open = localStorage.getItem('tts.cleanedOpen') === '1'; } catch (e) {}
+    setCleanedOpen(open);
+  })();
+
+  // Called from Rust when a selection is read via the hotkey, so the panel
+  // shows what is being spoken and the text can be edited and re-spoken.
+  window.setReadText = function (text) {
+    const box = document.getElementById('inputText');
+    if (!box) return;
+    box.value = text || '';
+    box.scrollTop = 0;
+    setStatus('READ SELECTION', true);
+  };
+
   function showToast(text) {
     const t = document.createElement('div');
     t.className = 'toast';

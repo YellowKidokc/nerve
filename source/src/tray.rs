@@ -81,7 +81,12 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
             } else if event.id == chat_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("chat".into()));
             } else if event.id == tts_read_id {
-                std::thread::spawn(|| { crate::tts::read_selection(); });
+                let read_proxy = proxy_clone.clone();
+                std::thread::spawn(move || {
+                    if let Some(text) = crate::tts::read_selection() {
+                        let _ = read_proxy.send_event(crate::AppEvent::TtsTextRead(text));
+                    }
+                });
             } else if event.id == tts_stop_id {
                 std::thread::spawn(|| { crate::tts::stop(); });
             } else if event.id == tts_panel_id {

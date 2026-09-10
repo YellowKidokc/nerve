@@ -49,6 +49,8 @@ pub enum AppEvent {
     ConfigReloaded,
     /// IPC message from a webview panel
     IpcMessage { panel: String, body: String },
+    /// A selection was read aloud — mirror the text into the TTS panel.
+    TtsTextRead(String),
 }
 
 /// Claim the single-instance lock, or return `None` if another copy holds it.
@@ -343,6 +345,12 @@ fn main() -> Result<()> {
                     panel_mgr.toggle(&name, event_loop, &cfg);
                 }
 
+                AppEvent::TtsTextRead(text) => {
+                    // No-op when the panel is closed; evaluate_script simply
+                    // finds no window to run against.
+                    let json = serde_json::to_string(&text).unwrap_or_else(|_| "\"\"".into());
+                    panel_mgr.evaluate_script("tts", &format!("window.setReadText({})", json));
+                }
                 AppEvent::HidePanel(name) => {
                     panel_mgr.hide(&name);
                 }
@@ -398,8 +406,13 @@ fn main() -> Result<()> {
                             }
                             "tts_read_selection" => {
                                 info!("TTS: reading selection");
-                                std::thread::spawn(|| {
-                                    tts::read_selection();
+                                // Capturing the selection blocks on a clipboard
+                                // round trip, so it stays off the event loop.
+                                let read_proxy = proxy.clone();
+                                std::thread::spawn(move || {
+                                    if let Some(text) = tts::read_selection() {
+                                        let _ = read_proxy.send_event(AppEvent::TtsTextRead(text));
+                                    }
                                 });
                             }
                             "tts_stop" => tts::stop(),

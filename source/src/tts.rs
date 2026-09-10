@@ -551,15 +551,22 @@ fn capture_selection() -> Option<String> {
 }
 
 /// Read the currently selected text aloud, interrupting any current speech.
-pub fn read_selection() {
+///
+/// Returns the text that was spoken, so callers can mirror it into the TTS
+/// panel; `None` when nothing was selected.
+pub fn read_selection() -> Option<String> {
     match capture_selection() {
         Some(text) => {
             info!("TTS: reading {} chars", text.chars().count());
             if let Err(e) = speak(&text) {
                 error!("TTS speak failed: {}", e);
             }
+            Some(text)
         }
-        None => info!("TTS: no text selected"),
+        None => {
+            info!("TTS: no text selected");
+            None
+        }
     }
 }
 
