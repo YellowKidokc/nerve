@@ -6,6 +6,8 @@ use std::sync::OnceLock;
 use std::time::{Duration, Instant};
 use std::path::PathBuf;
 
+use crate::tts_engine;
+
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
 
@@ -23,6 +25,10 @@ const ONECORE_VOICES_PATH: &str =
 
 /// Subprocess timeout for edge_tts --list-voices (Change 5)
 const EDGE_TTS_TIMEOUT_SECS: u64 = 8;
+
+/// How long `save_audio` waits for the engine to finish writing a file.
+/// Online (Natural) voices render over the network, so this is generous.
+const SAVE_TIMEOUT_SECS: u64 = 120;
 
 /// Volume scale factor for OneCore voices (Change 6).
 /// OneCore voices render ~10-15% louder than SAPI Desktop voices at the same
@@ -59,7 +65,9 @@ static TTS_SETTINGS: OnceLock<Mutex<TtsSettings>> = OnceLock::new();
 fn settings() -> &'static Mutex<TtsSettings> {
     TTS_SETTINGS.get_or_init(|| {
         Mutex::new(TtsSettings {
-            voice: "Brian".into(),  // Microsoft Brian Online — natural male
+            // Full name, not "Brian": a bare "Brian" also matches the
+            // different voice "Brian Online (Natural)".
+            voice: "BrianMultilingual".into(),
             speed: 2,              // slightly fast
             engine: "sapi".into(), // works out of the box
             volume: 100,
@@ -89,6 +97,14 @@ pub fn configure(voice: &str, speed: i32, engine: &str, volume: u32) {
     s.speed = speed;
     s.engine = engine.into();
     s.volume = volume;
+    drop(s);
+
+    // Push settings onto the live voice object so they apply to the next
+    // utterance without rebuilding anything.
+    tts_engine::send(tts_engine::Cmd::SetVoice(voice.to_string()));
+    tts_engine::send(tts_engine::Cmd::SetRate(speed));
+    tts_engine::send(tts_engine::Cmd::SetVolume(volume as i32));
+
     info!("TTS configured: voice={}, speed={}, engine={}, vol={}", voice, speed, engine, volume);
 }
 
@@ -504,222 +520,94 @@ pub fn get_voices() -> VoiceListResult {
     }
 }
 
-/// Find a voice by name (case-insensitive partial match, matching the existing
-/// PowerShell -match behavior) in a voice list.
-fn find_voice(voices: &[VoiceInfo], name: &str) -> Option<VoiceInfo> {
-    let lower = name.to_lowercase();
-    voices
-        .iter()
-        .find(|v| {
-            v.name.to_lowercase().contains(&lower)
-                || v.id.to_lowercase().contains(&lower)
-        })
-        .cloned()
-}
-
 // ── Speech functions ────────────────────────────────────────────────────────
 
-/// Read the currently selected text aloud.
-pub fn read_selection() {
+/// Copy the current selection without destroying what the user had on the
+/// clipboard.
+///
+/// A sentinel distinguishes "nothing was selected" from "the selection happens
+/// to equal the previous clipboard"; without it, pressing the read hotkey with
+/// no selection would re-read whatever was copied earlier.
+fn capture_selection() -> Option<String> {
+    const SENTINEL: &str = "\u{0}nerve-tts-probe\u{0}";
+
+    let previous = get_clipboard_text().unwrap_or_default();
+    let _ = set_clipboard_text(SENTINEL);
+
     send_ctrl_c();
-    std::thread::sleep(Duration::from_millis(150));
+    std::thread::sleep(Duration::from_millis(90));
 
-    let text = match get_clipboard_text() {
-        Ok(t) if !t.is_empty() => t,
-        _ => {
-            info!("TTS: no text selected");
-            return;
-        }
-    };
+    let copied = get_clipboard_text().unwrap_or_default();
 
-    info!("TTS: reading {} chars", text.len());
-    if let Err(e) = speak(&text) {
-        error!("TTS speak failed: {}", e);
+    // Let the source app finish its copy before we put the old value back.
+    std::thread::sleep(Duration::from_millis(20));
+    let _ = set_clipboard_text(&previous);
+
+    if copied == SENTINEL || copied.trim().is_empty() {
+        None
+    } else {
+        Some(copied.trim().to_string())
     }
 }
 
-/// Speak text with configured voice/speed.
+/// Read the currently selected text aloud, interrupting any current speech.
+pub fn read_selection() {
+    match capture_selection() {
+        Some(text) => {
+            info!("TTS: reading {} chars", text.chars().count());
+            if let Err(e) = speak(&text) {
+                error!("TTS speak failed: {}", e);
+            }
+        }
+        None => info!("TTS: no text selected"),
+    }
+}
+
+/// Speak text with the configured voice, cancelling anything already playing.
 ///
-/// Validates the configured voice against the known voice list (Change 4)
-/// and applies volume normalization for OneCore voices (Change 6).
-/// Returns an error if the configured voice is not available.
+/// Returns immediately: the work happens on the engine thread, so the hotkey
+/// that triggered this is never held up by audio.
 pub fn speak(text: &str) -> Result<(), String> {
     let s = settings().lock().unwrap();
+    let engine = s.engine.clone();
     let voice_name = s.voice.clone();
     let speed = s.speed;
-    let volume = s.volume;
-    let engine = s.engine.clone();
-    drop(s); // Release lock before spawning
+    drop(s);
 
-    match engine.as_str() {
-        "edge" => {
-            speak_edge_tts(text, &voice_name, speed);
-            Ok(())
-        }
-        _ => {
-            // For "default" or empty voice, skip validation — use SAPI default
-            if voice_name.is_empty() || voice_name == "default" {
-                let default_vi = VoiceInfo {
-                    id: String::new(),
-                    name: "default".into(),
-                    lang: String::new(),
-                    hive: "sapi".into(),
-                };
-                speak_sapi(text, &default_vi, speed, volume);
-                return Ok(());
-            }
-
-            // Look up voice in the in-memory cache first, then file cache
-            let voices = voice_list_store().lock().unwrap().clone();
-            let voices = if voices.is_empty() {
-                load_voice_cache().unwrap_or_default()
-            } else {
-                voices
-            };
-
-            // If no voice list available yet, skip validation to avoid blocking
-            if voices.is_empty() {
-                warn!("Voice list not populated yet, skipping validation for '{}'", voice_name);
-                let vi = VoiceInfo {
-                    id: String::new(),
-                    name: voice_name.clone(),
-                    lang: String::new(),
-                    hive: "sapi".into(),
-                };
-                speak_sapi(text, &vi, speed, volume);
-                return Ok(());
-            }
-
-            // Token ID validation (Change 4)
-            match find_voice(&voices, &voice_name) {
-                Some(vi) => {
-                    // Volume normalization for OneCore voices (Change 6)
-                    let effective_volume = if vi.hive == "onecore" {
-                        ((volume as f32) * ONECORE_VOLUME_FACTOR) as u32
-                    } else {
-                        volume
-                    };
-                    speak_sapi(text, &vi, speed, effective_volume);
-                    Ok(())
-                }
-                None => Err(format!(
-                    "Voice '{}' is no longer available. \
-                     Please select a different voice from the dropdown.",
-                    voice_name
-                )),
-            }
-        }
+    // Edge TTS stays a subprocess: it is a separate synthesizer with its own
+    // player, not something SAPI can drive.
+    if engine == "edge" {
+        speak_edge_tts(text, &voice_name, speed);
+        return Ok(());
     }
+
+    tts_engine::send(tts_engine::Cmd::Speak(text.to_string()));
+    Ok(())
 }
 
 /// Stop any currently playing speech.
-///
-/// Kills the tracked speaking subprocess (PowerShell or edge-playback) by PID.
 pub fn stop() {
-    // Kill the tracked speaking subprocess, if any
-    if let Some(pid) = speaking_pid().lock().unwrap().take() {
-        let _ = new_hidden_command("taskkill")
-            .args(["/PID", &pid.to_string(), "/F", "/T"])
-            .output();
-    }
-    // Also kill edge-playback processes (spawned by speak_edge_tts)
+    tts_engine::send(tts_engine::Cmd::Stop);
+
+    // Edge playback is a separate process, so it still needs killing.
     let _ = new_hidden_command("taskkill")
         .args(["/IM", "edge-playback.exe", "/F"])
         .output();
     info!("TTS: stopped");
 }
 
-/// Speak using Windows SAPI via the SAPI.SpVoice COM object in PowerShell.
+/// Start the speech engine ahead of first use.
 ///
-/// Uses `SAPI.SpVoice` (not `System.Speech.SpeechSynthesizer`) so that voice
-/// tokens from BOTH the legacy SAPI hive and the OneCore hive can be used.
-/// `System.Speech` only reads the legacy hive and cannot speak OneCore voices.
-fn speak_sapi(text: &str, voice: &VoiceInfo, speed: i32, volume: u32) {
-    let escaped = text
-        .replace('\'', "''")
-        .replace('\n', " ")
-        .replace('\r', "")
-        .replace('`', "'");
+/// The engine thread initializes COM and enumerates voice tokens on creation.
+/// Doing that lazily makes the first spoken request noticeably slower than the
+/// rest, which reads as a hang on the hotkey. Called once at startup.
+pub fn warm_up() {
+    tts_engine::send(tts_engine::Cmd::Warm);
+}
 
-    let rate = speed.clamp(-10, 10);
-    let voice_name_escaped = voice.name.replace('\'', "''");
-
-    // Use System.Speech.SpeechSynthesizer — more reliable than SAPI.SpVoice COM
-    // which can fail with 0x80045006 (SPERR_NOT_FOUND) in subprocess contexts.
-    let voice_setup = if voice.name.is_empty() || voice.name == "default" {
-        String::new()
-    } else {
-        format!(
-            "try {{ $synth.SelectVoice((($synth.GetInstalledVoices() | Where-Object {{ $_.VoiceInfo.Name -like '*{name}*' }}).VoiceInfo.Name | Select-Object -First 1)) }} catch {{}}",
-            name = voice_name_escaped
-        )
-    };
-
-    let script = format!(
-        "Add-Type -AssemblyName System.Speech; \
-         $synth = New-Object System.Speech.Synthesis.SpeechSynthesizer; \
-         {voice_setup}; \
-         $synth.Rate = {rate}; \
-         $synth.Volume = {volume}; \
-         $synth.Speak('{text}')",
-        voice_setup = voice_setup,
-        rate = rate,
-        volume = volume,
-        text = escaped
-    );
-
-    // Try System.Speech first
-    match new_hidden_command("powershell")
-        .args(["-NoProfile", "-NonInteractive", "-Command", &script])
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .stdin(Stdio::null())
-        .spawn()
-    {
-        Ok(child) => {
-            *speaking_pid().lock().unwrap() = Some(child.id());
-            info!("TTS System.Speech: voice={}, rate={}, vol={}", voice.name, rate, volume);
-        }
-        Err(e) => {
-            // Fallback: try SAPI.SpVoice COM directly
-            warn!("System.Speech failed ({}), trying SAPI.SpVoice", e);
-            let sapi_voice_setup = if voice.name.is_empty() || voice.name == "default" {
-                String::new()
-            } else {
-                format!(
-                    "$voices = $v.GetVoices(); \
-                     for ($i = 0; $i -lt $voices.Count; $i++) {{ \
-                       if ($voices.Item($i).GetDescription() -like '*{name}*') {{ \
-                         $v.Voice = $voices.Item($i); break \
-                       }} \
-                     }}",
-                    name = voice_name_escaped
-                )
-            };
-
-            let sapi_script = format!(
-                "$v = New-Object -ComObject SAPI.SpVoice; \
-                 {}; \
-                 $v.Rate = {}; $v.Volume = {}; \
-                 $v.Speak('{}')",
-                sapi_voice_setup, rate, volume, escaped
-            );
-
-            match new_hidden_command("powershell")
-                .args(["-NoProfile", "-NonInteractive", "-Command", &sapi_script])
-                .stdout(Stdio::null())
-                .stderr(Stdio::null())
-                .stdin(Stdio::null())
-                .spawn()
-            {
-                Ok(child) => {
-                    *speaking_pid().lock().unwrap() = Some(child.id());
-                    info!("TTS SAPI fallback: voice={}, rate={}, vol={}", voice.name, rate, volume);
-                }
-                Err(e2) => error!("TTS all engines failed: {}", e2),
-            }
-        }
-    }
+/// Pause if speaking, resume if paused.
+pub fn pause_toggle() {
+    tts_engine::send(tts_engine::Cmd::PauseToggle);
 }
 
 /// Map a friendly/SAPI voice name to an edge-tts neural voice name.
@@ -771,54 +659,34 @@ fn speak_edge_tts(text: &str, voice: &str, speed: i32) {
         }
         Err(_) => {
             info!("edge-tts not installed, falling back to SAPI");
-            let default_voice = VoiceInfo {
-                id: String::new(),
-                name: "default".to_string(),
-                lang: String::new(),
-                hive: "sapi".to_string(),
-            };
-            speak_sapi(&escaped, &default_voice, speed, 100);
+            tts_engine::send(tts_engine::Cmd::Speak(text.to_string()));
         }
     }
 }
 
-/// Save speech to audio file
-#[allow(dead_code)]
-pub fn save_audio(text: &str, output_path: &str) {
-    let s = settings().lock().unwrap();
-    let voice = s.voice.clone();
-    let speed = s.speed;
-    let engine = s.engine.clone();
-    drop(s);
+/// Render speech to a .wav file, leaving any in-progress playback alone.
+///
+/// Blocks until the file is written so callers can report a real result.
+pub fn save_audio(text: &str, output_path: &str) -> Result<(), String> {
+    let (reply, wait) = std::sync::mpsc::sync_channel(1);
+    tts_engine::send(tts_engine::Cmd::SaveWav {
+        text: text.to_string(),
+        path: output_path.to_string(),
+        reply,
+    });
 
-    let escaped = text.replace('\'', "''").replace('\n', " ").replace('\r', "");
-
-    match engine.as_str() {
-        "edge" => {
-            let rate_pct = speed * 10;
-            let rate_str = if rate_pct >= 0 { format!("+{}%", rate_pct) } else { format!("{}%", rate_pct) };
-            let v = if voice.is_empty() { "en-US-GuyNeural".into() } else { voice };
-            let _ = new_hidden_command("edge-tts")
-                .args(["--voice", &v, "--rate", &rate_str,
-                       "--text", &escaped, "--write-media", output_path])
-                .spawn();
+    match wait.recv_timeout(Duration::from_secs(SAVE_TIMEOUT_SECS)) {
+        Ok(result) => {
+            if result.is_ok() {
+                info!("TTS: saved audio to {}", output_path);
+            }
+            result
         }
-        _ => {
-            let script = format!(
-                "Add-Type -AssemblyName System.Speech; \
-                 $synth = New-Object System.Speech.Synthesis.SpeechSynthesizer; \
-                 $synth.Rate = {}; \
-                 $synth.SetOutputToWaveFile('{}'); \
-                 $synth.Speak('{}'); \
-                 $synth.SetOutputToDefaultAudioDevice()",
-                speed, output_path.replace('\'', "''"), escaped
-            );
-            let _ = new_hidden_command("powershell")
-                .args(["-NoProfile", "-Command", &script])
-                .spawn();
-        }
+        Err(_) => Err(format!(
+            "Timed out after {SAVE_TIMEOUT_SECS}s waiting for the audio file. \
+             Online (Natural) voices need network access to render."
+        )),
     }
-    info!("TTS: saving audio to {}", output_path);
 }
 
 /// List available voice names (backward-compatible wrapper around get_voices).
@@ -829,6 +697,13 @@ pub fn list_voices() -> Vec<String> {
         .into_iter()
         .map(|v| v.name)
         .collect()
+}
+
+fn set_clipboard_text(text: &str) -> anyhow::Result<()> {
+    use clipboard_win::{formats, set_clipboard};
+    set_clipboard(formats::Unicode, text)
+        .map_err(|e| anyhow::anyhow!("clipboard write: {:?}", e))?;
+    Ok(())
 }
 
 /// Create a Command that hides the console window on Windows

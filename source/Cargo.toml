@@ -31,6 +31,8 @@ windows = { version = "0.58", features = [
     # GetTickCount, paired with GetLastInputInfo for idle detection
     "Win32_System_SystemInformation",
     "Win32_System_Com",
+    # IDispatch VARIANT marshalling for the SAPI automation layer
+    "Win32_System_Variant",
 ] }
 
 # Async HTTP for Cloudflare API

@@ -55,6 +55,9 @@ pub struct PanelDef {
     /// Open centred on the mouse cursor instead of at x/y.
     #[serde(default)]
     pub follow_cursor: bool,
+    /// Open this panel automatically when the agent starts.
+    #[serde(default)]
+    pub open_at_startup: bool,
 }
 
 fn default_width() -> u32 {
@@ -94,7 +97,9 @@ impl Default for TtsConfig {
 }
 
 fn default_tts_voice() -> String {
-    "Brian".into()
+    // Match the full name, not "Brian": a bare "Brian" also matches
+    // "Brian Online (Natural)", which is a different voice.
+    "BrianMultilingual".into()
 }
 fn default_tts_speed() -> i32 {
     2
@@ -794,6 +799,16 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
             runtime_id: None,
         },
         HotkeyBinding {
+            keys: "Ctrl+Alt+F8".into(),
+            action: "tts_stop".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+F7".into(),
+            action: "tts_pause".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
             keys: "Ctrl+Shift+V".into(),
             action: "stratum_actions".into(),
             runtime_id: None,
@@ -877,6 +892,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "clipboard".into(),
@@ -889,6 +905,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: true,
         },
         PanelDef {
             name: "prompts".into(),
@@ -901,6 +918,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: true,
         },
         PanelDef {
             name: "links".into(),
@@ -913,6 +931,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "research".into(),
@@ -925,6 +944,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "chat".into(),
@@ -937,6 +957,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "tts".into(),
@@ -949,6 +970,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         // Canon workbench surfaces, grouped under html/atoms/.
         PanelDef {
@@ -962,6 +984,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "atom-builder".into(),
@@ -974,6 +997,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "lean-registry".into(),
@@ -986,6 +1010,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "reconciliation".into(),
@@ -998,6 +1023,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         // Stratum is a normal work window: users can place and resize it.
         PanelDef {
@@ -1011,6 +1037,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: true,
             follow_cursor: true,
+            open_at_startup: false,
         },
         // Floating selection toolbar - frameless, opens at the cursor.
         PanelDef {
@@ -1024,6 +1051,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: false,
             follow_cursor: true,
+            open_at_startup: false,
         },
         // Truth Capsule / result popup for a captured selection.
         PanelDef {
@@ -1037,6 +1065,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: true,
             decorations: false,
             follow_cursor: true,
+            open_at_startup: false,
         },
         PanelDef {
             name: "shortcuts".into(),
@@ -1049,6 +1078,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
         PanelDef {
             name: "mission-control".into(),
@@ -1061,6 +1091,7 @@ fn default_panels() -> Vec<PanelDef> {
             always_on_top: false,
             decorations: true,
             follow_cursor: false,
+            open_at_startup: false,
         },
     ]
 }

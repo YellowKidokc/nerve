@@ -18,6 +18,7 @@ mod selection;
 mod sync_client;
 mod tray;
 mod tts;
+mod tts_engine;
 #[allow(dead_code)]
 mod window_mgmt;
 
@@ -122,6 +123,35 @@ fn main() -> Result<()> {
                 .add_directive("clipsync_agent=info".parse().unwrap()),
         )
         .init();
+
+    // `--tts-say <text>` speaks one utterance and exits, without taking the
+    // instance lock. It exercises the same engine the agent uses, so it is the
+    // way to check voice, rate and audio output while the agent is running.
+    let args: Vec<String> = std::env::args().collect();
+    if let Some(pos) = args.iter().position(|a| a == "--tts-say") {
+        let text = args.get(pos + 1).cloned().unwrap_or_default();
+        let cfg = config::Config::load()?;
+        tts::configure(&cfg.tts.voice, cfg.tts.speed, "sapi", cfg.tts.volume);
+        let _ = tts::speak(&text);
+
+        // `--interrupt` re-speaks after two seconds; the first utterance must
+        // cut off mid-word rather than finishing or overlapping.
+        if args.iter().any(|a| a == "--interrupt") {
+            std::thread::sleep(std::time::Duration::from_secs(2));
+            info!("--- interrupting ---");
+            let _ = tts::speak("Interrupted. The first utterance should have stopped instantly.");
+        }
+
+        // Async speech: hold the process open long enough to hear it.
+        let seconds = args
+            .iter()
+            .position(|a| a == "--seconds")
+            .and_then(|i| args.get(i + 1))
+            .and_then(|v| v.parse::<u64>().ok())
+            .unwrap_or(20);
+        std::thread::sleep(std::time::Duration::from_secs(seconds));
+        return Ok(());
+    }
 
     info!("ClipSync Agent starting...");
 
@@ -251,6 +281,22 @@ fn main() -> Result<()> {
     // Panel manager — holds open webview windows
     let mut panel_mgr = panels::PanelManager::new(proxy.clone());
 
+    // Warm the speech engine now rather than on the first hotkey press.
+    // Starting it costs COM initialization plus a voice enumeration; paying
+    // that here keeps the first CapsLock+C as fast as every later one.
+    tts::warm_up();
+
+    // Panels the user wants up as soon as the agent is running. Queued as
+    // events so the event loop creates them once it is initialized — panels
+    // cannot be built before then.
+    {
+        let cfg_lock = cfg.lock().unwrap();
+        for panel in cfg_lock.panels.iter().filter(|p| p.open_at_startup) {
+            info!("Opening '{}' at startup", panel.name);
+            let _ = proxy.send_event(AppEvent::OpenPanel(panel.name.clone()));
+        }
+    }
+
     info!("ClipSync Agent ready.");
 
     // Main event loop
@@ -356,6 +402,8 @@ fn main() -> Result<()> {
                                     tts::read_selection();
                                 });
                             }
+                            "tts_stop" => tts::stop(),
+                            "tts_pause" => tts::pause_toggle(),
                             "paste_slot_1" => clipboard::paste_slot(0),
                             "paste_slot_2" => clipboard::paste_slot(1),
                             "paste_slot_3" => clipboard::paste_slot(2),
@@ -1067,9 +1115,7 @@ fn handle_ipc(
         }
 
         "tts_pause" => {
-            // SAPI pause/resume toggle — not yet implemented in tts.rs,
-            // so this is a no-op for now.
-            info!("TTS pause requested (not yet implemented)");
+            tts::pause_toggle();
         }
 
         "tts_download" => {
@@ -1082,7 +1128,9 @@ fn handle_ipc(
                 tts::configure(&voice, speed, &engine, volume);
                 let desktop = dirs::desktop_dir().unwrap_or_else(|| std::path::PathBuf::from("."));
                 let path = desktop.join("nerve_tts_output.wav");
-                tts::save_audio(&text, &path.to_string_lossy());
+                if let Err(e) = tts::save_audio(&text, &path.to_string_lossy()) {
+                    error!("TTS download failed: {}", e);
+                }
             });
         }
 
