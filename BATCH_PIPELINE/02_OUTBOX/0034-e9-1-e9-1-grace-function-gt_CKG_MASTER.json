@@ -1,0 +1,127 @@
+{
+  "title": "Grace Function G(t)",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0034_E9.1_E9_1_Grace_Function_Gt.md",
+  "source_sha256": "0067cc92945ef638334cd62b2e66ba76958e3f5f68ded86d5e2da895c91c0146",
+  "captured_at": "2026-09-06T23:35:18.508085+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2780,
+    "completion_tokens": 2752,
+    "total_tokens": 5532,
+    "cost": 0.003822590772,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0038612028,
+      "upstream_inference_prompt_cost": 0.0008023548,
+      "upstream_inference_completions_cost": 0.003058848
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Grace is a function of time.",
+      "role": "Statement / Core Assumption",
+      "formal": "G : t \u2192 G(t)"
+    },
+    {
+      "id": "P2",
+      "statement": "Grace has an initial, non-zero value.",
+      "role": "Implied by model structure",
+      "formal": "G\u2080 \u2208 \u211d, G\u2080 \u2260 0"
+    },
+    {
+      "id": "P3",
+      "statement": "Grace experiences exponential growth driven by a rate function.",
+      "role": "Formal Expression",
+      "formal": "Factor: e^(\u222b r(t') dt')"
+    },
+    {
+      "id": "P4",
+      "statement": "Growth is modulated by a subtractive resistance term.",
+      "role": "Formal Expression",
+      "formal": "Factor: (1 - R(t))"
+    },
+    {
+      "id": "P5",
+      "statement": "The resistance term R(t) is a free (unspecified) function.",
+      "role": "Limitation / Assumption",
+      "formal": "R : t \u2192 R(t)"
+    },
+    {
+      "id": "P6",
+      "statement": "The functional form G(t)=G\u2080\u00b7e^(\u222br dt')\u00b7(1-R) is proposed, not derived from first principles.",
+      "role": "Limitation / Assumption",
+      "formal": "Form is axiomatic, not theorem."
+    },
+    {
+      "id": "P7",
+      "statement": "The model depends on an Infinite Energy Source (BC6).",
+      "role": "Dependency Link",
+      "formal": "G(t) anchored to BC6."
+    },
+    {
+      "id": "P8",
+      "statement": "The model depends on a prior definition of a Grace Operator (D9.1).",
+      "role": "Dependency Link",
+      "formal": "G(t) depends_on D9.1."
+    },
+    {
+      "id": "P9",
+      "statement": "The model is classified within the Moral domain.",
+      "role": "Classification",
+      "formal": "domain: \"Moral\""
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition for the model is demonstrating grace is constant.",
+      "role": "Defeat Condition",
+      "formal": "If \u2203k. \u2200t, G(t)=k, model invalid."
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is demonstrating the resistance term is wrong.",
+      "role": "Defeat Condition",
+      "formal": "If R(t) specification is incorrect, model invalid."
+    },
+    {
+      "id": "P12",
+      "statement": "The model's epistemic status is that of an \"equation,\" not a proven law.",
+      "role": "Classification",
+      "formal": "epistemic status: \"equation\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0034: E9.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E9.1 \u2014 Grace Function G(t)",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

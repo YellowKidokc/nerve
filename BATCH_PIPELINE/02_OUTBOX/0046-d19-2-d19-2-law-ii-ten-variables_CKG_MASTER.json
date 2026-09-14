@@ -1,0 +1,130 @@
+{
+  "title": "Law II: Ten Variables",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0046_D19.2_D19_2_Law_II_Ten_Variables.md",
+  "source_sha256": "450fd496321e79976c92917459869f3eff420b6975dda9b48fc294e57e069041",
+  "captured_at": "2026-09-06T23:45:43.856588+00:00",
+  "tags": [
+    "information-theory",
+    "lean4"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2324,
+    "completion_tokens": 2700,
+    "total_tokens": 5024,
+    "cost": 0.003598112232,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036344568,
+      "upstream_inference_prompt_cost": 0.0006334068,
+      "upstream_inference_completions_cost": 0.00300105
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "There exists a set of ten variables.",
+      "role": "Definition",
+      "formal": "\u2203 set V,"
+    },
+    {
+      "id": "P2",
+      "statement": "The variables are named G, M, E, S, T, K, R, Q, F, and C.",
+      "role": "Definition",
+      "formal": "V = {G, M, E, S, T, K, R, Q, F, C}"
+    },
+    {
+      "id": "P3",
+      "statement": "This set is the *complete* variable set for the system.",
+      "role": "Axiomatic Assertion",
+      "formal": "V = complete_variable_set"
+    },
+    {
+      "id": "P4",
+      "statement": "The system's domain is \"Unified\".",
+      "role": "Classification",
+      "formal": "domain(system) = Unified"
+    },
+    {
+      "id": "P5",
+      "statement": "Law II is a definition within the axiom scaffold.",
+      "role": "Meta-statement",
+      "formal": "mode(Law_II) = AX_SCAFFOLD \u2227 atlas_type(Law_II) = Definition"
+    },
+    {
+      "id": "P6",
+      "statement": "Law II depends logically on the Master Equation First Form (E2.1).",
+      "role": "Dependency Assertion",
+      "formal": "depends_on(Law_II, E2.1)"
+    },
+    {
+      "id": "P7",
+      "statement": "The epistemic status of this law is `definition`.",
+      "role": "Meta-statement",
+      "formal": "epistemic_status(Law_II) = definition"
+    },
+    {
+      "id": "P8",
+      "statement": "A completeness proof for the variable set is needed.",
+      "role": "Limitation / Open Problem",
+      "formal": "\u00ac\u2203 proof(completeness(V))"
+    },
+    {
+      "id": "P9",
+      "statement": "The set's sufficiency and necessity is an assumption.",
+      "role": "Tagged Assumption",
+      "formal": "assumption(sufficient_and_necessary(V))"
+    },
+    {
+      "id": "P10",
+      "statement": "The defeat condition is demonstrating that fewer or more variables are needed.",
+      "role": "Falsification Condition",
+      "formal": "defeat_if("
+    },
+    {
+      "id": "P11",
+      "statement": "The variables are intended for formalization/primitives.",
+      "role": "Classification",
+      "formal": "mathematical_use(V) = \"Formal definition / primitive formalization\""
+    },
+    {
+      "id": "P12",
+      "statement": "The definition is generated from a specified canonical chain (AXIOM_CHAIN_MASTER_v2).",
+      "role": "Provenance Statement",
+      "formal": "generated_from(Law_II, AXIOM_CHAIN_MASTER_v2)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0046: D19.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.2 \u2014 Law II: Ten Variables",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

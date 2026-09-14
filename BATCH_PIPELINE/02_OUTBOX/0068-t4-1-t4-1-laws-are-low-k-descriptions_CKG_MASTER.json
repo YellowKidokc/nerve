@@ -1,0 +1,118 @@
+{
+  "title": "Laws Are Low-K Descriptions",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0068_T4.1_T4_1_Laws_Are_Low-K_Descriptions.md",
+  "source_sha256": "38a68882e79181d256f1969ff76198e41b57ea02cc7150a8def9fe24268a01ee",
+  "captured_at": "2026-09-07T00:02:57.353702+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2441,
+    "completion_tokens": 2210,
+    "total_tokens": 4651,
+    "cost": 0.003101838597,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0031331703,
+      "upstream_inference_prompt_cost": 0.0006767553,
+      "upstream_inference_completions_cost": 0.002456415
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Physical laws are descriptions of data.",
+      "role": "Core Theorem Statement",
+      "formal": "`Law` describes `Data`"
+    },
+    {
+      "id": "P2",
+      "statement": "The Kolmogorov complexity of a law is much less than the Kolmogorov complexity of the data it describes.",
+      "role": "Formal Expression & Core Theorem",
+      "formal": "\\( K(Law) << K(Data) \\)"
+    },
+    {
+      "id": "P3",
+      "statement": "A law compresses data.",
+      "role": "Formal Expression & Implied Function",
+      "formal": "`Law compresses Data`"
+    },
+    {
+      "id": "P4",
+      "statement": "This view is a standard position in the philosophy of science.",
+      "role": "Limitation / Context",
+      "formal": "\"Standard view in philosophy of science. Laws = compression.\""
+    },
+    {
+      "id": "P5",
+      "statement": "The theorem's anchor is A2.2 (Self-Grounding).",
+      "role": "Dependency",
+      "formal": "`Anchor: A2.2`"
+    },
+    {
+      "id": "P6",
+      "statement": "The theorem depends on D4.1 (Kolmogorov Complexity).",
+      "role": "Dependency",
+      "formal": "`depends_on: ... D4.1`"
+    },
+    {
+      "id": "P7",
+      "statement": "The theorem's status is `theorem` within the framework.",
+      "role": "Epistemic Status Declaration",
+      "formal": "`status: \"theorem\"`"
+    },
+    {
+      "id": "P8",
+      "statement": "The theorem would be defeated by demonstrating a law with K(Law) \u2265 K(Data).",
+      "role": "Defeat Condition",
+      "formal": "\"Show a law with K(Law) \u2265 K(Data).\""
+    },
+    {
+      "id": "P9",
+      "statement": "The domain of the theorem is ontological.",
+      "role": "Classification",
+      "formal": "`Domain: Ontological`"
+    },
+    {
+      "id": "P10",
+      "statement": "The theorem is a framework commitment.",
+      "role": "Classification",
+      "formal": "`Mathematical Use: Framework commitment`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0068: T4.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 T4.1 \u2014 Laws Are Low-K Descriptions",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

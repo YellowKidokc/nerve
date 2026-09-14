@@ -1,0 +1,127 @@
+{
+  "title": "Master Equation First Form",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0017_E2.1_E2_1_Master_Equation_First_Form.md",
+  "source_sha256": "6b849490fb968cce4accfb26ad001b5eaaf058a9218505a317657a11b5eba56a",
+  "captured_at": "2026-09-06T23:17:56.740661+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2726,
+    "completion_tokens": 2716,
+    "total_tokens": 5442,
+    "cost": 0.003763169982,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0038011818,
+      "upstream_inference_prompt_cost": 0.0007823478,
+      "upstream_inference_completions_cost": 0.003018834
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The Master Equation has a \"first form.\"",
+      "role": "Foundational Declaration",
+      "formal": "`E2.1`"
+    },
+    {
+      "id": "P2",
+      "statement": "The Master Equation governs \u03c7-field dynamics.",
+      "role": "Core Model Statement",
+      "formal": "`\u03c7-field equation of motion`"
+    },
+    {
+      "id": "P3",
+      "statement": "The equation is of the Klein-Gordon type.",
+      "role": "Structural Assertion",
+      "formal": "`\u25a1\u03c7 + ...`"
+    },
+    {
+      "id": "P4",
+      "statement": "The equation includes a self-interaction term.",
+      "role": "Model Component",
+      "formal": "`+ V'(\u03c7)`"
+    },
+    {
+      "id": "P5",
+      "statement": "The equation includes a source term.",
+      "role": "Model Component",
+      "formal": "`= J(\u03c7)`"
+    },
+    {
+      "id": "P6",
+      "statement": "The equation is currently schematic.",
+      "role": "Epistemic Status",
+      "formal": "`Needs V(\u03c7) and J(\u03c7) specified`"
+    },
+    {
+      "id": "P7",
+      "statement": "The equation's anchor is A2.2 (Self-Grounding).",
+      "role": "Dependency Assertion",
+      "formal": "`Anchor: A2.2`"
+    },
+    {
+      "id": "P8",
+      "statement": "The equation's epistemic status is \"equation.\"",
+      "role": "Classification",
+      "formal": "`Epistemic Status: equation`"
+    },
+    {
+      "id": "P9",
+      "statement": "The equation's domain is \"Ontological.\"",
+      "role": "Classification",
+      "formal": "`Domain: Ontological`"
+    },
+    {
+      "id": "P10",
+      "statement": "The equation can be defeated by internal inconsistency.",
+      "role": "Defeat Condition",
+      "formal": "`Show the equation is internally inconsistent`"
+    },
+    {
+      "id": "P11",
+      "statement": "The equation can be defeated by wrong predictions for known phenomena.",
+      "role": "Defeat Condition",
+      "formal": "`Demonstrate wrong predictions for known phenomena`"
+    },
+    {
+      "id": "P12",
+      "statement": "The equation's predictive power is limited until V(\u03c7) and J(\u03c7) are specified.",
+      "role": "Limitation",
+      "formal": "`Schematic. Needs V(\u03c7) and J(\u03c7) specified to make predictions`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0017: E2.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E2.1 \u2014 Master Equation First Form",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

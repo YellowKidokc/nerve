@@ -1,0 +1,130 @@
+{
+  "title": "Information Primacy",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0008_A1.3_A1_3_Information_Primacy.md",
+  "source_sha256": "e9231e7c466b21bf4fc56f968f56867754f0d0db13afb24d6432c9432c960dd0",
+  "captured_at": "2026-09-06T23:05:51.631316+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2618,
+    "completion_tokens": 2820,
+    "total_tokens": 5438,
+    "cost": 0.003837996162,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0038767638,
+      "upstream_inference_prompt_cost": 0.0007423338,
+      "upstream_inference_completions_cost": 0.00313443
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Distinguishability IS information.",
+      "role": "Core Theorem Statement",
+      "formal": "`I \u2261 Distinguishability`"
+    },
+    {
+      "id": "P2",
+      "statement": "Information is ontologically primitive.",
+      "role": "Core Theorem Statement",
+      "formal": "N/A (Ontological claim)"
+    },
+    {
+      "id": "P3",
+      "statement": "The concept is derived from axioms A1.1 (Existence) and A1.2 (Distinction).",
+      "role": "Dependency Declaration",
+      "formal": "`derived(A1.3) :- depends_on(A1.1, A1.2)`"
+    },
+    {
+      "id": "P4",
+      "statement": "Shannon entropy `H(X) = -\u03a3p\u00b7log p` is the formal expression for information.",
+      "role": "Formal Expression",
+      "formal": "`H(X) = -\u03a3 p_i log p_i`"
+    },
+    {
+      "id": "P5",
+      "statement": "Wheeler's \"It from Bit\" is suggestive but not proven.",
+      "role": "Limiting Assumption",
+      "formal": "N/A (Epistemic qualifier)"
+    },
+    {
+      "id": "P6",
+      "statement": "Landauer's principle shows information is physical.",
+      "role": "Supporting Reference",
+      "formal": "N/A (Physical principle)"
+    },
+    {
+      "id": "P7",
+      "statement": "The theorem can be defeated by showing information is emergent, not primitive.",
+      "role": "Defeat Condition",
+      "formal": "N/A (Falsification criterion)"
+    },
+    {
+      "id": "P8",
+      "statement": "The theorem can be defeated by demonstrating matter/energy without an informational substrate.",
+      "role": "Defeat Condition",
+      "formal": "N/A (Falsification criterion)"
+    },
+    {
+      "id": "P9",
+      "statement": "The theorem's status is `derived`.",
+      "role": "Epistemic Status",
+      "formal": "`status(A1.3) = derived`"
+    },
+    {
+      "id": "P10",
+      "statement": "The theorem's domain is \"Primordial\".",
+      "role": "Domain Classification",
+      "formal": "`domain(A1.3) = Primordial`"
+    },
+    {
+      "id": "P11",
+      "statement": "The theorem's mode is `AX_DERIVED`.",
+      "role": "Structural Classification",
+      "formal": "`mode(A1.3) = AX_DERIVED`"
+    },
+    {
+      "id": "P12",
+      "statement": "The theorem functions as an axiom in the workbook.",
+      "role": "System Role",
+      "formal": "`workbook_role(A1.3) = AXIOM`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0008: A1.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 A1.3 \u2014 Information Primacy",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

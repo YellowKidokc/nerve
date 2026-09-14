@@ -1,0 +1,131 @@
+{
+  "title": "Law IX: Grace Non-Unitarity",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0053_D19.9_D19_9_Law_IX_Grace_Non-Unitarity.md",
+  "source_sha256": "3b054b1441cd4f49b91c20df9a28b3c4d981660937fabd0db5b9531d4b17cd31",
+  "captured_at": "2026-09-06T23:51:52.949880+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems",
+    "theology"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2794,
+    "completion_tokens": 2863,
+    "total_tokens": 5657,
+    "cost": 0.003949868637,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0039897663,
+      "upstream_inference_prompt_cost": 0.0008075418,
+      "upstream_inference_completions_cost": 0.0031822245
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Grace adds information.",
+      "role": "Statement / Core Definition",
+      "formal": "Qualitative assertion; no formal mapping given."
+    },
+    {
+      "id": "P2",
+      "statement": "Grace enables coherence increase.",
+      "role": "Statement / Core Definition",
+      "formal": "Qualitative assertion; no formal measure specified."
+    },
+    {
+      "id": "P3",
+      "statement": "The Grace operator \u011c is non-unitary.",
+      "role": "Formal Expression / Definition",
+      "formal": "\u011c\u2020\u011c \u2260 I"
+    },
+    {
+      "id": "P4",
+      "statement": "Non-unitarity of \u011c corresponds to information being added.",
+      "role": "Formal Expression / Interpretation",
+      "formal": "Implicit link: \u011c\u2020\u011c \u2260 I \u2194 \"information added\""
+    },
+    {
+      "id": "P5",
+      "statement": "Law IX is a formal definition / primitive formalization.",
+      "role": "Classification",
+      "formal": "Mode: `AX_SCAFFOLD`; Atlas Type: `Definition`"
+    },
+    {
+      "id": "P6",
+      "statement": "Law IX is anchored to A9.2 (Non-Unitarity Of Grace).",
+      "role": "Dependency Declaration",
+      "formal": "`anchor: \"A9.2 (Non-Unitarity Of Grace)\"`"
+    },
+    {
+      "id": "P7",
+      "statement": "Law IX resides in the Unified domain.",
+      "role": "Classification",
+      "formal": "`domain: \"Unified\"`"
+    },
+    {
+      "id": "P8",
+      "statement": "Law IX is defeated if grace is shown to be unitary.",
+      "role": "Defeat Condition",
+      "formal": "Conditional: If \u011c\u2020\u011c = I is shown, then Law IX is false."
+    },
+    {
+      "id": "P9",
+      "statement": "The moral system's boundary with the divine is not physically defined.",
+      "role": "Limitation / Boundary Condition",
+      "formal": "Qualitative boundary statement."
+    },
+    {
+      "id": "P10",
+      "statement": "The framework references open quantum systems.",
+      "role": "Reference / Analogy Source",
+      "formal": "`References: \"Open quantum systems\"`"
+    },
+    {
+      "id": "P11",
+      "statement": "The framework references Sola Gratia (theological concept).",
+      "role": "Reference / Analogy Source",
+      "formal": "`References: \"Sola Gratia\"`"
+    },
+    {
+      "id": "P12",
+      "statement": "Law IX is part of the \"Master Laws\" chain tier (Tier 13).",
+      "role": "Structural Declaration",
+      "formal": "`Chain Tier: 13 \u2014 Master Laws`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0053: D19.9",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.9 \u2014 Law IX: Grace Non-Unitarity",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

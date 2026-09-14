@@ -1,0 +1,33 @@
+{
+  "title": "Observation Requirement",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0005_A5.1_A5_1_Observation_Requirement.md",
+  "source_sha256": "a61fe45f6e7447a54b251ab8582edce891be52426182160239f139e6d0ebab84",
+  "captured_at": "2026-09-06T23:02:40.059443+00:00",
+  "word_count": 365,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0005: A5.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A5.1 \u2014 Observation Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

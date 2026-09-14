@@ -1,0 +1,130 @@
+{
+  "title": "Coherence Measure",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0062_A3.2_A3_2_Coherence_Measure.md",
+  "source_sha256": "347ef0a82f060ad8f3bb7b50d692b6d98923a634accac97a85333029dd5a6061",
+  "captured_at": "2026-09-06T23:59:12.970467+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2150,
+    "completion_tokens": 2229,
+    "total_tokens": 4379,
+    "cost": 0.003016008567,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0030464733,
+      "upstream_inference_prompt_cost": 0.0005689398,
+      "upstream_inference_completions_cost": 0.0024775335
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Order can be quantified.",
+      "role": "Statement",
+      "formal": "`Order` is a measurable property."
+    },
+    {
+      "id": "P2",
+      "statement": "There exists a coherence measure.",
+      "role": "Statement",
+      "formal": "\u2203C"
+    },
+    {
+      "id": "P3",
+      "statement": "The coherence measure is a function of Order.",
+      "role": "Formal Expression",
+      "formal": "C = measure(Order)"
+    },
+    {
+      "id": "P4",
+      "statement": "This is a framework commitment.",
+      "role": "Maximum Defensible Position",
+      "formal": "Framework claim."
+    },
+    {
+      "id": "P5",
+      "statement": "The claim depends on A2.2 (Self-Grounding).",
+      "role": "Dependency Chain",
+      "formal": "depends_on: \"A2.2\""
+    },
+    {
+      "id": "P6",
+      "statement": "Entropy quantifies disorder.",
+      "role": "Limitations (from workbook)",
+      "formal": "Empirical fact from physics."
+    },
+    {
+      "id": "P7",
+      "statement": "Coherence quantifies order.",
+      "role": "Limitations (from workbook)",
+      "formal": "Analogous claim to entropy."
+    },
+    {
+      "id": "P8",
+      "statement": "The claim can be defeated if order without quantification is shown.",
+      "role": "Defeat Conditions",
+      "formal": "\u00ac(Order can be quantified) \u2192 defeat."
+    },
+    {
+      "id": "P9",
+      "statement": "This is an ontological domain claim.",
+      "role": "Classification",
+      "formal": "Domain: Ontological"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim's epistemic status is \"framework_commitment.\"",
+      "role": "Classification",
+      "formal": "Epistemic Status: `framework_commitment`"
+    },
+    {
+      "id": "P11",
+      "statement": "The claim is a standard assumption in physics.",
+      "role": "Limitations (from workbook)",
+      "formal": "Assumption label."
+    },
+    {
+      "id": "P12",
+      "statement": "The claim has a legacy identifier AX-017.",
+      "role": "Metadata",
+      "formal": "legacy_id: \"AX-017\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0062: A3.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A3.2 \u2014 Coherence Measure",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

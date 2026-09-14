@@ -1,0 +1,34 @@
+{
+  "title": "Order Requirement",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0061_A3.1_A3_1_Order_Requirement.md",
+  "source_sha256": "2b954e96dc68e8c7e712fcfd040c4c9868f6372c0c8d7f48a1291ba340f81544",
+  "captured_at": "2026-09-06T23:57:43.928478+00:00",
+  "word_count": 291,
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0061: A3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A3.1 \u2014 Order Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

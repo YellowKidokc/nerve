@@ -197,6 +197,7 @@
       <select id="itemType" onchange="onTypeChange()">
         <option value="hotkey">Hotkey (OS-Wide Shortcut)</option>
         <option value="hotstring">Hotstring (Text Expansion / Slash Command)</option>
+        <option value="prompt">Slash Prompt (System-Wide /name Command)</option>
       </select>
     </div>
 
@@ -262,7 +263,7 @@
   <!-- Right: Library -->
   <div class="library">
     <div class="library-header">
-      <span>Active Shortcuts & Hotstrings</span>
+      <span>Active Shortcuts, Expansions & Slash Prompts</span>
       <span class="library-badge" id="libraryCount">0 Loaded</span>
     </div>
     <div class="table-wrap">
@@ -296,17 +297,18 @@
   function onTypeChange() {
     const type = document.getElementById('itemType').value;
     document.getElementById('hotkeyFields').style.display = type === 'hotkey' ? 'block' : 'none';
-    document.getElementById('hotstringFields').style.display = type === 'hotstring' ? 'block' : 'none';
+    document.getElementById('hotstringFields').style.display = type === 'hotkey' ? 'none' : 'block';
   }
 
   function renderLibrary() {
     const tbody = document.getElementById('libraryBody');
     tbody.innerHTML = items.map((item, i) => {
       const isHk = item.type === 'hotkey';
+      const isPrompt = item.type === 'prompt';
       const trigger = isHk ? (item.trigger || formatHotkeyTrigger(item)) : item.trigger;
       const badge = isHk 
         ? '<span class="badge-tag badge-hotkey">Hotkey</span>' 
-        : '<span class="badge-tag badge-hotstring">Hotstring</span>';
+        : `<span class="badge-tag badge-hotstring">${isPrompt ? 'Slash Prompt' : 'Hotstring'}</span>`;
       const preview = (item.output || '').substring(0, 50);
 
       return `<tr class="${i === selectedIndex ? 'selected' : ''}" onclick="selectItem(${i})">

@@ -1,0 +1,130 @@
+{
+  "title": "Collapse Rate Gamma",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0029_D6.1_D6_1_Collapse_Rate_Gamma.md",
+  "source_sha256": "8bfe4f2ddd74136008bc69123df1e587c2d392d3390d858f4c91caa602e9c0a9",
+  "captured_at": "2026-09-06T23:28:50.241295+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2541,
+    "completion_tokens": 2386,
+    "total_tokens": 4927,
+    "cost": 0.003557544705,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035934795,
+      "upstream_inference_prompt_cost": 0.0009414405,
+      "upstream_inference_completions_cost": 0.002652039
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Collapse rate \u0393 is defined.",
+      "role": "Definition",
+      "formal": "\u0393 = collapse rate"
+    },
+    {
+      "id": "P2",
+      "statement": "Collapse rate \u0393 is a function.",
+      "role": "Maximum Defensible Position",
+      "formal": "\u0393 = collapse rate function"
+    },
+    {
+      "id": "P3",
+      "statement": "Collapse rate \u0393 is proportional to a function of integrated information \u03a6.",
+      "role": "Formal Expression & Statement",
+      "formal": "\u0393 \u221d f(\u03a6)"
+    },
+    {
+      "id": "P4",
+      "statement": "The definition of \u0393 depends on the observer's integrated information.",
+      "role": "Statement",
+      "formal": "\"depends on observer's integrated information\""
+    },
+    {
+      "id": "P5",
+      "statement": "The framework's distinctive prediction is the \u03a6-dependence of \u0393.",
+      "role": "Limitations",
+      "formal": "\"The \u03a6-dependence of \u0393 is the framework's distinctive prediction.\""
+    },
+    {
+      "id": "P6",
+      "statement": "Standard Quantum Mechanics has a constant collapse rate.",
+      "role": "Limitations & References",
+      "formal": "\"Standard QM has \u0393 = constant.\""
+    },
+    {
+      "id": "P7",
+      "statement": "The definition is anchored to A5.1 (Observation Requirement).",
+      "role": "Dependency",
+      "formal": "Anchor: A5.1"
+    },
+    {
+      "id": "P8",
+      "statement": "The definition depends on D5.2 (Integrated Information Phi).",
+      "role": "Dependency",
+      "formal": "Depends on: D5.2"
+    },
+    {
+      "id": "P9",
+      "statement": "The definition is ontological in domain.",
+      "role": "Classification",
+      "formal": "Domain: Ontological"
+    },
+    {
+      "id": "P10",
+      "statement": "The definition is a formal definition / primitive formalization.",
+      "role": "Classification",
+      "formal": "Mathematical Use: Formal definition / primitive formalization"
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is showing \u0393 is observer-independent.",
+      "role": "Defeat Conditions",
+      "formal": "\"Show collapse rate is observer-independent.\""
+    },
+    {
+      "id": "P12",
+      "statement": "A defeat condition is demonstrating \u0393 is not a function of \u03a6.",
+      "role": "Defeat Conditions",
+      "formal": "\"Demonstrate \u0393 \u2260 f(\u03a6).\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0029: D6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D6.1 \u2014 Collapse Rate Gamma",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

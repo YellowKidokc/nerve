@@ -1,0 +1,130 @@
+{
+  "title": "Modified Schr\u00f6dinger With Collapse",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0078_E6.1_E6_1_Modified_Schr_dinger_With_Collapse.md",
+  "source_sha256": "a14820990c48f56e87cc96933fb27b64507c543277e57b840ca4ba8a851ffa9e",
+  "captured_at": "2026-09-07T00:10:32.377625+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2465,
+    "completion_tokens": 3235,
+    "total_tokens": 5700,
+    "cost": 0.00446389515,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.004508985,
+      "upstream_inference_prompt_cost": 0.0009132825,
+      "upstream_inference_completions_cost": 0.0035957025
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The time evolution of a quantum state is not solely given by the standard Schr\u00f6dinger equation.",
+      "role": "Framework commitment",
+      "formal": "`i\u210f\u2202"
+    },
+    {
+      "id": "P2",
+      "statement": "A modified Schr\u00f6dinger equation includes an objective collapse term.",
+      "role": "Core equation statement",
+      "formal": "`i\u210f\u2202"
+    },
+    {
+      "id": "P3",
+      "statement": "The collapse term is proportional to the collapse rate Gamma (\u0393).",
+      "role": "Structural definition",
+      "formal": "Term is `- (\u0393/2) \u00b7 ( ... )`"
+    },
+    {
+      "id": "P4",
+      "statement": "The collapse term depends on the deviation of the state from its projection under some operator P\u0302.",
+      "role": "Structural definition",
+      "formal": "`("
+    },
+    {
+      "id": "P5",
+      "statement": "The framework depends on A5.1 (Observation Requirement).",
+      "role": "Dependency assertion",
+      "formal": "`depends_on: \"A5.1\"`"
+    },
+    {
+      "id": "P6",
+      "statement": "The framework depends on D6.1 (Collapse Rate Gamma).",
+      "role": "Dependency assertion",
+      "formal": "`depends_on: \"D6.1\"`"
+    },
+    {
+      "id": "P7",
+      "statement": "The modification is similar to GRW theory but with a \u03a6-dependent \u0393.",
+      "role": "Comparative claim",
+      "formal": "`\u0393 = \u0393(\u03a6)` distinguishes it from GRW's constant rate."
+    },
+    {
+      "id": "P8",
+      "statement": "The modification is distinguishable from GRW experimentally.",
+      "role": "Empirical claim",
+      "formal": "Different experimental signatures due to \u0393(\u03a6)."
+    },
+    {
+      "id": "P9",
+      "statement": "The equation's defeat condition is if the standard Schr\u00f6dinger equation suffices.",
+      "role": "Falsification condition",
+      "formal": "If `i\u210f\u2202"
+    },
+    {
+      "id": "P10",
+      "statement": "The equation is classified as an ontological equation.",
+      "role": "Domain classification",
+      "formal": "`Domain: \"Ontological\"`"
+    },
+    {
+      "id": "P11",
+      "statement": "The equation has the status \"equation\" within the framework.",
+      "role": "Epistemic status",
+      "formal": "`Status: \"equation\"`"
+    },
+    {
+      "id": "P12",
+      "statement": "The collapse rate Gamma is a metric within the framework.",
+      "role": "Metric definition",
+      "formal": "`Metric::\"Collapse rate Gamma value\"`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0078: E6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 E6.1 \u2014 Modified Schr\u00f6dinger With Collapse",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

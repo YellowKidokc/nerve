@@ -1,6 +1,6 @@
 ---
 fis_schema: "folder-index.v1"
-folder_id: "FLD-20260905-6220e3fc"
+folder_id: "FLD-20260907-6220e3fc"
 folder: "GitHub\nerve\source\html\stratum"
 folder_class: "project"
 confidence: 0.6
@@ -8,7 +8,7 @@ dependency_risk: 0.0
 dominant_family: "code"
 dominant_ratio: 0.75
 file_count: 4
-classified_at: "2026-09-05T20:04:02"
+classified_at: "2026-09-07T15:57:51"
 allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
 suggested_name: "stratum"
 ---

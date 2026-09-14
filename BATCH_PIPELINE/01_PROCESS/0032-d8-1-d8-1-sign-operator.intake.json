@@ -1,0 +1,33 @@
+{
+  "title": "Sign Operator",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0032_D8.1_D8_1_Sign_Operator.md",
+  "source_sha256": "580fbba99d623eff99d25552bb1792b9a9ad89a9fc83c22f4bffd0a9f01c2db4",
+  "captured_at": "2026-09-06T23:30:36.204841+00:00",
+  "word_count": 383,
+  "tags": [
+    "quantum-foundations"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0032: D8.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D8.1 \u2014 Sign Operator",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

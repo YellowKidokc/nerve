@@ -1,0 +1,218 @@
+# Meaning-record extraction prompt
+
+Read the complete source below. Preserve its meaning and distinguish what the source says from
+what you infer. Do not rewrite or reproduce the complete source in your response; the pipeline
+appends the exact source separately.
+
+Write the top layer as a clear research case file that a thoughtful reader can understand quickly. Return
+Markdown with exactly these headings:
+
+```markdown
+## At a glance
+State what this is, why it matters, and the one-sentence finding.
+
+## Central claim
+Give the strongest defensible substantive proposition, not generic meta-filler or summary rhetoric. If the source defines an ontological, mathematical, or structural rule, state the exact rule.
+
+## Best concise argument
+Present the clearest load-bearing argument in readable, logical steps.
+
+## System or model
+Describe the entities, distinctions, relationships, sequence, and causal or logical structure.
+You MUST include these two subsections:
+### Extracted Truth Predicates (Irreducible Assertions)
+Provide a markdown table extracting all irreducible, standalone truth assertions from the source:
+| # | Truth Predicate | Source Role | Formal / Mathematical Formulation |
+|---|---|---|---|
+| P1 | ... | ... | ... |
+Extract at least 6 to 12 truth predicates.
+
+### Terms and plain-language bridge
+Define technical terms, symbols, or operators above 9th grade level with an analogy.
+
+## Evidence chain
+For every important step use: `Claim -> Support -> Inference -> Confidence -> Boundary`.
+
+## Best evidence and sources
+Separate primary evidence, formal results, secondary interpretation, and analogy. Preserve citations and source names. An unproven Lean code snippet ending in sorry or admit is NEVER a formal result; write None if no verified proof exists.
+
+## Strongest objection and negative controls
+Give the best opposing case, counterexamples, competing physical or philosophical interpretations, and tests that prevent false conclusions.
+
+## What survives
+State what remains defensible after the strongest objection. Must be at least 80 characters of substantive analysis.
+
+## What this does not establish
+List nearby conclusions that the evidence does not earn. Distinguish formal mathematical results from physical facts, and physical facts from theological conclusions. Must be at least 80 characters.
+
+## Corrections and revisions
+Record where the conversation, paper, or prior generation corrected, narrowed, or retired an earlier claim.
+
+## Implications
+Separate empirical, formal, philosophical, semantic, and theological implications.
+
+## Formal or testable path
+Identify Lean, Z3, empirical, literature, or adversarial tests that could strengthen or defeat it.
+Must contain exactly:
+### Lean / formal checks
+Include a table: Proposed theorem or invariant | Definitions & premises to encode | Status | What a passing result establishes | Reader meaning / analogy
+### Empirical / literature checks
+### Adversarial checks
+
+## Open questions and next actions
+Prioritize unresolved questions and the next useful action.
+
+## Recommended classification and relationships
+Propose record type, domain, tags, and `supports`, `contradicts`, `refines`, `depends_on`, and `tests` links.
+```
+
+Rules:
+1. Never write generic filler like "It explains meaning, math, dependencies..." in Central claim.
+2. Never claim an unverified theorem ending in sorry/admit as a formal result.
+3. Separate empirical, formal, philosophical, semantic, and theological statements strictly.
+4. Never label anything canonical or proven merely because the source says so.
+5. In System or model, include both `### Extracted Truth Predicates (Irreducible Assertions)` and `### Terms and plain-language bridge`.
+6. Make the analysis readable without requiring the reader to inspect the complete source.
+
+## Source metadata
+
+{
+  "title": "Terminal Observer Exists",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0085_BC1_BC1_Terminal_Observer_Exists.md",
+  "source_sha256": "233d36a3a58aee12504a06ecc8f52a1a80238aad57634bfe8d5997ce6a9097ed",
+  "captured_at": "2026-09-07T00:16:55.192617+00:00",
+  "word_count": 377,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0085: BC1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 BC1 \u2014 Terminal Observer Exists",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}
+
+## Complete source for analysis
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0085: BC1
+
+| Field | Value |
+|---|---|
+| Registry position | 85 of 191 |
+| Canonical ID | `BC1` |
+| Mode | `FW_EXTENDED` |
+| Canonical source filename | `BC1_Terminal_Observer_Exists.md` |
+| Source SHA-256 | `b2ab74f7557fab6e70f2335eef9d9c8e7b41f5311266638b103616c188626636` |
+
+## Sequence Navigation
+
+Previous: [0084 - A7.2 - Uniqueness From Boundary Conditions](0084_A7.2_A7_2_Uniqueness_From_Boundary_Conditions.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0086 - BC3 - Measurement Orthogonality](0086_BC3_BC3_Measurement_Orthogonality.md)
+
+## Registered Dependency Links
+
+[LN6.1 - Terminal Observer Necessity](0082_LN6.1_LN6_1_Terminal_Observer_Necessity.md); [A7.1 - Closure Requirement](0083_A7.1_A7_1_Closure_Requirement.md)
+
+## Canonical Source Text
+
+---
+id: "BC1"
+legacy_id: "AX-058"
+title: "Terminal Observer Exists"
+mode: "FW_EXTENDED"
+atlas_type: "Boundary Condition"
+status: "boundary"
+domain: "Divine"
+anchor: "LN6.1, A7.1"
+depends_on: "LN6.1, A7.1"
+date: "2026-08-17"
+---
+
+# 🔶 BC1 — Terminal Observer Exists
+
+**Mode:** `FW_EXTENDED` | **Atlas Type:** `Boundary Condition` | **Status:** `boundary`
+**Domain:** Divine | **Legacy ID:** `AX-058`
+
+---
+
+## Statement
+
+A terminal observer exists — one that observes without being observed.
+
+## Formal Expression
+
+```
+∃O_T: Observes(O_T, all) ∧ ¬∃O': Observes(O', O_T) independently
+```
+
+$$
+∃O_T: Observes(O_T, all) ∧ ¬∃O': Observes(O', O_T) independently
+$$
+
+## Maximum Defensible Position
+
+Framework claim: A terminal observer exists — one that observes without being observed.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `FW_EXTENDED` |
+| **Atlas Object Type** | `Boundary Condition` |
+| **Workbook Role** | `FW_EXTENDED` |
+| **Mathematical Use** | Framework commitment |
+| **Epistemic Status** | `boundary` |
+| **Domain** | Divine |
+
+## Dependency Chain
+
+**Anchor:** LN6.1, A7.1
+**Depends On:** LN6.1, A7.1
+
+## References
+
+Von Neumann 1932; Theistic arguments
+
+## Defeat Conditions
+
+Show no terminal observer is needed.
+
+## Limitations (from workbook)
+
+FW_EXTENDED, not AX_CORE. An identification claim under test.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::4b5db390-1ed0-4a38-a8a5-76d31be0d4d4::"A terminal observer must exist that observes without being observed"::null::@Product%%
+%%tag::Dependency::063388f8-3f1c-412f-b8ee-7c951bc5a434::"Depends on LN6.1 Terminal Observer Necessity"::null::@Engineering%%
+%%tag::Dependency::843c5490-f502-4bf6-9749-f9994d29239b::"Depends on A7.1 Closure Requirement"::null::@Engineering%%
+%%tag::Risk::9389e5e2-78a9-450b-af3b-e3f591165ba1::"Risk that no terminal observer is needed, defeating the claim"::null::@Engineering,Product%%
+%%tag::Assumption::34b84fd3-f7e1-4e83-8075-8a9834caf116::"Assumes the existence of a terminal observer is a valid framework commitment"::null::@Engineering%%
+%%tag::Decision::de4f69c6-81eb-42d1-a0ff-4be47bed57b8::"Classified as FW_EXTENDED mode, not AX_CORE, making it an identification claim under test"::null::@Product%%
+%%tag::Stakeholder::27c16407-7b23-455c-98ab-0f16225f154b::"Theistic arguments community interested in the existence of a terminal observer"::null::@Product%%
+%%tag::OpenQuestion::81e25cdb-8b1c-40b9-bd6d-749c4345e02c::"Whether a terminal observer is actually needed"::null::@Engineering,Product%%
+%%--- END SEMANTIC TAGS ---%%

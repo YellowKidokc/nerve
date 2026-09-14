@@ -1,0 +1,127 @@
+{
+  "title": "Law VIII: Sign Algebra",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0052_D19.8_D19_8_Law_VIII_Sign_Algebra.md",
+  "source_sha256": "45d09f50ad2fbf6e29c84bdeb0506e2415d782de944a8b9a11cf77d1abce42da",
+  "captured_at": "2026-09-06T23:50:57.910529+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2332,
+    "completion_tokens": 2718,
+    "total_tokens": 5050,
+    "cost": 0.003620853522,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036574278,
+      "upstream_inference_prompt_cost": 0.0006363708,
+      "upstream_inference_completions_cost": 0.003021057
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Moral orientation is binary.",
+      "role": "Statement / Definition",
+      "formal": "\u03c3 \u2208 {\u00b11}"
+    },
+    {
+      "id": "P2",
+      "statement": "The sign operator \u03c3\u0302 has eigenvalues +1 and -1.",
+      "role": "Implicit from formal expression",
+      "formal": "\u03c3\u0302 \\"
+    },
+    {
+      "id": "P3",
+      "statement": "Moral orientation is preserved under the system's self-transformation (unitary evolution).",
+      "role": "Statement / Formal Expression",
+      "formal": "[\u03c3\u0302, \u00db] = 0"
+    },
+    {
+      "id": "P4",
+      "statement": "There exists an external operator \u011c(ext).",
+      "role": "Formal Expression",
+      "formal": "\u2203\u011c(ext)"
+    },
+    {
+      "id": "P5",
+      "statement": "The external operator \u011c(ext) can flip the moral orientation from -1 to +1.",
+      "role": "Formal Expression",
+      "formal": "\u011c\\"
+    },
+    {
+      "id": "P6",
+      "statement": "Law VIII is a definition.",
+      "role": "Classification",
+      "formal": "Status: `definition`"
+    },
+    {
+      "id": "P7",
+      "statement": "This law depends on the definition of the Sign Operator (D8.1).",
+      "role": "Dependency Declaration",
+      "formal": "`depends_on: \"depends on anchor: D8.1 (Sign Operator)\"`"
+    },
+    {
+      "id": "P8",
+      "statement": "The law can be defeated by disproving binary sign, self-conservation, or the external flip requirement.",
+      "role": "Defeat Condition",
+      "formal": "Textual statement"
+    },
+    {
+      "id": "P9",
+      "statement": "The law's vulnerability is concentrated in its parent axioms.",
+      "role": "Limitation",
+      "formal": "Textual statement"
+    },
+    {
+      "id": "P10",
+      "statement": "The domain of this law is \"Unified.\"",
+      "role": "Classification",
+      "formal": "Domain: Unified"
+    },
+    {
+      "id": "P11",
+      "statement": "The law is part of the \"Master Laws\" chain tier.",
+      "role": "Dependency Chain",
+      "formal": "Chain Tier: 13 \u2014 Master Laws"
+    },
+    {
+      "id": "P12",
+      "statement": "The epistemic status of this law is `definition`.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `definition`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0052: D19.8",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.8 \u2014 Law VIII: Sign Algebra",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

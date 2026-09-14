@@ -1189,6 +1189,34 @@ class MissionControlHandler(http.server.SimpleHTTPRequestHandler):
         raw = self.rfile.read(length).decode("utf-8")
         payload = json.loads(raw) if raw else {}
 
+        if self.path == "/api/atlas-record/save":
+            node_id = str(payload.get("node_id") or "UNASSIGNED-NODE")
+            json_text = str(payload.get("json") or "")
+            markdown_text = str(payload.get("markdown") or "")
+            try:
+                record_uuid = str(payload.get("uuid") or "").strip()
+                if not record_uuid and json_text:
+                    parsed_record = json.loads(json_text)
+                    record_uuid = str(parsed_record.get("uuid") or "").strip()
+                portable_id = re.sub(r"[^A-Za-z0-9_-]+", "_", record_uuid).strip("_")[:120]
+                if not portable_id:
+                    portable_id = re.sub(r"[^A-Za-z0-9_-]+", "_", node_id).strip("_")[:120] or "UNASSIGNED-NODE"
+                local_app_data = Path(os.environ.get("LOCALAPPDATA", str(Path.home() / "AppData" / "Local")))
+                output_dir = local_app_data / "ClipSync" / "working" / "atom-builder"
+                output_dir.mkdir(parents=True, exist_ok=True)
+                outputs = {
+                    output_dir / f"{portable_id}.atlas.json": json_text,
+                    output_dir / f"{portable_id}.atlas.md": markdown_text,
+                }
+                for destination, content in outputs.items():
+                    temporary = destination.with_suffix(destination.suffix + ".tmp")
+                    temporary.write_text(content, encoding="utf-8")
+                    os.replace(temporary, destination)
+                self._json_response({"ok": True, "path": str(output_dir), "files": [str(path) for path in outputs]})
+            except Exception as exc:
+                self._json_response({"ok": False, "error": str(exc)}, status=500)
+            return
+
         if self.path.startswith("/api/atom-builder/"):
             pass_name = self.path.rsplit("/", 1)[-1]
             if pass_name not in {"builder", "audit", "regenerate"}:

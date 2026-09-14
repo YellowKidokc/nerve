@@ -1,0 +1,130 @@
+{
+  "title": "Chi Ontological Priority",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0058_P2.1_P2_1_Chi_Ontological_Priority.md",
+  "source_sha256": "05d0f5f804f9a46064823586b4ee12fa7d2d8b0c1ff75d848e6ac1387b98ed1c",
+  "captured_at": "2026-09-06T23:56:03.168155+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2157,
+    "completion_tokens": 2438,
+    "total_tokens": 4595,
+    "cost": 0.003248556597,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032813703,
+      "upstream_inference_prompt_cost": 0.0005715333,
+      "upstream_inference_completions_cost": 0.002709837
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The \u03c7-field exists.",
+      "role": "Framework postulate",
+      "formal": "\u03c7 exists."
+    },
+    {
+      "id": "P2",
+      "statement": "Physical fields (e.g., g_\u03bc\u03bd, A_\u03bc) exist.",
+      "role": "Empirical background assumption",
+      "formal": "g_\u03bc\u03bd, A_\u03bc exist."
+    },
+    {
+      "id": "P3",
+      "statement": "There exists an ontological ordering relation between entities.",
+      "role": "Framework postulate",
+      "formal": "A relation \">\" is defined for ontological priority."
+    },
+    {
+      "id": "P4",
+      "statement": "The \u03c7-field is ontologically prior to the metric field (g_\u03bc\u03bd).",
+      "role": "Central claim",
+      "formal": "\u03c7 > g_\u03bc\u03bd"
+    },
+    {
+      "id": "P5",
+      "statement": "The \u03c7-field is ontologically prior to the electromagnetic field (A_\u03bc).",
+      "role": "Central claim",
+      "formal": "\u03c7 > A_\u03bc"
+    },
+    {
+      "id": "P6",
+      "statement": "Standard physics has no such ontological ordering.",
+      "role": "Limiting assumption",
+      "formal": "Standard physics \u22ad (\u03c7 > g_\u03bc\u03bd, A_\u03bc)"
+    },
+    {
+      "id": "P7",
+      "statement": "The claim depends on the axiom of self-grounding (A2.2).",
+      "role": "Dependency assertion",
+      "formal": "P2.1 \u22a2 A2.2"
+    },
+    {
+      "id": "P8",
+      "statement": "The claim is a framework commitment, not an empirical finding.",
+      "role": "Epistemic status",
+      "formal": "Status(P2.1) = `property`"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim can be defeated by demonstrating physical fields without a \u03c7-substrate.",
+      "role": "Defeat condition",
+      "formal": "Defeat if \u2203 physical fields \u2227 \u00ac\u2203 \u03c7-substrate"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim is related to philosophical positions like idealism and panpsychism.",
+      "role": "Contextual reference",
+      "formal": "P2.1 \u2248 {Idealism, Panpsychism}"
+    },
+    {
+      "id": "P11",
+      "statement": "The \u03c7-field must have ontological priority over physical fields.",
+      "role": "Requirement tag",
+      "formal": "Requirement(\u03c7-field priority)"
+    },
+    {
+      "id": "P12",
+      "statement": "Adopting \u03c7-field priority is a framework decision.",
+      "role": "Decision tag",
+      "formal": "Decision(Adopt \u03c7 > physical)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0058: P2.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 P2.1 \u2014 Chi Ontological Priority",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

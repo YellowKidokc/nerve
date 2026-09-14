@@ -1,0 +1,130 @@
+{
+  "title": "Three Observers Required",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0006_BC4_BC4_Three_Observers_Required.md",
+  "source_sha256": "a396387e266d7e92fd55264f64a4ad59b8bd5198c36b7904a90ee318615436a8",
+  "captured_at": "2026-09-06T23:04:04.142011+00:00",
+  "tags": [
+    "information-theory",
+    "quantum-foundations"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2405,
+    "completion_tokens": 2294,
+    "total_tokens": 4699,
+    "cost": 0.003406425165,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0034408335,
+      "upstream_inference_prompt_cost": 0.0008910525,
+      "upstream_inference_completions_cost": 0.002549781
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Complete measurement closure requires exactly three observer-operators.",
+      "role": "Central Statement",
+      "formal": "`N_observers = 3 for complete measurement closure`"
+    },
+    {
+      "id": "P2",
+      "statement": "N=3 is a boundary condition.",
+      "role": "Maximum Defensible Position",
+      "formal": "`N_observers = 3` (as a boundary)"
+    },
+    {
+      "id": "P3",
+      "statement": "The perichoretic requirement goes beyond N=3 \u2014 it specifies the RELATIONSHIP between the three.",
+      "role": "Limitation / Clarification",
+      "formal": "(No formal expression given)"
+    },
+    {
+      "id": "P4",
+      "statement": "This axiom depends on a core root (\u2205).",
+      "role": "Dependency Declaration",
+      "formal": "`depends_on: \"\u2205 (core root)\"`"
+    },
+    {
+      "id": "P5",
+      "statement": "The axiom's domain is Divine.",
+      "role": "Classification",
+      "formal": "`Domain: Divine`"
+    },
+    {
+      "id": "P6",
+      "statement": "The axiom's epistemic status is `boundary`.",
+      "role": "Classification",
+      "formal": "`Status: boundary`"
+    },
+    {
+      "id": "P7",
+      "statement": "The axiom is of Atlas Type `Boundary Condition`.",
+      "role": "Classification",
+      "formal": "`Atlas Type: \"Boundary Condition\"`"
+    },
+    {
+      "id": "P8",
+      "statement": "The axiom is of Mode `AX_CORE`.",
+      "role": "Classification",
+      "formal": "`Mode: \"AX_CORE\"`"
+    },
+    {
+      "id": "P9",
+      "statement": "The axiom is part of Chain Tier 8 \u2014 Boundary Conditions.",
+      "role": "Structural Context",
+      "formal": "(Descriptive)"
+    },
+    {
+      "id": "P10",
+      "statement": "References include Shannon (error correction N=3), Hamming codes, Quantum error correction, and the Nicene Creed.",
+      "role": "External Justification",
+      "formal": "(Citation list)"
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is showing N\u22603 suffices for closure.",
+      "role": "Falsification Condition",
+      "formal": "(Descriptive)"
+    },
+    {
+      "id": "P12",
+      "statement": "A defeat condition is demonstrating measurement completion with fewer observers.",
+      "role": "Falsification Condition",
+      "formal": "(Descriptive)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0006: BC4",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 BC4 \u2014 Three Observers Required",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

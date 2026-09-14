@@ -1,0 +1,130 @@
+{
+  "title": "Matter-Energy Derivative",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0056_LN1.1_LN1_1_Matter-Energy_Derivative.md",
+  "source_sha256": "e806509d0f8bb29890263466e0d661674bb9bc14fa41fcf06e5cff8432f28591",
+  "captured_at": "2026-09-06T23:54:25.860705+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2363,
+    "completion_tokens": 2465,
+    "total_tokens": 4828,
+    "cost": 0.003353826762,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033877038,
+      "upstream_inference_prompt_cost": 0.0006478563,
+      "upstream_inference_completions_cost": 0.0027398475
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Matter is derivative of information.",
+      "role": "Central Claim",
+      "formal": "Derivative(m, Information)"
+    },
+    {
+      "id": "P2",
+      "statement": "Energy is derivative of information.",
+      "role": "Central Claim",
+      "formal": "Derivative(E, Information)"
+    },
+    {
+      "id": "P3",
+      "statement": "Information is more fundamental than matter and energy.",
+      "role": "Maximum Defensible Position",
+      "formal": "Information \u227b {m, E} (ontological precedence)"
+    },
+    {
+      "id": "P4",
+      "statement": "The claim depends on A1.1 (Existence).",
+      "role": "Dependency Chain",
+      "formal": "depends_on(LN1.1, A1.1)"
+    },
+    {
+      "id": "P5",
+      "statement": "The claim depends on A1.2 (Distinction).",
+      "role": "Dependency Chain",
+      "formal": "depends_on(LN1.1, A1.2)"
+    },
+    {
+      "id": "P6",
+      "statement": "Distinction is an informational operation.",
+      "role": "Inferred from Dependency",
+      "formal": "is_a(Distinction, Informational_Operation)"
+    },
+    {
+      "id": "P7",
+      "statement": "Standard physics treats matter/energy as fundamental.",
+      "role": "Limitation/Context",
+      "formal": "Fundamental_StandardPhysics({m, E})"
+    },
+    {
+      "id": "P8",
+      "statement": "\"It from Bit\" is a minority ontological view.",
+      "role": "Limitation/Context",
+      "formal": "Status(\"It from Bit\", MinorityView)"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is classified as a Logical Necessity.",
+      "role": "Classification",
+      "formal": "Atlas_Type(LN1.1, Logical_Necessity)"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim's defeat condition is showing matter/energy is more fundamental than information.",
+      "role": "Defeat Conditions",
+      "formal": "Defeat_if(MoreFundamental({m, E}, Information))"
+    },
+    {
+      "id": "P11",
+      "statement": "Wheeler and Verlinde (2010) are referenced intellectual sources.",
+      "role": "References",
+      "formal": "Cites(LN1.1, {Wheeler, Verlinde2010})"
+    },
+    {
+      "id": "P12",
+      "statement": "The claim is a framework commitment, not an empirical fact.",
+      "role": "Classification",
+      "formal": "Mathematical_Use(LN1.1, Framework_commitment)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0056: LN1.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 LN1.1 \u2014 Matter-Energy Derivative",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

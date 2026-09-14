@@ -1,0 +1,33 @@
+{
+  "title": "Terminal Observer Exists",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0085_BC1_BC1_Terminal_Observer_Exists.md",
+  "source_sha256": "233d36a3a58aee12504a06ecc8f52a1a80238aad57634bfe8d5997ce6a9097ed",
+  "captured_at": "2026-09-07T00:16:55.192617+00:00",
+  "word_count": 377,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0085: BC1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 BC1 \u2014 Terminal Observer Exists",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

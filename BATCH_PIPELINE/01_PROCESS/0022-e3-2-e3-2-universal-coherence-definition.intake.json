@@ -1,0 +1,34 @@
+{
+  "title": "Universal Coherence Definition",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0022_E3.2_E3_2_Universal_Coherence_Definition.md",
+  "source_sha256": "d4efd52e9ffb8100a057ad28fab1f335c6a8ac7f263fd96894b06a93eb69a985",
+  "captured_at": "2026-09-06T23:22:08.674711+00:00",
+  "word_count": 403,
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0022: E3.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E3.2 \u2014 Universal Coherence Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

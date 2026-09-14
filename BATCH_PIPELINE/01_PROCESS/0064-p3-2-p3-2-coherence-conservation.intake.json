@@ -1,0 +1,33 @@
+{
+  "title": "Coherence Conservation",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0064_P3.2_P3_2_Coherence_Conservation.md",
+  "source_sha256": "3fc16ce0a6ab3a2e045983883c52df75b24a3560b643db64a36ef07e9285eb0d",
+  "captured_at": "2026-09-06T23:59:55.350566+00:00",
+  "word_count": 378,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0064: P3.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 P3.2 \u2014 Coherence Conservation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

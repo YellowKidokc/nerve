@@ -1,0 +1,129 @@
+{
+  "title": "Participatory Universe",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0071_A5.2_A5_2_Participatory_Universe.md",
+  "source_sha256": "a627b03bdf8f6acfaa7cb32d02a7dbb4aab15a2e3dddfb0bbce5fab91b3b8427",
+  "captured_at": "2026-09-07T00:04:54.507895+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2245,
+    "completion_tokens": 2407,
+    "total_tokens": 4652,
+    "cost": 0.003246722622,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032795178,
+      "upstream_inference_prompt_cost": 0.0006041373,
+      "upstream_inference_completions_cost": 0.0026753805
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The universe is participatory.",
+      "role": "Statement / Central Claim",
+      "formal": "`Universe is participatory`"
+    },
+    {
+      "id": "P2",
+      "statement": "Observers co-create reality through observation.",
+      "role": "Statement / Central Claim",
+      "formal": "`Reality = co_creation(Observer, Observation)`"
+    },
+    {
+      "id": "P3",
+      "statement": "Reality is a function of a fundamental substrate (\u03c7) and an Observer.",
+      "role": "Formal Expression",
+      "formal": "`Reality = f(\u03c7, Observer)`"
+    },
+    {
+      "id": "P4",
+      "statement": "This claim is a framework commitment.",
+      "role": "Maximum Defensible Position / Classification",
+      "formal": "`epistemic_status(framework_commitment)`"
+    },
+    {
+      "id": "P5",
+      "statement": "The claim's domain is Ontological.",
+      "role": "Classification",
+      "formal": "`domain(Ontological)`"
+    },
+    {
+      "id": "P6",
+      "statement": "The claim depends on A5.1 (Observation Requirement).",
+      "role": "Dependency Chain",
+      "formal": "`depends_on(A5.2, A5.1)`"
+    },
+    {
+      "id": "P7",
+      "statement": "The claim is defeated if reality is shown to be independent of all observers.",
+      "role": "Defeat Conditions",
+      "formal": "`defeat_if(\u2200 observer: Reality_independent)`"
+    },
+    {
+      "id": "P8",
+      "statement": "The Many-Worlds Interpretation (MWI) denies this claim.",
+      "role": "Limitations",
+      "formal": "`\u00acclaim(MWI)`"
+    },
+    {
+      "id": "P9",
+      "statement": "Bohmian mechanics denies this claim.",
+      "role": "Limitations",
+      "formal": "`\u00acclaim(Bohmian)`"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim finds support in Wheeler (1983), Copenhagen interpretation, and QBism.",
+      "role": "References",
+      "formal": "`supports(Wheeler, Copenhagen, QBism)`"
+    },
+    {
+      "id": "P11",
+      "statement": "Observers exist.",
+      "role": "Inferred from Assumption Tag",
+      "formal": "`\u2203 Observer`"
+    },
+    {
+      "id": "P12",
+      "statement": "Observation affects reality.",
+      "role": "Inferred from Assumption Tag",
+      "formal": "`Observation \u2192 \u0394Reality`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0071: A5.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A5.2 \u2014 Participatory Universe",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

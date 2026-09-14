@@ -1,0 +1,31 @@
+{
+  "title": "Existence",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0001_A1_1_Existence.md",
+  "source_sha256": "f80836ed4da87ae1d91382f73102320ce76195cd740c9540ad5e7ce9257d78df",
+  "captured_at": "2026-09-06T22:58:18.050853+00:00",
+  "word_count": 351,
+  "tags": [],
+  "source_outline": [
+    "Canonical Sequential Record 0001: A1.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A1.1 \u2014 Existence",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

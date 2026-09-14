@@ -1,0 +1,130 @@
+{
+  "title": "Measurement Orthogonality",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0086_BC3_BC3_Measurement_Orthogonality.md",
+  "source_sha256": "7248ef3830fe37185aeb938937364e96a93005d64134610ed9e522bcc38c0fa0",
+  "captured_at": "2026-09-07T00:18:37.301626+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2131,
+    "completion_tokens": 2375,
+    "total_tokens": 4506,
+    "cost": 0.003169695672,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032017128,
+      "upstream_inference_prompt_cost": 0.0005619003,
+      "upstream_inference_completions_cost": 0.0026398125
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Measurements must be orthogonal.",
+      "role": "Central Axiom",
+      "formal": "`\u27e8m_i"
+    },
+    {
+      "id": "P2",
+      "statement": "Measurement axes are independent.",
+      "role": "Interpretation of orthogonality",
+      "formal": "Independence of `m_i` and `m_j` for i \u2260 j"
+    },
+    {
+      "id": "P3",
+      "statement": "This is a boundary condition of the system.",
+      "role": "Classification",
+      "formal": "Status: `boundary`; Domain: `Divine`"
+    },
+    {
+      "id": "P4",
+      "statement": "The axiom depends on A5.1 (Observation Requirement).",
+      "role": "Dependency Link",
+      "formal": "`depends_on: \"A5.1\"`"
+    },
+    {
+      "id": "P5",
+      "statement": "The axiom depends on A6.2 (Collapse).",
+      "role": "Dependency Link",
+      "formal": "`depends_on: \"A6.2\"`"
+    },
+    {
+      "id": "P6",
+      "statement": "The axiom is a framework commitment.",
+      "role": "Classification",
+      "formal": "Mathematical Use: `Framework commitment`"
+    },
+    {
+      "id": "P7",
+      "statement": "The axiom's epistemic status is `boundary`.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `boundary`"
+    },
+    {
+      "id": "P8",
+      "statement": "The axiom can be defeated if non-orthogonal measurement suffices.",
+      "role": "Defeat Condition",
+      "formal": "\"Show non-orthogonal measurement suffices.\""
+    },
+    {
+      "id": "P9",
+      "statement": "This is a standard QM constraint applied to the BC system.",
+      "role": "Limitation",
+      "formal": "\"Standard QM constraint applied to the BC system.\""
+    },
+    {
+      "id": "P10",
+      "statement": "The axiom is part of the FW_EXTENDED mode.",
+      "role": "System Mode",
+      "formal": "Mode: `FW_EXTENDED`"
+    },
+    {
+      "id": "P11",
+      "statement": "The axiom is classified as a Boundary Condition in the Atlas.",
+      "role": "Object Type",
+      "formal": "Atlas Object Type: `Boundary Condition`"
+    },
+    {
+      "id": "P12",
+      "statement": "The axiom anchors the dependency chain A5.1 \u2192 A6.2.",
+      "role": "Structural Role",
+      "formal": "Anchor: `A5.1 \u2192 A6.2`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0086: BC3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 BC3 \u2014 Measurement Orthogonality",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

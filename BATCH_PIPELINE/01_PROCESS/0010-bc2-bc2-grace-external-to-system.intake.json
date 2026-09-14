@@ -1,0 +1,33 @@
+{
+  "title": "Grace External To System",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0010_BC2_BC2_Grace_External_To_System.md",
+  "source_sha256": "0ef7596bc44897cbc6c3ea131c28b26bd43dc274ae457cc34015e0b7e3b9cc2b",
+  "captured_at": "2026-09-06T23:08:40.264320+00:00",
+  "word_count": 372,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0010: BC2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 BC2 \u2014 Grace External To System",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

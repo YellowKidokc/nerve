@@ -1,0 +1,130 @@
+{
+  "title": "Information Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0013_D1.1_D1_1_Information_Definition.md",
+  "source_sha256": "3c655539e3e28695e2d18378823279769c33ca2211bb146985ab93eae97af91d",
+  "captured_at": "2026-09-06T23:12:39.750560+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2360,
+    "completion_tokens": 2595,
+    "total_tokens": 4955,
+    "cost": 0.003495776427,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035310873,
+      "upstream_inference_prompt_cost": 0.0006467448,
+      "upstream_inference_completions_cost": 0.0028843425
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Information is defined as resolved uncertainty.",
+      "role": "Core Definition",
+      "formal": "`I(x) = log\u2082(1/p(x))`"
+    },
+    {
+      "id": "P2",
+      "statement": "Shannon entropy is the measure of information for an ensemble.",
+      "role": "Formal Extension",
+      "formal": "`H(X) = -\u03a3 p(x) log\u2082 p(x)`"
+    },
+    {
+      "id": "P3",
+      "statement": "This definition depends on the concepts of Existence (A1.1) and Distinction (A1.2).",
+      "role": "Dependency Assertion",
+      "formal": "`D1.1 \u22a2 (A1.1 \u2227 A1.2)`"
+    },
+    {
+      "id": "P4",
+      "statement": "Shannon information is syntactic, not semantic.",
+      "role": "Limiting Property",
+      "formal": "N/A (descriptive property)"
+    },
+    {
+      "id": "P5",
+      "statement": "The framework requires a definition for semantic information in addition to this syntactic one.",
+      "role": "Framework Requirement",
+      "formal": "N/A (system requirement)"
+    },
+    {
+      "id": "P6",
+      "statement": "The definition is formalized using the Shannon entropy formula.",
+      "role": "Implementation Rule",
+      "formal": "Formula must be `I(x) = log\u2082(1/p(x)); H(X) = -\u03a3p\u00b7log p`"
+    },
+    {
+      "id": "P7",
+      "statement": "This record has the status of a `definition` within the system.",
+      "role": "Epistemic Status",
+      "formal": "`status: \"definition\"`"
+    },
+    {
+      "id": "P8",
+      "statement": "This record belongs to the `Primordial` domain of the system.",
+      "role": "Domain Classification",
+      "formal": "`domain: \"Primordial\"`"
+    },
+    {
+      "id": "P9",
+      "statement": "The definition can be defeated by showing information is better defined another way.",
+      "role": "Defeat Condition",
+      "formal": "N/A (metacondition)"
+    },
+    {
+      "id": "P10",
+      "statement": "The definition can be defeated by demonstrating Shannon entropy is the wrong measure.",
+      "role": "Defeat Condition",
+      "formal": "N/A (metacondition)"
+    },
+    {
+      "id": "P11",
+      "statement": "Adopting Shannon entropy as the definition of information is a formal decision.",
+      "role": "System Decision",
+      "formal": "`tag::Decision::...\"Adopt Shannon entropy...\"`"
+    },
+    {
+      "id": "P12",
+      "statement": "Shannon entropy may be the wrong measure of information.",
+      "role": "Acknowledged Risk",
+      "formal": "`tag::Risk::...\"Shannon entropy may be the wrong measure...\"`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0013: D1.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D1.1 \u2014 Information Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

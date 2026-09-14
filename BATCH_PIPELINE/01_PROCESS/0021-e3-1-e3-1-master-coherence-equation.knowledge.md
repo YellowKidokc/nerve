@@ -1,0 +1,153 @@
+---
+type: axiom_companion
+title: "Master Coherence Equation"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: pending_ai_analysis
+source_file: "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0021_E3.1_E3_1_Master_Coherence_Equation.md"
+source_sha256: 308eed3ae83fa337b50aaea37952b4b859546f7a722e78235b0da50edaaa76bd
+captured_at: 2026-09-06T23:21:20.639700+00:00
+tags: ["systems"]
+---
+
+# Master Coherence Equation
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** Source preserved below. Analytical case file pending.
+
+## Intake assessment
+
+- Inferred type: `axiom_companion`
+- Routing confidence: `0.98`
+- Signals: canonical axiom record, sealed v2.3 authority, axiom companion layout
+- Original words: `388`
+- Original SHA-256: `308eed3ae83fa337b50aaea37952b4b859546f7a722e78235b0da50edaaa76bd`
+
+## Source outline
+
+- Canonical Sequential Record 0021: E3.1
+- Sequence Navigation
+- Registered Dependency Links
+- Canonical Source Text
+- 📐 E3.1 — Master Coherence Equation
+- Statement
+- Formal Expression
+- Maximum Defensible Position
+- Classification
+- Dependency Chain
+- References
+- Defeat Conditions
+- Limitations (from workbook)
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0021: E3.1
+
+| Field | Value |
+|---|---|
+| Registry position | 21 of 191 |
+| Canonical ID | `E3.1` |
+| Mode | `AX_SCAFFOLD` |
+| Canonical source filename | `E3_1_Master_Coherence_Equation.md` |
+| Source SHA-256 | `968bac893d2bdeab397eb5e503a7dd06b8af3c357290fcb7907f3bae2a3dc71f` |
+
+## Sequence Navigation
+
+Previous: [0020 - D3.3 - Interaction Lagrangian](0020_D3.3_D3_3_Interaction_Lagrangian.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0022 - E3.2 - Universal Coherence Definition](0022_E3.2_E3_2_Universal_Coherence_Definition.md)
+
+## Registered Dependency Links
+
+[A2.2 - Self-Grounding](0004_A2.2_A2_2_Self-Grounding.md); [D3.1 - Coherence Functional Definition](0018_D3.1_D3_1_Coherence_Functional_Definition.md)
+
+## Canonical Source Text
+
+---
+id: "E3.1"
+legacy_id: "AX-021"
+title: "Master Coherence Equation"
+mode: "AX_SCAFFOLD"
+atlas_type: "Equation"
+status: "equation"
+domain: "Ontological"
+anchor: "A2.2 (Self-Grounding)"
+depends_on: "A2.2, D3.1"
+date: "2026-08-17"
+---
+
+# 📐 E3.1 — Master Coherence Equation
+
+**Mode:** `AX_SCAFFOLD` | **Atlas Type:** `Equation` | **Status:** `equation`
+**Domain:** Ontological | **Legacy ID:** `AX-021`
+
+---
+
+## Statement
+
+Master coherence equation — coherence dynamics with decay and source terms.
+
+## Formal Expression
+
+```
+dC/dt = -Γ_decay·C + Γ_source·J(χ)
+```
+
+$$
+\frac{dC}{dt} = -Γ_decay·C + Γ_source·J(χ)
+$$
+
+## Maximum Defensible Position
+
+Model: Coherence dynamics equation.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `AX_SCAFFOLD` |
+| **Atlas Object Type** | `Equation` |
+| **Workbook Role** | `EQUATION/PREDICTION` |
+| **Mathematical Use** | Mathematical model |
+| **Epistemic Status** | `equation` |
+| **Domain** | Ontological |
+
+## Dependency Chain
+
+**Anchor:** A2.2 (Self-Grounding)
+**Depends On:** A2.2, D3.1
+**Chain Tier:** 4 — Coherence System
+
+## References
+
+Rate equations; Open systems dynamics
+
+## Defeat Conditions
+
+Show coherence dynamics don't follow this form. Demonstrate missing terms.
+
+## Limitations (from workbook)
+
+Linear approximation. Nonlinear effects may be important at high coherence.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::6fc0476b-8817-4097-b620-382f162df99f::"Coherence dynamics must follow the master coherence equation form dC/dt = -Γ_decay·C + Γ_source·J(χ)"::null::@Engineering%%
+%%tag::Requirement::cd838863-da8c-4c9d-b676-a7516553c37b::"Coherence dynamics must include decay and source terms"::null::@Engineering%%
+%%tag::Decision::8ed94528-473c-490a-8c88-a22f630beacc::"Adopt linear approximation for coherence dynamics equation"::null::@Engineering%%
+%%tag::Dependency::010f7277-6ab0-498d-a992-f5cc450b7623::"Depends on A2.2 (Self-Grounding)"::null::@Engineering%%
+%%tag::Dependency::57615bda-6e3b-482c-a1b6-64989354bcc5::"Depends on D3.1 (Coherence Functional Definition)"::null::@Engineering%%
+%%tag::Risk::98188149-6efb-442a-a9f0-757dd0df57ca::"Nonlinear effects may be important at high coherence, potentially invalidating the linear approximation"::null::@Engineering%%
+%%tag::Risk::3f23ef31-cb35-4b1d-842b-4aa71f3f5010::"Coherence dynamics may not follow the specified form, or missing terms may exist"::null::@Engineering%%
+%%tag::Assumption::be413678-224b-47da-989d-4ec7d6c50ed4::"Coherence dynamics can be adequately modeled with a linear approximation"::null::@Engineering%%
+%%tag::OpenQuestion::7cd2695d-d7ea-4d59-b2eb-7bc524b56629::"Whether coherence dynamics follow the specified equation form"::null::@Engineering%%
+%%tag::OpenQuestion::671a0a56-4d4e-4e24-8b16-7888c9b41540::"Whether there are missing terms in the coherence dynamics equation"::null::@Engineering%%
+%%--- END SEMANTIC TAGS ---%%
+
+<!-- END EXACT SOURCE PROJECTION -->

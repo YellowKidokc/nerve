@@ -1,0 +1,35 @@
+{
+  "title": "Bit Definition",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0014_D1.2_D1_2_Bit_Definition.md",
+  "source_sha256": "c1c3be4ebf13fcda2afec364a6bed5ccd2e41dd4dd4269d5bf6d3e81a0759cd3",
+  "captured_at": "2026-09-06T23:12:39.759567+00:00",
+  "word_count": 409,
+  "tags": [
+    "information-theory",
+    "quantum-foundations",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0014: D1.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D1.2 \u2014 Bit Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

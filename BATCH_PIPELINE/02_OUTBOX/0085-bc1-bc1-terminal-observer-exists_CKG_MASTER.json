@@ -1,0 +1,129 @@
+{
+  "title": "Terminal Observer Exists",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0085_BC1_BC1_Terminal_Observer_Exists.md",
+  "source_sha256": "233d36a3a58aee12504a06ecc8f52a1a80238aad57634bfe8d5997ce6a9097ed",
+  "captured_at": "2026-09-07T00:17:47.895913+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2366,
+    "completion_tokens": 2454,
+    "total_tokens": 4820,
+    "cost": 0.003342822912,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033765888,
+      "upstream_inference_prompt_cost": 0.0006489678,
+      "upstream_inference_completions_cost": 0.002727621
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A terminal observer exists.",
+      "role": "Central Axiom",
+      "formal": "\\(\\exists O_T\\)"
+    },
+    {
+      "id": "P2",
+      "statement": "The terminal observer observes all.",
+      "role": "Property of \\(O_T\\)",
+      "formal": "\\(Observes(O_T, all)\\)"
+    },
+    {
+      "id": "P3",
+      "statement": "No other observer independently observes the terminal observer.",
+      "role": "Property of \\(O_T\\)",
+      "formal": "\\(\\neg \\exists O': Observes(O', O_T) \\text{ independently}\\)"
+    },
+    {
+      "id": "P4",
+      "statement": "The existence of a terminal observer is a framework commitment.",
+      "role": "Classification",
+      "formal": "Mode: `FW_EXTENDED`"
+    },
+    {
+      "id": "P5",
+      "statement": "The terminal observer is necessary for closure.",
+      "role": "Dependency Inference",
+      "formal": "Depends on LN6.1, A7.1"
+    },
+    {
+      "id": "P6",
+      "statement": "The claim is a boundary condition in the Divine domain.",
+      "role": "Classification",
+      "formal": "Atlas Type: `Boundary Condition`; Domain: `Divine`"
+    },
+    {
+      "id": "P7",
+      "statement": "The claim is not an AX_CORE axiom.",
+      "role": "Status Limitation",
+      "formal": "Mode: `FW_EXTENDED`, not `AX_CORE`"
+    },
+    {
+      "id": "P8",
+      "statement": "The claim is an identification claim under test.",
+      "role": "Epistemic Status",
+      "formal": "Status: `boundary`"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim can be defeated by showing no terminal observer is needed.",
+      "role": "Defeat Condition",
+      "formal": "Logical negation of necessity"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim references theistic arguments.",
+      "role": "Contextual Support",
+      "formal": "Citation: \"Theistic arguments\""
+    },
+    {
+      "id": "P11",
+      "statement": "The claim references von Neumann (1932).",
+      "role": "Contextual Support",
+      "formal": "Citation: \"Von Neumann 1932\""
+    },
+    {
+      "id": "P12",
+      "statement": "The framework requires closure to avoid infinite regress.",
+      "role": "Premise (from A7.1)",
+      "formal": "\\( \\text{Closure Requirement}(system) \\)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0085: BC1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 BC1 \u2014 Terminal Observer Exists",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "title": "Universe As Compression Algorithm",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0070_LN4.1_LN4_1_Universe_As_Compression_Algorithm.md",
+  "source_sha256": "e16e8c0b8605b1cfc38a529422b2712e6d350e927434639d51e6e7c82cc0f664",
+  "captured_at": "2026-09-07T00:04:07.720645+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2387,
+    "completion_tokens": 2754,
+    "total_tokens": 5141,
+    "cost": 0.003680641107,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037178193,
+      "upstream_inference_prompt_cost": 0.0006567483,
+      "upstream_inference_completions_cost": 0.003061071
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The universe is a compression algorithm.",
+      "role": "Core ontological claim",
+      "formal": "`Universe = compression_algorithm(self)`"
+    },
+    {
+      "id": "P2",
+      "statement": "The universe computes the simplest description of itself.",
+      "role": "Core operational claim",
+      "formal": "`Universe = min_K(self-description)`"
+    },
+    {
+      "id": "P3",
+      "statement": "The universe is self-grounding (depends on A2.2).",
+      "role": "Foundational premise",
+      "formal": "`Universe \u22a2 Explanation(Universe)`"
+    },
+    {
+      "id": "P4",
+      "statement": "Physical laws are low-Kolmogorov-complexity descriptions (depends on T4.1).",
+      "role": "Supporting premise",
+      "formal": "`Laws(Physics) = argmin K(description)`"
+    },
+    {
+      "id": "P5",
+      "statement": "The action principle selects paths of minimal description length (depends on T4.2).",
+      "role": "Supporting premise",
+      "formal": "`S = \u222b L dt \u2192 min K(path_description)`"
+    },
+    {
+      "id": "P6",
+      "statement": "This claim is a logical necessity within the framework.",
+      "role": "Epistemic status",
+      "formal": "`Status(LN4.1) = logical_necessity`"
+    },
+    {
+      "id": "P7",
+      "statement": "The claim is testable in principle via cosmic complexity measures.",
+      "role": "Empirical bridge",
+      "formal": "`Testable(\u2203 metric: cosmic_complexity \u2192 compression_ratio)`"
+    },
+    {
+      "id": "P8",
+      "statement": "A defeat condition is demonstrating the universe isn't compressing.",
+      "role": "Falsifiability condition",
+      "formal": "`Defeat \u21d4 \u00accompressing(Universe)`"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is very strong.",
+      "role": "Risk assessment",
+      "formal": "`Strength(claim) = high`"
+    },
+    {
+      "id": "P10",
+      "statement": "The framework references digital physics (Zuse, Wolfram) and \"It from Bit.\"",
+      "role": "Intellectual lineage",
+      "formal": "`Lineage \u2286 {Digital_Physics, It_from_Bit}`"
+    },
+    {
+      "id": "P11",
+      "statement": "The universe's description is recursive (self-description).",
+      "role": "Structural property",
+      "formal": "`description(Universe) \u2287 Universe`"
+    },
+    {
+      "id": "P12",
+      "statement": "The minimal description is an optimization target.",
+      "role": "Functional property",
+      "formal": "`Universe \u2192 argmin K`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0070: LN4.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 LN4.1 \u2014 Universe As Compression Algorithm",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

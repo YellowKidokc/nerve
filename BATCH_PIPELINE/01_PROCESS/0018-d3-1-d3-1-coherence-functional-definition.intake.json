@@ -1,0 +1,33 @@
+{
+  "title": "Coherence Functional Definition",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0018_D3.1_D3_1_Coherence_Functional_Definition.md",
+  "source_sha256": "365b2300b337f9f5c9af3864bd6dcd63878b2aac502f9918fcd5f1cc31ed2ae4",
+  "captured_at": "2026-09-06T23:17:56.761201+00:00",
+  "word_count": 379,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0018: D3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D3.1 \u2014 Coherence Functional Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

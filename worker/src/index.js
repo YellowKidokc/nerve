@@ -25,6 +25,10 @@
  * Auth: Bearer token in Authorization header, checked against NERVE_API_TOKEN secret.
  */
 
+const DEFAULT_AI_MODEL = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
+const STRUCTURED_AI_MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
+const MAX_PROMPT_CHARS = 60000;
+
 export default {
   async fetch(request, env) {
     // CORS preflight
@@ -50,6 +54,37 @@ export default {
     }
 
     try {
+      if (path === '/api/ai' && request.method === 'POST') {
+        ensureAiBinding(env);
+        const body = await request.json();
+        const prompt = String(body.prompt || '').trim();
+        const systemPrompt = String(body.system_prompt || 'You are an expert epistemologist and formal ontologist.').trim();
+        if (!prompt) return corsJson({ error: 'prompt is required' }, 400);
+        if (prompt.length > MAX_PROMPT_CHARS) return corsJson({ error: 'prompt is too large' }, 413);
+        const model = chooseAiModel(systemPrompt);
+        const result = await runDeepSeek(env, prompt, systemPrompt);
+        return corsJson({ ok: true, provider: 'cloudflare-workers-ai', model, response: result, generated_at: new Date().toISOString() });
+      }
+
+      if (path === '/api/harvest' && request.method === 'POST') {
+        ensureAiBinding(env);
+        const body = await request.json();
+        const sourceText = String(body.text || '').trim();
+        const maxPredicates = clampNumber(body.max_predicates, 1, 40, 20);
+        if (!sourceText) return corsJson({ error: 'text is required' }, 400);
+        if (sourceText.length > MAX_PROMPT_CHARS) return corsJson({ error: 'text is too large' }, 413);
+        const prompt = [
+          `Extract at most ${maxPredicates} independently reviewable truth predicates from the source below.`,
+          'Return only a JSON array of concise strings. Do not include markdown, commentary, or a code fence.',
+          'Do not merge claims that could stand or fail independently.',
+          '',
+          sourceText,
+        ].join('\n');
+        const raw = await runDeepSeek(env, prompt, 'You decompose source material into atomic, faithful, non-duplicative claims.');
+        const predicates = parsePredicateArray(raw).slice(0, maxPredicates);
+        if (!predicates.length) return corsJson({ error: 'DeepSeek returned no parseable predicates', raw_response: raw }, 502);
+        return corsJson({ ok: true, provider: 'cloudflare-workers-ai', model: DEFAULT_AI_MODEL, predicates, generated_at: new Date().toISOString() });
+      }
       // ── CLIPBOARD ──
 
       // POST /clipboard/push — add a clip to history
@@ -179,6 +214,8 @@ export default {
         return corsJson({
           service: 'nerve-sync-api',
           status: 'ok',
+          ai: Boolean(env.AI),
+          ai_model: DEFAULT_AI_MODEL,
           timestamp: new Date().toISOString(),
         });
       }
@@ -192,6 +229,60 @@ export default {
 };
 
 // ── Helpers ──
+
+function ensureAiBinding(env) {
+  if (!env.AI || typeof env.AI.run !== 'function') throw new Error('Cloudflare Workers AI binding is not configured');
+}
+
+async function runDeepSeek(env, prompt, systemPrompt) {
+  const model = chooseAiModel(systemPrompt);
+  const options = {
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: prompt },
+    ],
+    max_tokens: 8192,
+    temperature: 0.1,
+  };
+  if (model === STRUCTURED_AI_MODEL) options.response_format = { type: 'json_object' };
+  const result = await env.AI.run(model, options);
+  const structuredResult = model === STRUCTURED_AI_MODEL && result && typeof result === 'object'
+    ? (result.response ?? result)
+    : null;
+  const response = typeof result === 'string'
+    ? result
+    : typeof result?.response === 'string'
+      ? result.response
+      : structuredResult
+        ? JSON.stringify(structuredResult)
+        : '';
+  if (!response) throw new Error('AI model returned an empty response');
+  return response.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+}
+
+function chooseAiModel(systemPrompt) {
+  return String(systemPrompt || '').includes('neutral epistemic intake instrument')
+    ? STRUCTURED_AI_MODEL
+    : DEFAULT_AI_MODEL;
+}
+
+function parsePredicateArray(raw) {
+  const cleaned = String(raw || '').replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  const start = cleaned.indexOf('[');
+  const end = cleaned.lastIndexOf(']');
+  if (start === -1 || end <= start) return [];
+  try {
+    const parsed = JSON.parse(cleaned.slice(start, end + 1));
+    return Array.isArray(parsed) ? parsed.map(value => String(value).trim()).filter(Boolean) : [];
+  } catch {
+    return [];
+  }
+}
+
+function clampNumber(value, min, max, fallback) {
+  const number = Number.parseInt(value, 10);
+  return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback;
+}
 
 async function kvGetJson(kv, key) {
   const raw = await kv.get(key);

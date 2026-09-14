@@ -1,0 +1,129 @@
+{
+  "title": "Information Conservation",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0011_BC7_BC7_Information_Conservation.md",
+  "source_sha256": "1d9d60446486c30bbfc365d000ab78d08c6cc0b8b28c86e86c8578a2205407d2",
+  "captured_at": "2026-09-06T23:11:03.642010+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2230,
+    "completion_tokens": 2326,
+    "total_tokens": 4556,
+    "cost": 0.00337744836,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.003411564,
+      "upstream_inference_prompt_cost": 0.000826215,
+      "upstream_inference_completions_cost": 0.002585349
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Total information is conserved.",
+      "role": "Central claim",
+      "formal": "\\( dI_{\\text{total}}/dt = 0 \\)"
+    },
+    {
+      "id": "P2",
+      "statement": "Information is neither created nor destroyed.",
+      "role": "Elaboration of central claim",
+      "formal": "\\( \\Delta I_{\\text{total}} = 0 \\)"
+    },
+    {
+      "id": "P3",
+      "statement": "The terminal observer preserves all information.",
+      "role": "Statement",
+      "formal": "\\( \\text{TerminalObserver} \\models \\text{Preserves}(I_{\\text{total}}) \\)"
+    },
+    {
+      "id": "P4",
+      "statement": "BC7 is derived from BC6 (Infinite Energy Source).",
+      "role": "Dependency declaration",
+      "formal": "\\( \\text{BC6} \\vdash \\text{BC7} \\)"
+    },
+    {
+      "id": "P5",
+      "statement": "An infinite energy source preserves information.",
+      "role": "Maximum defensible position",
+      "formal": "\\( \\text{InfiniteEnergy} \\rightarrow \\text{Preserves}(I) \\)"
+    },
+    {
+      "id": "P6",
+      "statement": "The black hole information paradox is the strongest test case for this principle.",
+      "role": "Limitation",
+      "formal": "Test: BH evaporation \\(\\rightarrow\\) \\( I_{\\text{total}} \\) conserved?"
+    },
+    {
+      "id": "P7",
+      "statement": "Demonstrating permanent information loss in any process would defeat this claim.",
+      "role": "Defeat condition",
+      "formal": "\\( \\exists \\text{process } P: I_{\\text{out}} < I_{\\text{in}} \\)"
+    },
+    {
+      "id": "P8",
+      "statement": "BC7 is a Boundary Condition in the Divine domain.",
+      "role": "Classification",
+      "formal": "Domain: Divine; Type: Boundary Condition"
+    },
+    {
+      "id": "P9",
+      "statement": "BC7 has the epistemic status `boundary`.",
+      "role": "Classification",
+      "formal": "Status: `boundary`"
+    },
+    {
+      "id": "P10",
+      "statement": "Unitarity in quantum mechanics is a related concept.",
+      "role": "Reference",
+      "formal": "QM: \\( U^\\dagger U = I \\)"
+    },
+    {
+      "id": "P11",
+      "statement": "The work of Susskind/Maldacena is a relevant reference.",
+      "role": "Reference",
+      "formal": "ER=EPR, holography"
+    },
+    {
+      "id": "P12",
+      "statement": "BC7 is formally defined as an axiom-derived primitive.",
+      "role": "Classification",
+      "formal": "Mode: `AX_DERIVED`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0011: BC7",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 BC7 \u2014 Information Conservation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

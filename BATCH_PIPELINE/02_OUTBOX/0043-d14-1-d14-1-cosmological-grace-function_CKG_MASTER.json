@@ -1,0 +1,127 @@
+{
+  "title": "Cosmological Grace Function",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0043_D14.1_D14_1_Cosmological_Grace_Function.md",
+  "source_sha256": "af47b79a2d3baa31f65b098dd697897512f627322bf89849ede330e8042adadd",
+  "captured_at": "2026-09-06T23:43:15.405764+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2301,
+    "completion_tokens": 2303,
+    "total_tokens": 4604,
+    "cost": 0.003152823102,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0031846698,
+      "upstream_inference_prompt_cost": 0.0006248853,
+      "upstream_inference_completions_cost": 0.0025597845
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A function named G exists.",
+      "role": "Definition",
+      "formal": "`G(t, \u03a8_collective)`"
+    },
+    {
+      "id": "P2",
+      "statement": "G is a function of time (t).",
+      "role": "Definition",
+      "formal": "`G: t \u2192 ...`"
+    },
+    {
+      "id": "P3",
+      "statement": "G is a function of a collective consciousness parameter (\u03a8_collective).",
+      "role": "Definition",
+      "formal": "`G: \u03a8_collective \u2192 ...`"
+    },
+    {
+      "id": "P4",
+      "statement": "G is a dynamic function.",
+      "role": "Definition",
+      "formal": "`G(t, \u03a8_collective): dynamic grace-cosmology function`"
+    },
+    {
+      "id": "P5",
+      "statement": "G is defined to replace the static cosmological constant (\u039b) in the Friedmann equations.",
+      "role": "Requirement",
+      "formal": "`G(t, \u03a8_collective) defined \u2014 replaces static \u039b in Friedmann equations.`"
+    },
+    {
+      "id": "P6",
+      "statement": "The functional form of G is \"To Be Determined\" (TBD).",
+      "role": "Limitation",
+      "formal": "`Functional form is TBD.`"
+    },
+    {
+      "id": "P7",
+      "statement": "Without a specified form for G, predictions derived from it remain qualitative.",
+      "role": "Limitation",
+      "formal": "`Without specifying G(t,\u03a8), predictions remain qualitative.`"
+    },
+    {
+      "id": "P8",
+      "statement": "The definition of G depends on the prior axiom BC6 (Infinite Energy Source).",
+      "role": "Dependency",
+      "formal": "`Depends On: BC6`"
+    },
+    {
+      "id": "P9",
+      "statement": "G must not yield an incorrect cosmic expansion history.",
+      "role": "Defeat Condition",
+      "formal": "`Show G(t,\u03a8) gives wrong expansion history.`"
+    },
+    {
+      "id": "P10",
+      "statement": "This definition belongs to the domain of Cosmology.",
+      "role": "Classification",
+      "formal": "`Domain: Cosmology`"
+    },
+    {
+      "id": "P11",
+      "statement": "This definition is part of a \"Physics Unification\" chain.",
+      "role": "Classification",
+      "formal": "`Chain Tier: 12 \u2014 Physics Unification`"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition's epistemic status is that of a definition, not a proven theorem.",
+      "role": "Classification",
+      "formal": "`Epistemic Status: definition`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0043: D14.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D14.1 \u2014 Cosmological Grace Function",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

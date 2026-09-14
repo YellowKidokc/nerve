@@ -1,0 +1,151 @@
+---
+type: axiom_companion
+title: "Law I: Logos-Lagrangian"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: pending_ai_analysis
+source_file: "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0045_D19.1_D19_1_Law_I_Logos-Lagrangian.md"
+source_sha256: 9cf48a6602658c218c6d4db49e9caa21a94e4e865779224ffb033c70d7907b70
+captured_at: 2026-09-06T23:44:02.237927+00:00
+tags: []
+---
+
+# Law I: Logos-Lagrangian
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** Source preserved below. Analytical case file pending.
+
+## Intake assessment
+
+- Inferred type: `axiom_companion`
+- Routing confidence: `0.98`
+- Signals: canonical axiom record, sealed v2.3 authority, axiom companion layout
+- Original words: `348`
+- Original SHA-256: `9cf48a6602658c218c6d4db49e9caa21a94e4e865779224ffb033c70d7907b70`
+
+## Source outline
+
+- Canonical Sequential Record 0045: D19.1
+- Sequence Navigation
+- Registered Dependency Links
+- Canonical Source Text
+- 📐 D19.1 — Law I: Logos-Lagrangian
+- Statement
+- Formal Expression
+- Maximum Defensible Position
+- Classification
+- Dependency Chain
+- References
+- Defeat Conditions
+- Limitations (from workbook)
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0045: D19.1
+
+| Field | Value |
+|---|---|
+| Registry position | 45 of 191 |
+| Canonical ID | `D19.1` |
+| Mode | `AX_SCAFFOLD` |
+| Canonical source filename | `D19_1_Law_I_Logos-Lagrangian.md` |
+| Source SHA-256 | `829141b5bcadd2c166118f10bdfe8be44b668670145034a9bb9ee018e4d6f4c5` |
+
+## Sequence Navigation
+
+Previous: [0044 - D17.1 - AI Phi Measurement](0044_D17.1_D17_1_AI_Phi_Measurement.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0046 - D19.2 - Law II: Ten Variables](0046_D19.2_D19_2_Law_II_Ten_Variables.md)
+
+## Registered Dependency Links
+
+[D3.3 - Interaction Lagrangian](0020_D3.3_D3_3_Interaction_Lagrangian.md)
+
+## Canonical Source Text
+
+---
+id: "D19.1"
+legacy_id: "AX-136"
+title: "Law I: Logos-Lagrangian"
+mode: "AX_SCAFFOLD"
+atlas_type: "Definition"
+status: "definition"
+domain: "Unified"
+anchor: "D3.3 (Interaction Lagrangian)"
+depends_on: "depends on anchor: D3.3 (Interaction Lagrangian)"
+date: "2026-08-17"
+---
+
+# 📐 D19.1 — Law I: Logos-Lagrangian
+
+**Mode:** `AX_SCAFFOLD` | **Atlas Type:** `Definition` | **Status:** `definition`
+**Domain:** Unified | **Legacy ID:** `AX-136`
+
+---
+
+## Statement
+
+Law I: The Logos-Lagrangian Correspondence.
+
+## Formal Expression
+
+```
+L = L(χ, ∂χ, g_μν)
+```
+
+$$
+L = L(χ, ∂χ, g_μν)
+$$
+
+## Maximum Defensible Position
+
+Definition: Law I — Logos-Lagrangian.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `AX_SCAFFOLD` |
+| **Atlas Object Type** | `Definition` |
+| **Workbook Role** | `DEFINITION` |
+| **Mathematical Use** | Formal definition / primitive formalization |
+| **Epistemic Status** | `definition` |
+| **Domain** | Unified |
+
+## Dependency Chain
+
+**Anchor:** D3.3 (Interaction Lagrangian)
+**Depends On:** depends on anchor: D3.3 (Interaction Lagrangian)
+**Chain Tier:** 13 — Master Laws
+
+## References
+
+Noether 1918; Lagrangian mechanics
+
+## Defeat Conditions
+
+Show reality requires non-Lagrangian description.
+
+## Limitations (from workbook)
+
+Well-motivated. The χ-specific form needs derivation.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::658f79dc-952e-44d9-84e5-de6889412d93::"Law I must define the Logos-Lagrangian Correspondence"::null::@Engineering%%
+%%tag::Requirement::c242a6c9-4ad8-4ed8-85b7-8ec67c68d006::"Law I must be expressed as L = L(χ, ∂χ, g_μν)"::null::@Engineering%%
+%%tag::Requirement::94e9110c-5c08-44b2-9844-4c5835be73ec::"Law I must depend on anchor D3.3 (Interaction Lagrangian)"::null::@Engineering%%
+%%tag::Dependency::88f74d2a-c774-40e3-b976-e5314fb4cb70::"Depends on D3.3 (Interaction Lagrangian)"::null::@Engineering%%
+%%tag::Risk::35ee780f-8d30-4d6e-a511-1828eb07a051::"Defeat condition: reality may require non-Lagrangian description"::null::@Engineering%%
+%%tag::OpenQuestion::7e3df352-0c35-4f75-9bf4-f6b9a298df28::"The χ-specific form needs derivation"::null::@Engineering%%
+%%tag::Assumption::74f0db1c-c13e-4d30-b5cd-4e8596211500::"Lagrangian mechanics applies to the domain"::null::@Engineering%%
+%%tag::Stakeholder::0e6a71d5-9a52-43b7-b488-a9b8327f449d::"Noether (1918) - referenced for foundational support"::null::@Engineering%%
+%%--- END SEMANTIC TAGS ---%%
+
+<!-- END EXACT SOURCE PROJECTION -->

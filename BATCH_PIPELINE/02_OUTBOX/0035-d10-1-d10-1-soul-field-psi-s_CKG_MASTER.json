@@ -1,0 +1,130 @@
+{
+  "title": "Soul Field Psi_S",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0035_D10.1_D10_1_Soul_Field_Psi_S.md",
+  "source_sha256": "7ad2b49b9e1e0fa8037781758bd1387804ba2a723c782118f3117368d5c585a3",
+  "captured_at": "2026-09-06T23:36:04.891903+00:00",
+  "tags": [
+    "consciousness",
+    "quantum-foundations"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2378,
+    "completion_tokens": 2261,
+    "total_tokens": 4639,
+    "cost": 0.003134850147,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0031665153,
+      "upstream_inference_prompt_cost": 0.0006534138,
+      "upstream_inference_completions_cost": 0.0025131015
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A soul field \u03a8_S exists.",
+      "role": "Definitional Axiom",
+      "formal": "Existence of \u03a8_S"
+    },
+    {
+      "id": "P2",
+      "statement": "\u03a8_S represents individual consciousness.",
+      "role": "Semantic Interpretation",
+      "formal": "\u03a8_S \u2245 individual consciousness"
+    },
+    {
+      "id": "P3",
+      "statement": "\u03a8_S is a field.",
+      "role": "Structural Property",
+      "formal": "\u03a8_S is a field object"
+    },
+    {
+      "id": "P4",
+      "statement": "\u03a8_S is complex-valued.",
+      "role": "Codomain Specification",
+      "formal": "Codomain(\u03a8_S) = \u2102"
+    },
+    {
+      "id": "P5",
+      "statement": "\u03a8_S is defined on a manifold M.",
+      "role": "Domain Specification",
+      "formal": "Domain(\u03a8_S) = M"
+    },
+    {
+      "id": "P6",
+      "statement": "The formal expression of \u03a8_S is a map from M to \u2102.",
+      "role": "Formal Definition",
+      "formal": "\u03a8_S: M \u2192 \u2102"
+    },
+    {
+      "id": "P7",
+      "statement": "The soul-as-field is a model commitment.",
+      "role": "Epistemic Status",
+      "formal": "Model_Commitment(soul_as_field)"
+    },
+    {
+      "id": "P8",
+      "statement": "Whether consciousness has field structure is unknown.",
+      "role": "Limitation",
+      "formal": "Unknown(has_field_structure(consciousness))"
+    },
+    {
+      "id": "P9",
+      "statement": "The definition depends on BC6 (Infinite Energy Source).",
+      "role": "Dependency Assertion",
+      "formal": "depends_on(D10.1, BC6)"
+    },
+    {
+      "id": "P10",
+      "statement": "Consciousness may not need field representation.",
+      "role": "Defeat Condition",
+      "formal": "Possible(\u00acneeds_field_representation(consciousness))"
+    },
+    {
+      "id": "P11",
+      "statement": "The definition is a formal definition / primitive formalization.",
+      "role": "Classification",
+      "formal": "Type(D10.1) = Definition"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition anchors the \"Soul + Moral + Eschatology\" chain tier.",
+      "role": "Structural Role",
+      "formal": "Tier(D10.1) = 11"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0035: D10.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D10.1 \u2014 Soul Field Psi_S",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

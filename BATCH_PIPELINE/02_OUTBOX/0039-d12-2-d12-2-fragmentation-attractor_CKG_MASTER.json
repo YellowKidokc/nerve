@@ -1,0 +1,130 @@
+{
+  "title": "Fragmentation Attractor",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0039_D12.2_D12_2_Fragmentation_Attractor.md",
+  "source_sha256": "48c9284f8403316e2773bdf9dc006f1899af1aa3ba233420f5fa3a34af254bfa",
+  "captured_at": "2026-09-06T23:39:38.561942+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2473,
+    "completion_tokens": 2906,
+    "total_tokens": 5379,
+    "cost": 0.003879443997,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0039186303,
+      "upstream_inference_prompt_cost": 0.0006886113,
+      "upstream_inference_completions_cost": 0.003230019
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A fragmentation attractor exists.",
+      "role": "Definition",
+      "formal": "`A_-` exists."
+    },
+    {
+      "id": "P2",
+      "statement": "The fragmentation attractor is a low-coherence fixed point.",
+      "role": "Definition",
+      "formal": "`A_-` is a fixed point with low \u03a6."
+    },
+    {
+      "id": "P3",
+      "statement": "The fragmentation attractor is analogized to hell.",
+      "role": "Semantic Interpretation",
+      "formal": "`A_-` \u2261 \"hell\"."
+    },
+    {
+      "id": "P4",
+      "statement": "Coherence tends to zero at the fragmentation attractor as time approaches infinity.",
+      "role": "Formal Expression",
+      "formal": "`A_- = lim(t\u2192\u221e) C(t) \u2192 0`"
+    },
+    {
+      "id": "P5",
+      "statement": "The fragmentation attractor depends on the Infinite Energy Source (BC6).",
+      "role": "Dependency Assertion",
+      "formal": "`depends_on: \"BC6\"`"
+    },
+    {
+      "id": "P6",
+      "statement": "Fragmentation is the natural endpoint if T3.1 holds and no grace is applied.",
+      "role": "Conditional Fact (Limitation)",
+      "formal": "`If T3.1 \u2227 \u00acgrace then endpoint = A_-`"
+    },
+    {
+      "id": "P7",
+      "statement": "The fragmentation attractor may not be stable.",
+      "role": "Risk / Defeat Condition",
+      "formal": "Stability is not proven; defeat requires showing instability."
+    },
+    {
+      "id": "P8",
+      "statement": "Spontaneous coherence recovery from A_- is possible in principle.",
+      "role": "Open Question / Defeat Condition",
+      "formal": "`\u2203 trajectory: A_- \u2192 C(t) > 0`"
+    },
+    {
+      "id": "P9",
+      "statement": "The record is a definition within a formal canonical system.",
+      "role": "Meta-assertion",
+      "formal": "`mode: \"AX_SCAFFOLD\"`, `status: \"definition\"`"
+    },
+    {
+      "id": "P10",
+      "statement": "The domain of this definition is Eschatology.",
+      "role": "Classification",
+      "formal": "`domain: \"Eschatology\"`"
+    },
+    {
+      "id": "P11",
+      "statement": "The fragmentation attractor is part of a dependency chain at Tier 11 (Soul + Moral + Eschatology).",
+      "role": "Structural Assertion",
+      "formal": "`Chain Tier: 11`"
+    },
+    {
+      "id": "P12",
+      "statement": "The concept relates to dynamical systems, heat death, and maximum entropy.",
+      "role": "Conceptual Link",
+      "formal": "`References: Dynamical systems; Heat death; Maximum entropy`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0039: D12.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D12.2 \u2014 Fragmentation Attractor",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

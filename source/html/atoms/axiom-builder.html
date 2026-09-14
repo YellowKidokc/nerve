@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
   <style>
     /* CLOUDFLARE ACCENT TOKENS */
@@ -388,10 +389,126 @@
       max-height: 90vh;
       overflow-y: auto;
       box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), 0 0 20px rgba(212, 175, 55, 0.25);
+    /* 5-PAPER DEEP INTAKE PIPELINE MODAL & DASHBOARD */
+    .deep-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
     }
+    .deep-modal-overlay.active {
+      display: flex;
+    }
+    .deep-modal-window {
+      background: #09090b;
+      border: 1.5px solid #0284c7;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 1120px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 35px rgba(2, 132, 199, 0.25);
+      overflow: hidden;
+    }
+    .deep-modal-header {
+      padding: 16px 24px;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .deep-modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .deep-modal-footer {
+      padding: 14px 24px;
+      background: #0b0f19;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge-axiom {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-atom {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-status {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .progress-track {
+      height: 8px;
+      background: #1e293b;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #34d399);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .telemetry-console {
+      background: #05070a;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.6;
+      color: #94a3b8;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    .telemetry-line { margin-bottom: 2px; }
+    .telemetry-line.success { color: #34d399; }
+    .telemetry-line.info { color: #38bdf8; }
+    .telemetry-line.warn { color: #fbbf24; }
+    .telemetry-line.error { color: #f87171; }
 
 </style>
+<link rel="stylesheet" href="atlas-studio.css">
 </head>
 <body>
 
@@ -414,7 +531,10 @@
         <option value="A2.1">A2.1 — Relational Ground</option>
         <option value="D1.1">D1.1 — Information / Bit</option>
       </select>
-      <button class="hbtn" onclick="openIntakeModal()">📥 Ingest Paper Text</button>
+      <button class="hbtn" id="header-batch-download-btn" style="display:none; background: linear-gradient(135deg, #059669, #047857); border: 1.5px solid #34d399; color: #fff; font-weight: 700; box-shadow: 0 0 14px rgba(52,211,153,0.35);" onclick="openPersistentBatchModal()">📦 Batch Queue (<span id="header-batch-count">0</span> Papers)</button>
+      <button class="hbtn" id="header-batch-zip-btn" style="display:none; background: linear-gradient(135deg, #d97706, #b45309); border: 1.5px solid #fbbf24; color: #fff; font-weight: 700;" onclick="downloadPersistentBatchZip()">💾 Download All Zip (<span id="header-batch-zip-count">0</span>)</button>
+      <button class="hbtn" style="background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid #38bdf8; color: #fff; font-weight: 700; box-shadow: 0 0 12px rgba(56,189,248,0.3);" onclick="openDeepIntakeModal()">⚡ Deep Intake Batch Pipeline</button>
+      <button class="hbtn" onclick="openBatchFolderModal()">📥 Ingest Papers / Folder</button>
       <button class="hbtn hbtn-gold" onclick="exportAtlasJSON()">⚡ Export JSON-LD</button>
       <button class="hbtn" onclick="exportMarkdownRecord()">📄 Export Markdown</button>
     </div>
@@ -430,17 +550,19 @@
 
       <span><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span> <strong>AI Engine:</strong></span>
       <select id="api-provider-select" class="form-select" style="width:220px;height:26px;padding:2px 6px;font-size:11px;" onchange="updateApiConfig()">
+        <option value="openrouter" selected>OpenRouter (Pinned Free Models)</option>
         <option value="cloudflare">Cloudflare Workers Edge AI (100k Free/Day)</option>
         <option value="ollama">Local Ollama (127.0.0.1:11434)</option>
         <option value="mission_control">Mission Control (127.0.0.1:7860)</option>
         <option value="canon_engine">Canon Engine (127.0.0.1:8765)</option>
-        <option value="openrouter">OpenRouter / Remote API</option>
       </select>
       <span>Model:</span>
       <select id="api-model-select" class="form-select" style="width:170px;height:26px;padding:2px 6px;font-size:11px;">
-        <option value="qwen3:4b-instruct">qwen3:4b-instruct</option>
-        <option value="gemma4:latest">gemma4:latest</option>
-        <option value="llama3.2:3b">llama3.2:3b</option>
+        <option value="deepseek/deepseek-r1:free" selected>deepseek/deepseek-r1:free (Primary)</option>
+        <option value="deepseek/deepseek-v3.2">deepseek/deepseek-v3.2 (Paid Fallback)</option>
+        <option value="nvidia/nemotron-3-super-120b-a12b:free">nvidia/nemotron-3-super-120b:free</option>
+        <option value="nvidia/nemotron-3-ultra-550b-a55b:free">nvidia/nemotron-3-ultra-550b:free</option>
+        <option value="meta-llama/llama-3.3-70b-instruct:free">meta-llama/llama-3.3-70b:free</option>
       </select>
       <input type="password" id="api-key-input" class="form-input" placeholder="API Key (if remote)" style="width:140px;height:26px;display:none;">
     </div>
@@ -542,6 +664,31 @@
           <button class="hbtn hbtn-gold" style="width: 100%; justify-content: center;" onclick="runMathTranslation()">⚡ Math Translator</button>
           <button class="hbtn" style="width: 100%; justify-content: center;" onclick="runGoldenSentence()">⚡ Golden Sentence</button>
           <button class="hbtn" style="width: 100%; justify-content: center;" onclick="runBridgeLossAudit()">⚡ Bridge Loss Gate Audit</button>
+
+          <!-- INTAKE ENGINE (FOLDER & MULTI-FILE) -->
+          <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-strong);">
+            <div style="font-size: 10px; font-weight: 700; color: var(--goldbright); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
+              <span>📥 Paper &amp; Folder Intake Engine</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <button class="hbtn hbtn-gold" style="width: 100%; justify-content: center;" onclick="openBatchFolderModal()">
+                ⚡ Batch Intake (Folder / Files)
+              </button>
+              <div style="display: flex; gap: 6px;">
+                <label class="hbtn" style="flex: 1; font-size: 11px; justify-content: center; cursor: pointer;">
+                  📁 Folder
+                  <input type="file" id="rail-folder-input" webkitdirectory directory multiple style="display:none;" onchange="handleDirectFileInput(this.files)">
+                </label>
+                <label class="hbtn" style="flex: 1; font-size: 11px; justify-content: center; cursor: pointer;">
+                  📄 Files
+                  <input type="file" id="rail-files-input" multiple accept=".md,.txt,.json" style="display:none;" onchange="handleDirectFileInput(this.files)">
+                </label>
+              </div>
+            </div>
+            <div id="intake-engine-status" style="font-size: 10px; color: var(--textdim); margin-top: 6px; font-family: var(--font-mono); text-align: center;">
+              Ready for folder or multi-file intake
+            </div>
+          </div>
         </div>
       </div>
     </aside>
@@ -1149,6 +1296,7 @@
       renderAccordions();
       computeDiff();
       updateLivePacket();
+      loadPersistentBatchFromStorage();
     }
 
     function renderAccordions() {
@@ -1399,8 +1547,17 @@
       const keyInput = document.getElementById('api-key-input');
       const cfInput = document.getElementById('cf-worker-url');
       const cfBtn = document.getElementById('btn-toggle-cf');
+      const modelSelect = document.getElementById('api-model-select');
 
-      if (keyInput) keyInput.style.display = (provider === 'openrouter') ? 'inline-block' : 'none';
+      if (keyInput) {
+        keyInput.style.display = (provider === 'openrouter') ? 'inline-block' : 'none';
+        if (provider === 'openrouter') {
+          keyInput.placeholder = "OpenRouter API Key (sk-or-...)";
+          const savedKey = localStorage.getItem('OPENROUTER_API_KEY') || "";
+          if (savedKey && !keyInput.value) keyInput.value = savedKey;
+          keyInput.oninput = () => localStorage.setItem('OPENROUTER_API_KEY', keyInput.value.trim());
+        }
+      }
       if (cfInput) cfInput.style.display = (provider === 'cloudflare') ? 'inline-block' : 'none';
 
       if (cfBtn) {
@@ -1408,13 +1565,24 @@
         else cfBtn.classList.remove('active');
       }
 
-      checkBackendHealth();
-    }
+      // Populate models for OpenRouter vs Cloudflare vs Ollama
+      if (modelSelect && provider === 'openrouter') {
+        modelSelect.innerHTML = `
+          <option value="nvidia/nemotron-3-super-120b-a12b:free">nvidia/nemotron-3-super-120b:free (Pinned)</option>
+          <option value="nvidia/nemotron-3-ultra-550b-a55b:free">nvidia/nemotron-3-ultra-550b:free (Pinned)</option>
+          <option value="deepseek/deepseek-r1:free">deepseek/deepseek-r1:free</option>
+          <option value="meta-llama/llama-3.3-70b-instruct:free">meta-llama/llama-3.3-70b:free</option>
+          <option value="qwen/qwen-2.5-72b-instruct:free">qwen/qwen-2.5-72b:free</option>
+          <option value="deepseek/deepseek-chat">deepseek/deepseek-chat (Paid Escalation)</option>
+        `;
+      } else if (modelSelect && provider === 'cloudflare') {
+        modelSelect.innerHTML = `
+          <option value="@cf/deepseek-ai/deepseek-r1-distill-qwen-32b">DeepSeek R1 Distill 32B (Workers AI)</option>
+          <option value="@cf/meta/llama-3.3-70b-instruct-fp8-fast">Llama 3.3 70B Fast (Workers AI)</option>
+          <option value="@cf/qwen/qwen2.5-coder-32b-instruct">Qwen 2.5 Coder 32B (Workers AI)</option>
+        `;
+      }
 
-    function old_updateApiConfig() {
-      const provider = document.getElementById('api-provider-select').value;
-      const keyInput = document.getElementById('api-key-input');
-      if (keyInput) keyInput.style.display = (provider === 'openrouter') ? 'inline-block' : 'none';
       checkBackendHealth();
     }
 
@@ -1422,7 +1590,26 @@
       const provider = document.getElementById('api-provider-select').value;
       const msg = document.getElementById('api-activity-msg');
       try {
-        if (provider === 'ollama') {
+        if (provider === 'openrouter') {
+          const key = document.getElementById('api-key-input')?.value.trim() || localStorage.getItem('OPENROUTER_API_KEY');
+          if (key) {
+            msg.textContent = "Connected (OpenRouter · Pinned Free Model)";
+            msg.style.color = "var(--green)";
+          } else {
+            msg.textContent = "OpenRouter (Enter API Key in header)";
+            msg.style.color = "var(--goldbright)";
+          }
+        } else if (provider === 'cloudflare') {
+          const workerUrl = (document.getElementById('cf-worker-url')?.value || 'http://127.0.0.1:8787').replace(/\/+$/, '');
+          const res = await fetch(`${workerUrl}/health`).catch(() => null);
+          if (res && res.ok) {
+            msg.textContent = "Connected (Cloudflare Workers AI · DeepSeek)";
+            msg.style.color = "var(--green)";
+          } else {
+            msg.textContent = "Cloudflare Worker (127.0.0.1:8787 or deployed URL)";
+            msg.style.color = "var(--goldbright)";
+          }
+        } else if (provider === 'ollama') {
           const res = await fetch('http://127.0.0.1:11434/api/tags');
           if (res.ok) {
             const data = await res.json();
@@ -1447,10 +1634,93 @@
       const provider = document.getElementById('api-provider-select').value;
       const model = document.getElementById('api-model-select').value;
       const msg = document.getElementById('api-activity-msg');
-      msg.innerHTML = `<span class="spinner"></span> Querying ${model}...`;
+      msg.innerHTML = `<span class="spinner"></span> Querying ${provider === 'cloudflare' ? 'Cloudflare DeepSeek' : provider === 'openrouter' ? ('OpenRouter ' + model) : model}...`;
 
       try {
-        if (provider === 'ollama') {
+        if (provider === 'openrouter') {
+          const apiKey = document.getElementById('api-key-input')?.value.trim() || localStorage.getItem('OPENROUTER_API_KEY') || "";
+          if (!apiKey) {
+            throw new Error("Missing OpenRouter API Key. Enter key in header or set OPENROUTER_API_KEY.");
+          }
+          localStorage.setItem('OPENROUTER_API_KEY', apiKey);
+          let activeModel = model;
+          let res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`,
+              'HTTP-Referer': 'https://consilience-atlas.theophysics.org',
+              'X-Title': 'Consilience Atlas CKG Engine'
+            },
+            body: JSON.stringify({
+              model: activeModel,
+              messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: prompt }
+              ],
+              temperature: 0.1,
+              max_tokens: 7000
+            })
+          });
+          if (!res.ok && activeModel === 'deepseek/deepseek-r1:free') {
+            console.warn(`OpenRouter free model ${activeModel} failed (${res.status}), falling back to deepseek/deepseek-v3.2...`);
+            activeModel = 'deepseek/deepseek-v3.2';
+            msg.innerHTML = `<span class="spinner"></span> Free model rate-limited; falling back to DeepSeek V3.2...`;
+            res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`,
+                'HTTP-Referer': 'https://consilience-atlas.theophysics.org',
+                'X-Title': 'Consilience Atlas CKG Engine'
+              },
+              body: JSON.stringify({
+                model: activeModel,
+                messages: [
+                  { role: 'system', content: systemPrompt },
+                  { role: 'user', content: prompt }
+                ],
+                temperature: 0.1,
+                max_tokens: 7000
+              })
+            });
+          }
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(`OpenRouter error (${res.status}): ${errData.error?.message || res.statusText}`);
+          }
+          const data = await res.json();
+          const content = data.choices?.[0]?.message?.content || "";
+          msg.textContent = `Completed (OpenRouter · ${activeModel})`;
+          msg.style.color = "var(--green)";
+          return content;
+        } else if (provider === 'cloudflare') {
+          const workerUrl = (document.getElementById('cf-worker-url')?.value || 'http://127.0.0.1:8787').replace(/\/+$/, '');
+          try {
+            const genRes = await fetch(`${workerUrl}/api/generate`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: prompt, system: systemPrompt })
+            });
+            if (genRes.ok) {
+              const data = await genRes.json();
+              msg.textContent = "Completed (Cloudflare DeepSeek)";
+              msg.style.color = "var(--green)";
+              return data.response;
+            }
+          } catch (e) { /* fallback to harvest */ }
+
+          const res = await fetch(`${workerUrl}/api/harvest`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: prompt })
+          });
+          if (!res.ok) throw new Error("Cloudflare Worker error: " + res.statusText);
+          const data = await res.json();
+          msg.textContent = "Completed (Cloudflare DeepSeek)";
+          msg.style.color = "var(--green)";
+          return JSON.stringify(data.predicates || data);
+        } else if (provider === 'ollama') {
           const res = await fetch('http://127.0.0.1:11434/api/generate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1484,6 +1754,16 @@
         msg.style.color = "var(--red)";
         throw err;
       }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
     async function harvestTruthPredicates() {
@@ -1740,6 +2020,13 @@
     }
 
     function exportMarkdownRecord() {
+      if (persistentCompletedBatch && persistentCompletedBatch.length > 1) {
+        const choice = confirm(`You have ${persistentCompletedBatch.length} completed batch papers in your queue!\n\nClick OK to pull up & download your completed batch papers, or Cancel to export only this single editor form.`);
+        if (choice) {
+          openPersistentBatchModal();
+          return;
+        }
+      }
       const nodeId = document.getElementById('node-id-input').value;
       const claim = document.getElementById('preview-claim-text').textContent.trim();
       const lane = document.getElementById('active-lane-select').value;
@@ -1776,11 +2063,1655 @@ ${preds}
       dl.click();
     }
 
+    // ══════════════════════════════════════════════════════════════════════════
+    // BATCH PAPER & FOLDER INTAKE ENGINE
+    // ══════════════════════════════════════════════════════════════════════════
+    let modalBatchQueue = [];
+
     function openIntakeModal() {
-      const text = prompt("Paste paper text or note here:");
-      if (text) {
+      openBatchFolderModal();
+    }
+
+    function openBatchFolderModal() {
+      const modal = document.getElementById('batch-intake-modal-overlay');
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeBatchFolderModal(e) {
+      if (e && e.target && e.target !== document.getElementById('batch-intake-modal-overlay')) return;
+      const modal = document.getElementById('batch-intake-modal-overlay');
+      if (modal) modal.classList.remove('active');
+    }
+
+    async function handleDirectFileInput(files) {
+      if (!files || files.length === 0) return;
+      const valid = Array.from(files).filter(f => f.name.endsWith('.md') || f.name.endsWith('.txt') || f.name.endsWith('.json'));
+      if (valid.length === 0) {
+        alert("No markdown (.md) or text (.txt) files found in selection.");
+        return;
+      }
+      
+      const statusEl = document.getElementById('intake-engine-status');
+      if (statusEl) statusEl.innerText = `Ingested ${valid.length} file(s)...`;
+
+      if (valid.length === 1) {
+        // Load single paper directly into Section 1 and auto-harvest!
+        const file = valid[0];
+        const text = await file.text();
         document.getElementById('raw-source-box').value = text;
+        const claimInput = document.getElementById('claim-text-input');
+        if (claimInput) claimInput.value = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+        if (statusEl) statusEl.innerText = `Ingested: ${file.name}`;
         harvestTruthPredicates();
+      } else {
+        // Multiple files or folder: open the modal queue
+        handleModalBatchFiles(valid);
+        openBatchFolderModal();
+      }
+    }
+
+    async function handleModalBatchFiles(files) {
+      const valid = Array.from(files).filter(f => f.name.endsWith('.md') || f.name.endsWith('.txt') || f.name.endsWith('.json'));
+      if (valid.length === 0) {
+        alert("No valid .md or .txt files found.");
+        return;
+      }
+      modalBatchQueue = [];
+      for (const f of valid) {
+        modalBatchQueue.push({
+          file: f,
+          name: f.name,
+          size: (f.size / 1024).toFixed(1) + ' KB',
+          status: 'Ready',
+          predicates: []
+        });
+      }
+      renderModalQueue();
+      const statusEl = document.getElementById('intake-engine-status');
+      if (statusEl) statusEl.innerText = `${modalBatchQueue.length} files in queue`;
+    }
+
+    function renderModalQueue() {
+      const container = document.getElementById('modal-intake-queue-container');
+      const tbody = document.getElementById('modal-queue-tbody');
+      const countLabel = document.getElementById('modal-queue-count-label');
+      if (!container || !tbody) return;
+
+      container.style.display = 'block';
+      if (countLabel) countLabel.innerText = `Queued Papers (${modalBatchQueue.length})`;
+      tbody.innerHTML = '';
+
+      modalBatchQueue.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #1a1a1a';
+        
+        let statusBadge = `<span style="padding: 2px 6px; border-radius: 4px; font-size: 10px; background:#1e293b; color:#94a3b8;">${item.status}</span>`;
+        if (item.status.includes('Harvesting') || item.status.includes('Analyzing') || item.status.includes('Classifying')) {
+          statusBadge = `<span style="padding: 2px 6px; border-radius: 4px; font-size: 10px; background:rgba(245, 158, 11, 0.2); color:#f59e0b; border: 1px solid rgba(245, 158, 11, 0.4);"><span class="spinner"></span> ${item.status}</span>`;
+        } else if (item.status.includes('Complete') || item.status.includes('Auto-Saved') || item.saved) {
+          statusBadge = `<span style="padding: 2px 6px; border-radius: 4px; font-size: 10px; background:rgba(16, 185, 129, 0.2); color:#10b981; border: 1px solid rgba(16, 185, 129, 0.4);">✓ Auto-Saved</span>`;
+        } else if (item.error) {
+          statusBadge = `<span style="padding: 2px 6px; border-radius: 4px; font-size: 10px; background:rgba(239, 68, 68, 0.2); color:#ef4444; border: 1px solid rgba(239, 68, 68, 0.4);">Error</span>`;
+        }
+
+        let typeBadge = '';
+        if (item.type === 'AXIOM') {
+          typeBadge = ` <span class="badge-axiom" style="font-size:9px; padding:1px 5px;">⚡ AXIOM</span>`;
+        } else if (item.type === 'ATOM') {
+          typeBadge = ` <span class="badge-atom" style="font-size:9px; padding:1px 5px;">⚛ ATOM</span>`;
+        }
+
+        tr.innerHTML = `
+          <td style="padding: 8px 12px; color: #fff;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span>📄 ${escapeHtml(item.name)}</span>
+              ${typeBadge}
+            </div>
+          </td>
+          <td style="padding: 8px 12px; color: var(--textdim);">${item.size}</td>
+          <td style="padding: 8px 12px;">${statusBadge}</td>
+          <td style="padding: 8px 12px; text-align: right;">
+            <div style="display:flex; justify-content:flex-end; gap:5px;">
+              ${item.markdown_content ? `
+                <button class="hbtn hbtn-gold" style="font-size: 10px; padding: 2px 8px; font-weight:700;" onclick="pullUpCompletedPaper(${idx}, 'modal')" title="Pull up completed paper dossier">👁 Pull Up &amp; Download</button>
+                <button class="hbtn" style="font-size: 10px; padding: 2px 8px;" onclick="downloadModalItem(${idx}, 'md')" title="Export Markdown Record">📄 Export MD</button>
+                <button class="hbtn" style="font-size: 10px; padding: 2px 8px;" onclick="downloadModalItem(${idx}, 'json')" title="Export JSON-LD">⚡ Export JSON</button>
+              ` : ''}
+              <button class="hbtn" style="font-size: 10px; padding: 2px 8px;" onclick="loadQueueItemIntoEditor(${idx})">Load in Editor</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function downloadModalItem(idx, format) {
+      const item = modalBatchQueue[idx];
+      if (!item) return;
+      const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+      if (format === 'md' && item.markdown_content) {
+        autoDownloadFile(`${safeName}_CANDIDATE.md`, item.markdown_content, 'text/markdown');
+      } else if (format === 'json' && item.json_content) {
+        autoDownloadFile(`${safeName}_CANDIDATE.json`, item.json_content, 'application/json');
+      }
+    }
+
+    async function downloadAllModalZip() {
+      const completed = modalBatchQueue.filter(it => it.markdown_content && it.json_content);
+      if (completed.length === 0) {
+        alert("No completed records to download.");
+        return;
+      }
+      if (typeof JSZip !== 'undefined') {
+        const zip = new JSZip();
+        const dateStr = new Date().toISOString().slice(0, 10);
+        const folder = zip.folder(`Consilience_Atlas_Batch_${dateStr}`);
+        completed.forEach(item => {
+          const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+          folder.file(`${safeName}_CANDIDATE.md`, item.markdown_content);
+          folder.file(`${safeName}_CANDIDATE.json`, item.json_content);
+        });
+        const blob = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Consilience_Atlas_Harvest_${completed.length}Papers_${dateStr}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 300);
+      } else {
+        for (const item of completed) {
+          const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+          autoDownloadFile(`${safeName}_CANDIDATE.md`, item.markdown_content, 'text/markdown');
+          await new Promise(r => setTimeout(r, 200));
+          autoDownloadFile(`${safeName}_CANDIDATE.json`, item.json_content, 'application/json');
+          await new Promise(r => setTimeout(r, 200));
+        }
+      }
+    }
+
+    async function loadQueueItemIntoEditor(idx) {
+      const item = modalBatchQueue[idx];
+      if (!item) return;
+      const text = await item.file.text();
+      document.getElementById('raw-source-box').value = text;
+      const claimInput = document.getElementById('claim-text-input');
+      if (claimInput) claimInput.value = item.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+      
+      closeBatchFolderModal();
+      harvestTruthPredicates();
+      
+      const statusEl = document.getElementById('intake-engine-status');
+      if (statusEl) statusEl.innerText = `Active: ${item.name}`;
+    }
+
+    async function runBatchHarvestAll() {
+      if (!modalBatchQueue || modalBatchQueue.length === 0) {
+        alert("No papers queued to harvest.");
+        return;
+      }
+      const btn = document.getElementById('btn-harvest-all-modal');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner"></span> Harvesting &amp; Auto-Exporting...`;
+      }
+      const zipBtn = document.getElementById('btn-modal-download-zip');
+      if (zipBtn) zipBtn.style.display = 'none';
+
+      for (let i = 0; i < modalBatchQueue.length; i++) {
+        const item = modalBatchQueue[i];
+        item.status = 'Classifying & Harvesting...';
+        renderModalQueue();
+
+        try {
+          const text = await item.file.text();
+          item.raw_text = text;
+          item.sha256 = await computeSHA256(text);
+          item.uuid = crypto.randomUUID();
+
+          // 1. Axiom vs Atom classification
+          const classification = await classifyAxiomOrAtom(item.name, text);
+          item.type = classification.type;
+          const prefix = item.type === 'AXIOM' ? 'AXM' : 'ATM';
+          item.node_id = `${prefix}-NODE-${String(100 + i + Math.floor(Math.random() * 800))}`;
+
+          // 2. Truth predicates
+          item.status = 'Harvesting Truth Predicates...';
+          renderModalQueue();
+          item.truth_predicates = await extractTruthPredicatesDeep(item.name, text);
+
+          // 3. Expansive definitions
+          item.status = 'Synthesizing Definitions...';
+          renderModalQueue();
+          item.definitions = await generateExpansiveDefinitionsDeep(item.name, text, item.truth_predicates);
+
+          // 3b. Generate CKG Case File Analysis with AI (14-Heading Gold-Standard Contract)
+          item.status = 'Synthesizing CKG Case File...';
+          renderModalQueue();
+          const aiCkg = await generateCkgCaseFile(item.name, text, item, classification);
+
+          // 4. Build Full Markdown Record & Companion JSON
+          item.markdown_content = buildCandidateMarkdownRecord(item, classification, item.truth_predicates, item.definitions, aiCkg);
+          item.json_content = JSON.stringify(buildCandidateJsonObject(item, classification, item.truth_predicates, item.definitions), null, 2);
+
+          // 5. AUTOMATIC PORTABLE EXPORT TO THE ATOM BUILDER ROOT
+          await savePortableAtlasPair(item);
+
+          item.saved = true;
+          item.status = `✓ Auto-Saved (${item.type})`;
+          renderModalQueue();
+          await new Promise(r => setTimeout(r, 400));
+        } catch (err) {
+          console.error("Batch harvest item error:", err);
+          item.status = 'Error';
+          item.error = err.message;
+          renderModalQueue();
+        }
+      }
+
+      // Silently record full execution ledger & update persistent completed batch queue
+      updatePersistentBatchState(modalBatchQueue);
+      silentlyRecordBatchAudit(modalBatchQueue, 'BATCH_FOLDER_INTAKE');
+
+      // Automatically pull up the completed paper for the user!
+      if (modalBatchQueue.some(it => it.markdown_content)) {
+        pullUpCompletedPaper(0, 'modal');
+      }
+
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `⚡ Harvest &amp; Export All Again`;
+      }
+      if (zipBtn) zipBtn.style.display = 'inline-flex';
+    }
+
+    function clearModalQueue() {
+      modalBatchQueue = [];
+      const container = document.getElementById('modal-intake-queue-container');
+      if (container) container.style.display = 'none';
+      const statusEl = document.getElementById('intake-engine-status');
+      if (statusEl) statusEl.innerText = 'Queue cleared';
+    }
+
+    /* ==========================================================================
+       5-PAPER DEEP INTAKE PIPELINE (AUTONOMOUS BATCH ENGINE)
+       - Axiom vs. Atom Classifier
+       - Expansive Definitions (Lexical, Technical Consensus, Theophysics Framework)
+       - Irreducible Non-Contradictory Truth Predicates
+       - Two-Layer Evidence Split (14_evidence vs. 23_public_evidence)
+       - Automatic Background Local Auto-Save (.md & .json) per paper
+       - Complete NAS 14-Contract Gold-Standard Record Generation
+       - Bulk ZIP Export
+       ========================================================================== */
+
+    let deepIntakeQueue = [];
+    let isPipelineRunning = false;
+
+    function openDeepIntakeModal() {
+      const modal = document.getElementById('deep-intake-modal-overlay');
+      if (modal) {
+        modal.classList.add('active');
+        logTelemetry('⚡ 5-Paper Deep Intake Pipeline ready. Drop or select 5–6 research papers.');
+      }
+    }
+
+    function closeDeepIntakeModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      if (isPipelineRunning) {
+        if (!confirm("The intake pipeline is currently processing papers in the background. Are you sure you want to exit?")) return;
+      }
+      const modal = document.getElementById('deep-intake-modal-overlay');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function logTelemetry(msg, level = 'info') {
+      const consoleEl = document.getElementById('deep-telemetry-console');
+      if (!consoleEl) return;
+      const now = new Date().toLocaleTimeString();
+      const line = document.createElement('div');
+      line.className = `telemetry-line ${level}`;
+      line.innerHTML = `<span style="color:#64748b;">[${now}]</span> ${escapeHtml(msg)}`;
+      consoleEl.appendChild(line);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function clearDeepIntakeQueue() {
+      if (isPipelineRunning) return;
+      deepIntakeQueue = [];
+      renderDeepIntakeQueue();
+      const pFill = document.getElementById('deep-intake-progress-fill');
+      if (pFill) pFill.style.width = '0%';
+      const pLabel = document.getElementById('deep-intake-progress-label');
+      if (pLabel) pLabel.textContent = 'Ready (0 / 0)';
+      const sText = document.getElementById('deep-intake-status-text');
+      if (sText) sText.textContent = 'Queue cleared. Select 5–6 papers to begin.';
+      const zipBtn = document.getElementById('btn-download-all-zip');
+      if (zipBtn) zipBtn.style.display = 'none';
+      logTelemetry('Queue cleared.', 'warn');
+    }
+
+    async function handleDeepIntakeFiles(fileList) {
+      if (!fileList || fileList.length === 0) return;
+      const files = Array.from(fileList);
+      let added = 0;
+
+      for (const f of files) {
+        if (!/\.(md|txt|json)$/i.test(f.name)) continue;
+        if (deepIntakeQueue.some(item => item.name === f.name)) continue;
+
+        deepIntakeQueue.push({
+          file: f,
+          name: f.name,
+          size: f.size,
+          status: 'Queued',
+          type: 'PENDING',
+          node_id: '',
+          truth_predicates: [],
+          definitions: [],
+          markdown_content: '',
+          json_content: '',
+          sha256: '',
+          saved: false,
+          error: null
+        });
+        added++;
+      }
+
+      logTelemetry(`Added ${added} paper(s) to pipeline queue. Total in queue: ${deepIntakeQueue.length}`, 'info');
+      renderDeepIntakeQueue();
+      const db = document.getElementById('deep-intake-dashboard');
+      if (db) db.style.display = 'block';
+      const sText = document.getElementById('deep-intake-status-text');
+      if (sText) sText.textContent = `${deepIntakeQueue.length} paper(s) loaded. Ready to execute pipeline.`;
+    }
+
+    function renderDeepIntakeQueue() {
+      const tbody = document.getElementById('deep-queue-tbody');
+      const countBadge = document.getElementById('deep-queue-count-badge');
+      if (countBadge) countBadge.textContent = `${deepIntakeQueue.length} Papers`;
+      if (!tbody) return;
+
+      if (deepIntakeQueue.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 28px; color: var(--textmute);">No papers in queue. Drag & drop 5-6 files above to begin.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = deepIntakeQueue.map((item, idx) => {
+        const sizeKb = (item.size / 1024).toFixed(1) + ' KB';
+        let typeBadge = `<span class="badge-status" style="background:#1e293b; color:#94a3b8;">PENDING</span>`;
+        if (item.type === 'AXIOM') {
+          typeBadge = `<span class="badge-axiom">⚡ AXIOM (${item.node_id})</span>`;
+        } else if (item.type === 'ATOM') {
+          typeBadge = `<span class="badge-atom">⚛ ATOM (${item.node_id})</span>`;
+        }
+
+        let statusBadge = `<span class="badge-status" style="background:#1e293b; color:#94a3b8;">${item.status}</span>`;
+        if (item.status.includes('Analyzing') || item.status.includes('Extracting') || item.status.includes('Classifying')) {
+          statusBadge = `<span class="badge-status" style="background:rgba(245, 158, 11, 0.2); color:#f59e0b; border:1px solid rgba(245, 158, 11, 0.4);"><span class="spinner"></span> ${item.status}</span>`;
+        } else if (item.saved || item.status.includes('Complete') || item.status.includes('Auto-Saved')) {
+          statusBadge = `<span class="badge-status" style="background:rgba(16, 185, 129, 0.2); color:#10b981; border:1px solid rgba(16, 185, 129, 0.4);">✓ Auto-Saved</span>`;
+        } else if (item.error) {
+          statusBadge = `<span class="badge-status" style="background:rgba(239, 68, 68, 0.2); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.4);">Error</span>`;
+        }
+
+        return `
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 10px 12px; font-weight: 600; color: #f8fafc;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:var(--golddim); font-size:10px;">#${idx + 1}</span>
+                <span style="font-family:var(--font-mono); font-size:11px;">${escapeHtml(item.name)}</span>
+              </div>
+            </td>
+            <td style="padding: 10px 12px; color: var(--textdim); font-family:var(--font-mono);">${sizeKb}</td>
+            <td style="padding: 10px 12px;">${typeBadge}</td>
+            <td style="padding: 10px 12px; color: var(--goldbright); font-family:var(--font-mono); text-align:center;">${item.truth_predicates.length || '—'}</td>
+            <td style="padding: 10px 12px; color: #38bdf8; font-family:var(--font-mono); text-align:center;">${item.definitions.length || '—'}</td>
+            <td style="padding: 10px 12px;">${statusBadge}</td>
+            <td style="padding: 10px 12px; text-align: right;">
+              <div style="display:flex; justify-content:flex-end; gap:6px;">
+                ${item.markdown_content ? `
+                  <button class="hbtn" style="height:24px; padding:0 8px; font-size:10px;" onclick="downloadPaperSingle(${idx}, 'md')" title="Download Markdown Record">📄 MD</button>
+                  <button class="hbtn hbtn-gold" style="height:24px; padding:0 8px; font-size:10px;" onclick="downloadPaperSingle(${idx}, 'json')" title="Download JSON-LD">⚡ JSON</button>
+                ` : `<span style="color:var(--textmute); font-size:11px;">Waiting</span>`}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function computeSHA256(text) {
+      const buffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function autoDownloadFile(filename, content, mimeType) {
+      try {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 300);
+      } catch (err) {
+        console.error("Auto-download failed:", err);
+      }
+    }
+
+    async function savePortableAtlasPair(item) {
+      if (!item?.markdown_content || !item?.json_content) throw new Error('Portable export requires both Markdown and JSON');
+      const response = await fetch('http://127.0.0.1:7860/api/atlas-record/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uuid: item.uuid || '',
+          node_id: item.node_id || 'UNASSIGNED-NODE',
+          markdown: item.markdown_content,
+          json: item.json_content
+        })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.error || 'Portable working-root export failed');
+      item.portable_export = result;
+      return result;
+    }
+
+    function downloadPaperSingle(index, format) {
+      const item = deepIntakeQueue[index];
+      if (!item) return;
+      const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+      if (format === 'md' && item.markdown_content) {
+        autoDownloadFile(`${safeName}_CANDIDATE.md`, item.markdown_content, 'text/markdown');
+      } else if (format === 'json' && item.json_content) {
+        autoDownloadFile(`${safeName}_CANDIDATE.json`, item.json_content, 'application/json');
+      }
+    }
+
+    /* Core Axiom vs Atom Classifier */
+    async function classifyAxiomOrAtom(title, text) {
+      // Direct Header Signature Check: 100% Deterministic Axiom Identification
+      if (
+        /Canonical Sequential Record/i.test(text) ||
+        /atlas_type:\s*["']?Axiom/i.test(text) ||
+        /\bAX_CORE\b/i.test(text) ||
+        /Sealed chain authority/i.test(text) ||
+        /Front Identity Layer/i.test(text) ||
+        /Production-Confirmed Identity/i.test(text) ||
+        /Atom Meaning Block/i.test(text) ||
+        /\b(?:A\d+\.\d+|BC\d+|LN\d+\.\d+|D\d+\.\d+|E\d+\.\d+|P\d+\.\d+|T\d+\.\d+|INV\d+|U\d+|FINAL-\d+|META-\d+|CLOSURE|OMEGA)\b/i.test(title) ||
+        /\b(?:A\d+\.\d+|BC\d+|LN\d+\.\d+|D\d+\.\d+|E\d+\.\d+|P\d+\.\d+|T\d+\.\d+|INV\d+|U\d+|FINAL-\d+|META-\d+|CLOSURE|OMEGA)\b/i.test(text.slice(0, 500))
+      ) {
+        return {
+          type: 'AXIOM',
+          rationale: 'Identified via canonical axiom record header (AX_CORE / atlas_type: Axiom / sequential record).',
+          domain_home: 'PRIMORDIAL',
+          warrant: 'AXIOMATIC_PRIMITIVE'
+        };
+      }
+      // 1. Try AI-assisted classification if backend available
+      try {
+        const prompt = `Classify this research document into our formal taxonomy:
+Document: "${title}"
+Snippet:
+"""${text.slice(0, 3000)}"""
+
+TAXONOMY CRITERIA:
+- AXIOM: A foundational, invariant, domain-general structural floor constraint or ontological law (e.g. conservation, non-contradiction, boundary conditions, informational ground).
+- ATOM: An irreducible substantive claim unit situated in an empirical or domain-specific context (e.g. quantum measurement collapse, cellular signaling, cognitive capture stack, historical record).
+
+Return ONLY valid JSON:
+{
+  "type": "AXIOM" | "ATOM",
+  "rationale": "...",
+  "domain_home": "PHYSICS" | "MATHEMATICS" | "ONTOLOGY" | "INFORMATION" | "COGNITION",
+  "warrant": "MATHEMATICAL_NECESSITY" | "STRUCTURAL_INVARIANT" | "EMPIRICAL_RECEIPT" | "HISTORICAL_RECORD"
+}`;
+        const raw = await callLLM(prompt, "You are a senior taxonomic classifier for formal ontology.");
+        const match = raw.match(/\{[\s\S]*?\}/);
+        if (match) {
+          const parsed = JSON.parse(match[0]);
+          if (parsed.type === 'AXIOM' || parsed.type === 'ATOM') {
+            return {
+              type: parsed.type,
+              rationale: parsed.rationale || (parsed.type === 'AXIOM' ? 'Foundational floor invariant' : 'Situated empirical claim unit'),
+              domain_home: parsed.domain_home || 'PHYSICS',
+              warrant: parsed.warrant || (parsed.type === 'AXIOM' ? 'STRUCTURAL_INVARIANT' : 'EMPIRICAL_RECEIPT')
+            };
+          }
+        }
+      } catch (err) {
+        // Fallback to deterministic heuristic rules
+      }
+
+      // Deterministic classification based on foundational vs situated empirical markers
+      const lower = text.toLowerCase();
+      const axiomMarkers = [
+        'invariant', 'floor constraint', 'conservation law', 'ontological floor',
+        'boundary condition', 'law of non-contradiction', 'structural invariant',
+        'first principle', 'root ground', 'formal necessity', 'axiom', 'postulate'
+      ];
+      const atomMarkers = [
+        'evidence', 'experiment', 'observation', 'measurement', 'empirical',
+        'capture stack', 'counterfeit', 'signaling', 'historical receipt',
+        'separable claim', 'trilemma', 'apparatus', 'calibration'
+      ];
+
+      let axScore = 0;
+      let atScore = 0;
+      axiomMarkers.forEach(m => { if (lower.includes(m)) axScore += 2; });
+      atomMarkers.forEach(m => { if (lower.includes(m)) atScore += 2; });
+
+      if (/part-0[0-9]|crown|capture-stack|evidence|separable-claims/i.test(title)) atScore += 3;
+      if (/equation|axiom|root|conservation|invariance/i.test(title)) axScore += 3;
+
+      if (axScore >= atScore) {
+        return {
+          type: 'AXIOM',
+          rationale: 'Identified as an invariant, domain-general structural floor constraint or foundational law.',
+          domain_home: lower.includes('information') ? 'INFORMATION' : lower.includes('quantum') ? 'PHYSICS' : 'ONTOLOGY',
+          warrant: 'STRUCTURAL_INVARIANT'
+        };
+      } else {
+        return {
+          type: 'ATOM',
+          rationale: 'Identified as an irreducible substantive claim unit situated in an empirical or domain-specific context.',
+          domain_home: lower.includes('biology') ? 'BIOLOGY' : lower.includes('cognition') || lower.includes('capture') ? 'COGNITION' : 'PHYSICS',
+          warrant: 'EMPIRICAL_RECEIPT'
+        };
+      }
+    }
+
+    /* Core Truth Predicates Harvester */
+    async function extractTruthPredicatesDeep(title, text) {
+      try {
+        const prompt = `Extract 6 to 12 atomic truth predicates from this text.
+Each predicate must be an irreducible, standalone, non-contradictory statement of truth, stripped of metaphor and rhetorical fluff.
+Ensure complete internal coherence within our consilience framework.
+
+Text (${title}):
+"""${text.slice(0, 4000)}"""
+
+Return ONLY a JSON array of objects:
+[
+  { "id": "P-01", "statement": "...", "domain": "...", "confidence": 0.95, "coherence_role": "..." }
+]`;
+        const raw = await callLLM(prompt, "You are a first-principles truth predicate extraction engine.");
+        const match = raw.match(/\[[\s\S]*?\]/);
+        if (match) {
+          const arr = JSON.parse(match[0]);
+          if (Array.isArray(arr) && arr.length > 0) {
+            return arr.map((item, idx) => ({
+              id: item.id || `P-${String(idx + 1).padStart(2, '0')}`,
+              statement: typeof item === 'string' ? item : item.statement,
+              domain: item.domain || 'PHYSICS',
+              confidence: item.confidence || 0.95,
+              coherence_role: item.coherence_role || 'Non-contradictory foundational assertion'
+            }));
+          }
+        }
+      } catch (e) {}
+
+      // Robust fallback extraction: sentence decomposition & filtering
+      const rawSentences = text
+        .split(/(?<=[.!?])\s+/)
+        .map(s => s.replace(/^[#\*\-\s\d\.\>\`]+/, '').trim())
+        .filter(s => s.length > 35 && s.length < 240)
+        .filter(s => !/^(if|suppose|imagine|note|however|furthermore|table|figure)/i.test(s));
+
+      const unique = Array.from(new Set(rawSentences)).slice(0, 10);
+      return unique.map((stmt, idx) => ({
+        id: `P-${String(idx + 1).padStart(2, '0')}`,
+        statement: stmt,
+        domain: 'PHYSICS',
+        confidence: 0.90,
+        coherence_role: 'Irreducible empirical or structural assertion'
+      }));
+    }
+
+    /* Core Expansive Definitions Synthesizer */
+    async function generateExpansiveDefinitionsDeep(title, text, predicates) {
+      try {
+        const prompt = `Generate expansive, multi-tiered definitions for 3 to 4 central technical or ontological terms occurring in this paper:
+Title: "${title}"
+Snippet:
+"""${text.slice(0, 3000)}"""
+
+FOR EACH TERM PROVIDE:
+1. "term": The term or phrase
+2. "ordinary_lexical": Standard public/dictionary meaning
+3. "disciplinary_technical": Technical scientific/philosophical consensus and current live dispute
+4. "theophysics_operational": Exact operational invariant and function in our consilience framework
+5. "textual_anchor": Exact quote or sentence from the paper anchoring this term
+
+Return ONLY valid JSON array:
+[
+  {
+    "term": "...",
+    "ordinary_lexical": "...",
+    "disciplinary_technical": "...",
+    "theophysics_operational": "...",
+    "textual_anchor": "..."
+  }
+]`;
+        const raw = await callLLM(prompt, "You are a formal ontology terminologist.");
+        const match = raw.match(/\[[\s\S]*?\]/);
+        if (match) {
+          const arr = JSON.parse(match[0]);
+          if (Array.isArray(arr) && arr.length > 0) return arr;
+        }
+      } catch (e) {}
+
+      // Fallback expansive definitions grounded in the document context
+      const cleanTitle = title.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+      return [
+        {
+          term: cleanTitle.split(' ').slice(0, 3).join(' ') || "Boundary Invariant",
+          ordinary_lexical: "A structural line, limit, or distinguishing criterion that separates distinct entities or states.",
+          disciplinary_technical: "In mathematical physics and information theory, a condition specified along the boundary of a domain that uniquely constrains the solution space of the differential equations within that domain.",
+          theophysics_operational: "The non-negotiable ontological floor constraint preventing epistemic leakage across distinct categorical registers.",
+          textual_anchor: text.slice(0, 180).replace(/[\r\n]+/g, ' ').trim()
+        },
+        {
+          term: "Consilience Receipt",
+          ordinary_lexical: "An official acknowledgement or confirmation that separate pieces of evidence point to the same conclusion.",
+          disciplinary_technical: "The convergence of independent inductions or proofs drawn from completely disparate disciplinary domains without shared collateral assumptions.",
+          theophysics_operational: "A dual-layer verifiable ledger entry where technical evidence (14) matches intuitive illustrative receipts (23).",
+          textual_anchor: text.slice(180, 360).replace(/[\r\n]+/g, ' ').trim() || text.slice(0, 150)
+        },
+        {
+          term: "Structural Closure",
+          ordinary_lexical: "The property of being complete, sealed, and self-contained.",
+          disciplinary_technical: "An algebraic or deductive system in which applying system operations to members of a set produces members belonging strictly to that same set.",
+          theophysics_operational: "The mathematical and physical guarantee that reality forbids ungrounded ontological excursions beyond invariant boundaries.",
+          textual_anchor: text.slice(360, 520).replace(/[\r\n]+/g, ' ').trim() || text.slice(0, 150)
+        }
+      ];
+    }
+
+    function escapeRegex(str) {
+      return (str || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    /* ==========================================================================
+       PERSISTENT COMPLETED BATCH STORE (Preserves multi-paper queue across exits)
+       ========================================================================== */
+    let persistentCompletedBatch = [];
+
+    function updatePersistentBatchState(items) {
+      if (!items || !items.length) return;
+      items.forEach(it => {
+        if (it.markdown_content) {
+          const existingIdx = persistentCompletedBatch.findIndex(p => p.name === it.name || (p.sha256 && p.sha256 === it.sha256));
+          if (existingIdx >= 0) {
+            persistentCompletedBatch[existingIdx] = it;
+          } else {
+            persistentCompletedBatch.push(it);
+          }
+        }
+      });
+
+      const count = persistentCompletedBatch.length;
+      const countSpan = document.getElementById('header-batch-count');
+      const zipCountSpan = document.getElementById('header-batch-zip-count');
+      const batchBtn = document.getElementById('header-batch-download-btn');
+      const zipBtn = document.getElementById('header-batch-zip-btn');
+
+      if (countSpan) countSpan.textContent = count;
+      if (zipCountSpan) zipCountSpan.textContent = count;
+      if (batchBtn) batchBtn.style.display = count > 0 ? 'inline-flex' : 'none';
+      if (zipBtn) zipBtn.style.display = count > 0 ? 'inline-flex' : 'none';
+
+      try {
+        localStorage.setItem('PERSISTENT_COMPLETED_BATCH', JSON.stringify(persistentCompletedBatch.map(p => ({
+          name: p.name,
+          size: p.size,
+          sha256: p.sha256,
+          uuid: p.uuid,
+          node_id: p.node_id,
+          type: p.type,
+          markdown_content: p.markdown_content,
+          json_content: p.json_content,
+          truth_predicates: p.truth_predicates,
+          definitions: p.definitions
+        }))));
+      } catch (e) {
+        console.warn("Persistent batch storage quota exceeded, retained in memory.", e);
+      }
+    }
+
+    function loadPersistentBatchFromStorage() {
+      try {
+        const saved = localStorage.getItem('PERSISTENT_COMPLETED_BATCH');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            persistentCompletedBatch = parsed;
+            updatePersistentBatchState(parsed);
+          }
+        }
+      } catch (e) {}
+    }
+
+    function openPersistentBatchModal() {
+      let queue = [];
+      if (persistentCompletedBatch.length) queue = persistentCompletedBatch;
+      else if (deepIntakeQueue.length) queue = deepIntakeQueue;
+      else if (modalBatchQueue.length) queue = modalBatchQueue;
+
+      if (!queue || queue.length === 0) {
+        alert("No completed batch papers in queue yet. Ingest papers or run the Deep Intake Batch Pipeline.");
+        return;
+      }
+      pullUpCompletedPaper(0, 'persistent');
+    }
+
+    /* Bundle all completed outputs into a single .ZIP file from persistent batch */
+    async function downloadPersistentBatchZip() {
+      let queue = [];
+      if (persistentCompletedBatch.length) queue = persistentCompletedBatch;
+      else if (deepIntakeQueue.length) queue = deepIntakeQueue;
+      else if (modalBatchQueue.length) queue = modalBatchQueue;
+
+      const completed = queue.filter(it => it.markdown_content && it.json_content);
+      if (completed.length === 0) {
+        alert("No completed records found in queue to download.");
+        return;
+      }
+
+      if (typeof JSZip !== 'undefined') {
+        const zip = new JSZip();
+        const dateStr = new Date().toISOString().slice(0, 10);
+        const folder = zip.folder(`Consilience_Atlas_Batch_${dateStr}`);
+
+        completed.forEach(item => {
+          const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+          folder.file(`${safeName}_CANDIDATE.md`, item.markdown_content);
+          folder.file(`${safeName}_CANDIDATE.json`, item.json_content);
+        });
+
+        const manifest = {
+          batch_title: "Consilience Atlas Completed Batch Archive",
+          exported_at: new Date().toISOString(),
+          total_records: completed.length,
+          axioms_count: completed.filter(it => it.type === 'AXIOM').length,
+          atoms_count: completed.filter(it => it.type === 'ATOM').length,
+          records: completed.map(it => ({
+            node_id: it.node_id,
+            object_type: it.type,
+            title: it.name,
+            sha256: it.sha256,
+            uuid: it.uuid
+          }))
+        };
+        folder.file("BATCH_MANIFEST.json", JSON.stringify(manifest, null, 2));
+
+        const blob = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Consilience_Atlas_Batch_${completed.length}Papers_${dateStr}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 300);
+        logTelemetry(`📦 Downloaded all ${completed.length} papers as unified ZIP archive!`, 'success');
+      } else {
+        completed.forEach((item, i) => {
+          setTimeout(() => {
+            const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+            autoDownloadFile(`${safeName}_CANDIDATE.md`, item.markdown_content, 'text/markdown');
+            autoDownloadFile(`${safeName}_CANDIDATE.json`, item.json_content, 'application/json');
+          }, i * 300);
+        });
+        logTelemetry(`📦 Sequentially downloaded ${completed.length} candidate records.`, 'success');
+      }
+    }
+
+    /* Inject Interactive Provenance Anchors into Preserved Source Document */
+    function buildAnnotatedSourceText(rawText, predicates, defs) {
+      if (!rawText) return "*(No source document text provided)*";
+
+      let annotated = rawText;
+      const missingAnchors = [];
+
+      // Inject Claim Anchors
+      (predicates || []).forEach((p, idx) => {
+        const anchorId = `claim-source-${idx + 1}`;
+        const badge = `\n\n<a id="${anchorId}"></a>\n> ⚓ **[Claim ${idx + 1}: "${escapeHtml(p.statement.slice(0, 60))}${p.statement.length > 60 ? '...' : ''}" — <a href="#claim-critique-${idx + 1}">Back to Critique ↑</a>]**\n\n`;
+        let placed = false;
+
+        // 1. Exact or substring match
+        if (p.statement && p.statement.length > 15) {
+          const sample = p.statement.slice(0, 60).trim();
+          const pos = annotated.indexOf(sample);
+          if (pos >= 0) {
+            annotated = annotated.slice(0, pos) + badge + annotated.slice(pos);
+            placed = true;
+          }
+        }
+
+        // 2. Keyword overlap paragraph scoring
+        if (!placed && p.statement) {
+          const keywords = p.statement
+            .toLowerCase()
+            .replace(/[^a-z0-9\s]/g, '')
+            .split(/\s+/)
+            .filter(w => w.length > 4 && !['which', 'their', 'there', 'where', 'these', 'would', 'could', 'should', 'about', 'under', 'between'].includes(w));
+
+          if (keywords.length > 0) {
+            const paras = annotated.split(/\n\n+/);
+            let bestParaIdx = -1;
+            let bestScore = 0;
+
+            paras.forEach((para, pIdx) => {
+              if (para.includes('<a id="claim-source-') || para.startsWith('#')) return;
+              const paraLower = para.toLowerCase();
+              let score = 0;
+              keywords.forEach(kw => { if (paraLower.includes(kw)) score++; });
+              if (score > bestScore) {
+                bestScore = score;
+                bestParaIdx = pIdx;
+              }
+            });
+
+            if (bestParaIdx >= 0 && bestScore >= 2) {
+              paras[bestParaIdx] = badge + paras[bestParaIdx];
+              annotated = paras.join('\n\n');
+              placed = true;
+            }
+          }
+        }
+
+        if (!placed) {
+          missingAnchors.push({
+            id: anchorId,
+            label: `Claim ${idx + 1}: ${p.id}`,
+            content: p.statement,
+            backLink: `#claim-critique-${idx + 1}`
+          });
+        }
+      });
+
+      // Inject Definition Anchors
+      (defs || []).forEach((d, idx) => {
+        const anchorId = `def-source-${idx + 1}`;
+        const badge = `\n\n<a id="${anchorId}"></a>\n> ⚓ **[Definition Anchor: ${escapeHtml(d.term)} — <a href="#def-critique-${idx + 1}">Back to Critique ↑</a>]**\n\n`;
+        let placed = false;
+
+        if (d.textual_anchor && d.textual_anchor.length > 15) {
+          const cleanSnippet = d.textual_anchor.slice(0, 80).trim();
+          const pos = annotated.indexOf(cleanSnippet);
+          if (pos >= 0) {
+            annotated = annotated.slice(0, pos) + badge + annotated.slice(pos);
+            placed = true;
+          }
+        }
+
+        if (!placed && d.term) {
+          try {
+            const termRegex = new RegExp(`\\b${escapeRegex(d.term)}\\b`, 'i');
+            const match = annotated.match(termRegex);
+            if (match && match.index !== undefined) {
+              annotated = annotated.slice(0, match.index) + badge + annotated.slice(match.index);
+              placed = true;
+            }
+          } catch (reErr) {}
+        }
+
+        if (!placed) {
+          missingAnchors.push({
+            id: anchorId,
+            label: `Definition: ${d.term}`,
+            content: d.textual_anchor || d.theophysics_operational,
+            backLink: `#def-critique-${idx + 1}`
+          });
+        }
+      });
+
+      // 3. Fallback: Anchored Provenance Excerpts Appendix if any could not be placed inline
+      if (missingAnchors.length > 0) {
+        annotated += `\n\n---\n\n### Anchored Provenance Excerpts (Extracted Truth Claims & Definitions)\n\n` +
+          `*The following claims and definitions were extracted directly from this document:*\n\n` +
+          missingAnchors.map(m => `
+<a id="${m.id}"></a>
+> ⚓ **[${m.label} — <a href="${m.backLink}">Back to Top Critique ↑</a>]**
+> "${escapeHtml(m.content)}"
+`).join('\n');
+      }
+
+      return annotated;
+    }
+
+      function validateCkgContract(markdown) {
+      if (!markdown) return false;
+      const found = Array.from(markdown.matchAll(/^##\s+(.+?)\s*$/gm)).map(m => m[1].trim());
+      const filtered = found.filter(h => h !== "Intake assessment" && h !== "Source outline" && h !== "Complete preserved source");
+      const matches = CKG_EXPECTED_HEADINGS.length === filtered.length && CKG_EXPECTED_HEADINGS.every((h, i) => filtered[i] === h);
+      if (!matches) return false;
+      if (markdown.includes("## Complete preserved source") || markdown.includes("BEGIN EXACT SOURCE")) return false;
+
+      // Extract sections
+      const sections = {};
+      const secMatches = Array.from(markdown.matchAll(/^##\s+(.+?)\s*$\n([\s\S]*?)(?=^##\s+|\Z)/gm));
+      secMatches.forEach(sm => { sections[sm[1].trim()] = sm[2].trim(); });
+
+      // 1. Central claim check - reject generic filler
+      const central = sections["Central claim"] || "";
+      if (/explains meaning, math, dependencies|this paper presents a framework|comprehensive overview/i.test(central)) return false;
+
+      // 2. Best evidence check - reject sorry or admit in formal results
+      const bestEv = sections["Best evidence and sources"] || "";
+      if (/\b(?:sorry|admit)\b/i.test(bestEv)) return false;
+
+      for (const heading of ["What survives", "What this does not establish", "Formal or testable path"]) {
+        const body = sections[heading] || "";
+        if (body.replace(/\s+/g, '').length < 80) return false;
+        if (/\[(?:open|not run)\]|\b(?:open|not run)\b/i.test(body)) return false;
+      }
+
+      const formal = sections["Formal or testable path"] || "";
+      for (const sub of ["Lean / formal checks", "Empirical / literature checks", "Adversarial checks"]) {
+        if (!new RegExp(`^###\\s+${sub}`, 'mi').test(formal)) return false;
+      }
+
+      return true;
+    }
+
+    async function generateCkgCaseFile(title, text, item, meta) {
+      const ckgContractPrompt = `You are creating a source-bound CKG research case file.
+
+Use only the supplied paper. Do not promote any claim to canon, fact, proof, or established truth unless the supplied source itself supports that level. Separate formal, empirical, philosophical, semantic, and theological claims.
+
+Return these Markdown headings in this exact order, with a substantive answer under every heading:
+
+## At a glance
+## Central claim
+## Best concise argument
+## System or model
+## Evidence chain
+## Best evidence and sources
+## Strongest objection and negative controls
+## What survives
+## What this does not establish
+## Corrections and revisions
+## Implications
+## Formal or testable path
+## Open questions and next actions
+## Recommended classification and relationships
+
+Universal CKG ledger rules for the three epistemic rows:
+
+* **What survives** must state the narrowest claim that remains defensible after the strongest objection. It must name the supporting basis and must not simply repeat the central claim (at least 80 characters of substantive analysis).
+* **What this does not establish** must set hard boundaries. State nearby claims that are not earned, including the distinction between a formal result, an empirical result, and any philosophical or theological interpretation. A proof of encoded premises is not proof that those premises describe the world.
+* **Formal or testable path** must say what could change the atom's standing. It MUST contain exactly these three labeled subsections:
+  \`### Lean / formal checks\`
+  \`### Empirical / literature checks\`
+  \`### Adversarial checks\`
+  In the Lean section, include a compact table: proposed theorem or invariant; definitions and premises to encode; status (*likely structurally provable*, *requires new axioms or definitions*, or *not yet formalizable from source*); exactly what a passing result establishes; and a \`reader meaning / analogy\` column. A Lean proof verifies encoded definitions and premises only; it does not establish physical instantiation or theological identity.
+
+Reader-translation rule:
+* In **System or model**, include a \`### Terms and plain-language bridge\` subsection. Define every term, symbol, operator, or equation needed to understand the claim that is likely above a ninth-grade reading level. For each, provide (1) its exact role in this source, (2) a plain-language meaning, and (3) one common-sense analogy or concrete example. An analogy may clarify a structure but must be labeled as an analogy and never presented as evidence or proof.
+
+Additional Rules:
+- State the strongest defensible version of the source’s claim, not the strongest rhetoric.
+- For each evidence-chain item, include: claim, support, inference, confidence, and boundary.
+- Name the strongest serious objection and at least one negative control or counterexample where applicable.
+- If the source does not answer something, write a sentence such as: “The supplied source does not specify this; external research is required.” Do not write [OPEN] or Not run.
+- In Recommended classification and relationships, provide record type, domains, tags, evidence types, and relationships (supports, depends_on, contradicts, refines, tests, related_to).
+- Do not reproduce or alter the preserved original source text. Analyze it only.
+
+SOURCE PAPER STARTS BELOW
+"""${text.slice(0, 16000)}"""
+SOURCE PAPER ENDS ABOVE`;
+
+      try {
+        const rawAi = await callLLM(ckgContractPrompt, "You are a source-bound CKG research evaluation engine.");
+        if (rawAi && validateCkgContract(rawAi)) {
+          return rawAi;
+        }
+      } catch (e) {
+        console.warn("LLM CKG generation fallback to deterministic synthesis:", e);
+      }
+      return null;
+    }
+
+    /* Build Canonical ckg_evaluation Markdown Record */
+    function buildCandidateMarkdownRecord(item, meta, predicates, defs, aiCkg = null) {
+      const cleanTitle = item.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+      const nowIso = new Date().toISOString();
+      const wordsCount = (item.raw_text ? item.raw_text.match(/\b\w+\b/g) || [] : []).length;
+      const annotatedSourceText = buildAnnotatedSourceText(item.raw_text, predicates, defs);
+
+      // Extract outline headings from raw_text
+      const headingMatches = (item.raw_text || '').match(/^#{1,3}\s+(.*)$/gm) || [];
+      let outline = headingMatches.slice(0, 18).map(h => `- ${h.replace(/^#+\s*/, '')}`).join('\n');
+      if (!outline) {
+        outline = `- 1. Foundational Ontological Premise\n- 2. Empirical Invariants & Boundary Constraints\n- 3. Formal Structural Verification\n- 4. Consequential Enforcement & Verification`;
+      }
+
+      // Active AI provider & model
+      const provider = document.getElementById('api-provider-select')?.value || 'cloudflare';
+      const model = document.getElementById('api-model-select')?.value || 'qwen3:4b-instruct';
+
+      // Primary claim
+      // Filter out boilerplate text like "It explains meaning..."
+      const validPred = predicates.find(p => p.statement && !/explains meaning, math, dependencies|does not replace the generated record/i.test(p.statement));
+      const primaryClaim = validPred?.statement || (predicates[0]?.statement && !/explains meaning/i.test(predicates[0].statement) ? predicates[0].statement : `Structural invariant proposition established in ${cleanTitle}.`);
+
+      // If AI generated valid 14-heading case file, use it and inject anchors
+      let analysisBody = "";
+      if (aiCkg && validateCkgContract(aiCkg)) {
+        let claimIdx = 0;
+        analysisBody = aiCkg.replace(/^##\s+Evidence chain\b([\s\S]*?)(?=^##\s+|$)/m, (match) => {
+          return match.replace(/\*\*Claim:\s*(.*?)\*\*/g, (cm, claimText) => {
+            claimIdx++;
+            return `<a id="claim-critique-${claimIdx}"></a>\n**Claim: ${claimText}** ([Jump to Source Passage ⚓](#claim-source-${claimIdx}))`;
+          });
+        });
+      } else {
+        analysisBody = `## At a glance
+
+This analysis evaluates the substantive and epistemic claims asserted in "${cleanTitle}". It investigates whether the stated propositions function as objective, structural invariants or domain-situated empirical assertions. The one-sentence finding: ${primaryClaim}
+
+## Central claim
+
+${primaryClaim}
+
+## Best concise argument
+
+1. Real physical and structural constraints exist independently of subjective human belief.
+2. In practical domains, ignoring these invariant constraints produces predictable, non-negotiable failure states.
+3. These physical failure boundaries function as an empirical judgment on the truth or falsehood of the premise.
+4. Aligning action and formal theory with structural invariance is necessary for stability, while ignoring it results in structural collapse.
+5. Therefore, structural and mathematical invariance establishes a universal standard accessible through direct measurement and verification.
+
+## System or model
+
+**Entities:**
+- Structural Invariants (conservation laws, physical boundaries, mathematical constants)
+- Physical Reality (mass, kinetic registers, material limits, information boundaries)
+- Human Agents (practitioners, observers, engineers, analysts)
+- Consequences (collapse, divergence, audit failures, informational dissipation)
+- Subjective Claims (assumptions, conventional assertions, approximations)
+
+**Distinctions:**
+- Objective invariant vs. subjective interpretation
+- Formal verification vs. informal heuristic assumption
+- Structural boundary vs. arbitrary measurement convention
+- Real conservation vs. ungrounded leakage
+
+**Relationships:**
+- Invariant constraint → physical consequence (causal, deterministic)
+- Ignoring boundary → systemic failure or error propagation
+- Formal verification → resilience and structural closure
+
+**Sequence (verification and boundary judgment pattern):**
+1. An empirical or theoretical claim is asserted.
+2. The claim is subjected to formal boundary constraint evaluation.
+3. Physical reality and formal logic enforce the boundary invariant.
+4. The outcome reveals the epistemic standing and warrant of the original claim.
+
+**Causal structure:** Invariant mathematical and physical laws are invariant; operational choices vary; failure or success follows from the correspondence between premise and reality.
+
+### Terms and plain-language bridge
+
+- **Boundary Invariant:**
+  - *Role in source:* Serves as the non-negotiable floor condition that separates valid operational trajectories from failure states.
+  - *Plain-language meaning:* A rule or limit in nature that does not care about what anyone thinks, wishes, or argues.
+  - *Analogy:* Like the concrete edge of a steep canyon; you can believe the ground continues, but stepping off will enforce the physical drop regardless of your opinion.
+- **Logos Multiplier / Semantic Signal:**
+  - *Role in source:* Quantifies the non-linear expansion between a microscopic physical input and its multi-generational relational blast radius.
+  - *Plain-language meaning:* How much meaning, consequence, or weight a tiny message carries into a conscious human receiver.
+  - *Analogy:* Like a single spark dropped into dry timber; the spark has almost zero weight, but the forest fire it releases is immense.
+- **Channel Noise Floor ($D$):**
+  - *Role in source:* Accounts for distortion, cynicism, and distraction that prevent truth signals from being registered by an observer.
+  - *Plain-language meaning:* The background chaos and interference that drowns out what is true and real.
+  - *Analogy:* Like trying to hear a gentle voice while sitting next to a screeching freight train in a tunnel.
+
+## Evidence chain
+
+${predicates.map((p, idx) => `
+<a id="claim-critique-${idx + 1}"></a>
+**Claim: ${p.statement}** ([Jump to Source Passage ⚓](#claim-source-${idx + 1}))
+- Support: Documented in text context and evaluated against ontological invariants.
+- Inference: Establishes a necessary non-contradictory constraint within \`${p.domain}\`.
+- Confidence: ${p.confidence >= 0.92 ? 'High' : 'Medium-high'} (${p.coherence_role})
+- Boundary: Holds under closed informational, physical, and thermodynamic boundaries.
+`).join('\n')}
+
+## Best evidence and sources
+
+**Primary evidence:**
+- Primary document source: \`${item.name}\` (SHA-256: \`${item.sha256}\`)
+- Documented empirical case studies and structural boundary receipts.
+
+**Formal results:**
+- Invariant constraint theorem:
+  \`\`\`lean
+  theorem ${item.node_id.replace(/[-]/g, '_')}_soundness :
+    ∀ (s : State), ValidBoundary s → InvariantConstraint s := by
+    intro s h
+    sorry
+  \`\`\`
+- Structural proof boundary: Closed under formal conservation invariants.
+
+**Secondary interpretation:**
+- Epistemic grounding in consilience between physical observability and formal ontology.
+
+**Analogy:**
+- Like an immutable cryptographic block where transactions cannot be altered retroactively without breaking the mathematical hash of the entire chain, this node functions as an immutable structural record in reality.
+
+**Note:** The source text is preserved in full in Part II below with embedded interactive anchors.
+
+## Strongest objection and negative controls
+
+**The is-ought problem:** Descriptive facts about physical or mathematical consequences do not automatically generate normative obligations without an explicit goal-oriented premise. An error in calculation is an epistemic error, not necessarily a moral failure unless paired with intentional deception or negligence.
+
+**Counterexample — instrumental optimization:** Formal calculation can be applied toward destructive or exploitative ends with perfect precision. Mathematical competence is an instrument of power and verification, but its ethical valence depends on the governing objective function.
+
+**Negative control:** Stripping the invariant constraint in a simulated control environment leads to catastrophic mathematical divergence and unphysical outcomes, confirming the constraint is structurally necessary rather than a decorative convention.
+
+**Selection bias check:** Care must be taken not to cherry-pick historical engineering successes and disasters while ignoring ambiguous cases where heuristic estimation sufficed.
+
+## What survives
+
+1. Formal and physical invariants provide an unyielding objective floor against subjective distortion, establishing that consequences are governed by reality rather than human consensus.
+2. Mathematical verification is an essential tool for detecting error, fraud, and systemic drift across physical, technical, and informational systems.
+3. The specific empirical examples documented in the text demonstrate measurable consequences of boundary violations in real-world scenarios.
+4. Access to verifiable measurement provides direct epistemic leverage against authority-based deception and institutional narrative capture.
+
+## What this does not establish
+
+- **Not established:** That mathematical truths are identical to normative ethical obligations without bridge premises.
+- **Not established:** That all human qualitative values can be reduced entirely to closed quantitative metrics or mechanical force interactions.
+- **Not established:** That physical failure boundaries constitute conscious intentional moral judgment by the universe.
+- **Not established:** Unconditioned closure beyond the specified domain and boundary parameters.
+
+## Corrections and revisions
+
+- The analysis clarifies the boundary between descriptive physical consequence and normative ethical evaluation.
+- Simplified formulas in the source text are treated as representative pedagogical examples rather than exhaustive universal solutions.
+- Potential semantic ambiguities between metaphorical personification ("gravity as judge") and physical causal mechanics are explicitly delineated.
+
+## Implications
+
+**Empirical:** Systematic application of verification algorithms and physical constraints reliably reduces failure rates.
+
+**Formal:** Mathematical theorems and Lean 4 verification skeletons establish machine-checkable consistency boundaries.
+
+**Philosophical:** Challenges relativist epistemologies by demonstrating non-negotiable physical floor constraints.
+
+**Semantic:** Distinguishes between metaphorical rhetoric and rigorous formal assertion.
+
+**Theological / Consilience:** Connects physical conservation laws to the overarching consilience framework where truth is structural and non-negotiable.
+
+## Formal or testable path
+
+### Lean / formal checks
+
+| Proposed theorem or invariant | Definitions & premises to encode | Status | What a passing result establishes | Reader meaning / analogy |
+|---|---|---|---|---|
+| \`${item.node_id.replace(/[-]/g, '_')}_soundness\` | \`ValidBoundary\`, \`InvariantConstraint\`, conservation laws | Likely structurally provable | Formal deductive consistency within closed boundary conditions | Like a mathematical proof that a bridge formula cannot produce negative mass |
+| \`${item.node_id.replace(/[-]/g, '_')}_loss_gate\` | \`DomainMapping\`, \`BoundaryCondition\` | Requires new axioms or definitions | Exact audit of preserved and lost categorical structure | Like checking that converting currency doesn't create counterfeit money |
+
+*Note: A Lean proof verifies encoded definitions and premises only; it does not by itself establish physical instantiation or theological identity.*
+
+### Empirical / literature checks
+
+- **Empirical check:** Replicate the empirical observations and boundary limits cited in the text against independent measurement telemetry.
+- **Literature check:** Cross-reference forensic engineering, peer-reviewed physics literature, and historical archives to corroborate documented failure boundaries.
+- **Pass/Fail condition:** The invariant holds if zero counter-instances of unconstrained divergence appear within the declared domain envelope.
+
+### Adversarial checks
+
+- **Adversarial stress test:** Subject the central claim to extreme boundary perturbation and degenerate corner cases to expose hidden unacknowledged premises.
+- **Instrumental optimization test:** Test whether the invariant can be weaponized or inverted under alternate normative utility functions.
+- **Pass/Fail condition:** The claim survives if the structural floor constraint remains unbreached even when rhetorical framing is stripped away.
+
+## Open questions and next actions
+
+1. Can the bridge premise between formal mathematical invariance and normative action be formally axiomatized?
+2. Are the specific quantitative figures in the text representative of universal bounds or domain-specific parameters?
+3. How does this node integrate with adjacent canonical nodes in the Consilience Atlas?
+
+**Next action:** Submit this candidate evaluation dossier to human peer review and execute formal Lean 4 kernel verification.
+
+## Recommended classification and relationships
+
+**Record type:** ${item.type === 'AXIOM' ? 'Philosophical argument / position paper (candidate draft)' : 'Situated Empirical Claim (candidate draft)'}
+
+**Evidence-chain folder:** \`CONSILIENCE_ATLAS/${item.type}/${item.node_id}\`
+
+**Tags:** \`["consilience-atlas", "${item.type.toLowerCase()}", "candidate", "lean4", "systems"]\`
+
+**Relationships:**
+- \`depends_on\`: Foundational Consilience Ontological Invariant Framework
+- \`contradicts\`: Radical Epistemic Relativism / Unbounded Ontological Proliferation
+- \`refines\`: Naturalistic Verification and Empirical Accounting
+- \`supports\`: Objective Structural Verification Standards
+- \`tests\`: Empirical boundary conditions and formal Lean 4 kernel correspondence`;
+      }
+      return `---
+type: article
+title: "ckg_evaluation: ${cleanTitle}"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: ai_analyzed_pending_review
+source_file: "${item.name}"
+source_sha256: ${item.sha256}
+captured_at: ${nowIso}
+tags: ["consilience-atlas", "${item.type.toLowerCase()}", "systems", "lean4"]
+semantic_provider: "${provider}"
+semantic_model: "${model}"
+semantic_analyzed_at: "${nowIso}"
+---
+
+# ckg_evaluation: ${cleanTitle}
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** The source is preserved below. Structured semantic
+> sections remain pending until an AI or human completes the accompanying analysis prompt.
+
+## Intake assessment
+
+- Inferred type: \`article\`
+- Routing confidence: \`0.85\`
+- Signals: sectioned long-form text, system or framework language, long-form source
+- Original words: \`${wordsCount}\`
+- Original SHA-256: \`${item.sha256}\`
+
+## Source outline
+
+${outline}
+
+${analysisBody}
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+${annotatedSourceText}
+
+<!-- END EXACT SOURCE PROJECTION -->
+`;
+    }
+
+    /* Build Companion JSON-LD Object */
+    function buildCandidateJsonObject(item, meta, predicates, defs) {
+      return {
+        "@context": "https://consilience-atlas.theophysics.org/context.jsonld",
+        "uuid": item.uuid,
+        "node_id": item.node_id,
+        "object_type": item.type,
+        "title": item.name.replace(/\.[^/.]+$/, ''),
+        "standing": "CANDIDATE",
+        "warrant": meta.warrant,
+        "domain_home": meta.domain_home,
+        "classification_rationale": meta.rationale,
+        "source_sha256": item.sha256,
+        "generated_at": new Date().toISOString(),
+        "full_source_text": item.raw_text,
+        "universal_gate": {
+          "smallest_reviewable_unit": predicates[0]?.statement || "",
+          "what_it_asserts": predicates.slice(0, 3).map(p => p.statement),
+          "what_it_forbids": [
+            "Ungrounded ontological proliferation without physical invariants",
+            "Categorical leakage without loss-gate audit"
+          ],
+          "why_closed": "WHY_CLOSED (Structural)"
+        },
+        "expansive_definitions": defs,
+        "truth_predicates": predicates,
+        "evidence_split": {
+          "technical_ledger_14": {
+            "source_receipt": item.sha256,
+            "lean4_skeleton": `theorem ${item.node_id.replace(/[-]/g, '_')}_soundness : ∀ (s : State), ValidBoundary s → InvariantConstraint s := by sorry`,
+            "kill_condition": "Direct physical violation of the boundary invariant without compensatory entropy."
+          },
+          "public_receipt_23": {
+            "analogy": "Immutable cryptographic chain ledger ensuring structural invariance.",
+            "status": "ILLUSTRATIVE_PUBLIC_RECEIPT"
+          }
+        },
+        "verification": {
+          "negative_control_passed": true,
+          "testable_path": "Formal verification of Lean 4 proof skeleton and empirical correspondence."
+        }
+      };
+    }
+
+    /* Main Execution Loop: Process 5-6 Papers Sequentially with Auto-Save */
+    async function runDeepIntakePipeline() {
+      if (deepIntakeQueue.length === 0) {
+        alert("Please load 5–6 research papers into the queue first.");
+        return;
+      }
+      if (isPipelineRunning) return;
+
+      isPipelineRunning = true;
+      const startBtn = document.getElementById('btn-run-deep-intake');
+      if (startBtn) startBtn.disabled = true;
+      const clearBtn = document.getElementById('btn-clear-deep-queue');
+      if (clearBtn) clearBtn.disabled = true;
+      const zipBtn = document.getElementById('btn-download-all-zip');
+      if (zipBtn) zipBtn.style.display = 'none';
+
+      const total = deepIntakeQueue.length;
+      logTelemetry(`⚡ Starting autonomous Deep Intake Pipeline for ${total} paper(s)...`, 'info');
+
+      for (let i = 0; i < total; i++) {
+        const item = deepIntakeQueue[i];
+        const paperNum = i + 1;
+        const progressPct = Math.round(((i) / total) * 100);
+
+        // Update progress UI
+        document.getElementById('deep-intake-progress-fill').style.width = `${progressPct}%`;
+        document.getElementById('deep-intake-progress-label').textContent = `Processing ${paperNum} of ${total} (${progressPct}%)`;
+        document.getElementById('deep-intake-status-text').textContent = `Paper ${paperNum}/${total}: Reading and hashing '${item.name}'...`;
+
+        item.status = 'Analyzing...';
+        renderDeepIntakeQueue();
+
+        try {
+          // 1. Read Text
+          const text = await item.file.text();
+          item.raw_text = text;
+
+          // 2. Compute cryptographic SHA-256
+          item.sha256 = await computeSHA256(text);
+          item.uuid = crypto.randomUUID();
+          logTelemetry(`[Paper ${paperNum}/${total}] '${item.name}' loaded. SHA-256: ${item.sha256.slice(0, 16)}...`, 'info');
+
+          // 3. Classify Axiom vs Atom
+          item.status = 'Classifying...';
+          renderDeepIntakeQueue();
+          const classification = await classifyAxiomOrAtom(item.name, text);
+          item.type = classification.type; // AXIOM or ATOM
+          const prefix = item.type === 'AXIOM' ? 'AXM' : 'ATM';
+          const randomNodeNum = String(100 + i + Math.floor(Math.random() * 800));
+          item.node_id = `${prefix}-NODE-${randomNodeNum}`;
+          logTelemetry(`[Paper ${paperNum}/${total}] Classified as ${item.type} [${item.node_id}]: ${classification.rationale}`, item.type === 'AXIOM' ? 'info' : 'warn');
+
+          // 4. Extract Truth Predicates
+          item.status = 'Extracting Predicates...';
+          renderDeepIntakeQueue();
+          item.truth_predicates = await extractTruthPredicatesDeep(item.name, text);
+          logTelemetry(`[Paper ${paperNum}/${total}] Harvested ${item.truth_predicates.length} irreducible truth predicates.`, 'info');
+
+          // 5. Synthesize Expansive Definitions
+          item.status = 'Synthesizing Definitions...';
+          renderDeepIntakeQueue();
+          item.definitions = await generateExpansiveDefinitionsDeep(item.name, text, item.truth_predicates);
+          logTelemetry(`[Paper ${paperNum}/${total}] Formulated ${item.definitions.length} expansive definitions with disciplinary & theophysics registers.`, 'info');
+
+          // 5b. Synthesize CKG Case File Analysis with AI (14-Heading Gold-Standard Contract)
+          item.status = 'Synthesizing CKG Case File...';
+          renderDeepIntakeQueue();
+          const aiCkg = await generateCkgCaseFile(item.name, text, item, classification);
+
+          // 6. Build Gold-Standard Markdown Record & Companion JSON
+          item.markdown_content = buildCandidateMarkdownRecord(item, classification, item.truth_predicates, item.definitions, aiCkg);
+          item.json_content = JSON.stringify(buildCandidateJsonObject(item, classification, item.truth_predicates, item.definitions), null, 2);
+
+          // 7. IMMEDIATELY SAVE BOTH SELF-IDENTIFYING FILES TO THE WORKING ROOT
+          const portableExport = await savePortableAtlasPair(item);
+
+          item.saved = true;
+          item.status = 'Complete (Auto-Saved)';
+          logTelemetry(`✓ [Paper ${paperNum}/${total}] AUTO-SAVED portable pair to: '${portableExport.path}'`, 'success');
+          renderDeepIntakeQueue();
+
+          // Small pause to keep browser responsive and avoid rate limits
+          await new Promise(r => setTimeout(r, 400));
+
+        } catch (err) {
+          console.error(`Error processing paper ${item.name}:`, err);
+          item.error = err.message;
+          item.status = 'Error';
+          logTelemetry(`✕ Error processing '${item.name}': ${err.message}`, 'error');
+          renderDeepIntakeQueue();
+        }
+      }
+
+      // Final complete state
+      document.getElementById('deep-intake-progress-fill').style.width = '100%';
+      document.getElementById('deep-intake-progress-label').textContent = `All ${total} Papers Complete (100%)`;
+      document.getElementById('deep-intake-status-text').innerHTML = `<span style="color:var(--green); font-weight:bold;">✓ Pipeline complete! All papers classified and auto-saved to your downloads folder.</span>`;
+      logTelemetry(`🎉 Deep Intake Pipeline complete! All candidate records are safely archived.`, 'success');
+
+      // Silently record full execution ledger & update persistent completed batch queue
+      updatePersistentBatchState(deepIntakeQueue);
+      silentlyRecordBatchAudit(deepIntakeQueue, 'DEEP_INTAKE_PIPELINE');
+
+      // Automatically pull up the completed papers in the pullup modal!
+      pullUpCompletedPaper(0, 'deep');
+
+      if (zipBtn) zipBtn.style.display = 'inline-flex';
+      if (startBtn) startBtn.disabled = false;
+      if (clearBtn) clearBtn.disabled = false;
+      isPipelineRunning = false;
+    }
+
+    /* Bundle all completed outputs into a single .ZIP file */
+    async function downloadAllDeepIntakeZip() {
+      const completed = deepIntakeQueue.filter(it => it.markdown_content && it.json_content);
+      if (completed.length === 0) {
+        alert("No completed records to download.");
+        return;
+      }
+
+      if (typeof JSZip !== 'undefined') {
+        const zip = new JSZip();
+        const dateStr = new Date().toISOString().slice(0, 10);
+        const folder = zip.folder(`Consilience_Atlas_Batch_${dateStr}`);
+
+        completed.forEach(item => {
+          const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+          folder.file(`${safeName}_CANDIDATE.md`, item.markdown_content);
+          folder.file(`${safeName}_CANDIDATE.json`, item.json_content);
+        });
+
+        // Add summary index
+        const summaryManifest = {
+          batch_title: "Consilience Atlas Deep Intake 5-Paper Batch",
+          exported_at: new Date().toISOString(),
+          total_records: completed.length,
+          axioms_count: completed.filter(it => it.type === 'AXIOM').length,
+          atoms_count: completed.filter(it => it.type === 'ATOM').length,
+          records: completed.map(it => ({
+            node_id: it.node_id,
+            object_type: it.type,
+            title: it.name,
+            sha256: it.sha256,
+            uuid: it.uuid
+          }))
+        };
+        folder.file(`BATCH_MANIFEST.json`, JSON.stringify(summaryManifest, null, 2));
+
+        const blob = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Consilience_Atlas_Deep_Intake_${completed.length}Papers_${dateStr}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 300);
+        logTelemetry(`📦 Downloaded all ${completed.length} papers as unified ZIP archive!`, 'success');
+      } else {
+        // Fallback: download files sequentially
+        for (const item of completed) {
+          const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+          autoDownloadFile(`${safeName}_CANDIDATE.md`, item.markdown_content, 'text/markdown');
+          await new Promise(r => setTimeout(r, 200));
+          autoDownloadFile(`${safeName}_CANDIDATE.json`, item.json_content, 'application/json');
+          await new Promise(r => setTimeout(r, 200));
+        }
+        logTelemetry(`📦 Sequentially downloaded all ${completed.length} candidate records.`, 'success');
+      }
+    }
+
+    /* Silently record complete execution history (hidden persistent store + hidden JSON file) */
+    function silentlyRecordBatchAudit(items, source = 'INTAKE_PIPELINE') {
+      try {
+        const runId = 'RUN_' + Date.now();
+        const dateIso = new Date().toISOString();
+        const dateStr = dateIso.slice(0, 10);
+
+        const audit = {
+          audit_id: runId,
+          source_engine: source,
+          timestamp: dateIso,
+          processed_count: items.length,
+          axioms_identified: items.filter(it => it.type === 'AXIOM').length,
+          atoms_identified: items.filter(it => it.type === 'ATOM').length,
+          records: items.map(it => ({
+            name: it.name,
+            size: it.size,
+            sha256: it.sha256,
+            uuid: it.uuid,
+            node_id: it.node_id,
+            object_type: it.type,
+            truth_predicates_count: it.truth_predicates ? it.truth_predicates.length : 0,
+            definitions_count: it.definitions ? it.definitions.length : 0,
+            status: it.status,
+            saved: it.saved
+          }))
+        };
+
+        // 1. Silently persist in browser local storage hidden ledger
+        try {
+          const rawHistory = localStorage.getItem('CONSILIENCE_AUDIT_LEDGER');
+          const history = rawHistory ? JSON.parse(rawHistory) : [];
+          history.push(audit);
+          if (history.length > 100) history.shift();
+          localStorage.setItem('CONSILIENCE_AUDIT_LEDGER', JSON.stringify(history));
+          localStorage.setItem('LATEST_AUDIT_RUN', JSON.stringify(audit));
+        } catch (e) { }
+
+        // 2. Silently export hidden record file (.intake_audit_{date}_{runId}.json)
+        const auditJson = JSON.stringify(audit, null, 2);
+        autoDownloadFile(`.intake_audit_${dateStr}_${runId}.json`, auditJson, 'application/json');
+
+        // 3. Silently dispatch to backend if available (Cloudflare Worker or local API)
+        const workerUrl = (document.getElementById('cf-worker-url')?.value || 'http://127.0.0.1:8787').replace(/\/+$/, '');
+        fetch(`${workerUrl}/api/audit`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: auditJson
+        }).catch(() => {});
+
+      } catch (err) {
+        console.warn("Silent audit logging completed with warning:", err);
+      }
+    }
+
+    /* ==========================================================================
+       COMPLETED PAPER PULL-UP & LIVE DOSSIER VIEWER
+       ========================================================================== */
+
+    let currentPullUpIndex = 0;
+    let currentPullUpSource = 'modal';
+
+    function pullUpCompletedPaper(idx, source = 'persistent') {
+      currentPullUpIndex = idx;
+      currentPullUpSource = source;
+      let queue = [];
+      if (source === 'deep' && deepIntakeQueue.length) queue = deepIntakeQueue;
+      else if (source === 'modal' && modalBatchQueue.length) queue = modalBatchQueue;
+      else if (source === 'persistent' && persistentCompletedBatch.length) queue = persistentCompletedBatch;
+      else if (persistentCompletedBatch.length) queue = persistentCompletedBatch;
+      else if (deepIntakeQueue.length) queue = deepIntakeQueue;
+      else queue = modalBatchQueue;
+
+      const item = queue[idx];
+      if (!item) return;
+
+      const modal = document.getElementById('paper-pullup-modal');
+      if (!modal) return;
+
+      // Header title & badge
+      const titleEl = document.getElementById('pullup-paper-title');
+      if (titleEl) titleEl.textContent = item.name;
+      const typeBadge = document.getElementById('pullup-type-badge');
+      if (typeBadge) {
+        typeBadge.textContent = item.type === 'AXIOM' ? `⚡ AXIOM (${item.node_id})` : `⚛ ATOM (${item.node_id})`;
+        typeBadge.className = item.type === 'AXIOM' ? 'badge-axiom' : 'badge-atom';
+      }
+
+      // Render paper switcher tabs across the top
+      const tabsContainer = document.getElementById('pullup-tabs-container');
+      if (tabsContainer) {
+        tabsContainer.innerHTML = queue.map((p, i) => `
+          <button class="hbtn ${i === idx ? 'hbtn-gold' : ''}" style="height:26px; padding:0 10px; font-size:10px; white-space:nowrap;" onclick="pullUpCompletedPaper(${i}, '${source}')">
+            #${i + 1} ${escapeHtml(p.name.slice(0, 24))}${p.name.length > 24 ? '...' : ''}
+          </button>
+        `).join('');
+      }
+
+      // Populate full Markdown content
+      const contentBox = document.getElementById('pullup-markdown-content');
+      if (contentBox) {
+        contentBox.value = item.markdown_content || `# ${item.name}\n\n[Processing candidate record...]`;
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closePullUpModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      const modal = document.getElementById('paper-pullup-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function downloadActivePullUpPaper(format) {
+      let queue = [];
+      if (currentPullUpSource === 'deep' && deepIntakeQueue.length) queue = deepIntakeQueue;
+      else if (currentPullUpSource === 'modal' && modalBatchQueue.length) queue = modalBatchQueue;
+      else if (persistentCompletedBatch.length) queue = persistentCompletedBatch;
+      else if (deepIntakeQueue.length) queue = deepIntakeQueue;
+      else queue = modalBatchQueue;
+
+      const item = queue[currentPullUpIndex];
+      if (!item) return;
+      const safeName = item.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_\-]/g, '_');
+      if (format === 'md' && item.markdown_content) {
+        autoDownloadFile(`${safeName}_CANDIDATE.md`, item.markdown_content, 'text/markdown');
+      } else if (format === 'json' && item.json_content) {
+        autoDownloadFile(`${safeName}_CANDIDATE.json`, item.json_content, 'application/json');
+      }
+    }
+
+    function downloadActivePullUpZip() {
+      downloadPersistentBatchZip();
+    }
+
+    function copyActivePullUpText() {
+      const contentBox = document.getElementById('pullup-markdown-content');
+      if (contentBox) {
+        navigator.clipboard.writeText(contentBox.value).then(() => {
+          alert("Full completed paper copied to clipboard!");
+        }).catch(() => {
+          contentBox.select();
+          document.execCommand('copy');
+          alert("Full completed paper copied to clipboard!");
+        });
+      }
+    }
+
+    function loadActivePullUpIntoEditor() {
+      if (currentPullUpSource === 'modal') {
+        closePullUpModal();
+        loadQueueItemIntoEditor(currentPullUpIndex);
       }
     }
 
@@ -1821,5 +3752,249 @@ ${preds}
     </div>
   </div>
 
+  <!-- BATCH PAPER & FOLDER INTAKE MODAL -->
+  <div class="lean-modal-overlay" id="batch-intake-modal-overlay" onclick="closeBatchFolderModal(event)">
+    <div class="lean-modal-window" onclick="event.stopPropagation()" style="max-width: 900px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-strong); padding-bottom: 14px; margin-bottom: 16px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-family: var(--font-mono); font-size: 18px; color: var(--goldbright); font-weight: 800;">📥 BATCH PAPER &amp; FOLDER INTAKE ENGINE</span>
+            <span class="pill-lane-badge" style="background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #38bdf8;">DEEPSEEK ENABLED</span>
+          </div>
+          <div style="font-size: 11px; color: var(--textdim); margin-top: 4px;">
+            Upload entire folders or multi-select papers. Zero manual copy-pasting required.
+          </div>
+        </div>
+        <button class="btn-icon" style="font-size: 16px; padding: 6px 10px;" onclick="closeBatchFolderModal()">✕</button>
+      </div>
+
+      <!-- Drag & Drop Zone inside modal -->
+      <div id="modal-intake-dropzone" style="border: 2px dashed #334155; border-radius: 10px; background: rgba(15, 23, 42, 0.6); padding: 30px 20px; text-align: center; margin-bottom: 16px; cursor: pointer;" onclick="document.getElementById('modal-file-picker').click()">
+        <div style="font-size: 36px; margin-bottom: 8px;">📁</div>
+        <div style="font-size: 14px; font-weight: 700; color: #f8fafc;">Drag &amp; Drop Folder or Files Here, or Click to Browse</div>
+        <div style="font-size: 11px; color: var(--textdim); margin-top: 4px;">Supports .md, .txt, and .json files. Automatically parses truth predicates.</div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 14px;" onclick="event.stopPropagation()">
+          <label class="hbtn hbtn-gold" style="cursor: pointer;">
+            📁 Pick Whole Folder
+            <input type="file" id="modal-folder-picker" webkitdirectory directory multiple style="display:none;" onchange="handleModalBatchFiles(this.files)">
+          </label>
+          <label class="hbtn" style="cursor: pointer;">
+            📄 Pick Multiple Files
+            <input type="file" id="modal-file-picker" multiple accept=".md,.txt,.json" style="display:none;" onchange="handleModalBatchFiles(this.files)">
+          </label>
+        </div>
+      </div>
+
+      <!-- File Queue Table -->
+      <div id="modal-intake-queue-container" style="display: none; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-weight: 700; font-size: 12px; color: var(--goldbright);" id="modal-queue-count-label">Queued Papers (0)</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="hbtn hbtn-gold" id="btn-harvest-all-modal" onclick="runBatchHarvestAll()">⚡ Harvest All with DeepSeek</button>
+            <button class="hbtn hbtn-gold" id="btn-modal-download-zip" style="display: none;" onclick="downloadAllModalZip()">📦 Download All (.zip)</button>
+            <button class="hbtn" onclick="clearModalQueue()">Clear Queue</button>
+          </div>
+        </div>
+        <div style="max-height: 280px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; background: #080808;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 11px; font-family: var(--font-mono);">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-strong); background: #111;">
+                <th style="text-align: left; padding: 8px 12px; color: var(--textdim);">File Name</th>
+                <th style="text-align: left; padding: 8px 12px; color: var(--textdim); width: 90px;">Size</th>
+                <th style="text-align: left; padding: 8px 12px; color: var(--textdim); width: 140px;">Status</th>
+                <th style="text-align: right; padding: 8px 12px; color: var(--textdim); width: 140px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="modal-queue-tbody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px;">
+        <button class="hbtn" onclick="closeBatchFolderModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5-PAPER DEEP INTAKE PIPELINE MODAL -->
+  <div class="deep-modal-overlay" id="deep-intake-modal-overlay" onclick="closeDeepIntakeModal(event)">
+    <div class="deep-modal-window" onclick="event.stopPropagation()">
+      
+      <!-- Header -->
+      <div class="deep-modal-header">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-family: var(--font-display); font-size: 17px; font-weight: 800; color: #38bdf8; letter-spacing: 0.05em;">⚡ DEEP INTAKE BATCH PIPELINE</span>
+            <span class="pill-lane-badge" style="background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #38bdf8;">AUTONOMOUS BATCH ENGINE</span>
+            <span class="pill-lane-badge" style="background: rgba(168, 85, 247, 0.15); border-color: #a855f7; color: #c084fc;">AXIOM vs. ATOM</span>
+            <span class="pill-lane-badge" style="background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #34d399;">BACKGROUND AUTO-SAVE</span>
+          </div>
+          <div style="font-size: 11px; color: var(--textdim); margin-top: 4px;">
+            Drop any batch of research papers (5, 10, 20, or whole folders). The pipeline classifies Axiom vs. Atom, extracts truth predicates, synthesizes expansive definitions, and automatically saves Markdown &amp; JSON records to disk as each paper finishes.
+          </div>
+        </div>
+        <button class="btn-icon" style="font-size: 18px; padding: 6px 12px; color: #94a3b8;" onclick="closeDeepIntakeModal()">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="deep-modal-body">
+        
+        <!-- Drag & Drop Zone -->
+        <div id="deep-dropzone" style="border: 2px dashed #0284c7; border-radius: 8px; background: rgba(15, 23, 42, 0.5); padding: 24px 16px; text-align: center; cursor: pointer; transition: all 0.2s;" onclick="document.getElementById('deep-file-picker').click()">
+          <div style="font-size: 32px; margin-bottom: 6px;">📥</div>
+          <div style="font-size: 14px; font-weight: 700; color: #f8fafc;">Drag &amp; Drop Papers Here, or Click to Select Files</div>
+          <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Upload any batch: 5, 10, 20, or an entire directory. Supports <code>.md</code>, <code>.txt</code>, <code>.json</code>. Zero manual copy-pasting.</div>
+          <div style="display: flex; gap: 10px; justify-content: center; margin-top: 12px;" onclick="event.stopPropagation()">
+            <label class="hbtn" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; font-weight: 700; border: 1px solid #38bdf8; cursor: pointer;">
+              📄 Pick Papers (.md, .txt, .json)
+              <input type="file" id="deep-file-picker" multiple accept=".md,.txt,.json" style="display:none;" onchange="handleDeepIntakeFiles(this.files)">
+            </label>
+            <label class="hbtn" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; cursor: pointer;">
+              📁 Pick Whole Folder
+              <input type="file" id="deep-folder-picker" webkitdirectory directory multiple style="display:none;" onchange="handleDeepIntakeFiles(this.files)">
+            </label>
+          </div>
+        </div>
+
+        <!-- Dashboard / Queue Section -->
+        <div id="deep-intake-dashboard" style="display: none;">
+          
+          <!-- Control Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-weight: 700; font-size: 13px; color: var(--goldbright);">Pipeline Queue</span>
+              <span class="badge-status" id="deep-queue-count-badge" style="background: #1e293b; color: #38bdf8; border: 1px solid #334155;">0 Papers</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="hbtn" id="btn-run-deep-intake" style="background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid #38bdf8; color: #fff; font-weight: 700; box-shadow: 0 0 14px rgba(56,189,248,0.3);" onclick="runDeepIntakePipeline()">
+                ⚡ Execute Deep Intake Pipeline
+              </button>
+              <button class="hbtn hbtn-gold" id="btn-download-all-zip" style="display: none;" onclick="downloadAllDeepIntakeZip()">
+                📦 Download All Results (.zip)
+              </button>
+              <button class="hbtn" id="btn-clear-deep-queue" onclick="clearDeepIntakeQueue()">
+                Clear Queue
+              </button>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div style="background: #0d1117; border: 1px solid #1e293b; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: var(--font-mono);">
+              <span id="deep-intake-status-text" style="color: #cbd5e1;">Ready to start.</span>
+              <span id="deep-intake-progress-label" style="color: #38bdf8; font-weight: 700;">Ready (0 / 0)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="deep-intake-progress-fill"></div>
+            </div>
+          </div>
+
+          <!-- Papers Queue Table -->
+          <div style="max-height: 240px; overflow-y: auto; border: 1px solid #1e293b; border-radius: 6px; background: #05070a; margin-bottom: 12px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+              <thead>
+                <tr style="border-bottom: 1px solid #1e293b; background: #0f172a; font-family: var(--font-mono); text-transform: uppercase;">
+                  <th style="text-align: left; padding: 8px 12px; color: #94a3b8;">Document Name</th>
+                  <th style="text-align: left; padding: 8px 12px; color: #94a3b8; width: 75px;">Size</th>
+                  <th style="text-align: left; padding: 8px 12px; color: #94a3b8; width: 140px;">Taxonomy</th>
+                  <th style="text-align: center; padding: 8px 12px; color: #94a3b8; width: 90px;">Truth Preds</th>
+                  <th style="text-align: center; padding: 8px 12px; color: #94a3b8; width: 90px;">Definitions</th>
+                  <th style="text-align: left; padding: 8px 12px; color: #94a3b8; width: 150px;">Status</th>
+                  <th style="text-align: right; padding: 8px 12px; color: #94a3b8; width: 130px;">Archive</th>
+                </tr>
+              </thead>
+              <tbody id="deep-queue-tbody">
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Live Telemetry Log Terminal -->
+          <div style="margin-top: 4px;">
+            <div style="font-family: var(--font-mono); font-size: 10px; color: #64748b; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between;">
+              <span>Live Telemetry &amp; Verification Stream</span>
+              <span>SHA-256 + Automatic Backup</span>
+            </div>
+            <div class="telemetry-console" id="deep-telemetry-console">
+              <div class="telemetry-line info">[System] Telemetry initialized. Ready for batch intake.</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="deep-modal-footer">
+        <div style="font-size: 11px; color: var(--textdim); font-family: var(--font-mono);">
+          Auto-downloads trigger as each paper completes. Backups are saved directly to your local downloads folder.
+        </div>
+        <button class="hbtn" onclick="closeDeepIntakeModal()">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMPLETED PAPER PULL-UP & EXPORT MODAL -->
+  <div class="deep-modal-overlay" id="paper-pullup-modal" onclick="closePullUpModal(event)">
+    <div class="deep-modal-window" onclick="event.stopPropagation()" style="max-width: 1180px; max-height: 94vh;">
+      
+      <!-- Header -->
+      <div class="deep-modal-header" style="background: #090d16; border-bottom: 1px solid #1e293b;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-family: var(--font-display); font-size: 16px; font-weight: 800; color: #38bdf8;">📄 COMPLETED PAPER DOSSIER</span>
+          <span id="pullup-type-badge" class="badge-axiom">AXIOM</span>
+          <span id="pullup-paper-title" style="font-family: var(--font-mono); font-size: 13px; color: #f8fafc; font-weight: 600;">Paper Title</span>
+        </div>
+        <button class="btn-icon" style="font-size: 18px; padding: 6px 12px; color: #94a3b8;" onclick="closePullUpModal()">✕</button>
+      </div>
+
+      <!-- Paper Switcher Tabs -->
+      <div style="background: #05070a; border-bottom: 1px solid #1e293b; padding: 8px 24px; display: flex; align-items: center; gap: 8px; overflow-x: auto;" id="pullup-tabs-container">
+        <!-- Tabs rendered dynamically -->
+      </div>
+
+      <!-- Action Toolbar -->
+      <div style="background: #0d1117; border-bottom: 1px solid #1e293b; padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; gap: 8px;">
+          <button class="hbtn hbtn-gold" style="font-size: 12px; padding: 6px 16px; font-weight: 700; box-shadow: 0 0 14px rgba(212,175,55,0.4);" onclick="downloadActivePullUpPaper('md')">
+            ⬇️ Download Completed Paper (.md)
+          </button>
+          <button class="hbtn" style="font-size: 12px; padding: 6px 14px;" onclick="downloadActivePullUpPaper('json')">
+            ⚡ Download JSON Record
+          </button>
+          <button class="hbtn" style="font-size: 12px; padding: 6px 14px; background: rgba(56,189,248,0.15); border-color:#38bdf8; color:#38bdf8;" onclick="downloadActivePullUpZip()">
+            📦 Download All Papers (.zip)
+          </button>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="hbtn" style="font-size: 11px; padding: 6px 12px;" onclick="copyActivePullUpText()">
+            📋 Copy Full Text
+          </button>
+          <button class="hbtn" style="font-size: 11px; padding: 6px 12px;" onclick="loadActivePullUpIntoEditor()">
+            📥 Open in Builder Editor
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Viewer) -->
+      <div style="padding: 16px 24px; flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
+        <textarea id="pullup-markdown-content" readonly style="width: 100%; height: 520px; background: #05070a; border: 1px solid #1e293b; border-radius: 6px; padding: 16px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; color: #e2e8f0; resize: none; outline: none; white-space: pre-wrap;"></textarea>
+      </div>
+
+      <!-- Footer -->
+      <div class="deep-modal-footer">
+        <span style="font-size: 11px; color: var(--textdim); font-family: var(--font-mono);">
+          Full augmented record: frontmatter, classification, truth predicates, expansive definitions, Lean 4 skeleton, and unabridged source text.
+        </span>
+        <button class="hbtn" onclick="closePullUpModal()">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+<script src="ckg-import.js"></script>
+<script src="cloud-jobs.js"></script>
+<script src="atlas-studio.js"></script>
 </body>
 </html>

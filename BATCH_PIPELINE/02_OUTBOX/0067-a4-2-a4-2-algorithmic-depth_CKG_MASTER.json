@@ -1,0 +1,130 @@
+{
+  "title": "Algorithmic Depth",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0067_A4.2_A4_2_Algorithmic_Depth.md",
+  "source_sha256": "ed2fa5147137cf3547479a9360754b1c3788496a53cf211d170d03ad3e90fefa",
+  "captured_at": "2026-09-07T00:02:12.904432+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2271,
+    "completion_tokens": 2968,
+    "total_tokens": 5239,
+    "cost": 0.003873575277,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0039127023,
+      "upstream_inference_prompt_cost": 0.0006137703,
+      "upstream_inference_completions_cost": 0.003298932
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Reality has algorithmic depth.",
+      "role": "Core Axiom Statement",
+      "formal": "Depth(Universe) >> 0"
+    },
+    {
+      "id": "P2",
+      "statement": "Algorithmic depth means reality compresses non-trivially.",
+      "role": "Definition/Elaboration",
+      "formal": "Compression(Universe) is significant and non-random"
+    },
+    {
+      "id": "P3",
+      "statement": "Bennett's logical depth is a well-defined concept.",
+      "role": "Supporting Assumption",
+      "formal": "LogicalDepth(x) is a defined function (Bennett 1988)"
+    },
+    {
+      "id": "P4",
+      "statement": "Whether the universe has algorithmic depth is an empirical question.",
+      "role": "Epistemic Boundary",
+      "formal": "Depth(Universe) is a property subject to empirical investigation"
+    },
+    {
+      "id": "P5",
+      "statement": "The claim A4.2 depends on axiom A2.2 (Self-Grounding).",
+      "role": "Structural Dependency",
+      "formal": "A4.2 \u22a2 A2.2"
+    },
+    {
+      "id": "P6",
+      "statement": "The claim is a framework commitment.",
+      "role": "Epistemic Status",
+      "formal": "Status(A4.2) = `framework_commitment`"
+    },
+    {
+      "id": "P7",
+      "statement": "The domain of the claim is Ontological.",
+      "role": "Classification",
+      "formal": "Domain(A4.2) = Ontological"
+    },
+    {
+      "id": "P8",
+      "statement": "A defeat condition for the claim is showing the universe has no algorithmic depth.",
+      "role": "Falsification Condition",
+      "formal": "Defeat if: Depth(Universe) \u2248 0"
+    },
+    {
+      "id": "P9",
+      "statement": "Kolmogorov complexity (1963) is a foundational reference for compression.",
+      "role": "Historical Foundation",
+      "formal": "K(x) is defined (Kolmogorov 1963)"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim is part of a canonical sequential record (Registry position 67 of 191).",
+      "role": "Meta-assertion about the source",
+      "formal": "Position(A4.2) = 67"
+    },
+    {
+      "id": "P11",
+      "statement": "The claim's status is `framework_commitment`, not proven fact.",
+      "role": "Epistemic Caution",
+      "formal": "EpistemicStatus(A4.2) = commitment, not proof"
+    },
+    {
+      "id": "P12",
+      "statement": "The formal expression uses the \">>\" operator to denote \"significantly greater than\".",
+      "role": "Notational Convention",
+      "formal": "Depth(Universe) >> 0"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0067: A4.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A4.2 \u2014 Algorithmic Depth",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

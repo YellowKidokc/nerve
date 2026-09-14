@@ -1,0 +1,146 @@
+---
+type: axiom_companion
+title: "Uniqueness From Boundary Conditions"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: pending_ai_analysis
+source_file: "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0084_A7.2_A7_2_Uniqueness_From_Boundary_Conditions.md"
+source_sha256: 103b6235f0d312e6a8e11ccf4db15b12b3d63930000ca7a7226c68dad186d513
+captured_at: 2026-09-07T00:15:08.706536+00:00
+tags: ["systems"]
+---
+
+# Uniqueness From Boundary Conditions
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** Source preserved below. Analytical case file pending.
+
+## Intake assessment
+
+- Inferred type: `axiom_companion`
+- Routing confidence: `0.98`
+- Signals: canonical axiom record, sealed v2.3 authority, axiom companion layout
+- Original words: `305`
+- Original SHA-256: `103b6235f0d312e6a8e11ccf4db15b12b3d63930000ca7a7226c68dad186d513`
+
+## Source outline
+
+- Canonical Sequential Record 0084: A7.2
+- Sequence Navigation
+- Registered Dependency Links
+- Canonical Source Text
+- 🔶 A7.2 — Uniqueness From Boundary Conditions
+- Statement
+- Formal Expression
+- Maximum Defensible Position
+- Classification
+- Dependency Chain
+- References
+- Defeat Conditions
+- Limitations (from workbook)
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0084: A7.2
+
+| Field | Value |
+|---|---|
+| Registry position | 84 of 191 |
+| Canonical ID | `A7.2` |
+| Mode | `FW_EXTENDED` |
+| Canonical source filename | `A7_2_Uniqueness_From_Boundary_Conditions.md` |
+| Source SHA-256 | `35b9024c41ef8bf6b6caf2dadb7e73c05cc762052208552f9df0780a2eeb057e` |
+
+## Sequence Navigation
+
+Previous: [0083 - A7.1 - Closure Requirement](0083_A7.1_A7_1_Closure_Requirement.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0085 - BC1 - Terminal Observer Exists](0085_BC1_BC1_Terminal_Observer_Exists.md)
+
+## Registered Dependency Links
+
+[A7.1 - Closure Requirement](0083_A7.1_A7_1_Closure_Requirement.md)
+
+## Canonical Source Text
+
+---
+id: "A7.2"
+legacy_id: "AX-057"
+title: "Uniqueness From Boundary Conditions"
+mode: "FW_EXTENDED"
+atlas_type: "Claim"
+status: "framework_commitment"
+domain: "Ontological"
+anchor: "A7.1"
+depends_on: "A7.1"
+date: "2026-08-17"
+---
+
+# 🔶 A7.2 — Uniqueness From Boundary Conditions
+
+**Mode:** `FW_EXTENDED` | **Atlas Type:** `Claim` | **Status:** `framework_commitment`
+**Domain:** Ontological | **Legacy ID:** `AX-057`
+
+---
+
+## Statement
+
+Sufficient boundary conditions yield a unique solution.
+
+## Formal Expression
+
+```
+Sufficient BCs → ∃! solution
+```
+
+$$
+Sufficient BCs → ∃! solution
+$$
+
+## Maximum Defensible Position
+
+Framework claim: Sufficient boundary conditions yield a unique solution.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `FW_EXTENDED` |
+| **Atlas Object Type** | `Claim` |
+| **Workbook Role** | `FW_EXTENDED` |
+| **Mathematical Use** | Framework commitment |
+| **Epistemic Status** | `framework_commitment` |
+| **Domain** | Ontological |
+
+## Dependency Chain
+
+**Anchor:** A7.1
+**Depends On:** A7.1
+
+## References
+
+PDE uniqueness theorems; Cauchy-Kowalevski
+
+## Defeat Conditions
+
+Show BCs admit multiple solutions.
+
+## Limitations (from workbook)
+
+Standard math. The question is whether the 8 BCs are sufficient.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::732123cd-017e-4be8-a069-07278dc3d0da::"Sufficient boundary conditions must yield a unique solution"::null::@Engineering%%
+%%tag::Dependency::843c5490-f502-4bf6-9749-f9994d29239b::"Depends on A7.1 Closure Requirement"::null::@Engineering%%
+%%tag::OpenQuestion::e33d214e-3dba-4c6c-8198-56bd334bd3bc::"Whether the 8 boundary conditions are sufficient"::null::@Engineering%%
+%%tag::Risk::50110cec-e6c3-4a33-ab2f-8a7bd2fdfb41::"Boundary conditions may admit multiple solutions"::null::@Engineering%%
+%%--- END SEMANTIC TAGS ---%%
+
+<!-- END EXACT SOURCE PROJECTION -->

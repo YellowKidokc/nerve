@@ -1,0 +1,33 @@
+{
+  "title": "Law VI: Coherence Non-Increase",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0050_D19.6_D19_6_Law_VI_Coherence_Non-Increase.md",
+  "source_sha256": "cd78360842f6c5892cbd9071ea59aaacb4494d3f5b5f9fc165a857e588fbb89a",
+  "captured_at": "2026-09-06T23:48:19.709352+00:00",
+  "word_count": 367,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0050: D19.6",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.6 \u2014 Law VI: Coherence Non-Increase",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

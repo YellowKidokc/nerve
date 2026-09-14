@@ -1,0 +1,34 @@
+{
+  "title": "Irreversibility",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0077_A6.3_A6_3_Irreversibility.md",
+  "source_sha256": "a246c9b2afe6a70718f63e139296926b436d67ae8f186606ca95f0a444b98930",
+  "captured_at": "2026-09-07T00:08:37.342316+00:00",
+  "word_count": 305,
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0077: A6.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A6.3 \u2014 Irreversibility",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

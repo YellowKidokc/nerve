@@ -1,0 +1,33 @@
+{
+  "title": "Self-Interaction Potential",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0019_D3.2_D3_2_Self-Interaction_Potential.md",
+  "source_sha256": "cb6a344ed8607b5f59c8f282505af6fdebd31700306b8082c8aa6d1d48ec9984",
+  "captured_at": "2026-09-06T23:18:47.196517+00:00",
+  "word_count": 401,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0019: D3.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D3.2 \u2014 Self-Interaction Potential",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "title": "Moral Coherence Definition",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0037_D11.1_D11_1_Moral_Coherence_Definition.md",
+  "source_sha256": "bf2fb4a31379a744ed842ef7ca88fac6332c23216413db32cd410235ad2c0610",
+  "captured_at": "2026-09-06T23:36:55.711763+00:00",
+  "word_count": 479,
+  "tags": [],
+  "source_outline": [
+    "Canonical Sequential Record 0037: D11.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D11.1 \u2014 Moral Coherence Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

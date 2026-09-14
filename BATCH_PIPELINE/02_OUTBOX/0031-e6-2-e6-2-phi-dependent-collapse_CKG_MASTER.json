@@ -1,0 +1,130 @@
+{
+  "title": "Phi-Dependent Collapse",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0031_E6.2_E6_2_Phi-Dependent_Collapse.md",
+  "source_sha256": "d473b47dff6ffe1f205bb1c0490f49562d57534b843bf81669e2a3f6b699e7b6",
+  "captured_at": "2026-09-06T23:30:36.183650+00:00",
+  "tags": [
+    "consciousness",
+    "quantum-foundations"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2903,
+    "completion_tokens": 2586,
+    "total_tokens": 5489,
+    "cost": 0.003685042647,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037222653,
+      "upstream_inference_prompt_cost": 0.0008479263,
+      "upstream_inference_completions_cost": 0.002874339
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Collapse rate scales with integrated information.",
+      "role": "Statement / Core Proposition",
+      "formal": "\u0393 \u221d f(\u03a6)"
+    },
+    {
+      "id": "P2",
+      "statement": "The scaling follows a power law.",
+      "role": "Maximum Defensible Position / Model Choice",
+      "formal": "\u0393(\u03a6) = \u0393\u2080 \u00b7 (\u03a6/\u03a6_ref)^\u03b1"
+    },
+    {
+      "id": "P3",
+      "statement": "There exists a baseline collapse rate \u0393\u2080.",
+      "role": "Model Parameter Definition",
+      "formal": "\u0393\u2080 \u2208 \u211d\u207a"
+    },
+    {
+      "id": "P4",
+      "statement": "There exists a reference integrated information value \u03a6_ref.",
+      "role": "Model Parameter Definition",
+      "formal": "\u03a6_ref \u2208 \u211d\u207a"
+    },
+    {
+      "id": "P5",
+      "statement": "There exists an exponent \u03b1 governing the power law.",
+      "role": "Model Parameter Definition",
+      "formal": "\u03b1 \u2208 \u211d"
+    },
+    {
+      "id": "P6",
+      "statement": "Higher-consciousness observers collapse faster.",
+      "role": "Testable Prediction / Implication",
+      "formal": "If \u03a6\u2081 > \u03a6\u2082, then \u0393(\u03a6\u2081) > \u0393(\u03a6\u2082) (for \u03b1 > 0)"
+    },
+    {
+      "id": "P7",
+      "statement": "Collapse is a real physical process.",
+      "role": "Dependency (A6.2)",
+      "formal": "Postulate"
+    },
+    {
+      "id": "P8",
+      "statement": "Observation is a physical requirement.",
+      "role": "Dependency (A5.1)",
+      "formal": "Postulate"
+    },
+    {
+      "id": "P9",
+      "statement": "Integrated Information (\u03a6) quantifies cause-effect power.",
+      "role": "Dependency (D5.2)",
+      "formal": "Definition (from IIT)"
+    },
+    {
+      "id": "P10",
+      "statement": "The model is testable.",
+      "role": "Limitation / Workbook Note",
+      "formal": "Prediction: \u0393 correlates with \u03a6"
+    },
+    {
+      "id": "P11",
+      "statement": "The model could be defeated by showing collapse rate is \u03a6-independent.",
+      "role": "Defeat Condition",
+      "formal": "\u2203 measurement: \u0393 \u27c2 \u03a6"
+    },
+    {
+      "id": "P12",
+      "statement": "The model references IIT, GRW objective collapse, and Penrose-Hameroff.",
+      "role": "Context / Inspiration",
+      "formal": "Citation, not assertion"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0031: E6.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E6.2 \u2014 Phi-Dependent Collapse",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Law II: Ten Variables",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0046_D19.2_D19_2_Law_II_Ten_Variables.md",
+  "source_sha256": "450fd496321e79976c92917459869f3eff420b6975dda9b48fc294e57e069041",
+  "captured_at": "2026-09-06T23:44:50.343462+00:00",
+  "word_count": 388,
+  "tags": [
+    "information-theory",
+    "lean4"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0046: D19.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.2 \u2014 Law II: Ten Variables",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

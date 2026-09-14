@@ -1,0 +1,33 @@
+{
+  "title": "Distinction",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0002_A1_2_Distinction.md",
+  "source_sha256": "330e8d12b694889c3d96c91c3a716a9af1d61f04e1316f7db0078b463aee39ea",
+  "captured_at": "2026-09-06T22:59:02.548956+00:00",
+  "word_count": 372,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0002: A1.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A1.2 \u2014 Distinction",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

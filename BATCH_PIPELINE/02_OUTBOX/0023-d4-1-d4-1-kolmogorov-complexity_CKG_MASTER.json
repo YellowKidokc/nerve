@@ -1,0 +1,130 @@
+{
+  "title": "Kolmogorov Complexity",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0023_D4.1_D4_1_Kolmogorov_Complexity.md",
+  "source_sha256": "6db7cf5f9984034014f25a3c8743218c33a04f5914233948f7cb49f867b3a7b8",
+  "captured_at": "2026-09-06T23:23:55.330613+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2295,
+    "completion_tokens": 2497,
+    "total_tokens": 4792,
+    "cost": 0.003364097022,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033980778,
+      "upstream_inference_prompt_cost": 0.0006226623,
+      "upstream_inference_completions_cost": 0.0027754155
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Kolmogorov complexity is defined as algorithmic information content.",
+      "role": "Statement",
+      "formal": "`K(x)` is defined."
+    },
+    {
+      "id": "P2",
+      "statement": "Kolmogorov complexity is the length of the shortest program that produces the string.",
+      "role": "Formal Expression",
+      "formal": "`K(x) = min{"
+    },
+    {
+      "id": "P3",
+      "statement": "Kolmogorov complexity is a formal definition / primitive formalization.",
+      "role": "Classification",
+      "formal": "Mathematical Use: \"Formal definition / primitive formalization\""
+    },
+    {
+      "id": "P4",
+      "statement": "Kolmogorov complexity is an ontological concept.",
+      "role": "Classification",
+      "formal": "Domain: \"Ontological\""
+    },
+    {
+      "id": "P5",
+      "statement": "Kolmogorov complexity is well-established.",
+      "role": "Defeat Conditions",
+      "formal": "\"K(x) is well-established.\""
+    },
+    {
+      "id": "P6",
+      "statement": "Kolmogorov complexity is uncomputable in general.",
+      "role": "Defeat Conditions / Limitations",
+      "formal": "\"K(x) is uncomputable (halting problem).\""
+    },
+    {
+      "id": "P7",
+      "statement": "The definition depends on the concept of Self-Grounding (A2.2).",
+      "role": "Dependency Chain",
+      "formal": "Depends On: A2.2"
+    },
+    {
+      "id": "P8",
+      "statement": "Kolmogorov complexity is used as a theoretical measure, not a practical one.",
+      "role": "Limitations",
+      "formal": "\"Framework uses it as theoretical measure, not practical one.\""
+    },
+    {
+      "id": "P9",
+      "statement": "The definition is anchored to Self-Grounding (A2.2).",
+      "role": "Dependency Chain",
+      "formal": "Anchor: A2.2 (Self-Grounding)"
+    },
+    {
+      "id": "P10",
+      "statement": "The concept originates from Kolmogorov (1963), Chaitin (1966), and Solomonoff (1964).",
+      "role": "References",
+      "formal": "\"Kolmogorov 1963; Chaitin 1966; Solomonoff 1964\""
+    },
+    {
+      "id": "P11",
+      "statement": "The record is a definition with epistemic status `definition`.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `definition`"
+    },
+    {
+      "id": "P12",
+      "statement": "The record's mode is `AX_SCAFFOLD`.",
+      "role": "Classification",
+      "formal": "Mode: `AX_SCAFFOLD`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0023: D4.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D4.1 \u2014 Kolmogorov Complexity",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

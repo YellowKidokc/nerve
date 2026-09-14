@@ -1,0 +1,130 @@
+{
+  "title": "Chi Requires Observer For Actualization",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0074_LN5.1_LN5_1_Chi_Requires_Observer_For_Actualization.md",
+  "source_sha256": "0f131010b3f4584c323ab82313dff40dddb667d84e37e10ce399d0bc7332ae13",
+  "captured_at": "2026-09-07T00:06:52.880231+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2377,
+    "completion_tokens": 2418,
+    "total_tokens": 4795,
+    "cost": 0.003307243797,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033406503,
+      "upstream_inference_prompt_cost": 0.0006530433,
+      "upstream_inference_completions_cost": 0.002687607
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The \u03c7-field exists.",
+      "role": "Ontological postulate",
+      "formal": "`Exists(\u03c7-field)`"
+    },
+    {
+      "id": "P2",
+      "statement": "The \u03c7-field exists in superposition.",
+      "role": "State specification",
+      "formal": "`State(\u03c7) = Superposition`"
+    },
+    {
+      "id": "P3",
+      "statement": "Actualization is a distinct state from superposition.",
+      "role": "State distinction",
+      "formal": "`Actual(\u03c7) \u2260 Superposition(\u03c7)`"
+    },
+    {
+      "id": "P4",
+      "statement": "Observation is a necessary condition for actualization.",
+      "role": "Logical necessity",
+      "formal": "`Actual(\u03c7) \u2192 \u2203O: Observes(O, \u03c7)`"
+    },
+    {
+      "id": "P5",
+      "statement": "An observer is an entity capable of observing.",
+      "role": "Entity definition",
+      "formal": "`\u2203O: Observer(O)`"
+    },
+    {
+      "id": "P6",
+      "statement": "The axiom depends on A5.1 (Observation Requirement).",
+      "role": "Dependency assertion",
+      "formal": "`LN5.1 \u22a2 A5.1`"
+    },
+    {
+      "id": "P7",
+      "statement": "The claim is consistent with the Copenhagen interpretation.",
+      "role": "Interpretive alignment",
+      "formal": "`LN5.1 \u2248 Copenhagen(Observer Role)`"
+    },
+    {
+      "id": "P8",
+      "statement": "The claim goes further than standard Copenhagen by applying to the substrate itself.",
+      "role": "Comparative claim",
+      "formal": "`Scope(LN5.1) > Scope(Copenhagen)`"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim can be defeated by demonstrating \u03c7 self-actualizes.",
+      "role": "Defeat condition",
+      "formal": "`Defeat(LN5.1) \u2194 SelfActualizes(\u03c7)`"
+    },
+    {
+      "id": "P10",
+      "statement": "The axiom is classified as a Logical Necessity.",
+      "role": "Epistemic classification",
+      "formal": "`Classification(LN5.1) = Logical_Necessity`"
+    },
+    {
+      "id": "P11",
+      "statement": "The axiom's domain is Ontological.",
+      "role": "Domain classification",
+      "formal": "`Domain(LN5.1) = Ontological`"
+    },
+    {
+      "id": "P12",
+      "statement": "The axiom is in FW_EXTENDED mode.",
+      "role": "Framework commitment",
+      "formal": "`Mode(LN5.1) = FW_EXTENDED`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0074: LN5.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 LN5.1 \u2014 Chi Requires Observer For Actualization",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

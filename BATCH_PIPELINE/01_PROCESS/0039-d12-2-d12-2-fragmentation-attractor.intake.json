@@ -1,0 +1,34 @@
+{
+  "title": "Fragmentation Attractor",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0039_D12.2_D12_2_Fragmentation_Attractor.md",
+  "source_sha256": "48c9284f8403316e2773bdf9dc006f1899af1aa3ba233420f5fa3a34af254bfa",
+  "captured_at": "2026-09-06T23:38:42.986074+00:00",
+  "word_count": 393,
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0039: D12.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D12.2 \u2014 Fragmentation Attractor",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

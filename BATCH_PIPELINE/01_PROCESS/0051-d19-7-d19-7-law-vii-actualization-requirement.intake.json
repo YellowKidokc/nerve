@@ -1,0 +1,33 @@
+{
+  "title": "Law VII: Actualization Requirement",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0051_D19.7_D19_7_Law_VII_Actualization_Requirement.md",
+  "source_sha256": "200ea1cf7fd91a03594c690b110d8d42cf9af773bdd81eda3e2ac0dec60062ef",
+  "captured_at": "2026-09-06T23:49:19.632731+00:00",
+  "word_count": 354,
+  "tags": [
+    "quantum-foundations"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0051: D19.7",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.7 \u2014 Law VII: Actualization Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

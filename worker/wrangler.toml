@@ -2,9 +2,12 @@ name = "nerve-sync-api"
 main = "src/index.js"
 compatibility_date = "2024-09-23"
 
+[ai]
+binding = "AI"
+
 [vars]
 ALLOWED_ORIGIN = "*"
 
 [[kv_namespaces]]
 binding = "NERVE_KV"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "f6bfaed0e01b4e6c9080146fbffddf14"

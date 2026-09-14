@@ -1,0 +1,130 @@
+{
+  "title": "Terminal Observer Necessity",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0082_LN6.1_LN6_1_Terminal_Observer_Necessity.md",
+  "source_sha256": "72f6dbc44b589782950447a48e4adcce13a840c52539b5c8bfaff4d10ea8c6de",
+  "captured_at": "2026-09-07T00:14:13.034537+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2264,
+    "completion_tokens": 2658,
+    "total_tokens": 4922,
+    "cost": 0.003529888362,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035655438,
+      "upstream_inference_prompt_cost": 0.0006111768,
+      "upstream_inference_completions_cost": 0.002954367
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A Von Neumann chain exists.",
+      "role": "Foundational premise",
+      "formal": "Implicit in the dependency on T6.1."
+    },
+    {
+      "id": "P2",
+      "statement": "Von Neumann chains must terminate.",
+      "role": "Dependency from T6.1 (Von Neumann Chain Termination)",
+      "formal": "Termination is a required property."
+    },
+    {
+      "id": "P3",
+      "statement": "Termination requires a final element in the chain.",
+      "role": "Logical inference from chain structure",
+      "formal": "The chain has a last link."
+    },
+    {
+      "id": "P4",
+      "statement": "The final element must be an observer.",
+      "role": "Framework claim",
+      "formal": "The terminal element is an \\(O_{\\text{terminal}}\\)."
+    },
+    {
+      "id": "P5",
+      "statement": "This terminal observer does not require further observation.",
+      "role": "Core definition of terminal observer",
+      "formal": "\\(\\lnot \\exists O': \\text{Observes}(O', O_{\\text{terminal}}) \\text{ required}\\)"
+    },
+    {
+      "id": "P6",
+      "statement": "The existence of such a terminal observer is necessary for termination.",
+      "role": "Central claim",
+      "formal": "\\(\\exists O_{\\text{terminal}}\\) is a requirement for chain termination."
+    },
+    {
+      "id": "P7",
+      "statement": "The leap from 'chain terminates' to 'terminal observer' is contested.",
+      "role": "Explicit limitation",
+      "formal": "Acknowledged epistemic risk."
+    },
+    {
+      "id": "P8",
+      "statement": "The framework is committed to this claim.",
+      "role": "Status declaration",
+      "formal": "Status: `framework_commitment`."
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is ontological, not merely mathematical.",
+      "role": "Domain classification",
+      "formal": "Domain: Ontological."
+    },
+    {
+      "id": "P10",
+      "statement": "The claim depends on T6.1 (Von Neumann Chain Termination).",
+      "role": "Structural dependency",
+      "formal": "`depends_on: \"T6.1\"`."
+    },
+    {
+      "id": "P11",
+      "statement": "Von Neumann (1932) and Wigner (1961) are foundational references.",
+      "role": "Citation anchor",
+      "formal": "References: Von Neumann 1932; Wigner 1961."
+    },
+    {
+      "id": "P12",
+      "statement": "The claim can be defeated by showing a terminal observer is unnecessary.",
+      "role": "Defeat condition",
+      "formal": "Negation of the central claim constitutes defeat."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0082: LN6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 LN6.1 \u2014 Terminal Observer Necessity",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

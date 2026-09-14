@@ -1,0 +1,130 @@
+{
+  "title": "Collapse",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0076_A6.2_A6_2_Collapse.md",
+  "source_sha256": "614ac3d87e2a68630d0a31b07510514550d068fda1c7e0e5a9ceae361929ff77",
+  "captured_at": "2026-09-07T00:08:37.318231+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2203,
+    "completion_tokens": 2542,
+    "total_tokens": 4745,
+    "cost": 0.003605228055,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036416445,
+      "upstream_inference_prompt_cost": 0.0008162115,
+      "upstream_inference_completions_cost": 0.002825433
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Observation causes superposition to collapse.",
+      "role": "Core Statement",
+      "formal": "`Observation \u2192 ("
+    },
+    {
+      "id": "P2",
+      "statement": "The collapse results in a definite state.",
+      "role": "Core Statement",
+      "formal": "Result is a single basis state `"
+    },
+    {
+      "id": "P3",
+      "statement": "The probability of collapsing to state",
+      "role": "n\u27e9 is \\",
+      "formal": "c_n\\"
+    },
+    {
+      "id": "P4",
+      "statement": "This is a framework commitment (an adopted axiom).",
+      "role": "Classification",
+      "formal": "Status: `framework_commitment`"
+    },
+    {
+      "id": "P5",
+      "statement": "The claim is ontological in domain.",
+      "role": "Classification",
+      "formal": "Domain: `Ontological`"
+    },
+    {
+      "id": "P6",
+      "statement": "The claim depends on A5.1 (Observation Requirement).",
+      "role": "Dependency",
+      "formal": "`A6.2` depends_on: `A5.1`"
+    },
+    {
+      "id": "P7",
+      "statement": "The Copenhagen interpretation is the referent.",
+      "role": "References",
+      "formal": "\"Copenhagen; Von Neumann 1932\""
+    },
+    {
+      "id": "P8",
+      "statement": "The Born rule is the referent for the probability.",
+      "role": "References",
+      "formal": "\"Born rule\""
+    },
+    {
+      "id": "P9",
+      "statement": "Alternative interpretations (MWI, Bohmian, QBist) exist and challenge this claim.",
+      "role": "Limitations / Risk",
+      "formal": "\"MWI, Bohmian, and QBist alternatives exist.\""
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition is showing collapse doesn't happen.",
+      "role": "Defeat Conditions",
+      "formal": "\"Show collapse doesn't happen (MWI).\""
+    },
+    {
+      "id": "P11",
+      "statement": "This is a canonical sequential record within a larger axiom system.",
+      "role": "Source Metadata",
+      "formal": "Position: `76 of 191`; Mode: `FW_EXTENDED`"
+    },
+    {
+      "id": "P12",
+      "statement": "The claim is classified as a `Claim` (not a Theorem or Definition).",
+      "role": "Classification",
+      "formal": "Atlas Type: `Claim`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0076: A6.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A6.2 \u2014 Collapse",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

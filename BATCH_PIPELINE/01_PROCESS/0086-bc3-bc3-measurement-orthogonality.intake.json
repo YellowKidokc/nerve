@@ -1,0 +1,34 @@
+{
+  "title": "Measurement Orthogonality",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0086_BC3_BC3_Measurement_Orthogonality.md",
+  "source_sha256": "7248ef3830fe37185aeb938937364e96a93005d64134610ed9e522bcc38c0fa0",
+  "captured_at": "2026-09-07T00:17:47.914175+00:00",
+  "word_count": 307,
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0086: BC3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 BC3 \u2014 Measurement Orthogonality",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

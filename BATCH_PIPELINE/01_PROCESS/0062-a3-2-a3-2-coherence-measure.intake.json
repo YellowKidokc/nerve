@@ -1,0 +1,34 @@
+{
+  "title": "Coherence Measure",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0062_A3.2_A3_2_Coherence_Measure.md",
+  "source_sha256": "347ef0a82f060ad8f3bb7b50d692b6d98923a634accac97a85333029dd5a6061",
+  "captured_at": "2026-09-06T23:58:29.536241+00:00",
+  "word_count": 318,
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0062: A3.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A3.2 \u2014 Coherence Measure",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

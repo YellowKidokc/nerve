@@ -1,0 +1,130 @@
+{
+  "title": "Integrated Information Phi",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0027_D5.2_D5_2_Integrated_Information_Phi.md",
+  "source_sha256": "515bac2e74592d9bb99bb0251403645bcd8dfec89b0bd5eac92e32ef6d43a160",
+  "captured_at": "2026-09-06T23:27:12.157419+00:00",
+  "tags": [
+    "consciousness",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2368,
+    "completion_tokens": 2274,
+    "total_tokens": 4642,
+    "cost": 0.003145487202,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0031772598,
+      "upstream_inference_prompt_cost": 0.0006497088,
+      "upstream_inference_completions_cost": 0.002527551
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "\u03a6 measures the degree of consciousness.",
+      "role": "Statement, Maximum Defensible Position",
+      "formal": "\u03a6 = integrated information (IIT measure)"
+    },
+    {
+      "id": "P2",
+      "statement": "\u03a6 is defined per Integrated Information Theory (IIT).",
+      "role": "Statement, Formal Expression",
+      "formal": "\u03a6 = integrated information (IIT measure)"
+    },
+    {
+      "id": "P3",
+      "statement": "Computing \u03a6 is intractable for real systems.",
+      "role": "Limitation",
+      "formal": "N/A (Empirical/Computational Fact)"
+    },
+    {
+      "id": "P4",
+      "statement": "Proxy measures for \u03a6 exist but are approximations.",
+      "role": "Limitation",
+      "formal": "N/A (Empirical/Computational Fact)"
+    },
+    {
+      "id": "P5",
+      "statement": "The definition of \u03a6 depends on A5.1 (Observation Requirement).",
+      "role": "Dependency Link",
+      "formal": "Dependency: `depends_on: \"A5.1\"`"
+    },
+    {
+      "id": "P6",
+      "statement": "\u03a6 must measure consciousness degree.",
+      "role": "Semantic Tag (Requirement)",
+      "formal": "Requirement: \"\u03a6 must measure consciousness degree\""
+    },
+    {
+      "id": "P7",
+      "statement": "\u03a6 is a valid measure of consciousness.",
+      "role": "Semantic Tag (Assumption)",
+      "formal": "Assumption: \"\u03a6 is a valid measure of consciousness\""
+    },
+    {
+      "id": "P8",
+      "statement": "Showing \u03a6 doesn't measure consciousness is a defeat condition.",
+      "role": "Defeat Condition",
+      "formal": "N/A (Epistemic Boundary)"
+    },
+    {
+      "id": "P9",
+      "statement": "Demonstrating a better consciousness measure is a defeat condition.",
+      "role": "Defeat Condition",
+      "formal": "N/A (Epistemic Boundary)"
+    },
+    {
+      "id": "P10",
+      "statement": "The record adopts the IIT definition of \u03a6 for consciousness measurement.",
+      "role": "Semantic Tag (Decision)",
+      "formal": "Decision: \"Adopt IIT definition of \u03a6 for consciousness measurement\""
+    },
+    {
+      "id": "P11",
+      "statement": "The IIT research community (Tononi, Oizumi et al.) are stakeholders.",
+      "role": "Semantic Tag (Stakeholder)",
+      "formal": "N/A (Sociological Fact)"
+    },
+    {
+      "id": "P12",
+      "statement": "The record's epistemic status is `definition`.",
+      "role": "Classification",
+      "formal": "Status: `definition`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0027: D5.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D5.2 \u2014 Integrated Information Phi",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

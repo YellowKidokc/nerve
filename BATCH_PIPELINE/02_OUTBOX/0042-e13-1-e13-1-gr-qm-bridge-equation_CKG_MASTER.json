@@ -1,0 +1,129 @@
+{
+  "title": "GR-QM Bridge Equation",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0042_E13.1_E13_1_GR-QM_Bridge_Equation.md",
+  "source_sha256": "813d0f8628b9efe8992189d7c4017a4a51d73ecf2848f5eac2014e6b64cac6a5",
+  "captured_at": "2026-09-06T23:42:30.555898+00:00",
+  "tags": [
+    "quantum-foundations"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2414,
+    "completion_tokens": 3161,
+    "total_tokens": 5575,
+    "cost": 0.004138401267,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0041802033,
+      "upstream_inference_prompt_cost": 0.0006667518,
+      "upstream_inference_completions_cost": 0.0035134515
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The Einstein field equations can be modified by adding a \u03c7-field source term.",
+      "role": "Core Axiom",
+      "formal": "`G_\u03bc\u03bd + \u039bg_\u03bc\u03bd = (8\u03c0G/c\u2074)T_\u03bc\u03bd + \u03ba\u03c7_\u03bc\u03bd`"
+    },
+    {
+      "id": "P2",
+      "statement": "The \u03c7-field term (\u03ba\u03c7_\u03bc\u03bd) represents a bridge between General Relativity and Quantum Mechanics.",
+      "role": "Interpretation",
+      "formal": "`\u03ba\u03c7_\u03bc\u03bd` is the \"GR-QM bridge\" term"
+    },
+    {
+      "id": "P3",
+      "statement": "The equation is anchored to the concept of an \"Infinite Energy Source\" (BC6).",
+      "role": "Dependency Assertion",
+      "formal": "Anchor: BC6"
+    },
+    {
+      "id": "P4",
+      "statement": "The equation depends on a \"Unified Field Lagrangian\" (D13.1).",
+      "role": "Dependency Assertion",
+      "formal": "Depends_on: D13.1"
+    },
+    {
+      "id": "P5",
+      "statement": "A defeat condition for the equation is if the \u03c7_\u03bc\u03bd term violates energy-momentum conservation.",
+      "role": "Falsifiability Condition",
+      "formal": "Show `\u2207^\u03bc(\u03ba\u03c7_\u03bc\u03bd) \u2260 0` violates `\u2207^\u03bc T_\u03bc\u03bd = 0`"
+    },
+    {
+      "id": "P6",
+      "statement": "A defeat condition for the equation is if it produces wrong predictions for known gravitational phenomena.",
+      "role": "Falsifiability Condition",
+      "formal": "Demonstrate wrong predictions vs. classical GR tests"
+    },
+    {
+      "id": "P7",
+      "statement": "The equation must reproduce all known General Relativity results.",
+      "role": "Success Criterion",
+      "formal": "Reproduce all known GR results"
+    },
+    {
+      "id": "P8",
+      "statement": "The equation must make new predictions.",
+      "role": "Success Criterion",
+      "formal": "Make NEW predictions"
+    },
+    {
+      "id": "P9",
+      "statement": "The equation is a mathematical model.",
+      "role": "Epistemic Status",
+      "formal": "Mathematical Use: Mathematical model"
+    },
+    {
+      "id": "P10",
+      "statement": "The equation's epistemic status is \"equation\".",
+      "role": "Epistemic Status",
+      "formal": "Epistemic Status: `equation`"
+    },
+    {
+      "id": "P11",
+      "statement": "The equation belongs to the domain of Physics.",
+      "role": "Classification",
+      "formal": "Domain: Physics"
+    },
+    {
+      "id": "P12",
+      "statement": "The equation's role in the workbook is \"EQUATION/PREDICTION\".",
+      "role": "Functional Role",
+      "formal": "Workbook Role: `EQUATION/PREDICTION`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0042: E13.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E13.1 \u2014 GR-QM Bridge Equation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "title": "Integration Attractor",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0038_D12.1_D12_1_Integration_Attractor.md",
+  "source_sha256": "a032e80cfc819674275ede5655f5eab7b082464a446ddc74955c2d573ff1059a",
+  "captured_at": "2026-09-06T23:38:42.963819+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2442,
+    "completion_tokens": 2532,
+    "total_tokens": 4974,
+    "cost": 0.003456529362,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0034914438,
+      "upstream_inference_prompt_cost": 0.0006771258,
+      "upstream_inference_completions_cost": 0.002814318
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "An integration attractor exists as a defined entity.",
+      "role": "Definition",
+      "formal": "\\(A_+\\) is defined."
+    },
+    {
+      "id": "P2",
+      "statement": "The integration attractor is a high-coherence fixed point.",
+      "role": "Definition",
+      "formal": "\\(A_+\\) is a \"high-coherence fixed point (heaven).\""
+    },
+    {
+      "id": "P3",
+      "statement": "The integration attractor is the limit of a coherence function as time approaches infinity.",
+      "role": "Formal Expression",
+      "formal": "\\(A_+ = \\lim_{t \\to \\infty} C(t) \\to C_{max}\\)"
+    },
+    {
+      "id": "P4",
+      "statement": "The coherence function \\(C(t)\\) has a maximum possible value \\(C_{max}\\).",
+      "role": "Implicit in Formal Expression",
+      "formal": "\\(C(t) \\to C_{max}\\)"
+    },
+    {
+      "id": "P5",
+      "statement": "The concept of an attractor is borrowed from dynamical systems theory.",
+      "role": "Limitation / Assumption",
+      "formal": "Stated in \"Limitations (from workbook).\""
+    },
+    {
+      "id": "P6",
+      "statement": "The existence of attractors in moral systems is an assumption.",
+      "role": "Limitation / Assumption",
+      "formal": "\"Whether moral systems have attractors is assumed.\""
+    },
+    {
+      "id": "P7",
+      "statement": "The definition depends on the existence of an Infinite Energy Source (BC6).",
+      "role": "Dependency",
+      "formal": "\"Depends on: BC6\""
+    },
+    {
+      "id": "P8",
+      "statement": "The integration attractor is classified within the domain of Eschatology.",
+      "role": "Classification",
+      "formal": "\"Domain: Eschatology\""
+    },
+    {
+      "id": "P9",
+      "statement": "A defeat condition is that no stable high-coherence attractor exists.",
+      "role": "Defeat Condition",
+      "formal": "Listed under \"Defeat Conditions.\""
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition is that coherence always decays.",
+      "role": "Defeat Condition",
+      "formal": "Listed under \"Defeat Conditions.\""
+    },
+    {
+      "id": "P11",
+      "statement": "The formal expression is a primitive formalization.",
+      "role": "Classification",
+      "formal": "\"Mathematical Use: Formal definition / primitive formalization\""
+    },
+    {
+      "id": "P12",
+      "statement": "The Omega Point (Teilhard de Chardin) is a referenced analogous concept.",
+      "role": "Reference",
+      "formal": "\"Teilhard de Chardin (Omega Point)\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0038: D12.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D12.1 \u2014 Integration Attractor",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

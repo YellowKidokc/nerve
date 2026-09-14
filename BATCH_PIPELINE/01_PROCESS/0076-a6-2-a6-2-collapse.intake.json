@@ -1,0 +1,34 @@
+{
+  "title": "Collapse",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0076_A6.2_A6_2_Collapse.md",
+  "source_sha256": "614ac3d87e2a68630d0a31b07510514550d068fda1c7e0e5a9ceae361929ff77",
+  "captured_at": "2026-09-07T00:07:46.470923+00:00",
+  "word_count": 325,
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0076: A6.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A6.2 \u2014 Collapse",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

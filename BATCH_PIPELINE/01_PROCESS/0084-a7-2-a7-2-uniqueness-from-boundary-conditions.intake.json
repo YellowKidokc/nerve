@@ -1,0 +1,33 @@
+{
+  "title": "Uniqueness From Boundary Conditions",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0084_A7.2_A7_2_Uniqueness_From_Boundary_Conditions.md",
+  "source_sha256": "103b6235f0d312e6a8e11ccf4db15b12b3d63930000ca7a7226c68dad186d513",
+  "captured_at": "2026-09-07T00:15:08.706536+00:00",
+  "word_count": 305,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0084: A7.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A7.2 \u2014 Uniqueness From Boundary Conditions",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

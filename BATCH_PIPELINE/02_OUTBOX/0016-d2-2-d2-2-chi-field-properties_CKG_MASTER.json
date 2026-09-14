@@ -1,0 +1,127 @@
+{
+  "title": "Chi Field Properties",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0016_D2.2_D2_2_Chi_Field_Properties.md",
+  "source_sha256": "4c48be867606f7168859ca95fce9375a0d1c3d191954b62b29c9171a84359663",
+  "captured_at": "2026-09-06T23:17:06.364982+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2314,
+    "completion_tokens": 2815,
+    "total_tokens": 5129,
+    "cost": 0.003946347405,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0039862095,
+      "upstream_inference_prompt_cost": 0.000857337,
+      "upstream_inference_completions_cost": 0.0031288725
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The \u03c7-field is a scalar field.",
+      "role": "Definitional Axiom",
+      "formal": "`\u03c7: scalar`"
+    },
+    {
+      "id": "P2",
+      "statement": "The \u03c7-field is real-valued.",
+      "role": "Definitional Axiom",
+      "formal": "`\u03c7 \u2208 \u211d`"
+    },
+    {
+      "id": "P3",
+      "statement": "The \u03c7-field is non-negative.",
+      "role": "Definitional Axiom",
+      "formal": "`\u03c7 \u2265 0`"
+    },
+    {
+      "id": "P4",
+      "statement": "The \u03c7-field is Lorentz-invariant.",
+      "role": "Definitional Axiom",
+      "formal": "`\u03c7'(x') = \u03c7(x)` for Lorentz transformation `x \u2192 x'`"
+    },
+    {
+      "id": "P5",
+      "statement": "The definition of the \u03c7-field depends on the concept of Self-Grounding (A2.2).",
+      "role": "Dependency Assertion",
+      "formal": "`D2.2 \u22a2 A2.2`"
+    },
+    {
+      "id": "P6",
+      "statement": "Scalar field theory and the Klein-Gordon equation are relevant references for the \u03c7-field.",
+      "role": "Referential Assertion",
+      "formal": "Context: `L(\u03c7) ~ Klein-Gordon`"
+    },
+    {
+      "id": "P7",
+      "statement": "Defining the \u03c7-field as a scalar is the simplest choice.",
+      "role": "Justificatory Assertion",
+      "formal": "`argmin_{complexity}(field_type(\u03c7)) \u2192 scalar`"
+    },
+    {
+      "id": "P8",
+      "statement": "The gravitational field is a tensor (spin-2) field.",
+      "role": "Comparative Empirical Fact",
+      "formal": "`g_\u03bc\u03bd: tensor, spin-2`"
+    },
+    {
+      "id": "P9",
+      "statement": "The \u03c7-field may require generalization from a scalar.",
+      "role": "Risk/Contingency Assertion",
+      "formal": "`Possible(\u03c7: tensor/vector)`"
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition for this definition is demonstrating \u03c7 needs to be a vector or tensor.",
+      "role": "Falsification Condition",
+      "formal": "`If \u2203 model where \u03c7 must be vector/tensor, then D2.2 falsified`"
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is demonstrating Lorentz-invariance is the wrong symmetry.",
+      "role": "Falsification Condition",
+      "formal": "`If symmetry(\u03c7) \u2260 Lorentz, then D2.2 falsified`"
+    },
+    {
+      "id": "P12",
+      "statement": "This definition belongs to Chain Tier 3: Field Definitions.",
+      "role": "Structural Metadata",
+      "formal": "`tier(D2.2) = 3`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0016: D2.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D2.2 \u2014 Chi Field Properties",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

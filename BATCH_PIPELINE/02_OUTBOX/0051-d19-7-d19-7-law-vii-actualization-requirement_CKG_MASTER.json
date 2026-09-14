@@ -1,0 +1,129 @@
+{
+  "title": "Law VII: Actualization Requirement",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0051_D19.7_D19_7_Law_VII_Actualization_Requirement.md",
+  "source_sha256": "200ea1cf7fd91a03594c690b110d8d42cf9af773bdd81eda3e2ac0dec60062ef",
+  "captured_at": "2026-09-06T23:50:05.481509+00:00",
+  "tags": [
+    "quantum-foundations"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2242,
+    "completion_tokens": 2358,
+    "total_tokens": 4600,
+    "cost": 0.003191703372,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032239428,
+      "upstream_inference_prompt_cost": 0.0006030258,
+      "upstream_inference_completions_cost": 0.002620917
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Potentiality cannot self-actualize.",
+      "role": "Core Law / Statement",
+      "formal": "\u00ac\u2203x: Potential(x) \u2227 Actualizes(x, x)"
+    },
+    {
+      "id": "P2",
+      "statement": "For any actual entity, there exists an actualizer.",
+      "role": "Formal Expression",
+      "formal": "\u2200x: Actual(x) \u2192 \u2203y: Actualizes(y, x)"
+    },
+    {
+      "id": "P3",
+      "statement": "The actualizer must be distinct from the actualized entity.",
+      "role": "Formal Expression Constraint",
+      "formal": "\u2200x, y: Actualizes(y, x) \u2192 y \u2260 x"
+    },
+    {
+      "id": "P4",
+      "statement": "The law is a definitional primitive.",
+      "role": "Classification",
+      "formal": "Status: `definition`"
+    },
+    {
+      "id": "P5",
+      "statement": "This law depends on the concept that Chi (a fundamental potential) requires an observer for actualization.",
+      "role": "Dependency Assertion",
+      "formal": "Law VII `depends_on` LN5.1"
+    },
+    {
+      "id": "P6",
+      "statement": "Quantum vacuum fluctuations appear spontaneous.",
+      "role": "Limitation / Counterexample",
+      "formal": "Empirical observation"
+    },
+    {
+      "id": "P7",
+      "statement": "Quantum vacuum fluctuations require the quantum field.",
+      "role": "Defensive Assertion against P6",
+      "formal": "The field is the distinct actualizer (y)."
+    },
+    {
+      "id": "P8",
+      "statement": "Showing potentiality self-actualizes would defeat this law.",
+      "role": "Defeat Condition",
+      "formal": "\u2203x: Potential(x) \u2227 Actualizes(x, x)"
+    },
+    {
+      "id": "P9",
+      "statement": "The law is classified as a \"Master Law\" in tier 13 of a dependency chain.",
+      "role": "Structural Assertion",
+      "formal": "Chain Tier: 13 \u2014 Master Laws"
+    },
+    {
+      "id": "P10",
+      "statement": "The law has historical precedents in Aristotle, Aquinas, and Von Neumann (1932).",
+      "role": "Reference Claim",
+      "formal": "Citation list"
+    },
+    {
+      "id": "P11",
+      "statement": "The law's domain is \"Unified\" (physics and philosophy).",
+      "role": "Domain Assertion",
+      "formal": "Domain: Unified"
+    },
+    {
+      "id": "P12",
+      "statement": "The formal expression is a universally quantified conditional.",
+      "role": "Syntactic Assertion",
+      "formal": "\u2200x: Actual(x) \u2192 \u2203y: Actualizes(y,x) \u2227 y \u2260 x"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0051: D19.7",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.7 \u2014 Law VII: Actualization Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

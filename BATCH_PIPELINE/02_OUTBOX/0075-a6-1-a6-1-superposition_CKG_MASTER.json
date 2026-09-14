@@ -1,0 +1,130 @@
+{
+  "title": "Superposition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0075_A6.1_A6_1_Superposition.md",
+  "source_sha256": "3b9ae6af99859becdb9d0d7dc3b64dd3d74c69523debe8dec537eceee6171348",
+  "captured_at": "2026-09-07T00:07:46.453685+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2221,
+    "completion_tokens": 2748,
+    "total_tokens": 4969,
+    "cost": 0.003613150827,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036496473,
+      "upstream_inference_prompt_cost": 0.0005952453,
+      "upstream_inference_completions_cost": 0.003054402
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Unobserved systems exist in superposition of possible states.",
+      "role": "Central Axiomatic Claim",
+      "formal": "`"
+    },
+    {
+      "id": "P2",
+      "statement": "The state `",
+      "role": "\u03c8\u27e9` of an unobserved system is a linear combination (sum) of basis states `",
+      "formal": "n\u27e9`."
+    },
+    {
+      "id": "P3",
+      "statement": "This claim is a framework commitment (not an empirical finding).",
+      "role": "Epistemic Status",
+      "formal": "Status: `framework_commitment`"
+    },
+    {
+      "id": "P4",
+      "statement": "The claim depends on A5.1 (Observation Requirement).",
+      "role": "Logical Dependency",
+      "formal": "`depends_on: \"A5.1\"`"
+    },
+    {
+      "id": "P5",
+      "statement": "The claim belongs to the Ontological domain.",
+      "role": "Domain Classification",
+      "formal": "Domain: `Ontological`"
+    },
+    {
+      "id": "P6",
+      "statement": "The framework extends the superposition principle to the \u03c7-field.",
+      "role": "Framework Extension Decision",
+      "formal": "\"Framework extends it to \u03c7-field.\""
+    },
+    {
+      "id": "P7",
+      "statement": "The claim is a standard Quantum Mechanics assumption.",
+      "role": "Assumption Source",
+      "formal": "\"Standard QM assumption.\""
+    },
+    {
+      "id": "P8",
+      "statement": "The claim would be defeated if definite states could be shown to exist without observation.",
+      "role": "Falsification Condition",
+      "formal": "\"Defeat Conditions: Show definite states without observation.\""
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is recorded as a Canonical Axiom with a specific registry position (75 of 191).",
+      "role": "Record Metadata",
+      "formal": "Registry position: `75 of 191`"
+    },
+    {
+      "id": "P10",
+      "statement": "The formal expression applies specifically \"before measurement\".",
+      "role": "Temporal/Operational Scope",
+      "formal": "`(before measurement)`"
+    },
+    {
+      "id": "P11",
+      "statement": "The claim's legacy identifier within the framework is AX-045.",
+      "role": "Internal Reference",
+      "formal": "Legacy ID: `\"AX-045\"`"
+    },
+    {
+      "id": "P12",
+      "statement": "The claim is generated from master classification files (AXIOM_CHAIN_MASTER_v2, etc.).",
+      "role": "Provenance",
+      "formal": "\"*Generated... from AXIOM_CHAIN_MASTER_v2...\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0075: A6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A6.1 \u2014 Superposition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

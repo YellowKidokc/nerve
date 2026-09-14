@@ -1,0 +1,130 @@
+{
+  "title": "Grace Operator Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0033_D9.1_D9_1_Grace_Operator_Definition.md",
+  "source_sha256": "870ac0531834b8358a0e6dd6a8883f6ef138a48216c5f7aa3e483e98e07a5d4d",
+  "captured_at": "2026-09-06T23:34:24.556212+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2588,
+    "completion_tokens": 3056,
+    "total_tokens": 5644,
+    "cost": 0.00356084586,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2560,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.003596814,
+      "upstream_inference_prompt_cost": 0.00020007,
+      "upstream_inference_completions_cost": 0.003396744
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A Grace operator (\u011c) exists.",
+      "role": "Definition",
+      "formal": "`\u011c` is defined."
+    },
+    {
+      "id": "P2",
+      "statement": "The Grace operator flips a sign state from -1 to +1.",
+      "role": "Definition",
+      "formal": "`\u011c: \u03c3(-1) \u2192 \u03c3(+1)`"
+    },
+    {
+      "id": "P3",
+      "statement": "The Grace operator is non-unitary.",
+      "role": "Definition / Key Claim",
+      "formal": "`\u011c\u2020\u011c \u2260 I`"
+    },
+    {
+      "id": "P4",
+      "statement": "Unitary operators cannot flip eigenvalues.",
+      "role": "Justification / Assumption",
+      "formal": "If `U\u2020U = I`, then `U` cannot map an eigenstate `"
+    },
+    {
+      "id": "P5",
+      "statement": "The definition of \u011c depends on the existence of BC6 (Infinite Energy Source).",
+      "role": "Dependency",
+      "formal": "`depends_on: \"BC6\"`"
+    },
+    {
+      "id": "P6",
+      "statement": "The Grace operator is a primitive formalization within the moral domain.",
+      "role": "Classification",
+      "formal": "`Atlas Type: \"Definition\"`, `Domain: \"Moral\"`"
+    },
+    {
+      "id": "P7",
+      "statement": "The operator's non-unitarity is its key physics claim.",
+      "role": "Limitation / Emphasis",
+      "formal": "Stated in \"Limitations (from workbook)\"."
+    },
+    {
+      "id": "P8",
+      "statement": "The definition could be defeated if a sign flip is shown without an external operator.",
+      "role": "Defeat Condition",
+      "formal": "\"Show sign flip without external operator.\""
+    },
+    {
+      "id": "P9",
+      "statement": "The definition could be defeated if grace is demonstrated to be unitary.",
+      "role": "Defeat Condition",
+      "formal": "\"Demonstrate unitary grace.\""
+    },
+    {
+      "id": "P10",
+      "statement": "The registry position of this definition is 33 of 191.",
+      "role": "Metadata",
+      "formal": "`Registry position: 33 of 191`"
+    },
+    {
+      "id": "P11",
+      "statement": "The definition's chain tier is 10 (Grace Dynamics).",
+      "role": "Metadata",
+      "formal": "`Chain Tier: 10 \u2014 Grace Dynamics`"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition is in `AX_SCAFFOLD` mode, meaning it is a foundational building block.",
+      "role": "Metadata",
+      "formal": "`Mode: AX_SCAFFOLD`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0033: D9.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D9.1 \u2014 Grace Operator Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "title": "Self-Interaction Potential",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0019_D3.2_D3_2_Self-Interaction_Potential.md",
+  "source_sha256": "cb6a344ed8607b5f59c8f282505af6fdebd31700306b8082c8aa6d1d48ec9984",
+  "captured_at": "2026-09-06T23:20:36.902124+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2583,
+    "completion_tokens": 2772,
+    "total_tokens": 5355,
+    "cost": 0.003246502545,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2560,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032792955,
+      "upstream_inference_prompt_cost": 0.0001982175,
+      "upstream_inference_completions_cost": 0.003081078
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The self-interaction potential of the \u03c7-field is of spontaneous symmetry breaking form.",
+      "role": "Statement",
+      "formal": "`V(\u03c7)` has spontaneous symmetry breaking form."
+    },
+    {
+      "id": "P2",
+      "statement": "The formal expression for the self-interaction potential is `V(\u03c7) = \u03bb(\u03c7\u00b2 - v\u00b2)\u00b2`.",
+      "role": "Formal Expression",
+      "formal": "`V(\u03c7) = \u03bb(\u03c7\u00b2 - v\u00b2)\u00b2`"
+    },
+    {
+      "id": "P3",
+      "statement": "This expression is termed the \"Mexican hat potential.\"",
+      "role": "Formal Expression",
+      "formal": "`V(\u03c7)` is a Mexican hat potential."
+    },
+    {
+      "id": "P4",
+      "statement": "The maximum defensible position is that `V(\u03c7)` is a quartic self-interaction potential.",
+      "role": "Maximum Defensible Position",
+      "formal": "`V(\u03c7)` is quartic."
+    },
+    {
+      "id": "P5",
+      "statement": "This definition is anchored to and depends on A2.2 (Self-Grounding).",
+      "role": "Dependency Chain",
+      "formal": "`D3.2` depends_on `A2.2`"
+    },
+    {
+      "id": "P6",
+      "statement": "The definition borrows its form from Higgs physics.",
+      "role": "Limitations",
+      "formal": "Form borrowed from Higgs mechanism."
+    },
+    {
+      "id": "P7",
+      "statement": "Whether information fields have quartic potentials is assumed, not derived.",
+      "role": "Limitations",
+      "formal": "Assumption: Info fields have quartic potentials."
+    },
+    {
+      "id": "P8",
+      "statement": "The definition is defeated if `V(\u03c7)` is shown to have a different form.",
+      "role": "Defeat Conditions",
+      "formal": "Defeat if `V(\u03c7)` form differs."
+    },
+    {
+      "id": "P9",
+      "statement": "The definition is defeated if a quartic potential is wrong for an informational field.",
+      "role": "Defeat Conditions",
+      "formal": "Defeat if quartic wrong for info field."
+    },
+    {
+      "id": "P10",
+      "statement": "The definition is a formal definition / primitive formalization.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `definition`"
+    },
+    {
+      "id": "P11",
+      "statement": "The definition's domain is Ontological.",
+      "role": "Classification",
+      "formal": "Domain: Ontological"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition references the Higgs mechanism, Goldstone theorem, and spontaneous symmetry breaking.",
+      "role": "References",
+      "formal": "Context: Higgs, Goldstone, SSB."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0019: D3.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D3.2 \u2014 Self-Interaction Potential",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

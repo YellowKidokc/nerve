@@ -1,0 +1,127 @@
+{
+  "title": "Law V: Conservation Symmetry",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0049_D19.5_D19_5_Law_V_Conservation_Symmetry.md",
+  "source_sha256": "34010c5495935894d5a94b45640ff269e7f8ca6beb7fe63f42c180896c53f37e",
+  "captured_at": "2026-09-06T23:48:19.691336+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2507,
+    "completion_tokens": 2694,
+    "total_tokens": 5201,
+    "cost": 0.003658633407,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036955893,
+      "upstream_inference_prompt_cost": 0.0007012083,
+      "upstream_inference_completions_cost": 0.002994381
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Law V is a definition within the unified domain.",
+      "role": "Definition",
+      "formal": "`definition(Law_V, unified_domain)`"
+    },
+    {
+      "id": "P2",
+      "statement": "Every continuous symmetry of \u03c7 generates a conserved quantity.",
+      "role": "Core Axiom",
+      "formal": "`\u2200S (ContinuousSymmetry(S, \u03c7) \u2192 \u2203Q Conserved(Q))`"
+    },
+    {
+      "id": "P3",
+      "statement": "Noether's theorem is applied to the \u03c7-field.",
+      "role": "Method Specification",
+      "formal": "`Apply(NoetherTheorem, \u03c7)`"
+    },
+    {
+      "id": "P4",
+      "statement": "The formal expression of Law V is: Symmetry(\u03c7) \u2192 Conservation(Q).",
+      "role": "Formal Statement",
+      "formal": "`Symmetry(\u03c7) \u2192 Conservation(Q)`"
+    },
+    {
+      "id": "P5",
+      "statement": "This law depends on anchor P3.2 (Coherence Conservation).",
+      "role": "Dependency Assertion",
+      "formal": "`depends_on(Law_V, P3_2)`"
+    },
+    {
+      "id": "P6",
+      "statement": "The chain tier for this law is 13 (Master Laws).",
+      "role": "Structural Metadata",
+      "formal": "`tier(Law_V) = 13`"
+    },
+    {
+      "id": "P7",
+      "statement": "A defeat condition for this law is showing Noether's theorem fails for the \u03c7-field.",
+      "role": "Falsifiability Condition",
+      "formal": "`defeat_if(\u00acValid(NoetherTheorem, \u03c7))`"
+    },
+    {
+      "id": "P8",
+      "statement": "The standard Noether theorem application is considered low vulnerability.",
+      "role": "Risk Assessment",
+      "formal": "`vulnerability(application) = low`"
+    },
+    {
+      "id": "P9",
+      "statement": "The law assumes the \u03c7-field has continuous symmetries.",
+      "role": "Implicit Assumption",
+      "formal": "`\u2203S ContinuousSymmetry(S, \u03c7)`"
+    },
+    {
+      "id": "P10",
+      "statement": "The law assumes the standard Noether theorem applies.",
+      "role": "Implicit Assumption",
+      "formal": "`Assume(StandardNoetherHolds)`"
+    },
+    {
+      "id": "P11",
+      "statement": "The law's epistemic status is `definition`.",
+      "role": "Epistemic Claim",
+      "formal": "`status(Law_V) = definition`"
+    },
+    {
+      "id": "P12",
+      "statement": "The source is generated from canonical axiom chain classifications.",
+      "role": "Provenance",
+      "formal": "`source_generation(AXIOM_CHAIN_MASTER_v2, ...)`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0049: D19.5",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.5 \u2014 Law V: Conservation Symmetry",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

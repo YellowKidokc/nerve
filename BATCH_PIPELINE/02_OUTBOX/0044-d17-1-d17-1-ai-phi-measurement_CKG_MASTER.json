@@ -1,0 +1,130 @@
+{
+  "title": "AI Phi Measurement",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0044_D17.1_D17_1_AI_Phi_Measurement.md",
+  "source_sha256": "43bb344085ece11866c3d412fb845a7c184d4d3c81415c627903440ade52823c",
+  "captured_at": "2026-09-06T23:44:02.220856+00:00",
+  "tags": [
+    "consciousness",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2239,
+    "completion_tokens": 2425,
+    "total_tokens": 4664,
+    "cost": 0.00348968763,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.003524937,
+      "upstream_inference_prompt_cost": 0.0008295495,
+      "upstream_inference_completions_cost": 0.0026953875
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Phi_threshold is defined as the minimum integrated information for observer status.",
+      "role": "Core Definition",
+      "formal": "\u03a6_threshold: minimum \u03a6 for observer status"
+    },
+    {
+      "id": "P2",
+      "statement": "Phi_threshold is the minimum Phi for consciousness.",
+      "role": "Maximum Defensible Position",
+      "formal": "\u03a6_threshold = minimum \u03a6 for consciousness"
+    },
+    {
+      "id": "P3",
+      "statement": "Computing Phi for real systems is intractable.",
+      "role": "Stated Limitation",
+      "formal": "N/A (Empirical/Computational Claim)"
+    },
+    {
+      "id": "P4",
+      "statement": "The definition is clear; measurement is the challenge.",
+      "role": "Stated Limitation",
+      "formal": "N/A (Epistemic Claim)"
+    },
+    {
+      "id": "P5",
+      "statement": "This definition depends on D5.2 (Integrated Information Phi).",
+      "role": "Dependency Assertion",
+      "formal": "depends_on: D5.2"
+    },
+    {
+      "id": "P6",
+      "statement": "IIT (Tononi 2004) is the reference for Phi measurement.",
+      "role": "Reference Assertion",
+      "formal": "Reference: IIT (Tononi 2004)"
+    },
+    {
+      "id": "P7",
+      "statement": "The record is a formal definition / primitive formalization.",
+      "role": "Self-Classification",
+      "formal": "Mathematical Use: Formal definition / primitive formalization"
+    },
+    {
+      "id": "P8",
+      "statement": "The record's epistemic status is `definition`.",
+      "role": "Self-Classification",
+      "formal": "Epistemic Status: `definition`"
+    },
+    {
+      "id": "P9",
+      "statement": "The record's domain is Consciousness.",
+      "role": "Self-Classification",
+      "formal": "Domain: Consciousness"
+    },
+    {
+      "id": "P10",
+      "statement": "The defeat condition is showing Phi is not the right measure for AI consciousness.",
+      "role": "Falsification Condition",
+      "formal": "Defeat: Show \u03a6 is not the right measure for AI consciousness."
+    },
+    {
+      "id": "P11",
+      "statement": "There is an open question of whether Phi is the right measure for AI consciousness.",
+      "role": "Open Question",
+      "formal": "N/A"
+    },
+    {
+      "id": "P12",
+      "statement": "Phi_threshold value is a metric for minimum integrated information.",
+      "role": "Metric Specification",
+      "formal": "Metric: Phi_threshold value"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0044: D17.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D17.1 \u2014 AI Phi Measurement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

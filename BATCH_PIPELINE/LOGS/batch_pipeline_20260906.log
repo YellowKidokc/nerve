@@ -1,0 +1,841 @@
+[2026-09-06 17:52:35] Found 1 pending file(s) in 00_INBOX.
+[2026-09-06 17:52:35] Primary model: deepseek/deepseek-r1:free | Fallback: deepseek/deepseek-v3.2
+[2026-09-06 17:52:35] 
+[1/1] Processing: 0001_A1_1_Existence.md...
+[2026-09-06 17:52:35] [1/1] Prepared working packet: 0001-a1-1-existence.analysis-prompt.md
+[2026-09-06 17:52:35] Calling OpenRouter (deepseek/deepseek-r1:free) [Attempt 1/3]...
+[2026-09-06 17:52:35] HTTP 404 on deepseek/deepseek-r1:free: {"error":{"message":"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1","code":404},"user_id":"user_2ZY1YcIVmVjJhx6JojdHV5BaKjS"}
+[2026-09-06 17:52:37] Calling OpenRouter (deepseek/deepseek-r1:free) [Attempt 2/3]...
+[2026-09-06 17:52:37] HTTP 404 on deepseek/deepseek-r1:free: {"error":{"message":"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1","code":404},"user_id":"user_2ZY1YcIVmVjJhx6JojdHV5BaKjS"}
+[2026-09-06 17:52:41] Calling OpenRouter (deepseek/deepseek-r1:free) [Attempt 3/3]...
+[2026-09-06 17:52:41] HTTP 404 on deepseek/deepseek-r1:free: {"error":{"message":"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1","code":404},"user_id":"user_2ZY1YcIVmVjJhx6JojdHV5BaKjS"}
+[2026-09-06 17:52:49] Primary model rate-limited or failed; switching to paid fallback: deepseek/deepseek-v3.2
+[2026-09-06 17:52:49] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 17:53:34] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 17:53:34] [OUTBOX WRITTEN] 0001-a1-1-existence_CKG_MASTER.md
+[2026-09-06 17:53:34] [SYNOLOGY MIRROR] Synced to 0001-a1-1-existence_CKG_MASTER.md
+[2026-09-06 17:53:34] [INBOX -> ARCHIVE] Moved original 0001_A1_1_Existence.md to ARCHIVED_INPUTS
+[2026-09-06 17:53:34] [1/1] Completed successfully -> 0001-a1-1-existence_CKG_MASTER.md
+[2026-09-06 17:53:34] 
+======================================================
+[2026-09-06 17:53:34] Batch Execution Finished.
+[2026-09-06 17:53:34] Total: 1 | Succeeded: 1 | Failed: 0
+[2026-09-06 17:53:34] Protected Master Records in: D:\GitHub\nerve\BATCH_PIPELINE\02_OUTBOX
+[2026-09-06 17:53:34] ======================================================
+[2026-09-06 17:58:18] Found 99 pending file(s) in 00_INBOX.
+[2026-09-06 17:58:18] Primary model: deepseek/deepseek-v3.2 | Fallback: deepseek/deepseek-r1
+[2026-09-06 17:58:18] 
+[1/99] Processing: 0001_A1_1_Existence.md...
+[2026-09-06 17:58:18] [1/99] Prepared working packet: 0001-a1-1-existence.analysis-prompt.md
+[2026-09-06 17:58:18] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 17:59:02] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 17:59:02] Moved prior master to revisions: 0001-a1-1-existence_CKG_MASTER_20260906_175902.md
+[2026-09-06 17:59:02] [OUTBOX WRITTEN] 0001-a1-1-existence_CKG_MASTER.md
+[2026-09-06 17:59:02] [SYNOLOGY MIRROR] Synced to 0001-a1-1-existence_CKG_MASTER.md
+[2026-09-06 17:59:02] [INBOX -> ARCHIVE] Moved original 0001_A1_1_Existence.md to ARCHIVED_INPUTS
+[2026-09-06 17:59:02] [1/99] Completed successfully -> 0001-a1-1-existence_CKG_MASTER.md
+[2026-09-06 17:59:02] 
+[2/99] Processing: 0002_A1_2_Distinction.md...
+[2026-09-06 17:59:02] [2/99] Prepared working packet: 0002-a1-2-distinction.analysis-prompt.md
+[2026-09-06 17:59:02] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 17:59:56] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 17:59:56] [OUTBOX WRITTEN] 0002-a1-2-distinction_CKG_MASTER.md
+[2026-09-06 17:59:56] [SYNOLOGY MIRROR] Synced to 0002-a1-2-distinction_CKG_MASTER.md
+[2026-09-06 17:59:56] [INBOX -> ARCHIVE] Moved original 0002_A1_2_Distinction.md to ARCHIVED_INPUTS
+[2026-09-06 17:59:56] [2/99] Completed successfully -> 0002-a1-2-distinction_CKG_MASTER.md
+[2026-09-06 17:59:56] 
+[3/99] Processing: 0003_A2_1_Substrate_Requirement.md...
+[2026-09-06 17:59:56] [3/99] Prepared working packet: 0003-a2-1-substrate-requirement.analysis-prompt.md
+[2026-09-06 17:59:56] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:00:51] Validation or network error on deepseek/deepseek-v3.2 attempt 1: 'What this does not establish' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:00:53] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 2/3]...
+[2026-09-06 18:01:47] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:01:47] [OUTBOX WRITTEN] 0003-a2-1-substrate-requirement_CKG_MASTER.md
+[2026-09-06 18:01:47] [SYNOLOGY MIRROR] Synced to 0003-a2-1-substrate-requirement_CKG_MASTER.md
+[2026-09-06 18:01:47] [INBOX -> ARCHIVE] Moved original 0003_A2_1_Substrate_Requirement.md to ARCHIVED_INPUTS
+[2026-09-06 18:01:47] [3/99] Completed successfully -> 0003-a2-1-substrate-requirement_CKG_MASTER.md
+[2026-09-06 18:01:47] 
+[4/99] Processing: 0004_A2.2_A2_2_Self-Grounding.md...
+[2026-09-06 18:01:47] [4/99] Prepared working packet: 0004-a2-2-a2-2-self-grounding.analysis-prompt.md
+[2026-09-06 18:01:47] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:02:40] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:02:40] [OUTBOX WRITTEN] 0004-a2-2-a2-2-self-grounding_CKG_MASTER.md
+[2026-09-06 18:02:40] [SYNOLOGY MIRROR] Synced to 0004-a2-2-a2-2-self-grounding_CKG_MASTER.md
+[2026-09-06 18:02:40] [INBOX -> ARCHIVE] Moved original 0004_A2.2_A2_2_Self-Grounding.md to ARCHIVED_INPUTS
+[2026-09-06 18:02:40] [4/99] Completed successfully -> 0004-a2-2-a2-2-self-grounding_CKG_MASTER.md
+[2026-09-06 18:02:40] 
+[5/99] Processing: 0005_A5.1_A5_1_Observation_Requirement.md...
+[2026-09-06 18:02:40] [5/99] Prepared working packet: 0005-a5-1-a5-1-observation-requirement.analysis-prompt.md
+[2026-09-06 18:02:40] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:03:20] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:03:20] [OUTBOX WRITTEN] 0005-a5-1-a5-1-observation-requirement_CKG_MASTER.md
+[2026-09-06 18:03:20] [SYNOLOGY MIRROR] Synced to 0005-a5-1-a5-1-observation-requirement_CKG_MASTER.md
+[2026-09-06 18:03:20] [INBOX -> ARCHIVE] Moved original 0005_A5.1_A5_1_Observation_Requirement.md to ARCHIVED_INPUTS
+[2026-09-06 18:03:20] [5/99] Completed successfully -> 0005-a5-1-a5-1-observation-requirement_CKG_MASTER.md
+[2026-09-06 18:03:20] 
+[6/99] Processing: 0006_BC4_BC4_Three_Observers_Required.md...
+[2026-09-06 18:03:20] [6/99] Prepared working packet: 0006-bc4-bc4-three-observers-required.analysis-prompt.md
+[2026-09-06 18:03:20] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:04:04] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:04:04] [OUTBOX WRITTEN] 0006-bc4-bc4-three-observers-required_CKG_MASTER.md
+[2026-09-06 18:04:04] [SYNOLOGY MIRROR] Synced to 0006-bc4-bc4-three-observers-required_CKG_MASTER.md
+[2026-09-06 18:04:04] [INBOX -> ARCHIVE] Moved original 0006_BC4_BC4_Three_Observers_Required.md to ARCHIVED_INPUTS
+[2026-09-06 18:04:04] [6/99] Completed successfully -> 0006-bc4-bc4-three-observers-required_CKG_MASTER.md
+[2026-09-06 18:04:04] 
+[7/99] Processing: 0007_BC6_BC6_Infinite_Energy_Source.md...
+[2026-09-06 18:04:04] [7/99] Prepared working packet: 0007-bc6-bc6-infinite-energy-source.analysis-prompt.md
+[2026-09-06 18:04:04] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:04:58] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:04:58] [OUTBOX WRITTEN] 0007-bc6-bc6-infinite-energy-source_CKG_MASTER.md
+[2026-09-06 18:04:58] [SYNOLOGY MIRROR] Synced to 0007-bc6-bc6-infinite-energy-source_CKG_MASTER.md
+[2026-09-06 18:04:58] [INBOX -> ARCHIVE] Moved original 0007_BC6_BC6_Infinite_Energy_Source.md to ARCHIVED_INPUTS
+[2026-09-06 18:04:58] [7/99] Completed successfully -> 0007-bc6-bc6-infinite-energy-source_CKG_MASTER.md
+[2026-09-06 18:04:58] 
+[8/99] Processing: 0008_A1.3_A1_3_Information_Primacy.md...
+[2026-09-06 18:04:58] [8/99] Prepared working packet: 0008-a1-3-a1-3-information-primacy.analysis-prompt.md
+[2026-09-06 18:04:58] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:05:51] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:05:51] [OUTBOX WRITTEN] 0008-a1-3-a1-3-information-primacy_CKG_MASTER.md
+[2026-09-06 18:05:51] [SYNOLOGY MIRROR] Synced to 0008-a1-3-a1-3-information-primacy_CKG_MASTER.md
+[2026-09-06 18:05:51] [INBOX -> ARCHIVE] Moved original 0008_A1.3_A1_3_Information_Primacy.md to ARCHIVED_INPUTS
+[2026-09-06 18:05:51] [8/99] Completed successfully -> 0008-a1-3-a1-3-information-primacy_CKG_MASTER.md
+[2026-09-06 18:05:51] 
+[9/99] Processing: 0009_T3.1_T3_1_Coherence_Cannot_Self-Increase.md...
+[2026-09-06 18:05:51] [9/99] Prepared working packet: 0009-t3-1-t3-1-coherence-cannot-self-increase.analysis-prompt.md
+[2026-09-06 18:05:51] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:06:50] Validation or network error on deepseek/deepseek-v3.2 attempt 1: 'What this does not establish' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:06:52] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 2/3]...
+[2026-09-06 18:07:44] Validation or network error on deepseek/deepseek-v3.2 attempt 2: 'Formal or testable path' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:07:48] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 3/3]...
+[2026-09-06 18:08:40] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:08:40] [OUTBOX WRITTEN] 0009-t3-1-t3-1-coherence-cannot-self-increase_CKG_MASTER.md
+[2026-09-06 18:08:40] [SYNOLOGY MIRROR] Synced to 0009-t3-1-t3-1-coherence-cannot-self-increase_CKG_MASTER.md
+[2026-09-06 18:08:40] [INBOX -> ARCHIVE] Moved original 0009_T3.1_T3_1_Coherence_Cannot_Self-Increase.md to ARCHIVED_INPUTS
+[2026-09-06 18:08:40] [9/99] Completed successfully -> 0009-t3-1-t3-1-coherence-cannot-self-increase_CKG_MASTER.md
+[2026-09-06 18:08:40] 
+[10/99] Processing: 0010_BC2_BC2_Grace_External_To_System.md...
+[2026-09-06 18:08:40] [10/99] Prepared working packet: 0010-bc2-bc2-grace-external-to-system.analysis-prompt.md
+[2026-09-06 18:08:40] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:09:27] Validation or network error on deepseek/deepseek-v3.2 attempt 1: 'Formal or testable path' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:09:29] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 2/3]...
+[2026-09-06 18:10:20] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:10:20] [OUTBOX WRITTEN] 0010-bc2-bc2-grace-external-to-system_CKG_MASTER.md
+[2026-09-06 18:10:20] [SYNOLOGY MIRROR] Synced to 0010-bc2-bc2-grace-external-to-system_CKG_MASTER.md
+[2026-09-06 18:10:20] [INBOX -> ARCHIVE] Moved original 0010_BC2_BC2_Grace_External_To_System.md to ARCHIVED_INPUTS
+[2026-09-06 18:10:20] [10/99] Completed successfully -> 0010-bc2-bc2-grace-external-to-system_CKG_MASTER.md
+[2026-09-06 18:10:20] 
+[11/99] Processing: 0011_BC7_BC7_Information_Conservation.md...
+[2026-09-06 18:10:20] [11/99] Prepared working packet: 0011-bc7-bc7-information-conservation.analysis-prompt.md
+[2026-09-06 18:10:20] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:11:03] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:11:03] [OUTBOX WRITTEN] 0011-bc7-bc7-information-conservation_CKG_MASTER.md
+[2026-09-06 18:11:03] [SYNOLOGY MIRROR] Synced to 0011-bc7-bc7-information-conservation_CKG_MASTER.md
+[2026-09-06 18:11:03] [INBOX -> ARCHIVE] Moved original 0011_BC7_BC7_Information_Conservation.md to ARCHIVED_INPUTS
+[2026-09-06 18:11:03] [11/99] Completed successfully -> 0011-bc7-bc7-information-conservation_CKG_MASTER.md
+[2026-09-06 18:11:03] 
+[12/99] Processing: 0012_BC8_BC8_Voluntary_Coupling.md...
+[2026-09-06 18:11:03] [12/99] Prepared working packet: 0012-bc8-bc8-voluntary-coupling.analysis-prompt.md
+[2026-09-06 18:11:03] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:11:50] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:11:50] [OUTBOX WRITTEN] 0012-bc8-bc8-voluntary-coupling_CKG_MASTER.md
+[2026-09-06 18:11:50] [SYNOLOGY MIRROR] Synced to 0012-bc8-bc8-voluntary-coupling_CKG_MASTER.md
+[2026-09-06 18:11:50] [INBOX -> ARCHIVE] Moved original 0012_BC8_BC8_Voluntary_Coupling.md to ARCHIVED_INPUTS
+[2026-09-06 18:11:50] [12/99] Completed successfully -> 0012-bc8-bc8-voluntary-coupling_CKG_MASTER.md
+[2026-09-06 18:11:50] 
+[13/99] Processing: 0013_D1.1_D1_1_Information_Definition.md...
+[2026-09-06 18:11:50] [13/99] Prepared working packet: 0013-d1-1-d1-1-information-definition.analysis-prompt.md
+[2026-09-06 18:11:50] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:12:39] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:12:39] [OUTBOX WRITTEN] 0013-d1-1-d1-1-information-definition_CKG_MASTER.md
+[2026-09-06 18:12:39] [SYNOLOGY MIRROR] Synced to 0013-d1-1-d1-1-information-definition_CKG_MASTER.md
+[2026-09-06 18:12:39] [INBOX -> ARCHIVE] Moved original 0013_D1.1_D1_1_Information_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:12:39] [13/99] Completed successfully -> 0013-d1-1-d1-1-information-definition_CKG_MASTER.md
+[2026-09-06 18:12:39] 
+[14/99] Processing: 0014_D1.2_D1_2_Bit_Definition.md...
+[2026-09-06 18:12:39] [14/99] Prepared working packet: 0014-d1-2-d1-2-bit-definition.analysis-prompt.md
+[2026-09-06 18:12:39] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:13:32] Validation or network error on deepseek/deepseek-v3.2 attempt 1: 'What this does not establish' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:13:34] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 2/3]...
+[2026-09-06 18:14:24] Validation or network error on deepseek/deepseek-v3.2 attempt 2: 'What this does not establish' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:14:28] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 3/3]...
+[2026-09-06 18:15:22] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:15:22] [OUTBOX WRITTEN] 0014-d1-2-d1-2-bit-definition_CKG_MASTER.md
+[2026-09-06 18:15:22] [SYNOLOGY MIRROR] Synced to 0014-d1-2-d1-2-bit-definition_CKG_MASTER.md
+[2026-09-06 18:15:22] [INBOX -> ARCHIVE] Moved original 0014_D1.2_D1_2_Bit_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:15:22] [14/99] Completed successfully -> 0014-d1-2-d1-2-bit-definition_CKG_MASTER.md
+[2026-09-06 18:15:22] 
+[15/99] Processing: 0015_D2.1_D2_1_Logos_Field_Definition.md...
+[2026-09-06 18:15:22] [15/99] Prepared working packet: 0015-d2-1-d2-1-logos-field-definition.analysis-prompt.md
+[2026-09-06 18:15:22] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:16:11] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:16:11] [OUTBOX WRITTEN] 0015-d2-1-d2-1-logos-field-definition_CKG_MASTER.md
+[2026-09-06 18:16:11] [SYNOLOGY MIRROR] Synced to 0015-d2-1-d2-1-logos-field-definition_CKG_MASTER.md
+[2026-09-06 18:16:11] [INBOX -> ARCHIVE] Moved original 0015_D2.1_D2_1_Logos_Field_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:16:11] [15/99] Completed successfully -> 0015-d2-1-d2-1-logos-field-definition_CKG_MASTER.md
+[2026-09-06 18:16:11] 
+[16/99] Processing: 0016_D2.2_D2_2_Chi_Field_Properties.md...
+[2026-09-06 18:16:11] [16/99] Prepared working packet: 0016-d2-2-d2-2-chi-field-properties.analysis-prompt.md
+[2026-09-06 18:16:11] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:17:06] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:17:06] [OUTBOX WRITTEN] 0016-d2-2-d2-2-chi-field-properties_CKG_MASTER.md
+[2026-09-06 18:17:06] [SYNOLOGY MIRROR] Synced to 0016-d2-2-d2-2-chi-field-properties_CKG_MASTER.md
+[2026-09-06 18:17:06] [INBOX -> ARCHIVE] Moved original 0016_D2.2_D2_2_Chi_Field_Properties.md to ARCHIVED_INPUTS
+[2026-09-06 18:17:06] [16/99] Completed successfully -> 0016-d2-2-d2-2-chi-field-properties_CKG_MASTER.md
+[2026-09-06 18:17:06] 
+[17/99] Processing: 0017_E2.1_E2_1_Master_Equation_First_Form.md...
+[2026-09-06 18:17:06] [17/99] Prepared working packet: 0017-e2-1-e2-1-master-equation-first-form.analysis-prompt.md
+[2026-09-06 18:17:06] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:17:56] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:17:56] [OUTBOX WRITTEN] 0017-e2-1-e2-1-master-equation-first-form_CKG_MASTER.md
+[2026-09-06 18:17:56] [SYNOLOGY MIRROR] Synced to 0017-e2-1-e2-1-master-equation-first-form_CKG_MASTER.md
+[2026-09-06 18:17:56] [INBOX -> ARCHIVE] Moved original 0017_E2.1_E2_1_Master_Equation_First_Form.md to ARCHIVED_INPUTS
+[2026-09-06 18:17:56] [17/99] Completed successfully -> 0017-e2-1-e2-1-master-equation-first-form_CKG_MASTER.md
+[2026-09-06 18:17:56] 
+[18/99] Processing: 0018_D3.1_D3_1_Coherence_Functional_Definition.md...
+[2026-09-06 18:17:56] [18/99] Prepared working packet: 0018-d3-1-d3-1-coherence-functional-definition.analysis-prompt.md
+[2026-09-06 18:17:56] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:18:47] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:18:47] [OUTBOX WRITTEN] 0018-d3-1-d3-1-coherence-functional-definition_CKG_MASTER.md
+[2026-09-06 18:18:47] [SYNOLOGY MIRROR] Synced to 0018-d3-1-d3-1-coherence-functional-definition_CKG_MASTER.md
+[2026-09-06 18:18:47] [INBOX -> ARCHIVE] Moved original 0018_D3.1_D3_1_Coherence_Functional_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:18:47] [18/99] Completed successfully -> 0018-d3-1-d3-1-coherence-functional-definition_CKG_MASTER.md
+[2026-09-06 18:18:47] 
+[19/99] Processing: 0019_D3.2_D3_2_Self-Interaction_Potential.md...
+[2026-09-06 18:18:47] [19/99] Prepared working packet: 0019-d3-2-d3-2-self-interaction-potential.analysis-prompt.md
+[2026-09-06 18:18:47] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:19:43] Validation or network error on deepseek/deepseek-v3.2 attempt 1: 'What survives' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:19:45] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 2/3]...
+[2026-09-06 18:20:36] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:20:36] [OUTBOX WRITTEN] 0019-d3-2-d3-2-self-interaction-potential_CKG_MASTER.md
+[2026-09-06 18:20:36] [SYNOLOGY MIRROR] Synced to 0019-d3-2-d3-2-self-interaction-potential_CKG_MASTER.md
+[2026-09-06 18:20:36] [INBOX -> ARCHIVE] Moved original 0019_D3.2_D3_2_Self-Interaction_Potential.md to ARCHIVED_INPUTS
+[2026-09-06 18:20:36] [19/99] Completed successfully -> 0019-d3-2-d3-2-self-interaction-potential_CKG_MASTER.md
+[2026-09-06 18:20:36] 
+[20/99] Processing: 0020_D3.3_D3_3_Interaction_Lagrangian.md...
+[2026-09-06 18:20:36] [20/99] Prepared working packet: 0020-d3-3-d3-3-interaction-lagrangian.analysis-prompt.md
+[2026-09-06 18:20:36] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:21:20] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:21:20] [OUTBOX WRITTEN] 0020-d3-3-d3-3-interaction-lagrangian_CKG_MASTER.md
+[2026-09-06 18:21:20] [SYNOLOGY MIRROR] Synced to 0020-d3-3-d3-3-interaction-lagrangian_CKG_MASTER.md
+[2026-09-06 18:21:20] [INBOX -> ARCHIVE] Moved original 0020_D3.3_D3_3_Interaction_Lagrangian.md to ARCHIVED_INPUTS
+[2026-09-06 18:21:20] [20/99] Completed successfully -> 0020-d3-3-d3-3-interaction-lagrangian_CKG_MASTER.md
+[2026-09-06 18:21:20] 
+[21/99] Processing: 0021_E3.1_E3_1_Master_Coherence_Equation.md...
+[2026-09-06 18:21:20] [21/99] Prepared working packet: 0021-e3-1-e3-1-master-coherence-equation.analysis-prompt.md
+[2026-09-06 18:21:20] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:22:08] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:22:08] [OUTBOX WRITTEN] 0021-e3-1-e3-1-master-coherence-equation_CKG_MASTER.md
+[2026-09-06 18:22:08] [SYNOLOGY MIRROR] Synced to 0021-e3-1-e3-1-master-coherence-equation_CKG_MASTER.md
+[2026-09-06 18:22:08] [INBOX -> ARCHIVE] Moved original 0021_E3.1_E3_1_Master_Coherence_Equation.md to ARCHIVED_INPUTS
+[2026-09-06 18:22:08] [21/99] Completed successfully -> 0021-e3-1-e3-1-master-coherence-equation_CKG_MASTER.md
+[2026-09-06 18:22:08] 
+[22/99] Processing: 0022_E3.2_E3_2_Universal_Coherence_Definition.md...
+[2026-09-06 18:22:08] [22/99] Prepared working packet: 0022-e3-2-e3-2-universal-coherence-definition.analysis-prompt.md
+[2026-09-06 18:22:08] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:23:07] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:23:07] [OUTBOX WRITTEN] 0022-e3-2-e3-2-universal-coherence-definition_CKG_MASTER.md
+[2026-09-06 18:23:07] [SYNOLOGY MIRROR] Synced to 0022-e3-2-e3-2-universal-coherence-definition_CKG_MASTER.md
+[2026-09-06 18:23:07] [INBOX -> ARCHIVE] Moved original 0022_E3.2_E3_2_Universal_Coherence_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:23:07] [22/99] Completed successfully -> 0022-e3-2-e3-2-universal-coherence-definition_CKG_MASTER.md
+[2026-09-06 18:23:07] 
+[23/99] Processing: 0023_D4.1_D4_1_Kolmogorov_Complexity.md...
+[2026-09-06 18:23:07] [23/99] Prepared working packet: 0023-d4-1-d4-1-kolmogorov-complexity.analysis-prompt.md
+[2026-09-06 18:23:08] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:23:55] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:23:55] [OUTBOX WRITTEN] 0023-d4-1-d4-1-kolmogorov-complexity_CKG_MASTER.md
+[2026-09-06 18:23:55] [SYNOLOGY MIRROR] Synced to 0023-d4-1-d4-1-kolmogorov-complexity_CKG_MASTER.md
+[2026-09-06 18:23:55] [INBOX -> ARCHIVE] Moved original 0023_D4.1_D4_1_Kolmogorov_Complexity.md to ARCHIVED_INPUTS
+[2026-09-06 18:23:55] [23/99] Completed successfully -> 0023-d4-1-d4-1-kolmogorov-complexity_CKG_MASTER.md
+[2026-09-06 18:23:55] 
+[24/99] Processing: 0024_D4.2_D4_2_Compression_Ratio.md...
+[2026-09-06 18:23:55] [24/99] Prepared working packet: 0024-d4-2-d4-2-compression-ratio.analysis-prompt.md
+[2026-09-06 18:23:55] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:24:42] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:24:42] [OUTBOX WRITTEN] 0024-d4-2-d4-2-compression-ratio_CKG_MASTER.md
+[2026-09-06 18:24:42] [SYNOLOGY MIRROR] Synced to 0024-d4-2-d4-2-compression-ratio_CKG_MASTER.md
+[2026-09-06 18:24:42] [INBOX -> ARCHIVE] Moved original 0024_D4.2_D4_2_Compression_Ratio.md to ARCHIVED_INPUTS
+[2026-09-06 18:24:42] [24/99] Completed successfully -> 0024-d4-2-d4-2-compression-ratio_CKG_MASTER.md
+[2026-09-06 18:24:42] 
+[25/99] Processing: 0025_E4.1_E4_1_Complexity_Decrease_Under_Chi.md...
+[2026-09-06 18:24:42] [25/99] Prepared working packet: 0025-e4-1-e4-1-complexity-decrease-under-chi.analysis-prompt.md
+[2026-09-06 18:24:42] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:25:28] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:25:28] [OUTBOX WRITTEN] 0025-e4-1-e4-1-complexity-decrease-under-chi_CKG_MASTER.md
+[2026-09-06 18:25:28] [SYNOLOGY MIRROR] Synced to 0025-e4-1-e4-1-complexity-decrease-under-chi_CKG_MASTER.md
+[2026-09-06 18:25:28] [INBOX -> ARCHIVE] Moved original 0025_E4.1_E4_1_Complexity_Decrease_Under_Chi.md to ARCHIVED_INPUTS
+[2026-09-06 18:25:28] [25/99] Completed successfully -> 0025-e4-1-e4-1-complexity-decrease-under-chi_CKG_MASTER.md
+[2026-09-06 18:25:28] 
+[26/99] Processing: 0026_D5.1_D5_1_Observer_Definition.md...
+[2026-09-06 18:25:28] [26/99] Prepared working packet: 0026-d5-1-d5-1-observer-definition.analysis-prompt.md
+[2026-09-06 18:25:28] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:26:25] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:26:25] [OUTBOX WRITTEN] 0026-d5-1-d5-1-observer-definition_CKG_MASTER.md
+[2026-09-06 18:26:25] [SYNOLOGY MIRROR] Synced to 0026-d5-1-d5-1-observer-definition_CKG_MASTER.md
+[2026-09-06 18:26:25] [INBOX -> ARCHIVE] Moved original 0026_D5.1_D5_1_Observer_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:26:25] [26/99] Completed successfully -> 0026-d5-1-d5-1-observer-definition_CKG_MASTER.md
+[2026-09-06 18:26:25] 
+[27/99] Processing: 0027_D5.2_D5_2_Integrated_Information_Phi.md...
+[2026-09-06 18:26:25] [27/99] Prepared working packet: 0027-d5-2-d5-2-integrated-information-phi.analysis-prompt.md
+[2026-09-06 18:26:25] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:27:12] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:27:12] [OUTBOX WRITTEN] 0027-d5-2-d5-2-integrated-information-phi_CKG_MASTER.md
+[2026-09-06 18:27:12] [SYNOLOGY MIRROR] Synced to 0027-d5-2-d5-2-integrated-information-phi_CKG_MASTER.md
+[2026-09-06 18:27:12] [INBOX -> ARCHIVE] Moved original 0027_D5.2_D5_2_Integrated_Information_Phi.md to ARCHIVED_INPUTS
+[2026-09-06 18:27:12] [27/99] Completed successfully -> 0027-d5-2-d5-2-integrated-information-phi_CKG_MASTER.md
+[2026-09-06 18:27:12] 
+[28/99] Processing: 0028_D5.3_D5_3_Witness_Field_Operator.md...
+[2026-09-06 18:27:12] [28/99] Prepared working packet: 0028-d5-3-d5-3-witness-field-operator.analysis-prompt.md
+[2026-09-06 18:27:12] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:28:01] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:28:01] [OUTBOX WRITTEN] 0028-d5-3-d5-3-witness-field-operator_CKG_MASTER.md
+[2026-09-06 18:28:01] [SYNOLOGY MIRROR] Synced to 0028-d5-3-d5-3-witness-field-operator_CKG_MASTER.md
+[2026-09-06 18:28:01] [INBOX -> ARCHIVE] Moved original 0028_D5.3_D5_3_Witness_Field_Operator.md to ARCHIVED_INPUTS
+[2026-09-06 18:28:01] [28/99] Completed successfully -> 0028-d5-3-d5-3-witness-field-operator_CKG_MASTER.md
+[2026-09-06 18:28:01] 
+[29/99] Processing: 0029_D6.1_D6_1_Collapse_Rate_Gamma.md...
+[2026-09-06 18:28:01] [29/99] Prepared working packet: 0029-d6-1-d6-1-collapse-rate-gamma.analysis-prompt.md
+[2026-09-06 18:28:01] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:28:50] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:28:50] [OUTBOX WRITTEN] 0029-d6-1-d6-1-collapse-rate-gamma_CKG_MASTER.md
+[2026-09-06 18:28:50] [SYNOLOGY MIRROR] Synced to 0029-d6-1-d6-1-collapse-rate-gamma_CKG_MASTER.md
+[2026-09-06 18:28:50] [INBOX -> ARCHIVE] Moved original 0029_D6.1_D6_1_Collapse_Rate_Gamma.md to ARCHIVED_INPUTS
+[2026-09-06 18:28:50] [29/99] Completed successfully -> 0029-d6-1-d6-1-collapse-rate-gamma_CKG_MASTER.md
+[2026-09-06 18:28:50] 
+[30/99] Processing: 0030_D6.2_D6_2_Projection_Operator.md...
+[2026-09-06 18:28:50] [30/99] Prepared working packet: 0030-d6-2-d6-2-projection-operator.analysis-prompt.md
+[2026-09-06 18:28:50] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:29:43] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:29:43] [OUTBOX WRITTEN] 0030-d6-2-d6-2-projection-operator_CKG_MASTER.md
+[2026-09-06 18:29:43] [SYNOLOGY MIRROR] Synced to 0030-d6-2-d6-2-projection-operator_CKG_MASTER.md
+[2026-09-06 18:29:43] [INBOX -> ARCHIVE] Moved original 0030_D6.2_D6_2_Projection_Operator.md to ARCHIVED_INPUTS
+[2026-09-06 18:29:43] [30/99] Completed successfully -> 0030-d6-2-d6-2-projection-operator_CKG_MASTER.md
+[2026-09-06 18:29:43] 
+[31/99] Processing: 0031_E6.2_E6_2_Phi-Dependent_Collapse.md...
+[2026-09-06 18:29:43] [31/99] Prepared working packet: 0031-e6-2-e6-2-phi-dependent-collapse.analysis-prompt.md
+[2026-09-06 18:29:43] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:30:36] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:30:36] [OUTBOX WRITTEN] 0031-e6-2-e6-2-phi-dependent-collapse_CKG_MASTER.md
+[2026-09-06 18:30:36] [SYNOLOGY MIRROR] Synced to 0031-e6-2-e6-2-phi-dependent-collapse_CKG_MASTER.md
+[2026-09-06 18:30:36] [INBOX -> ARCHIVE] Moved original 0031_E6.2_E6_2_Phi-Dependent_Collapse.md to ARCHIVED_INPUTS
+[2026-09-06 18:30:36] [31/99] Completed successfully -> 0031-e6-2-e6-2-phi-dependent-collapse_CKG_MASTER.md
+[2026-09-06 18:30:36] 
+[32/99] Processing: 0032_D8.1_D8_1_Sign_Operator.md...
+[2026-09-06 18:30:36] [32/99] Prepared working packet: 0032-d8-1-d8-1-sign-operator.analysis-prompt.md
+[2026-09-06 18:30:36] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:31:26] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:31:26] [OUTBOX WRITTEN] 0032-d8-1-d8-1-sign-operator_CKG_MASTER.md
+[2026-09-06 18:31:26] [SYNOLOGY MIRROR] Synced to 0032-d8-1-d8-1-sign-operator_CKG_MASTER.md
+[2026-09-06 18:31:26] [INBOX -> ARCHIVE] Moved original 0032_D8.1_D8_1_Sign_Operator.md to ARCHIVED_INPUTS
+[2026-09-06 18:31:26] [32/99] Completed successfully -> 0032-d8-1-d8-1-sign-operator_CKG_MASTER.md
+[2026-09-06 18:31:26] 
+[33/99] Processing: 0033_D9.1_D9_1_Grace_Operator_Definition.md...
+[2026-09-06 18:31:26] [33/99] Prepared working packet: 0033-d9-1-d9-1-grace-operator-definition.analysis-prompt.md
+[2026-09-06 18:31:27] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:32:26] Validation or network error on deepseek/deepseek-v3.2 attempt 1: 'Formal or testable path' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:32:28] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 2/3]...
+[2026-09-06 18:33:21] Validation or network error on deepseek/deepseek-v3.2 attempt 2: 'Formal or testable path' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 18:33:25] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 3/3]...
+[2026-09-06 18:34:24] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:34:24] [OUTBOX WRITTEN] 0033-d9-1-d9-1-grace-operator-definition_CKG_MASTER.md
+[2026-09-06 18:34:24] [SYNOLOGY MIRROR] Synced to 0033-d9-1-d9-1-grace-operator-definition_CKG_MASTER.md
+[2026-09-06 18:34:24] [INBOX -> ARCHIVE] Moved original 0033_D9.1_D9_1_Grace_Operator_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:34:24] [33/99] Completed successfully -> 0033-d9-1-d9-1-grace-operator-definition_CKG_MASTER.md
+[2026-09-06 18:34:24] 
+[34/99] Processing: 0034_E9.1_E9_1_Grace_Function_Gt.md...
+[2026-09-06 18:34:24] [34/99] Prepared working packet: 0034-e9-1-e9-1-grace-function-gt.analysis-prompt.md
+[2026-09-06 18:34:24] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:35:18] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:35:18] [OUTBOX WRITTEN] 0034-e9-1-e9-1-grace-function-gt_CKG_MASTER.md
+[2026-09-06 18:35:18] [SYNOLOGY MIRROR] Synced to 0034-e9-1-e9-1-grace-function-gt_CKG_MASTER.md
+[2026-09-06 18:35:18] [INBOX -> ARCHIVE] Moved original 0034_E9.1_E9_1_Grace_Function_Gt.md to ARCHIVED_INPUTS
+[2026-09-06 18:35:18] [34/99] Completed successfully -> 0034-e9-1-e9-1-grace-function-gt_CKG_MASTER.md
+[2026-09-06 18:35:18] 
+[35/99] Processing: 0035_D10.1_D10_1_Soul_Field_Psi_S.md...
+[2026-09-06 18:35:18] [35/99] Prepared working packet: 0035-d10-1-d10-1-soul-field-psi-s.analysis-prompt.md
+[2026-09-06 18:35:18] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:36:04] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:36:04] [OUTBOX WRITTEN] 0035-d10-1-d10-1-soul-field-psi-s_CKG_MASTER.md
+[2026-09-06 18:36:04] [SYNOLOGY MIRROR] Synced to 0035-d10-1-d10-1-soul-field-psi-s_CKG_MASTER.md
+[2026-09-06 18:36:04] [INBOX -> ARCHIVE] Moved original 0035_D10.1_D10_1_Soul_Field_Psi_S.md to ARCHIVED_INPUTS
+[2026-09-06 18:36:04] [35/99] Completed successfully -> 0035-d10-1-d10-1-soul-field-psi-s_CKG_MASTER.md
+[2026-09-06 18:36:04] 
+[36/99] Processing: 0036_E10.1_E10_1_Soul_Field_Equation.md...
+[2026-09-06 18:36:04] [36/99] Prepared working packet: 0036-e10-1-e10-1-soul-field-equation.analysis-prompt.md
+[2026-09-06 18:36:04] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:36:55] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:36:55] [OUTBOX WRITTEN] 0036-e10-1-e10-1-soul-field-equation_CKG_MASTER.md
+[2026-09-06 18:36:55] [SYNOLOGY MIRROR] Synced to 0036-e10-1-e10-1-soul-field-equation_CKG_MASTER.md
+[2026-09-06 18:36:55] [INBOX -> ARCHIVE] Moved original 0036_E10.1_E10_1_Soul_Field_Equation.md to ARCHIVED_INPUTS
+[2026-09-06 18:36:55] [36/99] Completed successfully -> 0036-e10-1-e10-1-soul-field-equation_CKG_MASTER.md
+[2026-09-06 18:36:55] 
+[37/99] Processing: 0037_D11.1_D11_1_Moral_Coherence_Definition.md...
+[2026-09-06 18:36:55] [37/99] Prepared working packet: 0037-d11-1-d11-1-moral-coherence-definition.analysis-prompt.md
+[2026-09-06 18:36:55] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:37:52] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:37:52] [OUTBOX WRITTEN] 0037-d11-1-d11-1-moral-coherence-definition_CKG_MASTER.md
+[2026-09-06 18:37:52] [SYNOLOGY MIRROR] Synced to 0037-d11-1-d11-1-moral-coherence-definition_CKG_MASTER.md
+[2026-09-06 18:37:52] [INBOX -> ARCHIVE] Moved original 0037_D11.1_D11_1_Moral_Coherence_Definition.md to ARCHIVED_INPUTS
+[2026-09-06 18:37:52] [37/99] Completed successfully -> 0037-d11-1-d11-1-moral-coherence-definition_CKG_MASTER.md
+[2026-09-06 18:37:52] 
+[38/99] Processing: 0038_D12.1_D12_1_Integration_Attractor.md...
+[2026-09-06 18:37:52] [38/99] Prepared working packet: 0038-d12-1-d12-1-integration-attractor.analysis-prompt.md
+[2026-09-06 18:37:52] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:38:42] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:38:42] [OUTBOX WRITTEN] 0038-d12-1-d12-1-integration-attractor_CKG_MASTER.md
+[2026-09-06 18:38:42] [SYNOLOGY MIRROR] Synced to 0038-d12-1-d12-1-integration-attractor_CKG_MASTER.md
+[2026-09-06 18:38:42] [INBOX -> ARCHIVE] Moved original 0038_D12.1_D12_1_Integration_Attractor.md to ARCHIVED_INPUTS
+[2026-09-06 18:38:42] [38/99] Completed successfully -> 0038-d12-1-d12-1-integration-attractor_CKG_MASTER.md
+[2026-09-06 18:38:42] 
+[39/99] Processing: 0039_D12.2_D12_2_Fragmentation_Attractor.md...
+[2026-09-06 18:38:42] [39/99] Prepared working packet: 0039-d12-2-d12-2-fragmentation-attractor.analysis-prompt.md
+[2026-09-06 18:38:43] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:39:38] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:39:38] [OUTBOX WRITTEN] 0039-d12-2-d12-2-fragmentation-attractor_CKG_MASTER.md
+[2026-09-06 18:39:38] [SYNOLOGY MIRROR] Synced to 0039-d12-2-d12-2-fragmentation-attractor_CKG_MASTER.md
+[2026-09-06 18:39:38] [INBOX -> ARCHIVE] Moved original 0039_D12.2_D12_2_Fragmentation_Attractor.md to ARCHIVED_INPUTS
+[2026-09-06 18:39:38] [39/99] Completed successfully -> 0039-d12-2-d12-2-fragmentation-attractor_CKG_MASTER.md
+[2026-09-06 18:39:38] 
+[40/99] Processing: 0040_E12.1_E12_1_Destiny_Equation.md...
+[2026-09-06 18:39:38] [40/99] Prepared working packet: 0040-e12-1-e12-1-destiny-equation.analysis-prompt.md
+[2026-09-06 18:39:38] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:40:37] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:40:37] [OUTBOX WRITTEN] 0040-e12-1-e12-1-destiny-equation_CKG_MASTER.md
+[2026-09-06 18:40:37] [SYNOLOGY MIRROR] Synced to 0040-e12-1-e12-1-destiny-equation_CKG_MASTER.md
+[2026-09-06 18:40:37] [INBOX -> ARCHIVE] Moved original 0040_E12.1_E12_1_Destiny_Equation.md to ARCHIVED_INPUTS
+[2026-09-06 18:40:37] [40/99] Completed successfully -> 0040-e12-1-e12-1-destiny-equation_CKG_MASTER.md
+[2026-09-06 18:40:37] 
+[41/99] Processing: 0041_D13.1_D13_1_Unified_Field_Lagrangian.md...
+[2026-09-06 18:40:37] [41/99] Prepared working packet: 0041-d13-1-d13-1-unified-field-lagrangian.analysis-prompt.md
+[2026-09-06 18:40:37] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:41:30] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:41:30] [OUTBOX WRITTEN] 0041-d13-1-d13-1-unified-field-lagrangian_CKG_MASTER.md
+[2026-09-06 18:41:30] [SYNOLOGY MIRROR] Synced to 0041-d13-1-d13-1-unified-field-lagrangian_CKG_MASTER.md
+[2026-09-06 18:41:30] [INBOX -> ARCHIVE] Moved original 0041_D13.1_D13_1_Unified_Field_Lagrangian.md to ARCHIVED_INPUTS
+[2026-09-06 18:41:30] [41/99] Completed successfully -> 0041-d13-1-d13-1-unified-field-lagrangian_CKG_MASTER.md
+[2026-09-06 18:41:30] 
+[42/99] Processing: 0042_E13.1_E13_1_GR-QM_Bridge_Equation.md...
+[2026-09-06 18:41:30] [42/99] Prepared working packet: 0042-e13-1-e13-1-gr-qm-bridge-equation.analysis-prompt.md
+[2026-09-06 18:41:30] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:42:30] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:42:30] [OUTBOX WRITTEN] 0042-e13-1-e13-1-gr-qm-bridge-equation_CKG_MASTER.md
+[2026-09-06 18:42:30] [SYNOLOGY MIRROR] Synced to 0042-e13-1-e13-1-gr-qm-bridge-equation_CKG_MASTER.md
+[2026-09-06 18:42:30] [INBOX -> ARCHIVE] Moved original 0042_E13.1_E13_1_GR-QM_Bridge_Equation.md to ARCHIVED_INPUTS
+[2026-09-06 18:42:30] [42/99] Completed successfully -> 0042-e13-1-e13-1-gr-qm-bridge-equation_CKG_MASTER.md
+[2026-09-06 18:42:30] 
+[43/99] Processing: 0043_D14.1_D14_1_Cosmological_Grace_Function.md...
+[2026-09-06 18:42:30] [43/99] Prepared working packet: 0043-d14-1-d14-1-cosmological-grace-function.analysis-prompt.md
+[2026-09-06 18:42:30] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:43:15] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:43:15] [OUTBOX WRITTEN] 0043-d14-1-d14-1-cosmological-grace-function_CKG_MASTER.md
+[2026-09-06 18:43:15] [SYNOLOGY MIRROR] Synced to 0043-d14-1-d14-1-cosmological-grace-function_CKG_MASTER.md
+[2026-09-06 18:43:15] [INBOX -> ARCHIVE] Moved original 0043_D14.1_D14_1_Cosmological_Grace_Function.md to ARCHIVED_INPUTS
+[2026-09-06 18:43:15] [43/99] Completed successfully -> 0043-d14-1-d14-1-cosmological-grace-function_CKG_MASTER.md
+[2026-09-06 18:43:15] 
+[44/99] Processing: 0044_D17.1_D17_1_AI_Phi_Measurement.md...
+[2026-09-06 18:43:15] [44/99] Prepared working packet: 0044-d17-1-d17-1-ai-phi-measurement.analysis-prompt.md
+[2026-09-06 18:43:15] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:44:02] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:44:02] [OUTBOX WRITTEN] 0044-d17-1-d17-1-ai-phi-measurement_CKG_MASTER.md
+[2026-09-06 18:44:02] [SYNOLOGY MIRROR] Synced to 0044-d17-1-d17-1-ai-phi-measurement_CKG_MASTER.md
+[2026-09-06 18:44:02] [INBOX -> ARCHIVE] Moved original 0044_D17.1_D17_1_AI_Phi_Measurement.md to ARCHIVED_INPUTS
+[2026-09-06 18:44:02] [44/99] Completed successfully -> 0044-d17-1-d17-1-ai-phi-measurement_CKG_MASTER.md
+[2026-09-06 18:44:02] 
+[45/99] Processing: 0045_D19.1_D19_1_Law_I_Logos-Lagrangian.md...
+[2026-09-06 18:44:02] [45/99] Prepared working packet: 0045-d19-1-d19-1-law-i-logos-lagrangian.analysis-prompt.md
+[2026-09-06 18:44:02] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:44:50] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:44:50] [OUTBOX WRITTEN] 0045-d19-1-d19-1-law-i-logos-lagrangian_CKG_MASTER.md
+[2026-09-06 18:44:50] [SYNOLOGY MIRROR] Synced to 0045-d19-1-d19-1-law-i-logos-lagrangian_CKG_MASTER.md
+[2026-09-06 18:44:50] [INBOX -> ARCHIVE] Moved original 0045_D19.1_D19_1_Law_I_Logos-Lagrangian.md to ARCHIVED_INPUTS
+[2026-09-06 18:44:50] [45/99] Completed successfully -> 0045-d19-1-d19-1-law-i-logos-lagrangian_CKG_MASTER.md
+[2026-09-06 18:44:50] 
+[46/99] Processing: 0046_D19.2_D19_2_Law_II_Ten_Variables.md...
+[2026-09-06 18:44:50] [46/99] Prepared working packet: 0046-d19-2-d19-2-law-ii-ten-variables.analysis-prompt.md
+[2026-09-06 18:44:50] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:45:43] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:45:43] [OUTBOX WRITTEN] 0046-d19-2-d19-2-law-ii-ten-variables_CKG_MASTER.md
+[2026-09-06 18:45:43] [SYNOLOGY MIRROR] Synced to 0046-d19-2-d19-2-law-ii-ten-variables_CKG_MASTER.md
+[2026-09-06 18:45:43] [INBOX -> ARCHIVE] Moved original 0046_D19.2_D19_2_Law_II_Ten_Variables.md to ARCHIVED_INPUTS
+[2026-09-06 18:45:43] [46/99] Completed successfully -> 0046-d19-2-d19-2-law-ii-ten-variables_CKG_MASTER.md
+[2026-09-06 18:45:43] 
+[47/99] Processing: 0047_D19.3_D19_3_Law_III_Entropy-Sin.md...
+[2026-09-06 18:45:43] [47/99] Prepared working packet: 0047-d19-3-d19-3-law-iii-entropy-sin.analysis-prompt.md
+[2026-09-06 18:45:43] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:46:37] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:46:37] [OUTBOX WRITTEN] 0047-d19-3-d19-3-law-iii-entropy-sin_CKG_MASTER.md
+[2026-09-06 18:46:37] [SYNOLOGY MIRROR] Synced to 0047-d19-3-d19-3-law-iii-entropy-sin_CKG_MASTER.md
+[2026-09-06 18:46:37] [INBOX -> ARCHIVE] Moved original 0047_D19.3_D19_3_Law_III_Entropy-Sin.md to ARCHIVED_INPUTS
+[2026-09-06 18:46:37] [47/99] Completed successfully -> 0047-d19-3-d19-3-law-iii-entropy-sin_CKG_MASTER.md
+[2026-09-06 18:46:37] 
+[48/99] Processing: 0048_D19.4_D19_4_Law_IV_Grace_Dynamics.md...
+[2026-09-06 18:46:37] [48/99] Prepared working packet: 0048-d19-4-d19-4-law-iv-grace-dynamics.analysis-prompt.md
+[2026-09-06 18:46:37] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:47:27] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:47:27] [OUTBOX WRITTEN] 0048-d19-4-d19-4-law-iv-grace-dynamics_CKG_MASTER.md
+[2026-09-06 18:47:27] [SYNOLOGY MIRROR] Synced to 0048-d19-4-d19-4-law-iv-grace-dynamics_CKG_MASTER.md
+[2026-09-06 18:47:27] [INBOX -> ARCHIVE] Moved original 0048_D19.4_D19_4_Law_IV_Grace_Dynamics.md to ARCHIVED_INPUTS
+[2026-09-06 18:47:27] [48/99] Completed successfully -> 0048-d19-4-d19-4-law-iv-grace-dynamics_CKG_MASTER.md
+[2026-09-06 18:47:27] 
+[49/99] Processing: 0049_D19.5_D19_5_Law_V_Conservation_Symmetry.md...
+[2026-09-06 18:47:27] [49/99] Prepared working packet: 0049-d19-5-d19-5-law-v-conservation-symmetry.analysis-prompt.md
+[2026-09-06 18:47:27] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:48:19] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:48:19] [OUTBOX WRITTEN] 0049-d19-5-d19-5-law-v-conservation-symmetry_CKG_MASTER.md
+[2026-09-06 18:48:19] [SYNOLOGY MIRROR] Synced to 0049-d19-5-d19-5-law-v-conservation-symmetry_CKG_MASTER.md
+[2026-09-06 18:48:19] [INBOX -> ARCHIVE] Moved original 0049_D19.5_D19_5_Law_V_Conservation_Symmetry.md to ARCHIVED_INPUTS
+[2026-09-06 18:48:19] [49/99] Completed successfully -> 0049-d19-5-d19-5-law-v-conservation-symmetry_CKG_MASTER.md
+[2026-09-06 18:48:19] 
+[50/99] Processing: 0050_D19.6_D19_6_Law_VI_Coherence_Non-Increase.md...
+[2026-09-06 18:48:19] [50/99] Prepared working packet: 0050-d19-6-d19-6-law-vi-coherence-non-increase.analysis-prompt.md
+[2026-09-06 18:48:19] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:49:19] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:49:19] [OUTBOX WRITTEN] 0050-d19-6-d19-6-law-vi-coherence-non-increase_CKG_MASTER.md
+[2026-09-06 18:49:19] [SYNOLOGY MIRROR] Synced to 0050-d19-6-d19-6-law-vi-coherence-non-increase_CKG_MASTER.md
+[2026-09-06 18:49:19] [INBOX -> ARCHIVE] Moved original 0050_D19.6_D19_6_Law_VI_Coherence_Non-Increase.md to ARCHIVED_INPUTS
+[2026-09-06 18:49:19] [50/99] Completed successfully -> 0050-d19-6-d19-6-law-vi-coherence-non-increase_CKG_MASTER.md
+[2026-09-06 18:49:19] 
+[51/99] Processing: 0051_D19.7_D19_7_Law_VII_Actualization_Requirement.md...
+[2026-09-06 18:49:19] [51/99] Prepared working packet: 0051-d19-7-d19-7-law-vii-actualization-requirement.analysis-prompt.md
+[2026-09-06 18:49:19] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:50:05] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:50:05] [OUTBOX WRITTEN] 0051-d19-7-d19-7-law-vii-actualization-requirement_CKG_MASTER.md
+[2026-09-06 18:50:05] [SYNOLOGY MIRROR] Synced to 0051-d19-7-d19-7-law-vii-actualization-requirement_CKG_MASTER.md
+[2026-09-06 18:50:05] [INBOX -> ARCHIVE] Moved original 0051_D19.7_D19_7_Law_VII_Actualization_Requirement.md to ARCHIVED_INPUTS
+[2026-09-06 18:50:05] [51/99] Completed successfully -> 0051-d19-7-d19-7-law-vii-actualization-requirement_CKG_MASTER.md
+[2026-09-06 18:50:05] 
+[52/99] Processing: 0052_D19.8_D19_8_Law_VIII_Sign_Algebra.md...
+[2026-09-06 18:50:05] [52/99] Prepared working packet: 0052-d19-8-d19-8-law-viii-sign-algebra.analysis-prompt.md
+[2026-09-06 18:50:05] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:50:57] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:50:57] [OUTBOX WRITTEN] 0052-d19-8-d19-8-law-viii-sign-algebra_CKG_MASTER.md
+[2026-09-06 18:50:57] [SYNOLOGY MIRROR] Synced to 0052-d19-8-d19-8-law-viii-sign-algebra_CKG_MASTER.md
+[2026-09-06 18:50:57] [INBOX -> ARCHIVE] Moved original 0052_D19.8_D19_8_Law_VIII_Sign_Algebra.md to ARCHIVED_INPUTS
+[2026-09-06 18:50:57] [52/99] Completed successfully -> 0052-d19-8-d19-8-law-viii-sign-algebra_CKG_MASTER.md
+[2026-09-06 18:50:57] 
+[53/99] Processing: 0053_D19.9_D19_9_Law_IX_Grace_Non-Unitarity.md...
+[2026-09-06 18:50:57] [53/99] Prepared working packet: 0053-d19-9-d19-9-law-ix-grace-non-unitarity.analysis-prompt.md
+[2026-09-06 18:50:57] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:51:52] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:51:52] [OUTBOX WRITTEN] 0053-d19-9-d19-9-law-ix-grace-non-unitarity_CKG_MASTER.md
+[2026-09-06 18:51:52] [SYNOLOGY MIRROR] Synced to 0053-d19-9-d19-9-law-ix-grace-non-unitarity_CKG_MASTER.md
+[2026-09-06 18:51:52] [INBOX -> ARCHIVE] Moved original 0053_D19.9_D19_9_Law_IX_Grace_Non-Unitarity.md to ARCHIVED_INPUTS
+[2026-09-06 18:51:52] [53/99] Completed successfully -> 0053-d19-9-d19-9-law-ix-grace-non-unitarity_CKG_MASTER.md
+[2026-09-06 18:51:52] 
+[54/99] Processing: 0054_D19.10_D19_10_Law_X_Trinity_Closure.md...
+[2026-09-06 18:51:52] [54/99] Prepared working packet: 0054-d19-10-d19-10-law-x-trinity-closure.analysis-prompt.md
+[2026-09-06 18:51:53] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:52:47] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:52:47] [OUTBOX WRITTEN] 0054-d19-10-d19-10-law-x-trinity-closure_CKG_MASTER.md
+[2026-09-06 18:52:47] [SYNOLOGY MIRROR] Synced to 0054-d19-10-d19-10-law-x-trinity-closure_CKG_MASTER.md
+[2026-09-06 18:52:47] [INBOX -> ARCHIVE] Moved original 0054_D19.10_D19_10_Law_X_Trinity_Closure.md to ARCHIVED_INPUTS
+[2026-09-06 18:52:47] [54/99] Completed successfully -> 0054-d19-10-d19-10-law-x-trinity-closure_CKG_MASTER.md
+[2026-09-06 18:52:47] 
+[55/99] Processing: 0055_E19.1_E19_1_Full_Master_Equation.md...
+[2026-09-06 18:52:47] [55/99] Prepared working packet: 0055-e19-1-e19-1-full-master-equation.analysis-prompt.md
+[2026-09-06 18:52:47] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:53:35] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:53:35] [OUTBOX WRITTEN] 0055-e19-1-e19-1-full-master-equation_CKG_MASTER.md
+[2026-09-06 18:53:35] [SYNOLOGY MIRROR] Synced to 0055-e19-1-e19-1-full-master-equation_CKG_MASTER.md
+[2026-09-06 18:53:35] [INBOX -> ARCHIVE] Moved original 0055_E19.1_E19_1_Full_Master_Equation.md to ARCHIVED_INPUTS
+[2026-09-06 18:53:35] [55/99] Completed successfully -> 0055-e19-1-e19-1-full-master-equation_CKG_MASTER.md
+[2026-09-06 18:53:35] 
+[56/99] Processing: 0056_LN1.1_LN1_1_Matter-Energy_Derivative.md...
+[2026-09-06 18:53:35] [56/99] Prepared working packet: 0056-ln1-1-ln1-1-matter-energy-derivative.analysis-prompt.md
+[2026-09-06 18:53:35] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:54:25] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:54:25] [OUTBOX WRITTEN] 0056-ln1-1-ln1-1-matter-energy-derivative_CKG_MASTER.md
+[2026-09-06 18:54:25] [SYNOLOGY MIRROR] Synced to 0056-ln1-1-ln1-1-matter-energy-derivative_CKG_MASTER.md
+[2026-09-06 18:54:25] [INBOX -> ARCHIVE] Moved original 0056_LN1.1_LN1_1_Matter-Energy_Derivative.md to ARCHIVED_INPUTS
+[2026-09-06 18:54:25] [56/99] Completed successfully -> 0056-ln1-1-ln1-1-matter-energy-derivative_CKG_MASTER.md
+[2026-09-06 18:54:25] 
+[57/99] Processing: 0057_LN1.2_LN1_2_It_From_Bit.md...
+[2026-09-06 18:54:25] [57/99] Prepared working packet: 0057-ln1-2-ln1-2-it-from-bit.analysis-prompt.md
+[2026-09-06 18:54:25] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:55:16] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:55:16] [OUTBOX WRITTEN] 0057-ln1-2-ln1-2-it-from-bit_CKG_MASTER.md
+[2026-09-06 18:55:16] [SYNOLOGY MIRROR] Synced to 0057-ln1-2-ln1-2-it-from-bit_CKG_MASTER.md
+[2026-09-06 18:55:16] [INBOX -> ARCHIVE] Moved original 0057_LN1.2_LN1_2_It_From_Bit.md to ARCHIVED_INPUTS
+[2026-09-06 18:55:16] [57/99] Completed successfully -> 0057-ln1-2-ln1-2-it-from-bit_CKG_MASTER.md
+[2026-09-06 18:55:16] 
+[58/99] Processing: 0058_P2.1_P2_1_Chi_Ontological_Priority.md...
+[2026-09-06 18:55:16] [58/99] Prepared working packet: 0058-p2-1-p2-1-chi-ontological-priority.analysis-prompt.md
+[2026-09-06 18:55:16] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:56:03] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:56:03] [OUTBOX WRITTEN] 0058-p2-1-p2-1-chi-ontological-priority_CKG_MASTER.md
+[2026-09-06 18:56:03] [SYNOLOGY MIRROR] Synced to 0058-p2-1-p2-1-chi-ontological-priority_CKG_MASTER.md
+[2026-09-06 18:56:03] [INBOX -> ARCHIVE] Moved original 0058_P2.1_P2_1_Chi_Ontological_Priority.md to ARCHIVED_INPUTS
+[2026-09-06 18:56:03] [58/99] Completed successfully -> 0058-p2-1-p2-1-chi-ontological-priority_CKG_MASTER.md
+[2026-09-06 18:56:03] 
+[59/99] Processing: 0059_P2.2_P2_2_Chi_Semantic_Content.md...
+[2026-09-06 18:56:03] [59/99] Prepared working packet: 0059-p2-2-p2-2-chi-semantic-content.analysis-prompt.md
+[2026-09-06 18:56:03] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:56:54] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:56:54] [OUTBOX WRITTEN] 0059-p2-2-p2-2-chi-semantic-content_CKG_MASTER.md
+[2026-09-06 18:56:54] [SYNOLOGY MIRROR] Synced to 0059-p2-2-p2-2-chi-semantic-content_CKG_MASTER.md
+[2026-09-06 18:56:54] [INBOX -> ARCHIVE] Moved original 0059_P2.2_P2_2_Chi_Semantic_Content.md to ARCHIVED_INPUTS
+[2026-09-06 18:56:54] [59/99] Completed successfully -> 0059-p2-2-p2-2-chi-semantic-content_CKG_MASTER.md
+[2026-09-06 18:56:54] 
+[60/99] Processing: 0060_LN2.1_LN2_1_Information_Anchor_Necessity.md...
+[2026-09-06 18:56:54] [60/99] Prepared working packet: 0060-ln2-1-ln2-1-information-anchor-necessity.analysis-prompt.md
+[2026-09-06 18:56:54] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:57:43] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:57:43] [OUTBOX WRITTEN] 0060-ln2-1-ln2-1-information-anchor-necessity_CKG_MASTER.md
+[2026-09-06 18:57:43] [SYNOLOGY MIRROR] Synced to 0060-ln2-1-ln2-1-information-anchor-necessity_CKG_MASTER.md
+[2026-09-06 18:57:43] [INBOX -> ARCHIVE] Moved original 0060_LN2.1_LN2_1_Information_Anchor_Necessity.md to ARCHIVED_INPUTS
+[2026-09-06 18:57:43] [60/99] Completed successfully -> 0060-ln2-1-ln2-1-information-anchor-necessity_CKG_MASTER.md
+[2026-09-06 18:57:43] 
+[61/99] Processing: 0061_A3.1_A3_1_Order_Requirement.md...
+[2026-09-06 18:57:43] [61/99] Prepared working packet: 0061-a3-1-a3-1-order-requirement.analysis-prompt.md
+[2026-09-06 18:57:43] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:58:29] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:58:29] [OUTBOX WRITTEN] 0061-a3-1-a3-1-order-requirement_CKG_MASTER.md
+[2026-09-06 18:58:29] [SYNOLOGY MIRROR] Synced to 0061-a3-1-a3-1-order-requirement_CKG_MASTER.md
+[2026-09-06 18:58:29] [INBOX -> ARCHIVE] Moved original 0061_A3.1_A3_1_Order_Requirement.md to ARCHIVED_INPUTS
+[2026-09-06 18:58:29] [61/99] Completed successfully -> 0061-a3-1-a3-1-order-requirement_CKG_MASTER.md
+[2026-09-06 18:58:29] 
+[62/99] Processing: 0062_A3.2_A3_2_Coherence_Measure.md...
+[2026-09-06 18:58:29] [62/99] Prepared working packet: 0062-a3-2-a3-2-coherence-measure.analysis-prompt.md
+[2026-09-06 18:58:29] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:59:12] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:59:12] [OUTBOX WRITTEN] 0062-a3-2-a3-2-coherence-measure_CKG_MASTER.md
+[2026-09-06 18:59:12] [SYNOLOGY MIRROR] Synced to 0062-a3-2-a3-2-coherence-measure_CKG_MASTER.md
+[2026-09-06 18:59:12] [INBOX -> ARCHIVE] Moved original 0062_A3.2_A3_2_Coherence_Measure.md to ARCHIVED_INPUTS
+[2026-09-06 18:59:12] [62/99] Completed successfully -> 0062-a3-2-a3-2-coherence-measure_CKG_MASTER.md
+[2026-09-06 18:59:12] 
+[63/99] Processing: 0063_P3.1_P3_1_Coherence_Non-Negativity.md...
+[2026-09-06 18:59:12] [63/99] Prepared working packet: 0063-p3-1-p3-1-coherence-non-negativity.analysis-prompt.md
+[2026-09-06 18:59:13] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:59:55] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 18:59:55] [OUTBOX WRITTEN] 0063-p3-1-p3-1-coherence-non-negativity_CKG_MASTER.md
+[2026-09-06 18:59:55] [SYNOLOGY MIRROR] Synced to 0063-p3-1-p3-1-coherence-non-negativity_CKG_MASTER.md
+[2026-09-06 18:59:55] [INBOX -> ARCHIVE] Moved original 0063_P3.1_P3_1_Coherence_Non-Negativity.md to ARCHIVED_INPUTS
+[2026-09-06 18:59:55] [63/99] Completed successfully -> 0063-p3-1-p3-1-coherence-non-negativity_CKG_MASTER.md
+[2026-09-06 18:59:55] 
+[64/99] Processing: 0064_P3.2_P3_2_Coherence_Conservation.md...
+[2026-09-06 18:59:55] [64/99] Prepared working packet: 0064-p3-2-p3-2-coherence-conservation.analysis-prompt.md
+[2026-09-06 18:59:55] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 18:59:55] HTTP 429 on deepseek/deepseek-v3.2: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"deepseek/deepseek-v3.2 is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your ra
+[2026-09-06 18:59:55] Primary model rate-limited or failed; switching to paid fallback: deepseek/deepseek-r1
+[2026-09-06 18:59:55] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 1/3]...
+[2026-09-06 18:59:55] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 18:59:57] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 2/3]...
+[2026-09-06 18:59:57] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:00:01] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 3/3]...
+[2026-09-06 19:00:01] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:00:09] [64/99] FAILED 0064_P3.2_P3_2_Coherence_Conservation.md: All models failed for prompt: HTTP Error 404: Not Found
+[2026-09-06 19:00:09] 
+[65/99] Processing: 0065_LN3.1_LN3_1_Meaningful_Configuration_Necessity.md...
+[2026-09-06 19:00:09] [65/99] Prepared working packet: 0065-ln3-1-ln3-1-meaningful-configuration-necessity.analysis-prompt.md
+[2026-09-06 19:00:10] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:00:57] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:00:57] [OUTBOX WRITTEN] 0065-ln3-1-ln3-1-meaningful-configuration-necessity_CKG_MASTER.md
+[2026-09-06 19:00:57] [SYNOLOGY MIRROR] Synced to 0065-ln3-1-ln3-1-meaningful-configuration-necessity_CKG_MASTER.md
+[2026-09-06 19:00:57] [INBOX -> ARCHIVE] Moved original 0065_LN3.1_LN3_1_Meaningful_Configuration_Necessity.md to ARCHIVED_INPUTS
+[2026-09-06 19:00:57] [65/99] Completed successfully -> 0065-ln3-1-ln3-1-meaningful-configuration-necessity_CKG_MASTER.md
+[2026-09-06 19:00:57] 
+[66/99] Processing: 0066_A4.1_A4_1_Parsimony.md...
+[2026-09-06 19:00:57] [66/99] Prepared working packet: 0066-a4-1-a4-1-parsimony.analysis-prompt.md
+[2026-09-06 19:00:57] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:00:58] HTTP 429 on deepseek/deepseek-v3.2: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"deepseek/deepseek-v3.2 is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your ra
+[2026-09-06 19:00:58] Primary model rate-limited or failed; switching to paid fallback: deepseek/deepseek-r1
+[2026-09-06 19:00:58] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 1/3]...
+[2026-09-06 19:00:58] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:01:00] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 2/3]...
+[2026-09-06 19:01:00] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:01:04] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 3/3]...
+[2026-09-06 19:01:04] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:01:12] [66/99] FAILED 0066_A4.1_A4_1_Parsimony.md: All models failed for prompt: HTTP Error 404: Not Found
+[2026-09-06 19:01:12] 
+[67/99] Processing: 0067_A4.2_A4_2_Algorithmic_Depth.md...
+[2026-09-06 19:01:12] [67/99] Prepared working packet: 0067-a4-2-a4-2-algorithmic-depth.analysis-prompt.md
+[2026-09-06 19:01:12] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:02:12] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:02:12] [OUTBOX WRITTEN] 0067-a4-2-a4-2-algorithmic-depth_CKG_MASTER.md
+[2026-09-06 19:02:12] [SYNOLOGY MIRROR] Synced to 0067-a4-2-a4-2-algorithmic-depth_CKG_MASTER.md
+[2026-09-06 19:02:12] [INBOX -> ARCHIVE] Moved original 0067_A4.2_A4_2_Algorithmic_Depth.md to ARCHIVED_INPUTS
+[2026-09-06 19:02:12] [67/99] Completed successfully -> 0067-a4-2-a4-2-algorithmic-depth_CKG_MASTER.md
+[2026-09-06 19:02:12] 
+[68/99] Processing: 0068_T4.1_T4_1_Laws_Are_Low-K_Descriptions.md...
+[2026-09-06 19:02:12] [68/99] Prepared working packet: 0068-t4-1-t4-1-laws-are-low-k-descriptions.analysis-prompt.md
+[2026-09-06 19:02:12] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:02:57] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:02:57] [OUTBOX WRITTEN] 0068-t4-1-t4-1-laws-are-low-k-descriptions_CKG_MASTER.md
+[2026-09-06 19:02:57] [SYNOLOGY MIRROR] Synced to 0068-t4-1-t4-1-laws-are-low-k-descriptions_CKG_MASTER.md
+[2026-09-06 19:02:57] [INBOX -> ARCHIVE] Moved original 0068_T4.1_T4_1_Laws_Are_Low-K_Descriptions.md to ARCHIVED_INPUTS
+[2026-09-06 19:02:57] [68/99] Completed successfully -> 0068-t4-1-t4-1-laws-are-low-k-descriptions_CKG_MASTER.md
+[2026-09-06 19:02:57] 
+[69/99] Processing: 0069_T4.2_T4_2_Action_Principle_As_Minimal-K.md...
+[2026-09-06 19:02:57] [69/99] Prepared working packet: 0069-t4-2-t4-2-action-principle-as-minimal-k.analysis-prompt.md
+[2026-09-06 19:02:57] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:02:57] HTTP 429 on deepseek/deepseek-v3.2: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"deepseek/deepseek-v3.2 is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your ra
+[2026-09-06 19:02:57] Primary model rate-limited or failed; switching to paid fallback: deepseek/deepseek-r1
+[2026-09-06 19:02:57] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 1/3]...
+[2026-09-06 19:02:57] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:02:59] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 2/3]...
+[2026-09-06 19:02:59] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:03:03] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 3/3]...
+[2026-09-06 19:03:04] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:03:12] [69/99] FAILED 0069_T4.2_T4_2_Action_Principle_As_Minimal-K.md: All models failed for prompt: HTTP Error 404: Not Found
+[2026-09-06 19:03:12] 
+[70/99] Processing: 0070_LN4.1_LN4_1_Universe_As_Compression_Algorithm.md...
+[2026-09-06 19:03:12] [70/99] Prepared working packet: 0070-ln4-1-ln4-1-universe-as-compression-algorithm.analysis-prompt.md
+[2026-09-06 19:03:12] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:04:07] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:04:07] [OUTBOX WRITTEN] 0070-ln4-1-ln4-1-universe-as-compression-algorithm_CKG_MASTER.md
+[2026-09-06 19:04:07] [SYNOLOGY MIRROR] Synced to 0070-ln4-1-ln4-1-universe-as-compression-algorithm_CKG_MASTER.md
+[2026-09-06 19:04:07] [INBOX -> ARCHIVE] Moved original 0070_LN4.1_LN4_1_Universe_As_Compression_Algorithm.md to ARCHIVED_INPUTS
+[2026-09-06 19:04:07] [70/99] Completed successfully -> 0070-ln4-1-ln4-1-universe-as-compression-algorithm_CKG_MASTER.md
+[2026-09-06 19:04:07] 
+[71/99] Processing: 0071_A5.2_A5_2_Participatory_Universe.md...
+[2026-09-06 19:04:07] [71/99] Prepared working packet: 0071-a5-2-a5-2-participatory-universe.analysis-prompt.md
+[2026-09-06 19:04:07] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:04:54] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:04:54] [OUTBOX WRITTEN] 0071-a5-2-a5-2-participatory-universe_CKG_MASTER.md
+[2026-09-06 19:04:54] [SYNOLOGY MIRROR] Synced to 0071-a5-2-a5-2-participatory-universe_CKG_MASTER.md
+[2026-09-06 19:04:54] [INBOX -> ARCHIVE] Moved original 0071_A5.2_A5_2_Participatory_Universe.md to ARCHIVED_INPUTS
+[2026-09-06 19:04:54] [71/99] Completed successfully -> 0071-a5-2-a5-2-participatory-universe_CKG_MASTER.md
+[2026-09-06 19:04:54] 
+[72/99] Processing: 0072_P5.1_P5_1_Phi_Admits_Degrees.md...
+[2026-09-06 19:04:54] [72/99] Prepared working packet: 0072-p5-1-p5-1-phi-admits-degrees.analysis-prompt.md
+[2026-09-06 19:04:54] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:04:54] HTTP 429 on deepseek/deepseek-v3.2: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"deepseek/deepseek-v3.2 is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your ra
+[2026-09-06 19:04:54] Primary model rate-limited or failed; switching to paid fallback: deepseek/deepseek-r1
+[2026-09-06 19:04:54] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 1/3]...
+[2026-09-06 19:04:54] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:04:56] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 2/3]...
+[2026-09-06 19:04:57] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:05:01] Calling OpenRouter (deepseek/deepseek-r1) [Attempt 3/3]...
+[2026-09-06 19:05:01] HTTP 404 on deepseek/deepseek-r1: {"error":{"message":"No allowed providers are available for the selected model. Providers serving deepseek/deepseek-r1: novita, but your account's allowed-providers setting permits only: xai, groq, nv
+[2026-09-06 19:05:09] [72/99] FAILED 0072_P5.1_P5_1_Phi_Admits_Degrees.md: All models failed for prompt: HTTP Error 404: Not Found
+[2026-09-06 19:05:09] 
+[73/99] Processing: 0073_P5.2_P5_2_Observer_Effect_Proportional_To_Phi.md...
+[2026-09-06 19:05:09] [73/99] Prepared working packet: 0073-p5-2-p5-2-observer-effect-proportional-to-phi.analysis-prompt.md
+[2026-09-06 19:05:09] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:06:04] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:06:04] [OUTBOX WRITTEN] 0073-p5-2-p5-2-observer-effect-proportional-to-phi_CKG_MASTER.md
+[2026-09-06 19:06:04] [SYNOLOGY MIRROR] Synced to 0073-p5-2-p5-2-observer-effect-proportional-to-phi_CKG_MASTER.md
+[2026-09-06 19:06:04] [INBOX -> ARCHIVE] Moved original 0073_P5.2_P5_2_Observer_Effect_Proportional_To_Phi.md to ARCHIVED_INPUTS
+[2026-09-06 19:06:04] [73/99] Completed successfully -> 0073-p5-2-p5-2-observer-effect-proportional-to-phi_CKG_MASTER.md
+[2026-09-06 19:06:04] 
+[74/99] Processing: 0074_LN5.1_LN5_1_Chi_Requires_Observer_For_Actualization.md...
+[2026-09-06 19:06:04] [74/99] Prepared working packet: 0074-ln5-1-ln5-1-chi-requires-observer-for-actualization.analysis-prompt.md
+[2026-09-06 19:06:04] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:06:52] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:06:52] [OUTBOX WRITTEN] 0074-ln5-1-ln5-1-chi-requires-observer-for-actualization_CKG_MASTER.md
+[2026-09-06 19:06:52] [SYNOLOGY MIRROR] Synced to 0074-ln5-1-ln5-1-chi-requires-observer-for-actualization_CKG_MASTER.md
+[2026-09-06 19:06:52] [INBOX -> ARCHIVE] Moved original 0074_LN5.1_LN5_1_Chi_Requires_Observer_For_Actualization.md to ARCHIVED_INPUTS
+[2026-09-06 19:06:52] [74/99] Completed successfully -> 0074-ln5-1-ln5-1-chi-requires-observer-for-actualization_CKG_MASTER.md
+[2026-09-06 19:06:52] 
+[75/99] Processing: 0075_A6.1_A6_1_Superposition.md...
+[2026-09-06 19:06:52] [75/99] Prepared working packet: 0075-a6-1-a6-1-superposition.analysis-prompt.md
+[2026-09-06 19:06:52] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:07:46] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:07:46] [OUTBOX WRITTEN] 0075-a6-1-a6-1-superposition_CKG_MASTER.md
+[2026-09-06 19:07:46] [SYNOLOGY MIRROR] Synced to 0075-a6-1-a6-1-superposition_CKG_MASTER.md
+[2026-09-06 19:07:46] [INBOX -> ARCHIVE] Moved original 0075_A6.1_A6_1_Superposition.md to ARCHIVED_INPUTS
+[2026-09-06 19:07:46] [75/99] Completed successfully -> 0075-a6-1-a6-1-superposition_CKG_MASTER.md
+[2026-09-06 19:07:46] 
+[76/99] Processing: 0076_A6.2_A6_2_Collapse.md...
+[2026-09-06 19:07:46] [76/99] Prepared working packet: 0076-a6-2-a6-2-collapse.analysis-prompt.md
+[2026-09-06 19:07:46] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:08:37] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:08:37] [OUTBOX WRITTEN] 0076-a6-2-a6-2-collapse_CKG_MASTER.md
+[2026-09-06 19:08:37] [SYNOLOGY MIRROR] Synced to 0076-a6-2-a6-2-collapse_CKG_MASTER.md
+[2026-09-06 19:08:37] [INBOX -> ARCHIVE] Moved original 0076_A6.2_A6_2_Collapse.md to ARCHIVED_INPUTS
+[2026-09-06 19:08:37] [76/99] Completed successfully -> 0076-a6-2-a6-2-collapse_CKG_MASTER.md
+[2026-09-06 19:08:37] 
+[77/99] Processing: 0077_A6.3_A6_3_Irreversibility.md...
+[2026-09-06 19:08:37] [77/99] Prepared working packet: 0077-a6-3-a6-3-irreversibility.analysis-prompt.md
+[2026-09-06 19:08:37] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:09:29] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:09:29] [OUTBOX WRITTEN] 0077-a6-3-a6-3-irreversibility_CKG_MASTER.md
+[2026-09-06 19:09:29] [SYNOLOGY MIRROR] Synced to 0077-a6-3-a6-3-irreversibility_CKG_MASTER.md
+[2026-09-06 19:09:29] [INBOX -> ARCHIVE] Moved original 0077_A6.3_A6_3_Irreversibility.md to ARCHIVED_INPUTS
+[2026-09-06 19:09:29] [77/99] Completed successfully -> 0077-a6-3-a6-3-irreversibility_CKG_MASTER.md
+[2026-09-06 19:09:29] 
+[78/99] Processing: 0078_E6.1_E6_1_Modified_Schr_dinger_With_Collapse.md...
+[2026-09-06 19:09:29] [78/99] Prepared working packet: 0078-e6-1-e6-1-modified-schr-dinger-with-collapse.analysis-prompt.md
+[2026-09-06 19:09:29] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:10:32] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:10:32] [OUTBOX WRITTEN] 0078-e6-1-e6-1-modified-schr-dinger-with-collapse_CKG_MASTER.md
+[2026-09-06 19:10:32] [SYNOLOGY MIRROR] Synced to 0078-e6-1-e6-1-modified-schr-dinger-with-collapse_CKG_MASTER.md
+[2026-09-06 19:10:32] [INBOX -> ARCHIVE] Moved original 0078_E6.1_E6_1_Modified_Schr_dinger_With_Collapse.md to ARCHIVED_INPUTS
+[2026-09-06 19:10:32] [78/99] Completed successfully -> 0078-e6-1-e6-1-modified-schr-dinger-with-collapse_CKG_MASTER.md
+[2026-09-06 19:10:32] 
+[79/99] Processing: 0079_P6.1_P6_1_Collapse_Rate_Proportional_To_Phi.md...
+[2026-09-06 19:10:32] [79/99] Prepared working packet: 0079-p6-1-p6-1-collapse-rate-proportional-to-phi.analysis-prompt.md
+[2026-09-06 19:10:32] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:11:24] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:11:24] [OUTBOX WRITTEN] 0079-p6-1-p6-1-collapse-rate-proportional-to-phi_CKG_MASTER.md
+[2026-09-06 19:11:24] [SYNOLOGY MIRROR] Synced to 0079-p6-1-p6-1-collapse-rate-proportional-to-phi_CKG_MASTER.md
+[2026-09-06 19:11:24] [INBOX -> ARCHIVE] Moved original 0079_P6.1_P6_1_Collapse_Rate_Proportional_To_Phi.md to ARCHIVED_INPUTS
+[2026-09-06 19:11:24] [79/99] Completed successfully -> 0079-p6-1-p6-1-collapse-rate-proportional-to-phi_CKG_MASTER.md
+[2026-09-06 19:11:24] 
+[80/99] Processing: 0080_P6.2_P6_2_Collapse_Generates_Heat.md...
+[2026-09-06 19:11:24] [80/99] Prepared working packet: 0080-p6-2-p6-2-collapse-generates-heat.analysis-prompt.md
+[2026-09-06 19:11:24] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:12:21] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:12:21] [OUTBOX WRITTEN] 0080-p6-2-p6-2-collapse-generates-heat_CKG_MASTER.md
+[2026-09-06 19:12:21] [SYNOLOGY MIRROR] Synced to 0080-p6-2-p6-2-collapse-generates-heat_CKG_MASTER.md
+[2026-09-06 19:12:21] [INBOX -> ARCHIVE] Moved original 0080_P6.2_P6_2_Collapse_Generates_Heat.md to ARCHIVED_INPUTS
+[2026-09-06 19:12:21] [80/99] Completed successfully -> 0080-p6-2-p6-2-collapse-generates-heat_CKG_MASTER.md
+[2026-09-06 19:12:21] 
+[81/99] Processing: 0081_T6.1_T6_1_Von_Neumann_Chain_Termination.md...
+[2026-09-06 19:12:21] [81/99] Prepared working packet: 0081-t6-1-t6-1-von-neumann-chain-termination.analysis-prompt.md
+[2026-09-06 19:12:21] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:13:20] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:13:20] [OUTBOX WRITTEN] 0081-t6-1-t6-1-von-neumann-chain-termination_CKG_MASTER.md
+[2026-09-06 19:13:20] [SYNOLOGY MIRROR] Synced to 0081-t6-1-t6-1-von-neumann-chain-termination_CKG_MASTER.md
+[2026-09-06 19:13:20] [INBOX -> ARCHIVE] Moved original 0081_T6.1_T6_1_Von_Neumann_Chain_Termination.md to ARCHIVED_INPUTS
+[2026-09-06 19:13:20] [81/99] Completed successfully -> 0081-t6-1-t6-1-von-neumann-chain-termination_CKG_MASTER.md
+[2026-09-06 19:13:20] 
+[82/99] Processing: 0082_LN6.1_LN6_1_Terminal_Observer_Necessity.md...
+[2026-09-06 19:13:20] [82/99] Prepared working packet: 0082-ln6-1-ln6-1-terminal-observer-necessity.analysis-prompt.md
+[2026-09-06 19:13:20] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:14:13] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:14:13] [OUTBOX WRITTEN] 0082-ln6-1-ln6-1-terminal-observer-necessity_CKG_MASTER.md
+[2026-09-06 19:14:13] [SYNOLOGY MIRROR] Synced to 0082-ln6-1-ln6-1-terminal-observer-necessity_CKG_MASTER.md
+[2026-09-06 19:14:13] [INBOX -> ARCHIVE] Moved original 0082_LN6.1_LN6_1_Terminal_Observer_Necessity.md to ARCHIVED_INPUTS
+[2026-09-06 19:14:13] [82/99] Completed successfully -> 0082-ln6-1-ln6-1-terminal-observer-necessity_CKG_MASTER.md
+[2026-09-06 19:14:13] 
+[83/99] Processing: 0083_A7.1_A7_1_Closure_Requirement.md...
+[2026-09-06 19:14:13] [83/99] Prepared working packet: 0083-a7-1-a7-1-closure-requirement.analysis-prompt.md
+[2026-09-06 19:14:13] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:15:08] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:15:08] [OUTBOX WRITTEN] 0083-a7-1-a7-1-closure-requirement_CKG_MASTER.md
+[2026-09-06 19:15:08] [SYNOLOGY MIRROR] Synced to 0083-a7-1-a7-1-closure-requirement_CKG_MASTER.md
+[2026-09-06 19:15:08] [INBOX -> ARCHIVE] Moved original 0083_A7.1_A7_1_Closure_Requirement.md to ARCHIVED_INPUTS
+[2026-09-06 19:15:08] [83/99] Completed successfully -> 0083-a7-1-a7-1-closure-requirement_CKG_MASTER.md
+[2026-09-06 19:15:08] 
+[84/99] Processing: 0084_A7.2_A7_2_Uniqueness_From_Boundary_Conditions.md...
+[2026-09-06 19:15:08] [84/99] Prepared working packet: 0084-a7-2-a7-2-uniqueness-from-boundary-conditions.analysis-prompt.md
+[2026-09-06 19:15:08] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:16:00] Validation or network error on deepseek/deepseek-v3.2 attempt 1: 'Formal or testable path' contains an unresolved placeholder ('[OPEN]' or 'not run').
+[2026-09-06 19:16:02] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 2/3]...
+[2026-09-06 19:16:55] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:16:55] [OUTBOX WRITTEN] 0084-a7-2-a7-2-uniqueness-from-boundary-conditions_CKG_MASTER.md
+[2026-09-06 19:16:55] [SYNOLOGY MIRROR] Synced to 0084-a7-2-a7-2-uniqueness-from-boundary-conditions_CKG_MASTER.md
+[2026-09-06 19:16:55] [INBOX -> ARCHIVE] Moved original 0084_A7.2_A7_2_Uniqueness_From_Boundary_Conditions.md to ARCHIVED_INPUTS
+[2026-09-06 19:16:55] [84/99] Completed successfully -> 0084-a7-2-a7-2-uniqueness-from-boundary-conditions_CKG_MASTER.md
+[2026-09-06 19:16:55] 
+[85/99] Processing: 0085_BC1_BC1_Terminal_Observer_Exists.md...
+[2026-09-06 19:16:55] [85/99] Prepared working packet: 0085-bc1-bc1-terminal-observer-exists.analysis-prompt.md
+[2026-09-06 19:16:55] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:17:47] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:17:47] [OUTBOX WRITTEN] 0085-bc1-bc1-terminal-observer-exists_CKG_MASTER.md
+[2026-09-06 19:17:47] [SYNOLOGY MIRROR] Synced to 0085-bc1-bc1-terminal-observer-exists_CKG_MASTER.md
+[2026-09-06 19:17:47] [INBOX -> ARCHIVE] Moved original 0085_BC1_BC1_Terminal_Observer_Exists.md to ARCHIVED_INPUTS
+[2026-09-06 19:17:47] [85/99] Completed successfully -> 0085-bc1-bc1-terminal-observer-exists_CKG_MASTER.md
+[2026-09-06 19:17:47] 
+[86/99] Processing: 0086_BC3_BC3_Measurement_Orthogonality.md...
+[2026-09-06 19:17:47] [86/99] Prepared working packet: 0086-bc3-bc3-measurement-orthogonality.analysis-prompt.md
+[2026-09-06 19:17:47] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...
+[2026-09-06 19:18:37] Gate validation passed for model deepseek/deepseek-v3.2.
+[2026-09-06 19:18:37] [OUTBOX WRITTEN] 0086-bc3-bc3-measurement-orthogonality_CKG_MASTER.md
+[2026-09-06 19:18:37] [SYNOLOGY MIRROR] Synced to 0086-bc3-bc3-measurement-orthogonality_CKG_MASTER.md
+[2026-09-06 19:18:37] [INBOX -> ARCHIVE] Moved original 0086_BC3_BC3_Measurement_Orthogonality.md to ARCHIVED_INPUTS
+[2026-09-06 19:18:37] [86/99] Completed successfully -> 0086-bc3-bc3-measurement-orthogonality_CKG_MASTER.md
+[2026-09-06 19:18:37] 
+[87/99] Processing: 0087_BC5_BC5_Superposition_Preserved_Until_Collapse.md...
+[2026-09-06 19:18:37] [87/99] Prepared working packet: 0087-bc5-bc5-superposition-preserved-until-collapse.analysis-prompt.md
+[2026-09-06 19:18:37] Calling OpenRouter (deepseek/deepseek-v3.2) [Attempt 1/3]...

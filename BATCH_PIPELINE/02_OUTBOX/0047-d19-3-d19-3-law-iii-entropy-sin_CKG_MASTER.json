@@ -1,0 +1,129 @@
+{
+  "title": "Law III: Entropy-Sin",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0047_D19.3_D19_3_Law_III_Entropy-Sin.md",
+  "source_sha256": "fc0e69c41e56027db2a8adba7fcf7b5a46cf42dbc8ecc55f8f0d172e5993501e",
+  "captured_at": "2026-09-06T23:46:37.669096+00:00",
+  "tags": [
+    "information-theory"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2575,
+    "completion_tokens": 2731,
+    "total_tokens": 5306,
+    "cost": 0.003724289712,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037619088,
+      "upstream_inference_prompt_cost": 0.0007264023,
+      "upstream_inference_completions_cost": 0.0030355065
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "There exists a Law III: The Entropy-Sin Correspondence.",
+      "role": "Definitional Axiom",
+      "formal": "`Law III: S_physical \u2194 S_moral; dS/dt \u2265 0`"
+    },
+    {
+      "id": "P2",
+      "statement": "Physical entropy (S_physical) and moral sin (S_moral) correspond.",
+      "role": "Core Assertion",
+      "formal": "`S_physical \u2194 S_moral`"
+    },
+    {
+      "id": "P3",
+      "statement": "The time derivative of S (in both domains) is greater than or equal to zero.",
+      "role": "Dynamical Constraint",
+      "formal": "`dS/dt \u2265 0`"
+    },
+    {
+      "id": "P4",
+      "statement": "The correspondence is structural, not literal.",
+      "role": "Qualifying Limitation",
+      "formal": "(No formal expression, stated in limitations)"
+    },
+    {
+      "id": "P5",
+      "statement": "This law depends on T3.1 (Coherence Cannot Self-Increase).",
+      "role": "Dependency Assertion",
+      "formal": "`depends_on: T3.1`"
+    },
+    {
+      "id": "P6",
+      "statement": "This law depends on A8.2 (Sign Conservation).",
+      "role": "Dependency Assertion",
+      "formal": "`depends_on: A8.2`"
+    },
+    {
+      "id": "P7",
+      "statement": "The law is a formal definition / primitive formalization.",
+      "role": "Epistemic Classification",
+      "formal": "`Mathematical Use: Formal definition`"
+    },
+    {
+      "id": "P8",
+      "statement": "The defeat condition for this law is showing entropy and sin are not isomorphic.",
+      "role": "Falsification Condition",
+      "formal": "`Defeat Conditions: Show entropy and sin are not isomorphic.`"
+    },
+    {
+      "id": "P9",
+      "statement": "The law is anchored within a dependency chain at Tier 13 \u2014 Master Laws.",
+      "role": "Structural Assertion",
+      "formal": "`Chain Tier: 13 \u2014 Master Laws`"
+    },
+    {
+      "id": "P10",
+      "statement": "The law references the 2nd Law of Thermodynamics.",
+      "role": "Source Reference",
+      "formal": "`References: 2nd Law`"
+    },
+    {
+      "id": "P11",
+      "statement": "The law references Augustinian Hamartiology.",
+      "role": "Source Reference",
+      "formal": "`References: Augustinian Hamartiology`"
+    },
+    {
+      "id": "P12",
+      "statement": "The law's domain is \"Unified.\"",
+      "role": "Domain Assertion",
+      "formal": "`Domain: Unified`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0047: D19.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.3 \u2014 Law III: Entropy-Sin",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

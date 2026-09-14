@@ -1,0 +1,34 @@
+{
+  "title": "Coherence Non-Negativity",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0063_P3.1_P3_1_Coherence_Non-Negativity.md",
+  "source_sha256": "7cfdbb9dbd2e2f4eea114ec3c8676314d05f04bd9404a7fac0b26cd0c9b65293",
+  "captured_at": "2026-09-06T23:59:12.990480+00:00",
+  "word_count": 336,
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0063: P3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 P3.1 \u2014 Coherence Non-Negativity",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

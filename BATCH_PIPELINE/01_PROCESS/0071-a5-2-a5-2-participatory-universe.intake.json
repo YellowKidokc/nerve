@@ -1,0 +1,33 @@
+{
+  "title": "Participatory Universe",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0071_A5.2_A5_2_Participatory_Universe.md",
+  "source_sha256": "a627b03bdf8f6acfaa7cb32d02a7dbb4aab15a2e3dddfb0bbce5fab91b3b8427",
+  "captured_at": "2026-09-07T00:04:07.737708+00:00",
+  "word_count": 344,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0071: A5.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A5.2 \u2014 Participatory Universe",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

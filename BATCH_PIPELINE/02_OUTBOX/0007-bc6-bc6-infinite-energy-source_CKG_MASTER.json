@@ -1,0 +1,129 @@
+{
+  "title": "Infinite Energy Source",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0007_BC6_BC6_Infinite_Energy_Source.md",
+  "source_sha256": "b3601eb14582dec601cda64246eb680b5f4264322c565154daa21bb1abf11485",
+  "captured_at": "2026-09-06T23:04:58.148594+00:00",
+  "tags": [
+    "information-theory"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2333,
+    "completion_tokens": 2759,
+    "total_tokens": 5092,
+    "cost": 0.003666336102,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037033698,
+      "upstream_inference_prompt_cost": 0.0006367413,
+      "upstream_inference_completions_cost": 0.0030666285
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A terminal observer exists.",
+      "role": "Core entity definition",
+      "formal": "(Implicit existential claim)"
+    },
+    {
+      "id": "P2",
+      "statement": "The terminal observer must maintain eternal coherence or existence.",
+      "role": "Core requirement",
+      "formal": "(Implicit in \"otherwise entropy wins\")"
+    },
+    {
+      "id": "P3",
+      "statement": "Entropy, if unopposed, leads to degradation and \"wins.\"",
+      "role": "Thermodynamic premise",
+      "formal": "\u0394S \u2265 0 (for isolated systems)"
+    },
+    {
+      "id": "P4",
+      "statement": "Counteracting entropy requires energy.",
+      "role": "Thermodynamic premise",
+      "formal": "Energy is required to perform work against entropy."
+    },
+    {
+      "id": "P5",
+      "statement": "A finite energy source is exhaustible.",
+      "role": "Physical premise",
+      "formal": "E_finite \u2192 \u2203t: E(t) = 0 (given sufficient time/use)"
+    },
+    {
+      "id": "P6",
+      "statement": "Eternal coherence maintenance requires an inexhaustible energy source.",
+      "role": "Logical inference from P2, P4, P5",
+      "formal": "Eternal coherence \u2192 \u00ac(\u2203t: E(t)=0)"
+    },
+    {
+      "id": "P7",
+      "statement": "An infinite energy reservoir exists.",
+      "role": "Boundary condition assertion",
+      "formal": "\u2203E_source: E = \u221e"
+    },
+    {
+      "id": "P8",
+      "statement": "The terminal observer must have access to this infinite energy source.",
+      "role": "Core claim of BC6",
+      "formal": "Access(terminal_observer, E_source) \u2227 E_source = \u221e"
+    },
+    {
+      "id": "P9",
+      "statement": "BC6 is a boundary condition in the Divine domain.",
+      "role": "Classification",
+      "formal": "Domain(BC6) = Divine; Type(BC6) = Boundary_Condition"
+    },
+    {
+      "id": "P10",
+      "statement": "BC6 depends on a core root (\u2205).",
+      "role": "Dependency assertion",
+      "formal": "depends_on(BC6, \u2205)"
+    },
+    {
+      "id": "P11",
+      "statement": "If finite energy sufficed, BC6 would be defeated.",
+      "role": "Defeat condition",
+      "formal": "Defeat if: Eternal_coherence_possible(E_finite)"
+    },
+    {
+      "id": "P12",
+      "statement": "Most load-bearing nodes from \"Stage 8 onward\" route through BC6.",
+      "role": "Structural claim",
+      "formal": "(Descriptive claim about the axiom system's architecture)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0007: BC6",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 BC6 \u2014 Infinite Energy Source",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

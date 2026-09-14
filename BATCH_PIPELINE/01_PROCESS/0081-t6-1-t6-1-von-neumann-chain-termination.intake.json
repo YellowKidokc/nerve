@@ -1,0 +1,34 @@
+{
+  "title": "Von Neumann Chain Termination",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0081_T6.1_T6_1_Von_Neumann_Chain_Termination.md",
+  "source_sha256": "46f4f802b6cd5845f22391e2f555dd435a4b363344364f8deaf879c262e2ca72",
+  "captured_at": "2026-09-07T00:12:21.793339+00:00",
+  "word_count": 379,
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0081: T6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 T6.1 \u2014 Von Neumann Chain Termination",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

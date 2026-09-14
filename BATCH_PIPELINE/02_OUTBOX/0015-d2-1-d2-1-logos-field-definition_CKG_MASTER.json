@@ -1,0 +1,131 @@
+{
+  "title": "Logos Field Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0015_D2.1_D2_1_Logos_Field_Definition.md",
+  "source_sha256": "2beeca3c8324615accb27c1955bf5a1a601309d2540a9a46faada919f2e2bc4d",
+  "captured_at": "2026-09-06T23:16:11.258499+00:00",
+  "tags": [
+    "information-theory",
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2522,
+    "completion_tokens": 2591,
+    "total_tokens": 5113,
+    "cost": 0.003550795677,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035866623,
+      "upstream_inference_prompt_cost": 0.0007067658,
+      "upstream_inference_completions_cost": 0.0028798965
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The Logos Field \u03c7 is defined as the self-grounding informational substrate.",
+      "role": "Core Definition",
+      "formal": "\u03c7 = self-grounding informational field."
+    },
+    {
+      "id": "P2",
+      "statement": "The \u03c7-field is a scalar field.",
+      "role": "Formal Specification",
+      "formal": "\u03c7 is of type scalar field."
+    },
+    {
+      "id": "P3",
+      "statement": "The \u03c7-field is defined over a manifold M.",
+      "role": "Formal Specification",
+      "formal": "Domain: manifold M."
+    },
+    {
+      "id": "P4",
+      "statement": "The \u03c7-field maps from manifold M to the real numbers.",
+      "role": "Formal Expression",
+      "formal": "\u03c7: M \u2192 \u211d"
+    },
+    {
+      "id": "P5",
+      "statement": "This definition is an ontological primitive.",
+      "role": "Classification",
+      "formal": "Domain: Ontological; Epistemic Status: definition."
+    },
+    {
+      "id": "P6",
+      "statement": "The definition depends on the concept of self-grounding (A2.2).",
+      "role": "Dependency",
+      "formal": "Anchor: A2.2; Depends On: A2.2."
+    },
+    {
+      "id": "P7",
+      "statement": "The identification \u03c7 = Logos is a bridge claim, not part of the definition.",
+      "role": "Limitation",
+      "formal": "Stated in \"Limitations (from workbook)\"."
+    },
+    {
+      "id": "P8",
+      "statement": "The definition is part of a structured canonical sequence (Registry position 15 of 191).",
+      "role": "Structural Context",
+      "formal": "Chain Tier: 3 \u2014 Field Definitions."
+    },
+    {
+      "id": "P9",
+      "statement": "A defeat condition for this definition is demonstrating a substrate without field structure.",
+      "role": "Falsifiability",
+      "formal": "\"Demonstrate substrate without field structure.\""
+    },
+    {
+      "id": "P10",
+      "statement": "The definition is classified as `AX_SCAFFOLD` and `DEFINITION`.",
+      "role": "Meta-classification",
+      "formal": "Mode: `AX_SCAFFOLD`; Workbook Role: `DEFINITION`."
+    },
+    {
+      "id": "P11",
+      "statement": "The \u03c7-field is not proven to be needed.",
+      "role": "Risk",
+      "formal": "\"Show the \u03c7-field is not needed.\""
+    },
+    {
+      "id": "P12",
+      "statement": "The formal expression is adopted as a decision.",
+      "role": "Procedural Assertion",
+      "formal": "Tag: \"Adopt the formal expression \u03c7: M \u2192 \u211d for the Logos Field\"."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0015: D2.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D2.1 \u2014 Logos Field Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

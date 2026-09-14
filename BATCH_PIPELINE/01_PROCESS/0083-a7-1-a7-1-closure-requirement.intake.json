@@ -1,0 +1,33 @@
+{
+  "title": "Closure Requirement",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0083_A7.1_A7_1_Closure_Requirement.md",
+  "source_sha256": "25e01451ddb6b59523001af9311332815c0970f8ed891b7c30c9abfe826e7974",
+  "captured_at": "2026-09-07T00:14:13.057762+00:00",
+  "word_count": 348,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0083: A7.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A7.1 \u2014 Closure Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -89,7 +89,10 @@ unsafe extern "system" fn keyboard_hook_proc(code: i32, wparam: WPARAM, lparam: 
                         if let Ok(cfg) = cfg_arc.lock() {
                             // Check hotstrings first (higher priority)
                             for hs in &cfg.hotstrings {
-                                if buf.ends_with(&hs.trigger) {
+                                // Typed letters are normalized to lowercase by
+                                // this hook, so configured expansions must
+                                // compare case-insensitively.
+                                if buf.to_ascii_lowercase().ends_with(&hs.trigger.to_ascii_lowercase()) {
                                     info!("Hotstring triggered: {}", hs.trigger);
                                     let expansion = hs.expansion.clone();
                                     let trigger_len = hs.trigger.len();

@@ -313,6 +313,7 @@ textarea{resize:vertical;min-height:56px;line-height:1.6}
 </style>
 <link rel="stylesheet" href="prompt-rail.css">
 <link rel="stylesheet" href="prompt-target.css?v=20260904d">
+<link rel="stylesheet" href="atom-workspace.css">
 </head>
 <body>
 
@@ -324,8 +325,10 @@ textarea{resize:vertical;min-height:56px;line-height:1.6}
     <select id="atom-provider" onchange="updateAtomProvider()" style="width:auto;padding:3px 5px;font-size:11px;">
       <option value="deepseek">DeepSeek</option>
       <option value="ollama">Ollama NAS</option>
+      <option value="cloudflare">Cloudflare Workers</option>
     </select>
     <select id="atom-model" onchange="saveAtomProvider()" style="width:auto;max-width:155px;padding:3px 5px;font-size:11px;"></select>
+  </label>
   <button class="hbtn hbtn-b" style="background:#4a7fd4;color:#fff;font-weight:700;" onclick="newAtom()">＋ New Atom</button>
   <button class="hbtn" style="background:#2a200a;border:1px solid #d0a030;color:#ffd060;font-weight:700;" onclick="openAxiomBuilder()">⚡ Axiom</button>
   <button class="hbtn" style="background:#2a200a;border:1px solid #d0a030;color:#ffd060;font-weight:700;" onclick="openCanonWorkbench()">⚡ Canon Workbench</button>
@@ -1637,7 +1640,7 @@ function cM(){document.getElementById('ov').classList.remove('on');}
  .then(()=>{const b=document.querySelector('.mf .bg');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy',1400);});}
  document.getElementById('ov').onclick=e=>{if(e.target.id==='ov')cM();};
  const ATOM_PROVIDER_PREF='canonization.atom-provider.v1';
- const ATOM_PROVIDER_MODELS={deepseek:['deepseek-chat'],ollama:['llama3.2:latest','mistral:latest','moondream:latest']};
+ const ATOM_PROVIDER_MODELS={deepseek:['deepseek-chat'],ollama:['llama3.2:latest','mistral:latest','moondream:latest'],cloudflare:['@cf/meta/llama-3.3-70b-instruct-fp8-fast']};
  function getAtomProviderSelection(){return {provider:document.getElementById('atom-provider')?.value||'deepseek',model:document.getElementById('atom-model')?.value||'deepseek-chat'};}
  function saveAtomProvider(){localStorage.setItem(ATOM_PROVIDER_PREF,JSON.stringify(getAtomProviderSelection()));}
  function updateAtomProvider(){const provider=document.getElementById('atom-provider').value,model=document.getElementById('atom-model'),saved=JSON.parse(localStorage.getItem(ATOM_PROVIDER_PREF)||'{}');model.innerHTML=(ATOM_PROVIDER_MODELS[provider]||[]).map(x=>`<option value="${x}">${x}</option>`).join('');if(saved.provider===provider&&ATOM_PROVIDER_MODELS[provider].includes(saved.model))model.value=saved.model;saveAtomProvider();}
@@ -1699,6 +1702,8 @@ window.addEventListener('beforeunload',e=>{
 </script>
 <script src="field-registry.js"></script>
 <script src="prompt-rail.js"></script>
+<script src="atom-workspace.js"></script>
+<script src="cloud-jobs.js"></script>
 
 <script>
 // ══ BATCH INTAKE & GOVERNED EXPORT LOGIC ══

@@ -1,0 +1,130 @@
+{
+  "title": "Projection Operator",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0030_D6.2_D6_2_Projection_Operator.md",
+  "source_sha256": "7746b69a6706eaa740b28372578ffec3dcc6f06a44dbf79f12093f02f4057939",
+  "captured_at": "2026-09-06T23:29:43.117799+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2359,
+    "completion_tokens": 2572,
+    "total_tokens": 4931,
+    "cost": 0.003470100777,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035051523,
+      "upstream_inference_prompt_cost": 0.0006463743,
+      "upstream_inference_completions_cost": 0.002858778
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A projection operator is defined.",
+      "role": "Core Definition",
+      "formal": "\\( \\hat{P}_n \\) is defined."
+    },
+    {
+      "id": "P2",
+      "statement": "The projection operator is the standard quantum measurement projection.",
+      "role": "Statement / Classification",
+      "formal": "Standard QM formalism."
+    },
+    {
+      "id": "P3",
+      "statement": "The projection operator is expressed as an outer product.",
+      "role": "Formal Expression",
+      "formal": "\\( \\hat{P}_n ="
+    },
+    {
+      "id": "P4",
+      "statement": "The operator projects onto an eigenstate \\( n \\).",
+      "role": "Formal Expression Clarification",
+      "formal": "Projection onto eigenstate \\( n \\)."
+    },
+    {
+      "id": "P5",
+      "statement": "This definition anchors to A5.1 (Observation Requirement).",
+      "role": "Dependency Assertion",
+      "formal": "Anchor: A5.1."
+    },
+    {
+      "id": "P6",
+      "statement": "This definition depends on A5.1 and D6.1.",
+      "role": "Dependency Assertion",
+      "formal": "Depends On: A5.1, D6.1."
+    },
+    {
+      "id": "P7",
+      "statement": "The definition's epistemic status is `definition`.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `definition`."
+    },
+    {
+      "id": "P8",
+      "statement": "The definition's domain is Ontological.",
+      "role": "Classification",
+      "formal": "Domain: Ontological."
+    },
+    {
+      "id": "P9",
+      "statement": "The definition is of low vulnerability to defeat conditions.",
+      "role": "Risk Assessment",
+      "formal": "Low vulnerability."
+    },
+    {
+      "id": "P10",
+      "statement": "The framework-specific part is its coupling to \u03a6 (Phi).",
+      "role": "Limitation / Open Question",
+      "formal": "Framework-specific coupling to \u03a6 is not fully specified."
+    },
+    {
+      "id": "P11",
+      "statement": "The definition references Von Neumann 1932 and Standard QM.",
+      "role": "Source Attribution",
+      "formal": "References: Von Neumann 1932; Standard QM."
+    },
+    {
+      "id": "P12",
+      "statement": "The projection operator is a primitive formalization.",
+      "role": "Classification",
+      "formal": "Mathematical Use: Formal definition / primitive formalization."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0030: D6.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D6.2 \u2014 Projection Operator",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "title": "Unified Field Lagrangian",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0041_D13.1_D13_1_Unified_Field_Lagrangian.md",
+  "source_sha256": "a0f6ebc71815c510cae3c53694e259a59dcf4729fd854c6810d3091de2293586",
+  "captured_at": "2026-09-06T23:41:30.339557+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2353,
+    "completion_tokens": 2670,
+    "total_tokens": 5023,
+    "cost": 0.003575737737,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036118563,
+      "upstream_inference_prompt_cost": 0.0006441513,
+      "upstream_inference_completions_cost": 0.002967705
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A coupling constant \u03ba exists between the Logos Field \u03c7 and the metric g_\u03bc\u03bd.",
+      "role": "Core Definition",
+      "formal": "`\u03ba: \u03c7 \u2194 g_\u03bc\u03bd coupling constant`"
+    },
+    {
+      "id": "P2",
+      "statement": "The entity D13.1 is a formal definition.",
+      "role": "Classification",
+      "formal": "`Mode: AX_SCAFFOLD`, `Atlas Type: Definition`, `Status: definition`"
+    },
+    {
+      "id": "P3",
+      "statement": "D13.1 depends axiomatically on BC6 (Infinite Energy Source).",
+      "role": "Dependency Assertion",
+      "formal": "`Anchor: BC6`, `Depends On: BC6`"
+    },
+    {
+      "id": "P4",
+      "statement": "\u03ba is currently a free parameter.",
+      "role": "Limitation",
+      "formal": "`\u03ba is a free parameter.`"
+    },
+    {
+      "id": "P5",
+      "statement": "Without a measured value for \u03ba, predictions remain parametric.",
+      "role": "Limitation",
+      "formal": "`Without measured value, predictions remain parametric.`"
+    },
+    {
+      "id": "P6",
+      "statement": "The definition can be defeated by measuring \u03ba and showing it's zero.",
+      "role": "Defeat Condition",
+      "formal": "`Measure \u03ba and show it's zero.`"
+    },
+    {
+      "id": "P7",
+      "statement": "The definition can be defeated by showing \u03ba leads to contradictions.",
+      "role": "Defeat Condition",
+      "formal": "`Show \u03ba leads to contradictions.`"
+    },
+    {
+      "id": "P8",
+      "statement": "The domain of this definition is Physics.",
+      "role": "Classification",
+      "formal": "`Domain: Physics`"
+    },
+    {
+      "id": "P9",
+      "statement": "The definition is part of a chain toward Physics Unification.",
+      "role": "Context",
+      "formal": "`Chain Tier: 12 \u2014 Physics Unification`"
+    },
+    {
+      "id": "P10",
+      "statement": "The definition references General Relativity and Yang-Mills theory.",
+      "role": "Contextual Link",
+      "formal": "`References: General Relativity; Yang-Mills theory`"
+    },
+    {
+      "id": "P11",
+      "statement": "There is an open question regarding the measured value of \u03ba.",
+      "role": "Implicit Assertion (from tag)",
+      "formal": "`OpenQuestion::\"What is the measured value of \u03ba?\"`"
+    },
+    {
+      "id": "P12",
+      "statement": "It is assumed that \u03ba is non-zero and can be measured.",
+      "role": "Implicit Assertion (from tag)",
+      "formal": "`Assumption::\"\u03ba is non-zero and can be measured\"`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0041: D13.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D13.1 \u2014 Unified Field Lagrangian",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

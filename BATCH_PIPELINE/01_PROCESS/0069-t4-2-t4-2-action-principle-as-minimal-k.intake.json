@@ -1,0 +1,34 @@
+{
+  "title": "Action Principle As Minimal-K",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0069_T4.2_T4_2_Action_Principle_As_Minimal-K.md",
+  "source_sha256": "9e594a7de2b28ab8215bf35afe4893fb63e6bd0950e86f22f13d172eae1229ad",
+  "captured_at": "2026-09-07T00:02:57.371743+00:00",
+  "word_count": 368,
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0069: T4.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 T4.2 \u2014 Action Principle As Minimal-K",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

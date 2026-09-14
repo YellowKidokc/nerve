@@ -1,0 +1,130 @@
+{
+  "title": "Coherence Non-Negativity",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0063_P3.1_P3_1_Coherence_Non-Negativity.md",
+  "source_sha256": "7cfdbb9dbd2e2f4eea114ec3c8676314d05f04bd9404a7fac0b26cd0c9b65293",
+  "captured_at": "2026-09-06T23:59:55.328507+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2289,
+    "completion_tokens": 2162,
+    "total_tokens": 4451,
+    "cost": 0.003218626125,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032511375,
+      "upstream_inference_prompt_cost": 0.0008480745,
+      "upstream_inference_completions_cost": 0.002403063
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Coherence is non-negative.",
+      "role": "Statement / Central Claim",
+      "formal": "\\( C \\ge 0 \\)"
+    },
+    {
+      "id": "P2",
+      "statement": "You cannot have negative order.",
+      "role": "Plain-language restatement",
+      "formal": "N/A (semantic constraint)"
+    },
+    {
+      "id": "P3",
+      "statement": "Coherence has a natural zero, similar to entropy.",
+      "role": "Assumption / Limitation",
+      "formal": "Implicit: \\( \\exists \\, C = 0 \\)"
+    },
+    {
+      "id": "P4",
+      "statement": "This is a framework commitment.",
+      "role": "Classification",
+      "formal": "N/A (epistemic status)"
+    },
+    {
+      "id": "P5",
+      "statement": "The property depends on A2.2 (Self-Grounding).",
+      "role": "Dependency Link",
+      "formal": "Logical dependency"
+    },
+    {
+      "id": "P6",
+      "statement": "The property depends on D3.1 (Coherence Functional Definition).",
+      "role": "Dependency Link",
+      "formal": "Logical dependency"
+    },
+    {
+      "id": "P7",
+      "statement": "The property's domain is Ontological.",
+      "role": "Classification",
+      "formal": "Domain classification"
+    },
+    {
+      "id": "P8",
+      "statement": "The defeat condition is showing negative coherence is meaningful.",
+      "role": "Defeat Condition",
+      "formal": "Falsification criterion"
+    },
+    {
+      "id": "P9",
+      "statement": "This is a standard constraint.",
+      "role": "Limitation",
+      "formal": "N/A (methodological claim)"
+    },
+    {
+      "id": "P10",
+      "statement": "The property's status is `property`.",
+      "role": "Classification",
+      "formal": "Epistemic status"
+    },
+    {
+      "id": "P11",
+      "statement": "Entropy (S) is non-negative (S \u2265 0).",
+      "role": "Reference / Analogy",
+      "formal": "\\( S \\ge 0 \\)"
+    },
+    {
+      "id": "P12",
+      "statement": "Integrated Information (\u03a6) is non-negative (\u03a6 \u2265 0).",
+      "role": "Reference / Analogy",
+      "formal": "\\( \\Phi \\ge 0 \\)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0063: P3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 P3.1 \u2014 Coherence Non-Negativity",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

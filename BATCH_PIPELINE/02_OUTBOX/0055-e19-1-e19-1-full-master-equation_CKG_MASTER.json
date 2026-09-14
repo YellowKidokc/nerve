@@ -1,0 +1,130 @@
+{
+  "title": "Full Master Equation",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0055_E19.1_E19_1_Full_Master_Equation.md",
+  "source_sha256": "282139bf1ddf2822d558098ef2abcab5d8edf4f2e2683d0ab48b16ae4da22645",
+  "captured_at": "2026-09-06T23:53:35.862044+00:00",
+  "tags": [
+    "information-theory",
+    "theology"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 3251,
+    "completion_tokens": 2521,
+    "total_tokens": 5772,
+    "cost": 0.003741162282,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037789518,
+      "upstream_inference_prompt_cost": 0.0009768603,
+      "upstream_inference_completions_cost": 0.0028020915
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A Theophysics Master Equation exists that integrates all ten laws.",
+      "role": "Core claim of the record",
+      "formal": "\u2203 MasterEquation(LLC, \u03c7, primitives, S)"
+    },
+    {
+      "id": "P2",
+      "statement": "The formal expression of the master equation is LLC = \u03c7(t)(d/dt(\u03a3 primitives))\u00b2 - S\u00b7\u03c7(t).",
+      "role": "Given formal expression",
+      "formal": "LLC = \u03c7(t) * (d/dt(\u03a3_i p_i))\u00b2 - S * \u03c7(t)"
+    },
+    {
+      "id": "P3",
+      "statement": "The equation's status is \"equation\" and its epistemic mode is \"AX_SCAFFOLD\".",
+      "role": "Classification metadata",
+      "formal": "status = \"equation\", mode = \"AX_SCAFFOLD\""
+    },
+    {
+      "id": "P4",
+      "statement": "The master equation depends on laws D19.1 through D19.10.",
+      "role": "Dependency declaration",
+      "formal": "depends_on = {D19.1, D19.2, ..., D19.10}"
+    },
+    {
+      "id": "P5",
+      "statement": "The master equation is schematic: each primitive needs a precise definition.",
+      "role": "Limitation/Requirement",
+      "formal": "\u2200 p_i \u2208 {primitives}, Definition(p_i) is required."
+    },
+    {
+      "id": "P6",
+      "statement": "The square of the time derivative in the equation needs justification.",
+      "role": "Limitation/Open Question",
+      "formal": "Justification for (d/dt(\u03a3 p_i))\u00b2 is required."
+    },
+    {
+      "id": "P7",
+      "statement": "A defeat condition for the master equation is demonstrating internal inconsistency.",
+      "role": "Defeat condition",
+      "formal": "Defeat if: \u2203 contradiction within MasterEquation axioms."
+    },
+    {
+      "id": "P8",
+      "statement": "The equation's domain is \"Unified\".",
+      "role": "Classification",
+      "formal": "domain = \"Unified\""
+    },
+    {
+      "id": "P9",
+      "statement": "The equation's chain tier is \"13 \u2014 Master Laws\".",
+      "role": "Metric",
+      "formal": "chain_tier = 13"
+    },
+    {
+      "id": "P10",
+      "statement": "The master equation is an \"Atlas Object Type\" of \"Equation\".",
+      "role": "Classification",
+      "formal": "atlas_type = \"Equation\""
+    },
+    {
+      "id": "P11",
+      "statement": "The master equation's workbook role is \"EQUATION/PREDICTION\".",
+      "role": "Classification",
+      "formal": "workbook_role = \"EQUATION/PREDICTION\""
+    },
+    {
+      "id": "P12",
+      "statement": "The master equation is a mathematical model.",
+      "role": "Classification",
+      "formal": "mathematical_use = \"Mathematical model\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0055: E19.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E19.1 \u2014 Full Master Equation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

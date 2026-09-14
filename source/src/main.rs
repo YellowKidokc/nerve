@@ -468,6 +468,9 @@ fn main() -> Result<()> {
                     );
                     // Re-register hotkeys — replace the manager so the old one
                     // drops (unregistering old hotkeys) and the new one stays alive.
+                    // Release old registrations before replacing them, so
+                    // Windows does not reject the saved combinations as duplicates.
+                    hotkey_manager.take();
                     match hotkeys::register_all(&cfg_lock) {
                         Ok(mgr) => {
                             hotkey_manager = Some(mgr);
@@ -1008,6 +1011,14 @@ fn handle_ipc(
                     "description": hs.description
                 }));
             }
+            for prompt in &cfg_lock.prompts {
+                items.push(serde_json::json!({
+                    "type": "prompt",
+                    "trigger": format!("/{}", prompt.name),
+                    "output": prompt.template,
+                    "description": prompt.shortcut.clone().unwrap_or_default()
+                }));
+            }
             if let Ok(json) = serde_json::to_string(&items) {
                 let script = format!("items = {}; renderLibrary();", json);
                 panel_mgr.evaluate_script(panel, &script);
@@ -1019,6 +1030,7 @@ fn handle_ipc(
                 let mut cfg_lock = cfg.lock().unwrap();
                 let mut new_hotkeys = Vec::new();
                 let mut new_hotstrings = Vec::new();
+                let mut new_prompts = Vec::new();
 
                 for it in items {
                     let it_type = it.get("type").and_then(|v| v.as_str()).unwrap_or("");
@@ -1055,6 +1067,23 @@ fn handle_ipc(
                                 replace_trigger: true,
                             });
                         }
+                    } else if it_type == "prompt" {
+                        let name = it.get("trigger")
+                            .and_then(|v| v.as_str())
+                            .unwrap_or("")
+                            .trim()
+                            .trim_start_matches('/')
+                            .trim()
+                            .to_ascii_lowercase();
+                        if !name.is_empty() && !output.is_empty() {
+                            new_prompts.push(config::Prompt {
+                                name,
+                                template: output,
+                                shortcut: if desc.is_empty() { None } else { Some(desc) },
+                                replace: true,
+                                popup: false,
+                            });
+                        }
                     }
                 }
 
@@ -1062,11 +1091,12 @@ fn handle_ipc(
                     cfg_lock.hotkeys = new_hotkeys;
                 }
                 cfg_lock.hotstrings = new_hotstrings;
+                cfg_lock.prompts = new_prompts;
 
                 if let Err(e) = cfg_lock.save() {
                     error!("Failed to save shortcuts: {}", e);
                 } else {
-                    info!("Shortcuts saved via IPC ({} hotkeys, {} hotstrings)", cfg_lock.hotkeys.len(), cfg_lock.hotstrings.len());
+                    info!("Shortcuts saved via IPC ({} hotkeys, {} hotstrings, {} slash prompts)", cfg_lock.hotkeys.len(), cfg_lock.hotstrings.len(), cfg_lock.prompts.len());
                 }
                 drop(cfg_lock);
 

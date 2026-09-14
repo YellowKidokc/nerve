@@ -1,0 +1,127 @@
+{
+  "title": "Law I: Logos-Lagrangian",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0045_D19.1_D19_1_Law_I_Logos-Lagrangian.md",
+  "source_sha256": "9cf48a6602658c218c6d4db49e9caa21a94e4e865779224ffb033c70d7907b70",
+  "captured_at": "2026-09-06T23:44:50.325938+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2312,
+    "completion_tokens": 2564,
+    "total_tokens": 4876,
+    "cost": 0.003444058332,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0034788468,
+      "upstream_inference_prompt_cost": 0.0006289608,
+      "upstream_inference_completions_cost": 0.002849886
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Law I is the Logos-Lagrangian Correspondence.",
+      "role": "Core Definition",
+      "formal": "`Law I := \"Logos-Lagrangian Correspondence\"`"
+    },
+    {
+      "id": "P2",
+      "statement": "The Logos-Lagrangian is a function L.",
+      "role": "Formal Expression",
+      "formal": "`L`"
+    },
+    {
+      "id": "P3",
+      "statement": "L depends on a field \u03c7.",
+      "role": "Formal Expression",
+      "formal": "`L(\u03c7, ...)`"
+    },
+    {
+      "id": "P4",
+      "statement": "L depends on the derivatives of \u03c7.",
+      "role": "Formal Expression",
+      "formal": "`L(..., \u2202\u03c7, ...)`"
+    },
+    {
+      "id": "P5",
+      "statement": "L depends on the spacetime metric g_\u03bc\u03bd.",
+      "role": "Formal Expression",
+      "formal": "`L(..., g_\u03bc\u03bd)`"
+    },
+    {
+      "id": "P6",
+      "statement": "The framework's domain is \"Unified.\"",
+      "role": "Classification",
+      "formal": "`domain = \"Unified\"`"
+    },
+    {
+      "id": "P7",
+      "statement": "Law I depends on anchor D3.3 (Interaction Lagrangian).",
+      "role": "Dependency Chain",
+      "formal": "`depends_on(D19.1, D3.3)`"
+    },
+    {
+      "id": "P8",
+      "statement": "The epistemic status of Law I is \"definition.\"",
+      "role": "Classification",
+      "formal": "`epistemic_status = \"definition\"`"
+    },
+    {
+      "id": "P9",
+      "statement": "A defeat condition for this law is demonstrating reality requires a non-Lagrangian description.",
+      "role": "Defeat Condition",
+      "formal": "`defeat_if(\u2203 description_of_reality \u2227 \u00acuses_Lagrangian)`"
+    },
+    {
+      "id": "P10",
+      "statement": "The \u03c7-specific form of L needs derivation.",
+      "role": "Limitation",
+      "formal": "`need_to_derive(L_explicit(\u03c7))`"
+    },
+    {
+      "id": "P11",
+      "statement": "Lagrangian mechanics applies to the domain.",
+      "role": "Assumption (from tags)",
+      "formal": "`assume(applicable(Lagrangian_mechanics, domain))`"
+    },
+    {
+      "id": "P12",
+      "statement": "Noether (1918) is a foundational reference.",
+      "role": "Reference",
+      "formal": "`references(Noether_1918)`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0045: D19.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.1 \u2014 Law I: Logos-Lagrangian",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

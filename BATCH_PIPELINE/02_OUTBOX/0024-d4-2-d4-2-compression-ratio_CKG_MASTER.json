@@ -1,0 +1,129 @@
+{
+  "title": "Compression Ratio",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0024_D4.2_D4_2_Compression_Ratio.md",
+  "source_sha256": "9c21c980005d85704b6755a2b996d259e318be178c2d89eb9e59cbb468d34c67",
+  "captured_at": "2026-09-06T23:24:42.640321+00:00",
+  "tags": [
+    "information-theory"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2370,
+    "completion_tokens": 2465,
+    "total_tokens": 4835,
+    "cost": 0.003356394327,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033902973,
+      "upstream_inference_prompt_cost": 0.0006504498,
+      "upstream_inference_completions_cost": 0.0027398475
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The compression ratio is defined as Kolmogorov complexity over raw length.",
+      "role": "Statement",
+      "formal": "`CR(x) = K(x) /"
+    },
+    {
+      "id": "P2",
+      "statement": "`CR(x)` is a function of a string `x`.",
+      "role": "Formal Expression",
+      "formal": "`CR(x)`"
+    },
+    {
+      "id": "P3",
+      "statement": "`K(x)` denotes the Kolmogorov complexity of `x`.",
+      "role": "Formal Expression (implicit)",
+      "formal": "`K(x)`"
+    },
+    {
+      "id": "P4",
+      "statement": "`",
+      "role": "x",
+      "formal": "` denotes the raw length of `x`."
+    },
+    {
+      "id": "P5",
+      "statement": "This definition is anchored in A2.2 (Self-Grounding).",
+      "role": "Dependency Chain",
+      "formal": "`anchor: A2.2`"
+    },
+    {
+      "id": "P6",
+      "statement": "This definition depends on A2.2 (Self-Grounding).",
+      "role": "Dependency Chain",
+      "formal": "`depends_on: A2.2`"
+    },
+    {
+      "id": "P7",
+      "statement": "The definition is classified as \"Ontological\" in domain.",
+      "role": "Classification",
+      "formal": "`Domain: Ontological`"
+    },
+    {
+      "id": "P8",
+      "statement": "The definition is a standard definition.",
+      "role": "Limitations",
+      "formal": "\"Standard definition.\""
+    },
+    {
+      "id": "P9",
+      "statement": "The definition has low vulnerability.",
+      "role": "Limitations",
+      "formal": "\"Low vulnerability.\""
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition is showing the compression ratio is the wrong measure.",
+      "role": "Defeat Conditions",
+      "formal": "\"Show compression ratio is wrong measure.\""
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is demonstrating a better complexity measure exists.",
+      "role": "Defeat Conditions",
+      "formal": "\"Demonstrate better complexity measure.\""
+    },
+    {
+      "id": "P12",
+      "statement": "The record's epistemic status is \"definition\".",
+      "role": "Classification",
+      "formal": "`Epistemic Status: definition`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0024: D4.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D4.2 \u2014 Compression Ratio",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

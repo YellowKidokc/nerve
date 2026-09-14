@@ -1,0 +1,33 @@
+{
+  "title": "GR-QM Bridge Equation",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0042_E13.1_E13_1_GR-QM_Bridge_Equation.md",
+  "source_sha256": "813d0f8628b9efe8992189d7c4017a4a51d73ecf2848f5eac2014e6b64cac6a5",
+  "captured_at": "2026-09-06T23:41:30.362200+00:00",
+  "word_count": 381,
+  "tags": [
+    "quantum-foundations"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0042: E13.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E13.1 \u2014 GR-QM Bridge Equation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

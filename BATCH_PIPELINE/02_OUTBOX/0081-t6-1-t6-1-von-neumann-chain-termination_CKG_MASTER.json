@@ -1,0 +1,130 @@
+{
+  "title": "Von Neumann Chain Termination",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0081_T6.1_T6_1_Von_Neumann_Chain_Termination.md",
+  "source_sha256": "46f4f802b6cd5845f22391e2f555dd435a4b363344364f8deaf879c262e2ca72",
+  "captured_at": "2026-09-07T00:13:20.311750+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2389,
+    "completion_tokens": 2625,
+    "total_tokens": 5014,
+    "cost": 0.003539425032,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035751768,
+      "upstream_inference_prompt_cost": 0.0006574893,
+      "upstream_inference_completions_cost": 0.0029176875
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The Von Neumann measurement chain must terminate.",
+      "role": "Core Theorem Statement",
+      "formal": "\u2203N: chain terminates at observer N"
+    },
+    {
+      "id": "P2",
+      "statement": "Infinite regress in measurement is unphysical.",
+      "role": "Core Theorem Justification",
+      "formal": "\u00ac(chain is infinite \u2227 physical)"
+    },
+    {
+      "id": "P3",
+      "statement": "The theorem depends on A5.1 (Observation Requirement).",
+      "role": "Dependency Assertion",
+      "formal": "T6.1 \u22a2 A5.1"
+    },
+    {
+      "id": "P4",
+      "statement": "The theorem depends on A6.2 (Collapse).",
+      "role": "Dependency Assertion",
+      "formal": "T6.1 \u22a2 A6.2"
+    },
+    {
+      "id": "P5",
+      "statement": "The theorem's anchor in the dependency chain is A5.1 \u2192 A6.2.",
+      "role": "Structural Assertion",
+      "formal": "Anchor(A5.1, A6.2)"
+    },
+    {
+      "id": "P6",
+      "statement": "The theorem is classified as ontological.",
+      "role": "Classification Assertion",
+      "formal": "Domain(T6.1) = Ontological"
+    },
+    {
+      "id": "P7",
+      "statement": "The theorem's status is `theorem`.",
+      "role": "Epistemic Assertion",
+      "formal": "Status(T6.1) = theorem"
+    },
+    {
+      "id": "P8",
+      "statement": "The standard argument against infinite regress in measurement is assumed valid.",
+      "role": "Assumption",
+      "formal": "Assume(valid(standard_argument))"
+    },
+    {
+      "id": "P9",
+      "statement": "A defeat condition exists: showing an infinite measurement chain is physical.",
+      "role": "Falsifiability Condition",
+      "formal": "Defeat(T6.1) \u2194 physical(infinite_chain)"
+    },
+    {
+      "id": "P10",
+      "statement": "The theorem references the Von Neumann (1932) and Wigner's friend thought experiments.",
+      "role": "Referential Assertion",
+      "formal": "References(T6.1) = {Von Neumann 1932, Wigner's friend}"
+    },
+    {
+      "id": "P11",
+      "statement": "The theorem is a framework commitment within the `FW_EXTENDED` mode.",
+      "role": "Framework Assertion",
+      "formal": "Mode(T6.1) = FW_EXTENDED \u2227 Role(T6.1) = Framework commitment"
+    },
+    {
+      "id": "P12",
+      "statement": "The chain termination is a requirement for physicality.",
+      "role": "Implied Necessity",
+      "formal": "physical(measurement) \u2192 \u2203N: terminates(N)"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0081: T6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 T6.1 \u2014 Von Neumann Chain Termination",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

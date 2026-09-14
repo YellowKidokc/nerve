@@ -1,0 +1,129 @@
+{
+  "title": "Substrate Requirement",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0003_A2_1_Substrate_Requirement.md",
+  "source_sha256": "eb69624140f46b26b13bb1295fb178063dbc9002ea1acfe4a3844f543bc41725",
+  "captured_at": "2026-09-06T23:01:47.720391+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2173,
+    "completion_tokens": 2760,
+    "total_tokens": 4933,
+    "cost": 0.003608749287,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036452013,
+      "upstream_inference_prompt_cost": 0.0005774613,
+      "upstream_inference_completions_cost": 0.00306774
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Information requires a substrate.",
+      "role": "Axiomatic Statement",
+      "formal": "\u2203S: Grounds(S, Information)"
+    },
+    {
+      "id": "P2",
+      "statement": "Information cannot exist as a free-floating abstraction.",
+      "role": "Corollary / Restatement",
+      "formal": "\u00ac\u2203I: (Information(I) \u2227 \u2200S: \u00acGrounds(S, I))"
+    },
+    {
+      "id": "P3",
+      "statement": "The framework requires that information requires a substrate.",
+      "role": "Maximum Defensible Position",
+      "formal": "Framework \u22a2 (\u2203S: Grounds(S, Information))"
+    },
+    {
+      "id": "P4",
+      "statement": "This axiom depends on A1.3 (Information Primacy).",
+      "role": "Dependency Assertion",
+      "formal": "A2.1 \u22a2 depends_on(A1.3)"
+    },
+    {
+      "id": "P5",
+      "statement": "Mathematical Platonists (e.g., Tegmark) disagree with this substrate requirement.",
+      "role": "Defeat Condition / Limitation",
+      "formal": "\u2203Position(Platonism) \u2227 Position \u22a2 \u00acA2.1"
+    },
+    {
+      "id": "P6",
+      "statement": "If mathematics exists without a substrate, then A2.1 is false.",
+      "role": "Defeat Condition Formalization",
+      "formal": "(\u2203Math \u2227 \u00ac\u2203S: Grounds(S, Math)) \u2192 \u00acA2.1"
+    },
+    {
+      "id": "P7",
+      "statement": "This axiom belongs to the ontological domain.",
+      "role": "Classification",
+      "formal": "Domain(A2.1) = Ontological"
+    },
+    {
+      "id": "P8",
+      "statement": "The axiom's status is primitive.",
+      "role": "Epistemic Status",
+      "formal": "Status(A2.1) = primitive"
+    },
+    {
+      "id": "P9",
+      "statement": "Showing information existing without any substrate defeats the axiom.",
+      "role": "Defeat Condition Statement",
+      "formal": "Defeat(A2.1) \u2194 (\u2203I: Information(I) \u2227 \u2200S: \u00acGrounds(S, I))"
+    },
+    {
+      "id": "P10",
+      "statement": "The axiom is part of a dependency chain at Tier 2 (Ontological Substrate).",
+      "role": "Structural Assertion",
+      "formal": "Tier(A2.1) = 2"
+    },
+    {
+      "id": "P11",
+      "statement": "The concept references Aristotelian hylomorphism and Floridi (2011).",
+      "role": "Source Attribution",
+      "formal": "References(A2.1) = {Aristotle(hylomorphism), Floridi2011}"
+    },
+    {
+      "id": "P12",
+      "statement": "The axiom is a formal definition / primitive formalization.",
+      "role": "Functional Role",
+      "formal": "MathematicalUse(A2.1) = Formal definition"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0003: A2.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A2.1 \u2014 Substrate Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "title": "Irreversibility",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0077_A6.3_A6_3_Irreversibility.md",
+  "source_sha256": "a246c9b2afe6a70718f63e139296926b436d67ae8f186606ca95f0a444b98930",
+  "captured_at": "2026-09-07T00:09:29.528494+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2133,
+    "completion_tokens": 2667,
+    "total_tokens": 4800,
+    "cost": 0.003491741682,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035270118,
+      "upstream_inference_prompt_cost": 0.0005626413,
+      "upstream_inference_completions_cost": 0.0029643705
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Collapse is irreversible.",
+      "role": "Central Claim",
+      "formal": "`Collapse: irreversible process`"
+    },
+    {
+      "id": "P2",
+      "statement": "You cannot uncollapse a measurement.",
+      "role": "Restatement of Central Claim",
+      "formal": "`\u00ac(Uncollapse(measurement))`"
+    },
+    {
+      "id": "P3",
+      "statement": "Collapse is a standard irreversible process.",
+      "role": "Assumption (from semantic tags)",
+      "formal": "Assumed as a framework commitment."
+    },
+    {
+      "id": "P4",
+      "statement": "The framework depends on A5.1 (Observation Requirement).",
+      "role": "Dependency Declaration",
+      "formal": "`A6.3 depends_on A5.1`"
+    },
+    {
+      "id": "P5",
+      "statement": "Landauer's principle and the 2nd Law are relevant references.",
+      "role": "Supporting Reference",
+      "formal": "Cited as conceptual backing."
+    },
+    {
+      "id": "P6",
+      "statement": "A demonstration of reversible collapse would defeat this claim.",
+      "role": "Defeat Condition",
+      "formal": "`Defeat if: Show reversible collapse.`"
+    },
+    {
+      "id": "P7",
+      "statement": "Quantum error correction can partially reverse, but not fully reverse, collapse.",
+      "role": "Limitation/Qualification",
+      "formal": "`QEC \u2192 partial reversal, \u00acfull reversal`"
+    },
+    {
+      "id": "P8",
+      "statement": "The epistemic status of this claim is `framework_commitment`.",
+      "role": "Classification",
+      "formal": "Status is asserted, not derived."
+    },
+    {
+      "id": "P9",
+      "statement": "This claim belongs to the Ontological domain.",
+      "role": "Classification",
+      "formal": "Domain: Ontological."
+    },
+    {
+      "id": "P10",
+      "statement": "The risk exists that reversible collapse could be demonstrated.",
+      "role": "Risk Statement (from semantic tags)",
+      "formal": "Identified as a framework risk."
+    },
+    {
+      "id": "P11",
+      "statement": "It is an open question whether quantum error correction can fully reverse collapse.",
+      "role": "Open Question (from semantic tags)",
+      "formal": "Question is explicitly noted."
+    },
+    {
+      "id": "P12",
+      "statement": "Collapse must be irreversible.",
+      "role": "Requirement (from semantic tags)",
+      "formal": "Stated as a framework requirement."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0077: A6.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A6.3 \u2014 Irreversibility",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

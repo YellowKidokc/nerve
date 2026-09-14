@@ -1,0 +1,130 @@
+{
+  "title": "Witness Field Operator",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0028_D5.3_D5_3_Witness_Field_Operator.md",
+  "source_sha256": "302089eb2e61f0fc59c5e1867bfb840a46ada1363e1c574eaf87bac6d6ddb987",
+  "captured_at": "2026-09-06T23:28:01.667201+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2184,
+    "completion_tokens": 2450,
+    "total_tokens": 4634,
+    "cost": 0.003271664682,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033047118,
+      "upstream_inference_prompt_cost": 0.0005815368,
+      "upstream_inference_completions_cost": 0.002723175
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A witness field operator (\u0174) is defined.",
+      "role": "Core Definition",
+      "formal": "\u0174 is defined."
+    },
+    {
+      "id": "P2",
+      "statement": "The witness field operator (\u0174) is the formal representation of observation.",
+      "role": "Interpretation of Definition",
+      "formal": "\u0174 \u2261 formal_rep(observation)"
+    },
+    {
+      "id": "P3",
+      "statement": "The witnessed field, W(x), is the expectation value of the witness field operator.",
+      "role": "Corollary Definition",
+      "formal": "W(x) = \u27e8\u0174\u27e9"
+    },
+    {
+      "id": "P4",
+      "statement": "The definition of \u0174 depends on Axiom A5.1 (Observation Requirement).",
+      "role": "Dependency Assertion",
+      "formal": "D5.3 \u2283 A5.1"
+    },
+    {
+      "id": "P5",
+      "statement": "The formalism is novel.",
+      "role": "Self-assessment",
+      "formal": "novel(\u0174_formalism) = True"
+    },
+    {
+      "id": "P6",
+      "statement": "The formalism lacks a connection to established measurement theory.",
+      "role": "Limitation",
+      "formal": "connection(\u0174_formalism, established_measurement_theory) \u2248 null"
+    },
+    {
+      "id": "P7",
+      "statement": "Observation is a required component of the system (from A5.1).",
+      "role": "Imported Premise",
+      "formal": "requirement(observation) = True"
+    },
+    {
+      "id": "P8",
+      "statement": "The record is a definition within the ontological domain.",
+      "role": "Meta-assertion",
+      "formal": "domain(D5.3) = Ontological"
+    },
+    {
+      "id": "P9",
+      "statement": "The record's status is `definition`.",
+      "role": "Meta-assertion",
+      "formal": "status(D5.3) = definition"
+    },
+    {
+      "id": "P10",
+      "statement": "The formalism could be defeated by showing observation doesn't need a field operator.",
+      "role": "Defeat Condition",
+      "formal": "defeat if \u00acneed(observation, field_operator_formalism)"
+    },
+    {
+      "id": "P11",
+      "statement": "The operator is a primitive formalization.",
+      "role": "Classification",
+      "formal": "type(\u0174) = primitive_formalization"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition is anchored to A5.1.",
+      "role": "Structural Assertion",
+      "formal": "anchor(D5.3) = A5.1"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0028: D5.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D5.3 \u2014 Witness Field Operator",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

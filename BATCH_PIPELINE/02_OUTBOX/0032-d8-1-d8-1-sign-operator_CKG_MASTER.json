@@ -1,0 +1,129 @@
+{
+  "title": "Sign Operator",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0032_D8.1_D8_1_Sign_Operator.md",
+  "source_sha256": "580fbba99d623eff99d25552bb1792b9a9ad89a9fc83c22f4bffd0a9f01c2db4",
+  "captured_at": "2026-09-06T23:31:26.964506+00:00",
+  "tags": [
+    "quantum-foundations"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2344,
+    "completion_tokens": 2455,
+    "total_tokens": 4799,
+    "cost": 0.003335853807,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033695493,
+      "upstream_inference_prompt_cost": 0.0006408168,
+      "upstream_inference_completions_cost": 0.0027287325
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The sign operator is defined.",
+      "role": "Statement / Definition",
+      "formal": "\u03c3\u0302 is defined."
+    },
+    {
+      "id": "P2",
+      "statement": "The sign operator is a binary moral orientation eigenvalue operator.",
+      "role": "Statement / Maximum Defensible Position",
+      "formal": "\u03c3\u0302 is a \"sign (moral orientation) operator\"."
+    },
+    {
+      "id": "P3",
+      "statement": "The sign operator acts on a state",
+      "role": "\u03c8\u27e9.",
+      "formal": "Formal Expression"
+    },
+    {
+      "id": "P4",
+      "statement": "The eigenvalue \u03c3 of the sign operator is either +1 or -1.",
+      "role": "Formal Expression",
+      "formal": "\u03c3 \u2208 {+1, -1}"
+    },
+    {
+      "id": "P5",
+      "statement": "The sign operator's domain is \"Moral\".",
+      "role": "Classification",
+      "formal": "Domain: Moral"
+    },
+    {
+      "id": "P6",
+      "statement": "The sign operator depends on BC6 (Infinite Energy Source).",
+      "role": "Dependency Chain",
+      "formal": "Depends On: BC6"
+    },
+    {
+      "id": "P7",
+      "statement": "The sign operator is a formal definition / primitive formalization.",
+      "role": "Classification",
+      "formal": "Mathematical Use: Formal definition / primitive formalization"
+    },
+    {
+      "id": "P8",
+      "statement": "The epistemic status of this record is \"definition\".",
+      "role": "Classification",
+      "formal": "Epistemic Status: `definition`"
+    },
+    {
+      "id": "P9",
+      "statement": "The binary claim about moral orientation is strong.",
+      "role": "Limitations",
+      "formal": "\"The binary claim is strong.\""
+    },
+    {
+      "id": "P10",
+      "statement": "Most moral philosophy assumes a continuous moral spectrum.",
+      "role": "Limitations",
+      "formal": "\"Most moral philosophy assumes continuous spectrum.\""
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is showing moral orientation is not binary.",
+      "role": "Defeat Conditions",
+      "formal": "\"Show moral orientation is not binary.\""
+    },
+    {
+      "id": "P12",
+      "statement": "A defeat condition is demonstrating a continuous moral spectrum without a sign.",
+      "role": "Defeat Conditions",
+      "formal": "\"Demonstrate continuous moral spectrum without sign.\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0032: D8.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D8.1 \u2014 Sign Operator",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

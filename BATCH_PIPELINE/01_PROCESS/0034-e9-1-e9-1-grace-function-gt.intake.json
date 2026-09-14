@@ -1,0 +1,31 @@
+{
+  "title": "Grace Function G(t)",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0034_E9.1_E9_1_Grace_Function_Gt.md",
+  "source_sha256": "0067cc92945ef638334cd62b2e66ba76958e3f5f68ded86d5e2da895c91c0146",
+  "captured_at": "2026-09-06T23:34:24.576263+00:00",
+  "word_count": 459,
+  "tags": [],
+  "source_outline": [
+    "Canonical Sequential Record 0034: E9.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E9.1 \u2014 Grace Function G(t)",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

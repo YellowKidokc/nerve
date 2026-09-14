@@ -1,0 +1,12 @@
+{
+  "name": "nerve-atom-jobs",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-09-08",
+  "ai": { "binding": "AI" },
+  "vars": { "AI_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast" },
+  "d1_databases": [{ "binding": "DB", "database_name": "nerve-atom-jobs", "database_id": "bb6b3790-b515-402b-b0e8-0652df07b23c" }],
+  "queues": {
+    "producers": [{ "binding": "JOBS", "queue": "nerve-atom-jobs" }],
+    "consumers": [{ "queue": "nerve-atom-jobs", "max_batch_size": 1, "max_concurrency": 100, "max_retries": 100, "retry_delay": 60 }]
+  }
+}

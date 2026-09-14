@@ -1,0 +1,131 @@
+{
+  "title": "Observer Effect Proportional To Phi",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0073_P5.2_P5_2_Observer_Effect_Proportional_To_Phi.md",
+  "source_sha256": "0629ebcbfb2eed028105585736524363b5b1475f26c318ef4e9e57a849e389e6",
+  "captured_at": "2026-09-07T00:06:04.337066+00:00",
+  "tags": [
+    "consciousness",
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2523,
+    "completion_tokens": 2715,
+    "total_tokens": 5238,
+    "cost": 0.003687610212,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037248588,
+      "upstream_inference_prompt_cost": 0.0007071363,
+      "upstream_inference_completions_cost": 0.0030177225
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "An observer is required for quantum actualization.",
+      "role": "Dependency Anchor (A5.1)",
+      "formal": "Not provided in source, but referenced as foundational."
+    },
+    {
+      "id": "P2",
+      "statement": "Integrated Information (\u03a6) quantifies a system's causal/conscious power.",
+      "role": "Dependency (D5.2)",
+      "formal": "Not provided in source, but referenced as definitional."
+    },
+    {
+      "id": "P3",
+      "statement": "The observer's effect on the observed is proportional to the observer's \u03a6.",
+      "role": "Central Claim",
+      "formal": "`Effect \u221d \u03a6_observer`"
+    },
+    {
+      "id": "P4",
+      "statement": "This proposition is a framework commitment within the `FW_EXTENDED` mode.",
+      "role": "Classification",
+      "formal": "Mode: `FW_EXTENDED`; Atlas Type: `Property`"
+    },
+    {
+      "id": "P5",
+      "statement": "The proposition belongs to the Ontological domain.",
+      "role": "Classification",
+      "formal": "Domain: `Ontological`"
+    },
+    {
+      "id": "P6",
+      "statement": "The proposition depends on axioms A5.1 and definition D5.2.",
+      "role": "Dependency Structure",
+      "formal": "`depends_on: \"A5.1, D5.2\"`"
+    },
+    {
+      "id": "P7",
+      "statement": "If true, high-\u03a6 observers collapse wavefunctions faster.",
+      "role": "Predictive Consequence (from Limitations)",
+      "formal": "Conditional: If `Effect \u221d \u03a6_observer`, then `Collapse_Rate(high-\u03a6) > Collapse_Rate(low-\u03a6)`"
+    },
+    {
+      "id": "P8",
+      "statement": "The claim can be defeated by showing the observer effect is \u03a6-independent.",
+      "role": "Defeat Condition",
+      "formal": "Falsified if `d(Effect)/d(\u03a6_observer) = 0`"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is a \"distinctive prediction\" of the framework.",
+      "role": "Epistemic Status",
+      "formal": "Labeled \"THE distinctive prediction.\""
+    },
+    {
+      "id": "P10",
+      "statement": "The claim's epistemic status is `property`, not axiom or theorem.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `property`"
+    },
+    {
+      "id": "P11",
+      "statement": "PEAR Lab, GCP, and IIT are relevant research contexts.",
+      "role": "Contextual Reference",
+      "formal": "References: \"PEAR Lab; GCP; IIT\""
+    },
+    {
+      "id": "P12",
+      "statement": "How to empirically verify the proportionality is an open question.",
+      "role": "Open Question",
+      "formal": "Tag: `OpenQuestion::\"How to empirically verify proportionality...\"`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0073: P5.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 P5.2 \u2014 Observer Effect Proportional To Phi",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

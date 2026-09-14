@@ -1,0 +1,34 @@
+{
+  "title": "Information Primacy",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0008_A1.3_A1_3_Information_Primacy.md",
+  "source_sha256": "e9231e7c466b21bf4fc56f968f56867754f0d0db13afb24d6432c9432c960dd0",
+  "captured_at": "2026-09-06T23:04:58.157602+00:00",
+  "word_count": 391,
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0008: A1.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 A1.3 \u2014 Information Primacy",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

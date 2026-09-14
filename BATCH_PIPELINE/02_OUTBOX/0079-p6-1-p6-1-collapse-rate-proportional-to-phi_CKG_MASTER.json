@@ -1,0 +1,130 @@
+{
+  "title": "Collapse Rate Proportional To Phi",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0079_P6.1_P6_1_Collapse_Rate_Proportional_To_Phi.md",
+  "source_sha256": "40fd0723a2f1481f8a5d3f17aa3004223458b5e86b7c9ec557fc857ce4be7636",
+  "captured_at": "2026-09-07T00:11:24.525645+00:00",
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2422,
+    "completion_tokens": 2634,
+    "total_tokens": 5056,
+    "cost": 0.003561432732,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035974068,
+      "upstream_inference_prompt_cost": 0.0006697158,
+      "upstream_inference_completions_cost": 0.002927691
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Collapse rate \u0393 is proportional to observer's integrated information \u03a6.",
+      "role": "Central Property Claim",
+      "formal": "\u0393 \u221d \u03a6"
+    },
+    {
+      "id": "P2",
+      "statement": "Observation is a physical requirement for a definite outcome (collapse).",
+      "role": "Dependency (A5.1)",
+      "formal": "Not formally given in this source."
+    },
+    {
+      "id": "P3",
+      "statement": "Integrated information \u03a6 quantifies the observer.",
+      "role": "Dependency (D5.2)",
+      "formal": "Not formally given in this source."
+    },
+    {
+      "id": "P4",
+      "statement": "Collapse is a physical process characterized by a rate \u0393.",
+      "role": "Dependency (D6.1)",
+      "formal": "Not formally given in this source."
+    },
+    {
+      "id": "P5",
+      "statement": "This property (P6.1) is the most testable prediction of the framework.",
+      "role": "Limitation/Workbook Note",
+      "formal": "N/A (Interpretive)"
+    },
+    {
+      "id": "P6",
+      "statement": "Testing this property requires measuring both \u0393 and \u03a6 simultaneously.",
+      "role": "Limitation/Workbook Note",
+      "formal": "N/A (Empirical Requirement)"
+    },
+    {
+      "id": "P7",
+      "statement": "An experiment showing \u0393 is not a function of \u03a6 would defeat this property.",
+      "role": "Defeat Condition",
+      "formal": "Experimental result: \u0393 \u2260 f(\u03a6)"
+    },
+    {
+      "id": "P8",
+      "statement": "This claim is classified as an ontological property within the framework.",
+      "role": "Classification",
+      "formal": "Domain: Ontological; Status: property"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is a framework commitment, not a derived theorem.",
+      "role": "Classification",
+      "formal": "Mathematical Use: Framework commitment"
+    },
+    {
+      "id": "P10",
+      "statement": "The property anchors a dependency chain: A5.1 \u2192 D5.2 \u2192 D6.1.",
+      "role": "Structural Relationship",
+      "formal": "Anchor: A5.1 \u2192 D5.2 \u2192 D6.1"
+    },
+    {
+      "id": "P11",
+      "statement": "The claim draws references from IIT and objective collapse theories.",
+      "role": "Source Attribution",
+      "formal": "References: IIT; Objective collapse theories"
+    },
+    {
+      "id": "P12",
+      "statement": "The property's epistemic status within the framework is `property`.",
+      "role": "Epistemic Classification",
+      "formal": "Epistemic Status: `property`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0079: P6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 P6.1 \u2014 Collapse Rate Proportional To Phi",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

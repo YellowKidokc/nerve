@@ -1,0 +1,131 @@
+{
+  "title": "Soul Field Equation",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0036_E10.1_E10_1_Soul_Field_Equation.md",
+  "source_sha256": "2e69bf13bbc963e2027c86944bbe9e6132018599957aecf22464e5b5b4bfbd06",
+  "captured_at": "2026-09-06T23:36:55.692534+00:00",
+  "tags": [
+    "consciousness",
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2740,
+    "completion_tokens": 2553,
+    "total_tokens": 5293,
+    "cost": 0.003588942357,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036251943,
+      "upstream_inference_prompt_cost": 0.0007875348,
+      "upstream_inference_completions_cost": 0.0028376595
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A soul field exists as a dynamical entity.",
+      "role": "Foundational Assumption",
+      "formal": "\u03a8_S is a defined field."
+    },
+    {
+      "id": "P2",
+      "statement": "The soul field's dynamics can be modeled with a Schr\u00f6dinger-like equation.",
+      "role": "Core Modeling Assumption",
+      "formal": "\u2202\u03a8_S/\u2202t \u221d (\u0124 + \u011c)\u03a8_S"
+    },
+    {
+      "id": "P3",
+      "statement": "A \"grace coupling\" term (\u011c) is a valid addition to the dynamical equation.",
+      "role": "Novel Term Introduction",
+      "formal": "i\u210f\u2202\u03a8_S/\u2202t = \u0124\u03a8_S + **\u011c\u00b7\u03a8_S**"
+    },
+    {
+      "id": "P4",
+      "statement": "The equation is a modified Schr\u00f6dinger equation.",
+      "role": "Classification",
+      "formal": "i\u210f\u2202\u03a8_S/\u2202t = \u0124\u03a8_S + \u011c\u00b7\u03a8_S"
+    },
+    {
+      "id": "P5",
+      "statement": "The model's anchor is an infinite energy source (BC6).",
+      "role": "Dependency Assertion",
+      "formal": "Model anchored to BC6."
+    },
+    {
+      "id": "P6",
+      "statement": "The model depends on the definition of the soul field Psi_S (D10.1).",
+      "role": "Dependency Assertion",
+      "formal": "Model depends on D10.1."
+    },
+    {
+      "id": "P7",
+      "statement": "The equation belongs to the domain of Consciousness.",
+      "role": "Domain Classification",
+      "formal": "Domain: Consciousness"
+    },
+    {
+      "id": "P8",
+      "statement": "The equation's epistemic status is \"equation\".",
+      "role": "Status Assertion",
+      "formal": "Status: `equation`"
+    },
+    {
+      "id": "P9",
+      "statement": "A defeat condition is showing soul dynamics don't follow Schr\u00f6dinger form.",
+      "role": "Falsifiability Condition",
+      "formal": "If \u00ac(\u03a8_S dynamics ~ Schr\u00f6dinger) \u2192 model defeated."
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition is demonstrating the grace term violates conservation laws.",
+      "role": "Falsifiability Condition",
+      "formal": "If \u011c violates conservation \u2192 model defeated."
+    },
+    {
+      "id": "P11",
+      "statement": "A limitation is that the equation needs to reproduce known consciousness phenomena.",
+      "role": "Performance Requirement",
+      "formal": "Model must output \u2248 known consciousness data."
+    },
+    {
+      "id": "P12",
+      "statement": "The equation is a mathematical model.",
+      "role": "Use Classification",
+      "formal": "Mathematical Use: Mathematical model"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0036: E10.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E10.1 \u2014 Soul Field Equation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

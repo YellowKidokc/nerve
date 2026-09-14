@@ -1,0 +1,31 @@
+{
+  "title": "Law V: Conservation Symmetry",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0049_D19.5_D19_5_Law_V_Conservation_Symmetry.md",
+  "source_sha256": "34010c5495935894d5a94b45640ff269e7f8ca6beb7fe63f42c180896c53f37e",
+  "captured_at": "2026-09-06T23:47:27.268294+00:00",
+  "word_count": 395,
+  "tags": [],
+  "source_outline": [
+    "Canonical Sequential Record 0049: D19.5",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.5 \u2014 Law V: Conservation Symmetry",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

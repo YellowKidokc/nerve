@@ -1,0 +1,130 @@
+{
+  "title": "It From Bit",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0057_LN1.2_LN1_2_It_From_Bit.md",
+  "source_sha256": "451447bf2da91f2c97b5ac99381185fb505a606c489692f0b37d34d6e970437d",
+  "captured_at": "2026-09-06T23:55:16.056190+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2332,
+    "completion_tokens": 2662,
+    "total_tokens": 4994,
+    "cost": 0.003559231962,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035951838,
+      "upstream_inference_prompt_cost": 0.0006363708,
+      "upstream_inference_completions_cost": 0.002958813
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Physical reality emerges from informational processes.",
+      "role": "Central Claim / Framework Commitment",
+      "formal": "`Physics \u2190 Information (ontological priority)`"
+    },
+    {
+      "id": "P2",
+      "statement": "Informational processes are ontologically prior to physical reality.",
+      "role": "Assumption / Core Premise",
+      "formal": "`Information >\u2092 Physics`"
+    },
+    {
+      "id": "P3",
+      "statement": "The claim \"It From Bit\" is a logical necessity within the FW_EXTENDED mode.",
+      "role": "Classification / Epistemic Status",
+      "formal": "`Status(logical_necessity)`"
+    },
+    {
+      "id": "P4",
+      "statement": "The claim depends on the axioms of Existence (A1.1) and Distinction (A1.2).",
+      "role": "Dependency Declaration",
+      "formal": "`depends_on: \"A1.1, A1.2\"`"
+    },
+    {
+      "id": "P5",
+      "statement": "Distinction (A1.2) is an informational act.",
+      "role": "Inferred from Dependency Chain",
+      "formal": "(Inferred: A1.2 \u2192 Informational Primitive)"
+    },
+    {
+      "id": "P6",
+      "statement": "The framework adopts \"It From Bit\" as a commitment.",
+      "role": "Decision Tag",
+      "formal": "`Decision: \"Adopt 'It From Bit' as a logical necessity...\"`"
+    },
+    {
+      "id": "P7",
+      "statement": "The literal truth of Wheeler's slogan is debated.",
+      "role": "Limitation / Risk Statement",
+      "formal": "`\"Whether it's literally true is debated.\"`"
+    },
+    {
+      "id": "P8",
+      "statement": "A defeat condition is demonstrating physical processes without an informational substrate.",
+      "role": "Defeat Condition",
+      "formal": "`\"Show physical processes without informational substrate.\"`"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is anchored in the axioms A1.1 and A1.2.",
+      "role": "Structural Link",
+      "formal": "`Anchor: \"A1.1, A1.2\"`"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim belongs to the Ontological domain.",
+      "role": "Classification",
+      "formal": "`Domain: \"Ontological\"`"
+    },
+    {
+      "id": "P11",
+      "statement": "The concept originates with Wheeler (1990) and is supported by digital physics (Zuse, Wolfram).",
+      "role": "Reference Attribution",
+      "formal": "`\"Wheeler 1990; Digital physics (Zuse, Wolfram)\"`"
+    },
+    {
+      "id": "P12",
+      "statement": "There is an open question of whether physical processes can exist without an informational substrate.",
+      "role": "Open Question Tag",
+      "formal": "`OpenQuestion: \"Whether physical processes can exist without informational substrate\"`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0057: LN1.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 LN1.2 \u2014 It From Bit",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

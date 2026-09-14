@@ -1,0 +1,31 @@
+{
+  "title": "Chi Field Properties",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0016_D2.2_D2_2_Chi_Field_Properties.md",
+  "source_sha256": "4c48be867606f7168859ca95fce9375a0d1c3d191954b62b29c9171a84359663",
+  "captured_at": "2026-09-06T23:16:11.275508+00:00",
+  "word_count": 351,
+  "tags": [],
+  "source_outline": [
+    "Canonical Sequential Record 0016: D2.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D2.2 \u2014 Chi Field Properties",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

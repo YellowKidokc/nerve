@@ -1,0 +1,129 @@
+{
+  "title": "Self-Grounding",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0004_A2.2_A2_2_Self-Grounding.md",
+  "source_sha256": "6ac28a93623326a83468b163bdc909e7bef3b6fa294103e2792360cf7efc5a03",
+  "captured_at": "2026-09-06T23:02:40.049409+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2556,
+    "completion_tokens": 2709,
+    "total_tokens": 5265,
+    "cost": 0.003693112137,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037304163,
+      "upstream_inference_prompt_cost": 0.0007193628,
+      "upstream_inference_completions_cost": 0.0030110535
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A substrate exists.",
+      "role": "Dependency from A2.1",
+      "formal": "\u2203S (Substrate(S))"
+    },
+    {
+      "id": "P2",
+      "statement": "The substrate must be self-grounding.",
+      "role": "Core Axiomatic Statement",
+      "formal": "\u2200S (Substrate(S) \u2192 Grounds(S, S))"
+    },
+    {
+      "id": "P3",
+      "statement": "The substrate cannot depend on something outside itself for existence.",
+      "role": "Corollary of self-grounding",
+      "formal": "\u2200S \u2200X (Substrate(S) \u2227 X \u2260 S \u2192 \u00acDepends(S, X))"
+    },
+    {
+      "id": "P4",
+      "statement": "The stance that the substrate is self-grounding is a framework commitment.",
+      "role": "Maximum Defensible Position",
+      "formal": "Adopt( Framework, \u2200S (Substrate(S) \u2192 Grounds(S, S)) )"
+    },
+    {
+      "id": "P5",
+      "statement": "Self-grounding is a stance, not a self-evident truth.",
+      "role": "Epistemic Status Declaration",
+      "formal": "Status(Self-Grounding) = stance"
+    },
+    {
+      "id": "P6",
+      "statement": "Everything downstream inherits this commitment status.",
+      "role": "Inheritance Rule",
+      "formal": "\u2200P (DerivedFrom(P, A2.2) \u2192 Status(P) \u2264 stance)"
+    },
+    {
+      "id": "P7",
+      "statement": "Infinite regress of substrates is a potential defeat condition.",
+      "role": "Defeat Condition",
+      "formal": "Coherent(InfiniteRegress(Substrate)) \u2192 \u00acA2.2"
+    },
+    {
+      "id": "P8",
+      "statement": "Demonstration of external grounding without circularity is a defeat condition.",
+      "role": "Defeat Condition",
+      "formal": "\u2203S \u2203X (Substrate(S) \u2227 Grounds(X, S) \u2227 X \u2260 S \u2227 \u00acCircular) \u2192 \u00acA2.2"
+    },
+    {
+      "id": "P9",
+      "statement": "The formal expression of self-grounding is \u2203S: Grounds(S, S).",
+      "role": "Formal Encoding",
+      "formal": "\u2203S: Grounds(S, S)"
+    },
+    {
+      "id": "P10",
+      "statement": "The axiom belongs to the ontological domain.",
+      "role": "Classification",
+      "formal": "Domain(A2.2) = Ontological"
+    },
+    {
+      "id": "P11",
+      "statement": "The axiom depends on A2.1 (Substrate Requirement).",
+      "role": "Dependency Link",
+      "formal": "DependsOn(A2.2, A2.1)"
+    },
+    {
+      "id": "P12",
+      "statement": "Historical philosophical positions (Aristotle, Spinoza, Aquinas) are referenced as conceptual anchors.",
+      "role": "External Reference",
+      "formal": "Reference(A2.2) \u2286 {UnmovedMover, CausaSui, NecessaryBeing}"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0004: A2.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A2.2 \u2014 Self-Grounding",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

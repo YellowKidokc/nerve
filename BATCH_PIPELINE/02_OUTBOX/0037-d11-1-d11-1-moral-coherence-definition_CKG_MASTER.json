@@ -1,0 +1,127 @@
+{
+  "title": "Moral Coherence Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0037_D11.1_D11_1_Moral_Coherence_Definition.md",
+  "source_sha256": "bf2fb4a31379a744ed842ef7ca88fac6332c23216413db32cd410235ad2c0610",
+  "captured_at": "2026-09-06T23:37:52.608291+00:00",
+  "tags": [],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2780,
+    "completion_tokens": 2818,
+    "total_tokens": 5598,
+    "cost": 0.003895216182,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0039345618,
+      "upstream_inference_prompt_cost": 0.0008023548,
+      "upstream_inference_completions_cost": 0.003132207
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Moral coherence is defined as a function of integrated information, sign, and behavior.",
+      "role": "Statement",
+      "formal": "`C_moral = f(\u03a6, \u03c3, behavior_vector)`"
+    },
+    {
+      "id": "P2",
+      "statement": "C_moral is a moral coherence measure.",
+      "role": "Maximum Defensible Position",
+      "formal": "`C_moral` is a scalar measure."
+    },
+    {
+      "id": "P3",
+      "statement": "The identification of morality with coherence is a bridge claim, not a necessary truth.",
+      "role": "Limitation",
+      "formal": "\u00ac(Morality \u2261 Coherence) is a necessary truth."
+    },
+    {
+      "id": "P4",
+      "statement": "A defeat condition is showing morality without coherence structure.",
+      "role": "Defeat Condition",
+      "formal": "\u2203(Morality) \u2227 \u00ac\u2203(CoherenceStructure) \u2192 Defeats(D11.1)"
+    },
+    {
+      "id": "P5",
+      "statement": "A defeat condition is demonstrating coherence without moral content.",
+      "role": "Defeat Condition",
+      "formal": "\u2203(Coherence) \u2227 \u00ac\u2203(MoralContent) \u2192 Defeats(D11.1)"
+    },
+    {
+      "id": "P6",
+      "statement": "D11.1 depends on BC6 (Infinite Energy Source).",
+      "role": "Dependency",
+      "formal": "`depends_on(D11.1, BC6)`"
+    },
+    {
+      "id": "P7",
+      "statement": "D11.1 is anchored to BC6 (Infinite Energy Source).",
+      "role": "Dependency Anchor",
+      "formal": "`anchor(D11.1) = BC6`"
+    },
+    {
+      "id": "P8",
+      "statement": "Moral coherence is classified as a formal definition / primitive formalization.",
+      "role": "Classification",
+      "formal": "`type(D11.1) = Definition` \u2227 `math_use(D11.1) = primitive_formalization`"
+    },
+    {
+      "id": "P9",
+      "statement": "The domain of D11.1 is Moral.",
+      "role": "Classification",
+      "formal": "`domain(D11.1) = Moral`"
+    },
+    {
+      "id": "P10",
+      "statement": "The epistemic status of D11.1 is `definition`.",
+      "role": "Classification",
+      "formal": "`epistemic_status(D11.1) = definition`"
+    },
+    {
+      "id": "P11",
+      "statement": "Morality is assumed to have a coherence structure.",
+      "role": "Assumption (from tags)",
+      "formal": "`Assumption: \u2203(CoherenceStructure(Morality))`"
+    },
+    {
+      "id": "P12",
+      "statement": "Coherence is assumed to be able to contain moral content.",
+      "role": "Assumption (from tags)",
+      "formal": "`Assumption: \u2203(MoralContent(Coherence))`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0037: D11.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D11.1 \u2014 Moral Coherence Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

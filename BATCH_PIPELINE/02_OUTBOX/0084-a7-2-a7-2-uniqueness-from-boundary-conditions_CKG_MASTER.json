@@ -1,0 +1,129 @@
+{
+  "title": "Uniqueness From Boundary Conditions",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0084_A7.2_A7_2_Uniqueness_From_Boundary_Conditions.md",
+  "source_sha256": "103b6235f0d312e6a8e11ccf4db15b12b3d63930000ca7a7226c68dad186d513",
+  "captured_at": "2026-09-07T00:16:55.174055+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2063,
+    "completion_tokens": 2501,
+    "total_tokens": 4564,
+    "cost": 0.002907804042,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2048,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0029371758,
+      "upstream_inference_prompt_cost": 0.0001573143,
+      "upstream_inference_completions_cost": 0.0027798615
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Sufficient boundary conditions yield a unique solution.",
+      "role": "Central Claim",
+      "formal": "`Sufficient BCs \u2192 \u2203! solution`"
+    },
+    {
+      "id": "P2",
+      "statement": "The framework is committed to the claim that sufficient boundary conditions yield a unique solution.",
+      "role": "Maximum Defensible Position",
+      "formal": "Framework claim: `Sufficient BCs \u2192 \u2203! solution`"
+    },
+    {
+      "id": "P3",
+      "statement": "This claim depends on A7.1 (Closure Requirement).",
+      "role": "Dependency Assertion",
+      "formal": "`A7.2 depends_on: A7.1`"
+    },
+    {
+      "id": "P4",
+      "statement": "The claim is classified as an ontological domain commitment.",
+      "role": "Classification",
+      "formal": "Domain: Ontological; Epistemic Status: `framework_commitment`"
+    },
+    {
+      "id": "P5",
+      "statement": "The claim is supported by references to PDE uniqueness theorems and Cauchy-Kowalevski.",
+      "role": "Evidential Citation",
+      "formal": "References: PDE uniqueness theorems; Cauchy-Kowalevski"
+    },
+    {
+      "id": "P6",
+      "statement": "A defeat condition for the claim is demonstrating that boundary conditions admit multiple solutions.",
+      "role": "Falsification Condition",
+      "formal": "Defeat Conditions: Show BCs admit multiple solutions."
+    },
+    {
+      "id": "P7",
+      "statement": "The claim has a limitation: it is standard mathematics.",
+      "role": "Limitation",
+      "formal": "Limitations (from workbook): Standard math."
+    },
+    {
+      "id": "P8",
+      "statement": "An open question exists: whether the 8 boundary conditions (context-dependent) are sufficient.",
+      "role": "Open Question",
+      "formal": "Limitations (from workbook): The question is whether the 8 BCs are sufficient."
+    },
+    {
+      "id": "P9",
+      "statement": "The claim is part of a sequential canonical record with a specific registry position.",
+      "role": "Structural Metadata",
+      "formal": "Registry position: 84 of 191; Canonical ID: `A7.2`"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim's mode is `FW_EXTENDED`, indicating it is a framework extension commitment.",
+      "role": "Classification",
+      "formal": "Mode: `FW_EXTENDED`; Workbook Role: `FW_EXTENDED`"
+    },
+    {
+      "id": "P11",
+      "statement": "The claim is an anchor for dependent structures.",
+      "role": "Structural Role",
+      "formal": "Anchor: A7.1"
+    },
+    {
+      "id": "P12",
+      "statement": "The claim carries a risk: boundary conditions may admit multiple solutions.",
+      "role": "Risk Tag",
+      "formal": "Risk:: \"Boundary conditions may admit multiple solutions\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0084: A7.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A7.2 \u2014 Uniqueness From Boundary Conditions",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

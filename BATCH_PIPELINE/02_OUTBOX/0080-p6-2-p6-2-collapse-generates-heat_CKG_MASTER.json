@@ -1,0 +1,131 @@
+{
+  "title": "Collapse Generates Heat",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0080_P6.2_P6_2_Collapse_Generates_Heat.md",
+  "source_sha256": "6d9cc83d093e27d9473da0f65f55100857a8abbb437948258c4e490fce0a3c87",
+  "captured_at": "2026-09-07T00:12:21.771213+00:00",
+  "tags": [
+    "information-theory",
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2343,
+    "completion_tokens": 2908,
+    "total_tokens": 5251,
+    "cost": 0.003833961417,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0038726883,
+      "upstream_inference_prompt_cost": 0.0006404463,
+      "upstream_inference_completions_cost": 0.003232242
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Wavefunction collapse generates heat.",
+      "role": "Core Statement",
+      "formal": "\\(Q_{\\text{collapse}} > 0\\)"
+    },
+    {
+      "id": "P2",
+      "statement": "Landauer's principle applies to wavefunction collapse.",
+      "role": "Core Commitment",
+      "formal": "Landauer bound is a governing constraint."
+    },
+    {
+      "id": "P3",
+      "statement": "The heat generated per bit of information gained has a specific lower bound.",
+      "role": "Formal Expression",
+      "formal": "\\(Q_{\\text{collapse}} \\ge kT \\ln 2\\) per bit"
+    },
+    {
+      "id": "P4",
+      "statement": "Observation is a physical requirement for collapse.",
+      "role": "Dependency (A5.1)",
+      "formal": "(Assumed as premise)"
+    },
+    {
+      "id": "P5",
+      "statement": "The collapse process is irreversible.",
+      "role": "Dependency (A6.3)",
+      "formal": "(Assumed as premise)"
+    },
+    {
+      "id": "P6",
+      "statement": "Collapse constitutes information gain.",
+      "role": "Foundational Assumption",
+      "formal": "Collapse reduces uncertainty, yielding \\(\\ge 1\\) bit."
+    },
+    {
+      "id": "P7",
+      "statement": "The framework treats this as a property (not an axiom or theorem).",
+      "role": "Classification",
+      "formal": "Status: `property`; Domain: Ontological"
+    },
+    {
+      "id": "P8",
+      "statement": "This property can be defeated by demonstrating collapse without heat generation.",
+      "role": "Defeat Condition",
+      "formal": "Existence of \\(Q_{\\text{collapse}} = 0\\) refutes it."
+    },
+    {
+      "id": "P9",
+      "statement": "The claim's defensibility hinges on Landauer's principle if collapse is information gain.",
+      "role": "Limitation",
+      "formal": "Conditional on the validity of that link."
+    },
+    {
+      "id": "P10",
+      "statement": "The property is anchored in a dependency chain from A5.1 to A6.3.",
+      "role": "Structural Assertion",
+      "formal": "Logical flow: A5.1 \u2192 A6.3 \u2192 P6.2"
+    },
+    {
+      "id": "P11",
+      "statement": "Landauer (1961) and Bennett (1982) are foundational references.",
+      "role": "Citation Assertion",
+      "formal": "Establishes intellectual lineage."
+    },
+    {
+      "id": "P12",
+      "statement": "The property belongs to the `FW_EXTENDED` mode of the framework.",
+      "role": "Classification",
+      "formal": "Mode: `FW_EXTENDED`; Atlas Type: `Property`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0080: P6.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 P6.2 \u2014 Collapse Generates Heat",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

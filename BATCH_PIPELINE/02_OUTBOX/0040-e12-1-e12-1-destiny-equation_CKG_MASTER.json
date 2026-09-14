@@ -1,0 +1,129 @@
+{
+  "title": "Destiny Equation",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0040_E12.1_E12_1_Destiny_Equation.md",
+  "source_sha256": "0a44894396ad2a20673c1027f0030c5b7e3da6d5011058f0c450e8fbf1115f0e",
+  "captured_at": "2026-09-06T23:40:37.751849+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2593,
+    "completion_tokens": 3011,
+    "total_tokens": 5604,
+    "cost": 0.004038999822,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0040797978,
+      "upstream_inference_prompt_cost": 0.0007330713,
+      "upstream_inference_completions_cost": 0.0033467265
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Destiny is modeled by a coherence trajectory equation.",
+      "role": "Maximum Defensible Position",
+      "formal": "Destiny \\( \\equiv \\) solution \\( C(t) \\) of \\( \\frac{dC}{dt} = -\\Gamma C + G(t)\\sigma \\)"
+    },
+    {
+      "id": "P2",
+      "statement": "Coherence dynamics include decay and grace.",
+      "role": "Statement",
+      "formal": "\\( \\frac{dC}{dt} = -\\Gamma\u00b7C + G(t)\u00b7\u03c3 \\)"
+    },
+    {
+      "id": "P3",
+      "statement": "The dynamics are sign-dependent.",
+      "role": "Statement",
+      "formal": "Implicit in term \\( \u03c3 \\), likely \\( \\sigma = \\text{sgn}(C) \\) or similar."
+    },
+    {
+      "id": "P4",
+      "statement": "The equation's long-term behavior exhibits two attractors.",
+      "role": "Limitation / Defeat Condition",
+      "formal": "Bifurcation to bimodal outcome."
+    },
+    {
+      "id": "P5",
+      "statement": "One attractor corresponds to Integration (D12.1).",
+      "role": "Dependency Link",
+      "formal": "Depends on D12.1 (Integration Attractor)."
+    },
+    {
+      "id": "P6",
+      "statement": "One attractor corresponds to Fragmentation (D12.2).",
+      "role": "Dependency Link",
+      "formal": "Depends on D12.2 (Fragmentation Attractor)."
+    },
+    {
+      "id": "P7",
+      "statement": "The Infinite Energy Source (BC6) is the anchor for this equation.",
+      "role": "Dependency Link",
+      "formal": "Anchor: BC6 (Infinite Energy Source)."
+    },
+    {
+      "id": "P8",
+      "statement": "The bimodal outcome is the framework's eschatological prediction.",
+      "role": "Limitation",
+      "formal": "Framework prediction: two attractors."
+    },
+    {
+      "id": "P9",
+      "statement": "A defeat condition is showing the dynamics do not bifurcate.",
+      "role": "Defeat Condition",
+      "formal": "Demonstrate single attractor for all initial conditions."
+    },
+    {
+      "id": "P10",
+      "statement": "The equation is a mathematical model.",
+      "role": "Classification",
+      "formal": "Mathematical Use: Mathematical model."
+    },
+    {
+      "id": "P11",
+      "statement": "The equation belongs to the domain of Eschatology.",
+      "role": "Classification",
+      "formal": "Domain: Eschatology."
+    },
+    {
+      "id": "P12",
+      "statement": "The equation's epistemic status is that of an equation (not a theorem).",
+      "role": "Classification",
+      "formal": "Epistemic Status: `equation`."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0040: E12.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E12.1 \u2014 Destiny Equation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

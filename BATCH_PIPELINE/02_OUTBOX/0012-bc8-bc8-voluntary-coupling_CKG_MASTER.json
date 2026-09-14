@@ -1,0 +1,129 @@
+{
+  "title": "Voluntary Coupling",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0012_BC8_BC8_Voluntary_Coupling.md",
+  "source_sha256": "24ab2d50d7594351177f3c73192f65830ea0fb7f17c4b6c1ade830518c11fcb9",
+  "captured_at": "2026-09-06T23:11:50.243191+00:00",
+  "tags": [
+    "information-theory"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2454,
+    "completion_tokens": 2539,
+    "total_tokens": 4993,
+    "cost": 0.003468633597,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035036703,
+      "upstream_inference_prompt_cost": 0.0006815718,
+      "upstream_inference_completions_cost": 0.0028220985
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Grace is an infinite energy source.",
+      "role": "Dependency Anchor (BC6)",
+      "formal": "`Grace \u2208 InfiniteEnergySources`"
+    },
+    {
+      "id": "P2",
+      "statement": "The coupling between observer and grace must be voluntary.",
+      "role": "Core Axiom",
+      "formal": "`Coupling(Observer, Grace) = Voluntary`"
+    },
+    {
+      "id": "P3",
+      "statement": "Forced coupling is prohibited.",
+      "role": "Corollary of P2",
+      "formal": "`\u00acForced(Coupling(Observer, Grace))`"
+    },
+    {
+      "id": "P4",
+      "statement": "Forced coupling violates observer integrity.",
+      "role": "Justification for P3",
+      "formal": "`Forced(Coupling) \u2192 Violates(Integrity(Observer))`"
+    },
+    {
+      "id": "P5",
+      "statement": "Observer integrity must be preserved.",
+      "role": "Implicit Value Assertion",
+      "formal": "`MustPreserve(Integrity(Observer))`"
+    },
+    {
+      "id": "P6",
+      "statement": "Involuntary grace could destroy personhood.",
+      "role": "Risk Statement",
+      "formal": "`Involuntary(Grace) \u2192 Risk(Destroys(Personhood))`"
+    },
+    {
+      "id": "P7",
+      "statement": "The axiom is a boundary condition in the Divine domain.",
+      "role": "Classification",
+      "formal": "`BC8 \u2208 BoundaryConditions \u2227 Domain(BC8) = Divine`"
+    },
+    {
+      "id": "P8",
+      "statement": "This axiom is derived from BC6 (Infinite Energy Source).",
+      "role": "Dependency Assertion",
+      "formal": "`DerivesFrom(BC8, BC6)`"
+    },
+    {
+      "id": "P9",
+      "statement": "The \"irresistible grace\" debate (Calvinism vs. Arminianism) is relevant.",
+      "role": "Contextual Limitation",
+      "formal": "`Relevant(TheologicalDebate(IrresistibleGrace))`"
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition is demonstrating forced coupling that preserves observer integrity.",
+      "role": "Falsifiability Condition",
+      "formal": "`DefeatIf(\u2203 ForcedCoupling \u2227 PreservesIntegrity)`"
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is demonstrating involuntary grace that doesn't destroy personhood.",
+      "role": "Alternative Falsifiability Condition",
+      "formal": "`DefeatIf(\u2203 InvoluntaryGrace \u2227 \u00acDestroys(Personhood))`"
+    },
+    {
+      "id": "P12",
+      "statement": "The axiom is formally expressed as `Coupling(Observer, Grace) = Voluntary; \u00acForced`.",
+      "role": "Formal Encoding",
+      "formal": "`Coupling(O, G) = V; \u00acF`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0012: BC8",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 BC8 \u2014 Voluntary Coupling",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "title": "Interaction Lagrangian",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0020_D3.3_D3_3_Interaction_Lagrangian.md",
+  "source_sha256": "cf5985710ac4a8fe88a514700a1cee4987589ea8e369a4dfe8b6cfb1594fd106",
+  "captured_at": "2026-09-06T23:21:20.621055+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2474,
+    "completion_tokens": 2339,
+    "total_tokens": 4813,
+    "cost": 0.003255892497,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032887803,
+      "upstream_inference_prompt_cost": 0.0006889818,
+      "upstream_inference_completions_cost": 0.0025997985
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "The interaction Lagrangian for \u03c7 is defined as a Yukawa-type coupling.",
+      "role": "Definition / Statement",
+      "formal": "\\( L_{\\text{int}} = g \\cdot \\chi \\cdot \\bar{\\psi}\\psi \\)"
+    },
+    {
+      "id": "P2",
+      "statement": "The field \u03c7 couples to other fields.",
+      "role": "Foundational Assumption",
+      "formal": "Implicit in the definition of \\( L_{\\text{int}} \\)"
+    },
+    {
+      "id": "P3",
+      "statement": "The coupling constant is denoted by `g`.",
+      "role": "Definitional Component",
+      "formal": "`g` in \\( L_{\\text{int}} = g \\cdot \\chi \\cdot \\bar{\\psi}\\psi \\)"
+    },
+    {
+      "id": "P4",
+      "statement": "The matter field is represented by the Dirac bilinear \\( \\bar{\\psi}\\psi \\).",
+      "role": "Definitional Component",
+      "formal": "\\( \\bar{\\psi}\\psi \\) in \\( L_{\\text{int}} = g \\cdot \\chi \\cdot \\bar{\\psi}\\psi \\)"
+    },
+    {
+      "id": "P5",
+      "statement": "The Yukawa form is the simplest coupling structure.",
+      "role": "Justification / Limitation",
+      "formal": "Stated in \"Limitations\" section"
+    },
+    {
+      "id": "P6",
+      "statement": "The real coupling may be more complex than the Yukawa form.",
+      "role": "Limitation / Risk",
+      "formal": "Stated in \"Limitations\" and as a Risk tag"
+    },
+    {
+      "id": "P7",
+      "statement": "The definition depends on the concept of Self-Grounding (A2.2).",
+      "role": "Dependency",
+      "formal": "Explicitly listed in \"Dependency Chain\""
+    },
+    {
+      "id": "P8",
+      "statement": "The definition references Yukawa theory and Standard Model couplings.",
+      "role": "External Justification",
+      "formal": "Listed in \"References\""
+    },
+    {
+      "id": "P9",
+      "statement": "A defeat condition is demonstrating \u03c7 does not couple to matter.",
+      "role": "Falsifiability Condition",
+      "formal": "Listed in \"Defeat Conditions\""
+    },
+    {
+      "id": "P10",
+      "statement": "A defeat condition is demonstrating the wrong coupling structure.",
+      "role": "Falsifiability Condition",
+      "formal": "Listed in \"Defeat Conditions\""
+    },
+    {
+      "id": "P11",
+      "statement": "The coupling strength `g` is a metric for the interaction.",
+      "role": "Implicit Metric",
+      "formal": "Listed as a Metric semantic tag"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition is classified within the Ontological domain.",
+      "role": "Epistemic Context",
+      "formal": "Stated in Classification table and header"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0020: D3.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D3.3 \u2014 Interaction Lagrangian",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

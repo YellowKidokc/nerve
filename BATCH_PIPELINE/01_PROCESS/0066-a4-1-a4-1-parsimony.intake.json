@@ -1,0 +1,33 @@
+{
+  "title": "Parsimony",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0066_A4.1_A4_1_Parsimony.md",
+  "source_sha256": "9cd17db621f0b7f7df81f4f978a1b260eb5b27c13ea991dc61743757e03e1beb",
+  "captured_at": "2026-09-07T00:00:57.533897+00:00",
+  "word_count": 322,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0066: A4.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A4.1 \u2014 Parsimony",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

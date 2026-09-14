@@ -1,0 +1,33 @@
+{
+  "title": "Law III: Entropy-Sin",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0047_D19.3_D19_3_Law_III_Entropy-Sin.md",
+  "source_sha256": "fc0e69c41e56027db2a8adba7fcf7b5a46cf42dbc8ecc55f8f0d172e5993501e",
+  "captured_at": "2026-09-06T23:45:43.881986+00:00",
+  "word_count": 414,
+  "tags": [
+    "information-theory"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0047: D19.3",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.3 \u2014 Law III: Entropy-Sin",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

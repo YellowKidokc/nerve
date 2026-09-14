@@ -1,0 +1,129 @@
+{
+  "title": "Coherence Functional Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0018_D3.1_D3_1_Coherence_Functional_Definition.md",
+  "source_sha256": "365b2300b337f9f5c9af3864bd6dcd63878b2aac502f9918fcd5f1cc31ed2ae4",
+  "captured_at": "2026-09-06T23:18:47.177922+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2409,
+    "completion_tokens": 2686,
+    "total_tokens": 5095,
+    "cost": 0.003613884417,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036503883,
+      "upstream_inference_prompt_cost": 0.0006648993,
+      "upstream_inference_completions_cost": 0.002985489
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A coherence functional is defined.",
+      "role": "Core Definition",
+      "formal": "`C[\u03c7]` is defined."
+    },
+    {
+      "id": "P2",
+      "statement": "The coherence functional is a normalized gradient measure of \u03c7.",
+      "role": "Statement",
+      "formal": "`C[\u03c7]` is a normalized measure of `\u2207\u03c7`."
+    },
+    {
+      "id": "P3",
+      "statement": "The formal expression is C[\u03c7] = \u222b",
+      "role": "\u2207\u03c7",
+      "formal": "\u00b2dV / \u222b"
+    },
+    {
+      "id": "P4",
+      "statement": "This definition is a maximum defensible position.",
+      "role": "Epistemic Status",
+      "formal": "Definition: `C[\u03c7] = coherence functional`."
+    },
+    {
+      "id": "P5",
+      "statement": "The definition's domain is Ontological.",
+      "role": "Classification",
+      "formal": "Domain: Ontological."
+    },
+    {
+      "id": "P6",
+      "statement": "The definition depends on A2.2 (Self-Grounding).",
+      "role": "Dependency",
+      "formal": "`depends_on: \"A2.2\"`"
+    },
+    {
+      "id": "P7",
+      "statement": "The gradient measure captures spatial coherence.",
+      "role": "Assumption/Limitation",
+      "formal": "\"The gradient measure captures spatial coherence.\""
+    },
+    {
+      "id": "P8",
+      "statement": "Temporal coherence may need separate treatment.",
+      "role": "Limitation",
+      "formal": "\"Temporal coherence may need separate treatment.\""
+    },
+    {
+      "id": "P9",
+      "statement": "The functional could miss key coherence features.",
+      "role": "Defeat Condition",
+      "formal": "\"Demonstrate this functional misses key coherence features.\""
+    },
+    {
+      "id": "P10",
+      "statement": "Coherence might be better measured differently.",
+      "role": "Defeat Condition",
+      "formal": "\"Show coherence is better measured differently.\""
+    },
+    {
+      "id": "P11",
+      "statement": "The definition is classified as a `DEFINITION` in the workbook.",
+      "role": "Classification",
+      "formal": "Workbook Role: `DEFINITION`"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition's mode is `AX_SCAFFOLD`.",
+      "role": "Classification",
+      "formal": "Mode: `AX_SCAFFOLD`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0018: D3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D3.1 \u2014 Coherence Functional Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "title": "Order Requirement",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0061_A3.1_A3_1_Order_Requirement.md",
+  "source_sha256": "2b954e96dc68e8c7e712fcfd040c4c9868f6372c0c8d7f48a1291ba340f81544",
+  "captured_at": "2026-09-06T23:58:29.511230+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2086,
+    "completion_tokens": 2381,
+    "total_tokens": 4467,
+    "cost": 0.003159792207,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0031917093,
+      "upstream_inference_prompt_cost": 0.0005452278,
+      "upstream_inference_completions_cost": 0.0026464815
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Self-grounding substrate must exhibit internal order.",
+      "role": "Central Axiom",
+      "formal": "\u2203Order(S)"
+    },
+    {
+      "id": "P2",
+      "statement": "The claim is a framework commitment.",
+      "role": "Classification",
+      "formal": "Status = `framework_commitment`"
+    },
+    {
+      "id": "P3",
+      "statement": "The claim belongs to the ontological domain.",
+      "role": "Classification",
+      "formal": "Domain = `Ontological`"
+    },
+    {
+      "id": "P4",
+      "statement": "The claim depends on A2.2 (Self-Grounding).",
+      "role": "Dependency Declaration",
+      "formal": "depends_on: \"A2.2\""
+    },
+    {
+      "id": "P5",
+      "statement": "A substrate without order could defeat the claim.",
+      "role": "Defeat Condition",
+      "formal": "Show substrate without order."
+    },
+    {
+      "id": "P6",
+      "statement": "Disorder equals no information.",
+      "role": "Limitation/Assumption",
+      "formal": "(Informal premise)"
+    },
+    {
+      "id": "P7",
+      "statement": "The claim follows from self-grounding if disorder = no information.",
+      "role": "Limitation Justification",
+      "formal": "Logical implication from premise P6."
+    },
+    {
+      "id": "P8",
+      "statement": "The claim is anchored by A2.2.",
+      "role": "Structural Link",
+      "formal": "Anchor: \"A2.2\""
+    },
+    {
+      "id": "P9",
+      "statement": "The claim has legacy identifier AX-016.",
+      "role": "Metadata",
+      "formal": "legacy_id: \"AX-016\""
+    },
+    {
+      "id": "P10",
+      "statement": "The claim references thermodynamics and information theory.",
+      "role": "Context",
+      "formal": "References: \"Thermodynamics; Information theory\""
+    },
+    {
+      "id": "P11",
+      "statement": "The claim's mathematical use is as a framework commitment.",
+      "role": "Classification",
+      "formal": "Mathematical Use: Framework commitment"
+    },
+    {
+      "id": "P12",
+      "statement": "The epistemic status is `framework_commitment`.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `framework_commitment`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0061: A3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A3.1 \u2014 Order Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

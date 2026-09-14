@@ -1,0 +1,151 @@
+---
+type: axiom_companion
+title: "Law II: Ten Variables"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: pending_ai_analysis
+source_file: "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0046_D19.2_D19_2_Law_II_Ten_Variables.md"
+source_sha256: 450fd496321e79976c92917459869f3eff420b6975dda9b48fc294e57e069041
+captured_at: 2026-09-06T23:44:50.343462+00:00
+tags: ["information-theory", "lean4"]
+---
+
+# Law II: Ten Variables
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** Source preserved below. Analytical case file pending.
+
+## Intake assessment
+
+- Inferred type: `axiom_companion`
+- Routing confidence: `0.98`
+- Signals: canonical axiom record, sealed v2.3 authority, axiom companion layout
+- Original words: `388`
+- Original SHA-256: `450fd496321e79976c92917459869f3eff420b6975dda9b48fc294e57e069041`
+
+## Source outline
+
+- Canonical Sequential Record 0046: D19.2
+- Sequence Navigation
+- Registered Dependency Links
+- Canonical Source Text
+- 📐 D19.2 — Law II: Ten Variables
+- Statement
+- Formal Expression
+- Maximum Defensible Position
+- Classification
+- Dependency Chain
+- References
+- Defeat Conditions
+- Limitations (from workbook)
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0046: D19.2
+
+| Field | Value |
+|---|---|
+| Registry position | 46 of 191 |
+| Canonical ID | `D19.2` |
+| Mode | `AX_SCAFFOLD` |
+| Canonical source filename | `D19_2_Law_II_Ten_Variables.md` |
+| Source SHA-256 | `cdf707cc1a40c1e055031fae6d00cba9fcdd1a8d7e05841b9c0b6d87d55e891c` |
+
+## Sequence Navigation
+
+Previous: [0045 - D19.1 - Law I: Logos-Lagrangian](0045_D19.1_D19_1_Law_I_Logos-Lagrangian.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0047 - D19.3 - Law III: Entropy-Sin](0047_D19.3_D19_3_Law_III_Entropy-Sin.md)
+
+## Registered Dependency Links
+
+[E2.1 - Master Equation First Form](0017_E2.1_E2_1_Master_Equation_First_Form.md)
+
+## Canonical Source Text
+
+---
+id: "D19.2"
+legacy_id: "AX-137"
+title: "Law II: Ten Variables"
+mode: "AX_SCAFFOLD"
+atlas_type: "Definition"
+status: "definition"
+domain: "Unified"
+anchor: "E2.1 (Master Equation First Form)"
+depends_on: "depends on anchor: E2.1 (Master Equation First Form)"
+date: "2026-08-17"
+---
+
+# 📐 D19.2 — Law II: Ten Variables
+
+**Mode:** `AX_SCAFFOLD` | **Atlas Type:** `Definition` | **Status:** `definition`
+**Domain:** Unified | **Legacy ID:** `AX-137`
+
+---
+
+## Statement
+
+Law II: The Ten Variables.
+
+## Formal Expression
+
+```
+{G, M, E, S, T, K, R, Q, F, C} = complete variable set
+```
+
+$$
+{G, M, E, S, T, K, R, Q, F, C} = complete variable set
+$$
+
+## Maximum Defensible Position
+
+Definition: Law II — Ten Variables.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `AX_SCAFFOLD` |
+| **Atlas Object Type** | `Definition` |
+| **Workbook Role** | `DEFINITION` |
+| **Mathematical Use** | Formal definition / primitive formalization |
+| **Epistemic Status** | `definition` |
+| **Domain** | Unified |
+
+## Dependency Chain
+
+**Anchor:** E2.1 (Master Equation First Form)
+**Depends On:** depends on anchor: E2.1 (Master Equation First Form)
+**Chain Tier:** 13 — Master Laws
+
+## References
+
+Shannon; IIT; GR; QM; Moral theory
+
+## Defeat Conditions
+
+Show fewer or more variables are needed.
+
+## Limitations (from workbook)
+
+Completeness proof needed.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::4ae566ea-487b-406a-a78a-63fb7bb66320::"Law II must define the complete variable set of ten variables"::null::@Engineering%%
+%%tag::Requirement::377eb0ee-f11a-4420-8b76-5d77ea797b3a::"The variable set must be complete"::null::@Engineering%%
+%%tag::Dependency::b2391b21-a152-4df8-b4c4-13488139cdab::"Depends on anchor E2.1 (Master Equation First Form)"::null::@Engineering%%
+%%tag::Risk::9c0f4488-8ff6-4283-ad26-b8876887c952::"Completeness proof needed for the variable set"::null::@Engineering%%
+%%tag::Risk::17e4cd66-c99b-4d51-a152-e006da6e8c2d::"Defeat condition: showing fewer or more variables are needed"::null::@Engineering%%
+%%tag::OpenQuestion::d50dc5a8-8050-4f61-8a26-1f503575887d::"Is the ten-variable set complete?"::null::@Engineering%%
+%%tag::Decision::1be7cf21-1167-45db-8920-a95e860601d7::"Adopt the ten-variable set as the complete variable set"::null::@Engineering%%
+%%tag::Assumption::789c4737-c746-42d4-ad23-df9b95773e32::"The ten variables are sufficient and necessary for the unified domain"::null::@Engineering%%
+%%--- END SEMANTIC TAGS ---%%
+
+<!-- END EXACT SOURCE PROJECTION -->

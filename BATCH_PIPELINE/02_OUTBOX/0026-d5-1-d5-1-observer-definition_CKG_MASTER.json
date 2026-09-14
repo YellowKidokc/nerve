@@ -1,0 +1,129 @@
+{
+  "title": "Observer Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0026_D5.1_D5_1_Observer_Definition.md",
+  "source_sha256": "81991962c17548cf916eb5eb0e4dfcb3380e9c0045ffe351f5eb55d5479d4876",
+  "captured_at": "2026-09-06T23:26:25.478017+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2532,
+    "completion_tokens": 2913,
+    "total_tokens": 5445,
+    "cost": 0.003908787597,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0039482703,
+      "upstream_inference_prompt_cost": 0.0007104708,
+      "upstream_inference_completions_cost": 0.0032377995
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "An observer is any system with integrated information \u03a6 > 0.",
+      "role": "Central Definition",
+      "formal": "`O = { system"
+    },
+    {
+      "id": "P2",
+      "statement": "An observer must be capable of making distinctions.",
+      "role": "Constraint on Definition",
+      "formal": "`capable_of_making_distinctions(O)`"
+    },
+    {
+      "id": "P3",
+      "statement": "The adopted definition of observer is the broadest possible.",
+      "role": "Epistemic Stance",
+      "formal": "`\u2200 system, (\u03a6(system) > 0) \u2192 Observer(system)`"
+    },
+    {
+      "id": "P4",
+      "statement": "Systems with very low \u03a6 (e.g., thermostats) qualify as observers under this definition.",
+      "role": "Consequence / Limitation",
+      "formal": "`\u03a6(thermostat) > 0 \u2192 Observer(thermostat)`"
+    },
+    {
+      "id": "P5",
+      "statement": "The definition depends on A5.1 (Observation Requirement).",
+      "role": "Logical Dependency",
+      "formal": "`D5.1 \u22a2 A5.1`"
+    },
+    {
+      "id": "P6",
+      "statement": "Integrated Information \u03a6 is a valid measure for determining observer status.",
+      "role": "Foundational Assumption",
+      "formal": "`ValidMeasure(\u03a6, ObserverStatus)`"
+    },
+    {
+      "id": "P7",
+      "statement": "The definition is defeated if observers without \u03a6 are demonstrated.",
+      "role": "Falsification Condition",
+      "formal": "`\u2203 system (Observer(system) \u2227 \u03a6(system) = 0) \u2192 \u00acD5.1`"
+    },
+    {
+      "id": "P8",
+      "statement": "The definition is defeated if \u03a6=0 systems that observe are demonstrated.",
+      "role": "Falsification Condition",
+      "formal": "`\u2203 system (\u03a6(system) = 0 \u2227 Observes(system)) \u2192 \u00acD5.1`"
+    },
+    {
+      "id": "P9",
+      "statement": "The boundary of what constitutes an observer is unclear under this definition.",
+      "role": "Acknowledged Limitation",
+      "formal": "`Boundary(Observer) is undefined`"
+    },
+    {
+      "id": "P10",
+      "statement": "The definition is formal and mathematical in nature.",
+      "role": "Classification",
+      "formal": "`Mode(D5.1) = AX_SCAFFOLD`"
+    },
+    {
+      "id": "P11",
+      "statement": "The definition's domain is ontological.",
+      "role": "Classification",
+      "formal": "`Domain(D5.1) = Ontological`"
+    },
+    {
+      "id": "P12",
+      "statement": "The definition references Integrated Information Theory (Tononi 2004) and Von Neumann (1932).",
+      "role": "Intellectual Heritage",
+      "formal": "`Citations(D5.1) = {IIT, Von Neumann}`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0026: D5.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D5.1 \u2014 Observer Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

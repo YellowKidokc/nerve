@@ -1,0 +1,129 @@
+{
+  "title": "Law VI: Coherence Non-Increase",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0050_D19.6_D19_6_Law_VI_Coherence_Non-Increase.md",
+  "source_sha256": "cd78360842f6c5892cbd9071ea59aaacb4494d3f5b5f9fc165a857e588fbb89a",
+  "captured_at": "2026-09-06T23:49:19.614191+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2393,
+    "completion_tokens": 3032,
+    "total_tokens": 5425,
+    "cost": 0.003988748907,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0040290393,
+      "upstream_inference_prompt_cost": 0.0006589713,
+      "upstream_inference_completions_cost": 0.003370068
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Coherence cannot self-increase.",
+      "role": "Foundational Anchor (T3.1)",
+      "formal": "(Implicitly: \u0394C_self \u2265 0 is impossible)"
+    },
+    {
+      "id": "P2",
+      "statement": "A closed system cannot increase its own coherence.",
+      "role": "Law Statement",
+      "formal": "`dC/dt \u2264 0 (closed system)`"
+    },
+    {
+      "id": "P3",
+      "statement": "The formal expression of Law VI is dC/dt \u2264 0 for a closed system.",
+      "role": "Formal Expression",
+      "formal": "`\\frac{dC}{dt} \\le 0 (closed system)`"
+    },
+    {
+      "id": "P4",
+      "statement": "Law VI is a definition.",
+      "role": "Maximum Defensible Position",
+      "formal": "\"Definition: Law VI \u2014 Coherence Non-Increase.\""
+    },
+    {
+      "id": "P5",
+      "statement": "Law VI depends on anchor T3.1 (Coherence Cannot Self-Increase).",
+      "role": "Dependency Declaration",
+      "formal": "`depends_on: \"depends on anchor: T3.1...\"`"
+    },
+    {
+      "id": "P6",
+      "statement": "Law VI is a restatement of T3.1.",
+      "role": "Limitation/Classification",
+      "formal": "\"Restatement of T3.1.\""
+    },
+    {
+      "id": "P7",
+      "statement": "Law VI references the 2nd Law of Thermodynamics (Clausius/Boltzmann).",
+      "role": "Reference Claim",
+      "formal": "\"2nd Law (Clausius/Boltzmann)\""
+    },
+    {
+      "id": "P8",
+      "statement": "Law VI assumes the system is closed.",
+      "role": "Embedded Assumption",
+      "formal": "Implicit in predicate P2 and formalization P3."
+    },
+    {
+      "id": "P9",
+      "statement": "Law VI can be defeated by demonstrating a closed system's coherence increase.",
+      "role": "Defeat Condition",
+      "formal": "\"Show closed system coherence increase.\""
+    },
+    {
+      "id": "P10",
+      "statement": "Law VI is classified as a `DEFINITION` within the workbook.",
+      "role": "Epistemic Classification",
+      "formal": "`Workbook Role: DEFINITION`"
+    },
+    {
+      "id": "P11",
+      "statement": "Law VI is a \"Master Law\" at Chain Tier 13.",
+      "role": "Structural Classification",
+      "formal": "`Chain Tier: 13 \u2014 Master Laws`"
+    },
+    {
+      "id": "P12",
+      "statement": "The domain of Law VI is \"Unified.\"",
+      "role": "Domain Scope",
+      "formal": "`Domain: Unified`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0050: D19.6",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.6 \u2014 Law VI: Coherence Non-Increase",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

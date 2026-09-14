@@ -1,0 +1,34 @@
+{
+  "title": "Grace Operator Definition",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0033_D9.1_D9_1_Grace_Operator_Definition.md",
+  "source_sha256": "870ac0531834b8358a0e6dd6a8883f6ef138a48216c5f7aa3e483e98e07a5d4d",
+  "captured_at": "2026-09-06T23:31:26.983489+00:00",
+  "word_count": 407,
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0033: D9.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D9.1 \u2014 Grace Operator Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

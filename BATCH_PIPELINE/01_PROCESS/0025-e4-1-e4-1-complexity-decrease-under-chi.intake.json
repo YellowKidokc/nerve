@@ -1,0 +1,33 @@
+{
+  "title": "Complexity Decrease Under Chi",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0025_E4.1_E4_1_Complexity_Decrease_Under_Chi.md",
+  "source_sha256": "ecc38aa56eefb387669ce98cd19aaae87c5a5060608cc164d92459a503ea48b4",
+  "captured_at": "2026-09-06T23:24:42.657467+00:00",
+  "word_count": 362,
+  "tags": [
+    "information-theory"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0025: E4.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E4.1 \u2014 Complexity Decrease Under Chi",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

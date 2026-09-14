@@ -1,0 +1,117 @@
+{
+  "title": "Closure Requirement",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0083_A7.1_A7_1_Closure_Requirement.md",
+  "source_sha256": "25e01451ddb6b59523001af9311332815c0970f8ed891b7c30c9abfe826e7974",
+  "captured_at": "2026-09-07T00:15:08.686471+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2220,
+    "completion_tokens": 2803,
+    "total_tokens": 5023,
+    "cost": 0.003673305207,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037104093,
+      "upstream_inference_prompt_cost": 0.0005948748,
+      "upstream_inference_completions_cost": 0.0031155345
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Physical theory requires boundary conditions for closure.",
+      "role": "Central Claim",
+      "formal": "`Closure(Theory) \u2192 \u2203 BCs`"
+    },
+    {
+      "id": "P2",
+      "statement": "A physical theory is underdetermined without boundary conditions.",
+      "role": "Restatement of Central Claim",
+      "formal": "`\u00acBCs \u2192 Underdetermined(Theory)`"
+    },
+    {
+      "id": "P3",
+      "statement": "The conjunction of a theory and its boundary conditions yields a unique solution.",
+      "role": "Formal Expression",
+      "formal": "`Theory \u2227 BCs \u2192 UniqueSolution`"
+    },
+    {
+      "id": "P4",
+      "statement": "This requirement is standard in physics (PDE theory).",
+      "role": "Supporting Evidence",
+      "formal": "Reference to Dirichlet/Neumann conditions."
+    },
+    {
+      "id": "P5",
+      "statement": "The application of this closure requirement to theology is a novel part.",
+      "role": "Limitation/Novelty",
+      "formal": "`Novel(Theological_Application)`"
+    },
+    {
+      "id": "P6",
+      "statement": "This claim is a framework commitment.",
+      "role": "Epistemic Status",
+      "formal": "`Status(A7.1) = framework_commitment`"
+    },
+    {
+      "id": "P7",
+      "statement": "This claim depends on LN6.1 (Terminal Observer Necessity).",
+      "role": "Dependency",
+      "formal": "`DependsOn(A7.1, LN6.1)`"
+    },
+    {
+      "id": "P8",
+      "statement": "A defeat condition for this claim is demonstrating a physical theory that does not require boundary conditions.",
+      "role": "Falsification Condition",
+      "formal": "`Defeat(A7.1) \u2194 \u2203 Theory: \u00acRequires(Theory, BCs)`"
+    },
+    {
+      "id": "P9",
+      "statement": "The claim belongs to the ontological domain.",
+      "role": "Classification",
+      "formal": "`Domain(A7.1) = Ontological`"
+    },
+    {
+      "id": "P10",
+      "statement": "The claim is anchored to LN6.1.",
+      "role": "Structural Link",
+      "formal": "`Anchor(A7.1) = LN6.1`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0083: A7.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 A7.1 \u2014 Closure Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

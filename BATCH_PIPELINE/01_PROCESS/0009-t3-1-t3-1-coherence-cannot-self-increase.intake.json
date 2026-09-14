@@ -1,0 +1,33 @@
+{
+  "title": "Coherence Cannot Self-Increase",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0009_T3.1_T3_1_Coherence_Cannot_Self-Increase.md",
+  "source_sha256": "64d71b9f9f5a360d19b6ab7a0aac04b54283bb403b2cf0b001bb29c3187e461c",
+  "captured_at": "2026-09-06T23:05:51.641844+00:00",
+  "word_count": 369,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0009: T3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 T3.1 \u2014 Coherence Cannot Self-Increase",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

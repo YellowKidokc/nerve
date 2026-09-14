@@ -1,0 +1,129 @@
+{
+  "title": "Grace External To System",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0010_BC2_BC2_Grace_External_To_System.md",
+  "source_sha256": "0ef7596bc44897cbc6c3ea131c28b26bd43dc274ae457cc34015e0b7e3b9cc2b",
+  "captured_at": "2026-09-06T23:10:20.154597+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2511,
+    "completion_tokens": 2693,
+    "total_tokens": 5204,
+    "cost": 0.003170722698,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2432,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032027502,
+      "upstream_inference_prompt_cost": 0.0002094807,
+      "upstream_inference_completions_cost": 0.0029932695
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Coherence cannot self-increase.",
+      "role": "Anchor Premise (T3.1)",
+      "formal": "(Formulation from T3.1, not provided here)"
+    },
+    {
+      "id": "P2",
+      "statement": "Coherence recovery requires an external source.",
+      "role": "Core Axiom Statement",
+      "formal": "`Recovery(Coherence) \u21d2 \u2203 ExternalSource`"
+    },
+    {
+      "id": "P3",
+      "statement": "Grace must be external to the system.",
+      "role": "Formalized Central Claim",
+      "formal": "`Grace \u2209 System; Grace \u2208 External`"
+    },
+    {
+      "id": "P4",
+      "statement": "Grace is the external source for coherence recovery.",
+      "role": "Definitional Link",
+      "formal": "`Grace \u2261 ExternalSource(Recovery(Coherence))`"
+    },
+    {
+      "id": "P5",
+      "statement": "The axiom BC2 is derived from T3.1.",
+      "role": "Dependency Declaration",
+      "formal": "`BC2 \u2190 T3.1`"
+    },
+    {
+      "id": "P6",
+      "statement": "If the informational 2nd Law holds, BC2 follows necessarily.",
+      "role": "Limitation/Justification",
+      "formal": "`Informational2ndLaw \u21d2 BC2`"
+    },
+    {
+      "id": "P7",
+      "statement": "BC2 is a Boundary Condition.",
+      "role": "Classification",
+      "formal": "`Type(BC2) = Boundary_Condition`"
+    },
+    {
+      "id": "P8",
+      "statement": "BC2 belongs to the Divine domain.",
+      "role": "Domain Assignment",
+      "formal": "`Domain(BC2) = Divine`"
+    },
+    {
+      "id": "P9",
+      "statement": "BC2 can be defeated by demonstrating internal coherence recovery.",
+      "role": "Defeat Condition",
+      "formal": "`Defeat(BC2) \u21d4 \u2203 InternalRecovery(Coherence)`"
+    },
+    {
+      "id": "P10",
+      "statement": "BC2 can be defeated by demonstrating self-bootstrapping moral improvement.",
+      "role": "Defeat Condition",
+      "formal": "`Defeat(BC2) \u21d4 \u2203 SelfBootstrap(MoralImprovement)`"
+    },
+    {
+      "id": "P11",
+      "statement": "The axiom is in `AX_DERIVED` mode.",
+      "role": "Modal Classification",
+      "formal": "`Mode(BC2) = AX_DERIVED`"
+    },
+    {
+      "id": "P12",
+      "statement": "The axiom's status is `boundary`.",
+      "role": "Epistemic Status",
+      "formal": "`Status(BC2) = boundary`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0010: BC2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 BC2 \u2014 Grace External To System",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

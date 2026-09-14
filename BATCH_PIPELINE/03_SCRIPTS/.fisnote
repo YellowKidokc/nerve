@@ -1,0 +1,29 @@
+---
+fis_schema: "folder-index.v1"
+folder_id: "FLD-20260907-b43aa4ee"
+folder: "GitHub\nerve\BATCH_PIPELINE\03_SCRIPTS"
+folder_class: "project"
+confidence: 0.6
+dependency_risk: 0.333
+dominant_family: "code"
+dominant_ratio: 1.0
+file_count: 4
+classified_at: "2026-09-07T15:57:51"
+allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
+suggested_name: "03_scripts"
+system_markers: ["dir:__pycache__"]
+---
+
+# FIS Folder Index: 03_SCRIPTS
+
+**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 4  ·  **Dominant**: code (100%)
+
+## Allowed actions
+- index
+- rename_internal
+- subfolder_sort
+- archive_exports
+
+**Suggested name**: `03_scripts`  (not applied — review before use)
+
+<!-- FIS folder-index.v1: parseable note; safe to regenerate. -->

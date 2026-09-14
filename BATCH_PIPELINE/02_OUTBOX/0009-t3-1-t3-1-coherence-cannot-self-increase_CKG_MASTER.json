@@ -1,0 +1,129 @@
+{
+  "title": "Coherence Cannot Self-Increase",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0009_T3.1_T3_1_Coherence_Cannot_Self-Increase.md",
+  "source_sha256": "64d71b9f9f5a360d19b6ab7a0aac04b54283bb403b2cf0b001bb29c3187e461c",
+  "captured_at": "2026-09-06T23:08:40.255313+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2278,
+    "completion_tokens": 2704,
+    "total_tokens": 4982,
+    "cost": 0.003172483314,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2176,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032045286,
+      "upstream_inference_prompt_cost": 0.0001990326,
+      "upstream_inference_completions_cost": 0.003005496
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A closed system cannot increase its own coherence.",
+      "role": "Statement / Theorem",
+      "formal": "`dC/dt \u2264 0 (closed system, no external input)`"
+    },
+    {
+      "id": "P2",
+      "statement": "This is an informational Second Law.",
+      "role": "Statement / Analogy",
+      "formal": "Informal analogy to thermodynamics."
+    },
+    {
+      "id": "P3",
+      "statement": "The theorem is derived from A2.2 (Self-Grounding) and D3.1 (Coherence Functional Definition).",
+      "role": "Dependency Declaration",
+      "formal": "`depends_on: \"A2.2, D3.1\"`"
+    },
+    {
+      "id": "P4",
+      "statement": "The theorem is classified as a `Theorem` with `Epistemic Status: theorem`.",
+      "role": "Classification",
+      "formal": "`status: \"theorem\"`"
+    },
+    {
+      "id": "P5",
+      "statement": "This theorem is the load-bearing theorem for a larger \"sign-flip\" argument.",
+      "role": "Limitation / Risk Declaration",
+      "formal": "\"THE load-bearing theorem. If this falls, grace becomes optional. The entire sign-flip argument depends on it.\""
+    },
+    {
+      "id": "P6",
+      "statement": "If the theorem is defeated, grace becomes optional.",
+      "role": "Consequence Declaration",
+      "formal": "Same as P5 source."
+    },
+    {
+      "id": "P7",
+      "statement": "The theorem can be defeated by showing a closed system coherence increase.",
+      "role": "Defeat Condition",
+      "formal": "\"Show closed system coherence increase. Find a perpetual motion machine of the second kind.\""
+    },
+    {
+      "id": "P8",
+      "statement": "The theorem's domain is Ontological.",
+      "role": "Classification",
+      "formal": "`domain: \"Ontological\"`"
+    },
+    {
+      "id": "P9",
+      "statement": "The theorem is an `AX_DERIVED` mode object.",
+      "role": "Classification",
+      "formal": "`mode: \"AX_DERIVED\"`"
+    },
+    {
+      "id": "P10",
+      "statement": "The theorem references the 2nd Law (Clausius/Boltzmann) and Landauer's principle.",
+      "role": "Reference / Analogy",
+      "formal": "\"2nd Law (Clausius/Boltzmann); Landauer's principle\""
+    },
+    {
+      "id": "P11",
+      "statement": "The theorem is formally expressed with both plain text and LaTeX notation.",
+      "role": "Formal Expression",
+      "formal": "`dC/dt \u2264 0 (closed system, no external input)` and `$$ \\frac{dC}{dt} \\le 0 (closed system, no external input) $$`"
+    },
+    {
+      "id": "P12",
+      "statement": "The theorem is positioned in Dependency Chain Tier 4 \u2014 Coherence System.",
+      "role": "Structural Declaration",
+      "formal": "\"Chain Tier: 4 \u2014 Coherence System\""
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0009: T3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd37 T3.1 \u2014 Coherence Cannot Self-Increase",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

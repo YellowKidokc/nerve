@@ -910,8 +910,11 @@ fn default_panels() -> Vec<PanelDef> {
         },
         PanelDef {
             name: "prompts".into(),
-            title: "Prompts".into(),
-            url: to_url("prompts/prompt_picker.html"),
+            title: "Prompts & Slash Commands".into(),
+            // The shortcut editor is the live configuration surface. Keeping
+            // this panel there prevents the separate static Prompt Picker
+            // from looking saved while system-wide slash commands remain empty.
+            url: to_url("shortcuts.html"),
             width: 520,
             height: 680,
             x: None,

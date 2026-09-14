@@ -1,0 +1,129 @@
+{
+  "title": "Distinction",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0002_A1_2_Distinction.md",
+  "source_sha256": "330e8d12b694889c3d96c91c3a716a9af1d61f04e1316f7db0078b463aee39ea",
+  "captured_at": "2026-09-06T22:59:56.760850+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2273,
+    "completion_tokens": 2841,
+    "total_tokens": 5114,
+    "cost": 0.00395991882,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.003999918,
+      "upstream_inference_prompt_cost": 0.0008421465,
+      "upstream_inference_completions_cost": 0.0031577715
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "For anything to be describable or knowable, it must be distinguishable from something else.",
+      "role": "Axiom Statement",
+      "formal": "`\u2200x\u2200y(x\u2260y \u2192 Distinguishable(x,y))`"
+    },
+    {
+      "id": "P2",
+      "statement": "The framework presently assumes or requires distinguishability for describability/knowability.",
+      "role": "Maximum Defensible Position",
+      "formal": "Assumption: `Distinguishable(x,y)` is a necessary condition for `Describable(x)` or `Knowable(x)`."
+    },
+    {
+      "id": "P3",
+      "statement": "Distinction is a primitive axiom in the system.",
+      "role": "Classification",
+      "formal": "Status: `primitive`; Mode: `AX_CORE`."
+    },
+    {
+      "id": "P4",
+      "statement": "This axiom depends on the prior axiom A1.1 (Existence).",
+      "role": "Dependency Chain",
+      "formal": "`A1.2` `depends_on` `A1.1`."
+    },
+    {
+      "id": "P5",
+      "statement": "A property of reality that requires no distinction would defeat this axiom.",
+      "role": "Defeat Condition",
+      "formal": "\u2203P \u2208 Reality: \u00ac\u2203y(Distinguishable(P,y))."
+    },
+    {
+      "id": "P6",
+      "statement": "Existence without distinguishability being coherent would defeat this axiom.",
+      "role": "Defeat Condition",
+      "formal": "CoherentModel(\u2203x(\u00ac\u2203y(Distinguishable(x,y))))."
+    },
+    {
+      "id": "P7",
+      "statement": "Advaita Vedanta's non-dual challenge is a genuine limitation.",
+      "role": "Limitation",
+      "formal": "ChallengeValid(NonDualAdvaitaVedanta)."
+    },
+    {
+      "id": "P8",
+      "statement": "The axiom needs a steelman of \u015aa\u1e45kara's non-dual position.",
+      "role": "Open Question",
+      "formal": "Requirement: ConstructSteelman(\u015aa\u1e45karaPosition, A1.2)."
+    },
+    {
+      "id": "P9",
+      "statement": "Distinction is foundational for the \"Primordial\" domain.",
+      "role": "Classification",
+      "formal": "Domain: `Primordial`."
+    },
+    {
+      "id": "P10",
+      "statement": "The axiom is referenced by Spencer-Brown (1969) and Bateson (1972).",
+      "role": "Reference",
+      "formal": "Citation(SpencerBrown1969, Bateson1972)."
+    },
+    {
+      "id": "P11",
+      "statement": "The axiom's role in the workbook is `AXIOM`.",
+      "role": "Classification",
+      "formal": "Workbook Role: `AXIOM`."
+    },
+    {
+      "id": "P12",
+      "statement": "The axiom is formally expressed as a universal quantification over entities.",
+      "role": "Formal Expression",
+      "formal": "`\u2200x\u2200y(x\u2260y \u2192 Distinguishable(x,y))`."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0002: A1.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A1.2 \u2014 Distinction",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

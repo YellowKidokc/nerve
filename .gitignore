@@ -26,3 +26,15 @@ desktop.ini
 
 # Voice cache (generated at runtime)
 voice_cache.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Cloudflare Wrangler cache
+.wrangler/
+worker/.wrangler/
+atom-cloud/.wrangler/
+
+# Temp
+tmp/

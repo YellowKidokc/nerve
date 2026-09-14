@@ -1,0 +1,34 @@
+{
+  "title": "Collapse Rate Gamma",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0029_D6.1_D6_1_Collapse_Rate_Gamma.md",
+  "source_sha256": "8bfe4f2ddd74136008bc69123df1e587c2d392d3390d858f4c91caa602e9c0a9",
+  "captured_at": "2026-09-06T23:28:01.711755+00:00",
+  "word_count": 410,
+  "tags": [
+    "quantum-foundations",
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0029: D6.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D6.1 \u2014 Collapse Rate Gamma",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "title": "Complexity Decrease Under Chi",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0025_E4.1_E4_1_Complexity_Decrease_Under_Chi.md",
+  "source_sha256": "ecc38aa56eefb387669ce98cd19aaae87c5a5060608cc164d92459a503ea48b4",
+  "captured_at": "2026-09-06T23:25:28.432736+00:00",
+  "tags": [
+    "information-theory"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2308,
+    "completion_tokens": 2350,
+    "total_tokens": 4658,
+    "cost": 0.003207108762,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0032395038,
+      "upstream_inference_prompt_cost": 0.0006274788,
+      "upstream_inference_completions_cost": 0.002612025
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Complexity decreases as \u03c7 increases.",
+      "role": "Statement",
+      "formal": "\\( K \\text{ decreases as } \u03c7 \\text{ increases} \\)"
+    },
+    {
+      "id": "P2",
+      "statement": "The field organizes information.",
+      "role": "Statement",
+      "formal": "The \u03c7 field has an organizing effect on information."
+    },
+    {
+      "id": "P3",
+      "statement": "The derivative of K with respect to \u03c7 is negative.",
+      "role": "Formal Expression",
+      "formal": "\\( dK/d\u03c7 < 0 \\)"
+    },
+    {
+      "id": "P4",
+      "statement": "\u03c7 reduces algorithmic complexity.",
+      "role": "Maximum Defensible Position",
+      "formal": "\\( \u03c7 \\implies \\text{reduction in } K \\)"
+    },
+    {
+      "id": "P5",
+      "statement": "This is the formal version of 'order from information.'",
+      "role": "Limitations",
+      "formal": "Conceptual mapping: \\( dK/d\u03c7 < 0 \\) \u2261 \"order from information\""
+    },
+    {
+      "id": "P6",
+      "statement": "The model depends on A2.2 (Self-Grounding).",
+      "role": "Dependency Chain",
+      "formal": "Model validity conditional on A2.2."
+    },
+    {
+      "id": "P7",
+      "statement": "The model depends on D4.1 (Kolmogorov Complexity).",
+      "role": "Dependency Chain",
+      "formal": "Model validity conditional on D4.1."
+    },
+    {
+      "id": "P8",
+      "statement": "The equation's domain is Ontological.",
+      "role": "Classification",
+      "formal": "Domain assignment: Ontological."
+    },
+    {
+      "id": "P9",
+      "statement": "The equation is a mathematical model.",
+      "role": "Classification",
+      "formal": "Mathematical Use: Mathematical model."
+    },
+    {
+      "id": "P10",
+      "statement": "Experimental support is needed.",
+      "role": "Limitations",
+      "formal": "The formal claim lacks empirical confirmation."
+    },
+    {
+      "id": "P11",
+      "statement": "A defeat condition is showing \u03c7 increase without complexity decrease.",
+      "role": "Defeat Conditions",
+      "formal": "\\( \u2203 (\u03c7\u2191, K\u00ac\u2193) \\) falsifies the claim."
+    },
+    {
+      "id": "P12",
+      "statement": "A defeat condition is demonstrating complexity increase with coherence.",
+      "role": "Defeat Conditions",
+      "formal": "\\( \u2203 (\u03c7\u2191, K\u2191) \\) falsifies the claim."
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0025: E4.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E4.1 \u2014 Complexity Decrease Under Chi",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

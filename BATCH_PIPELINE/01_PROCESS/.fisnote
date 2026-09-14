@@ -1,0 +1,28 @@
+---
+fis_schema: "folder-index.v1"
+folder_id: "FLD-20260907-3a189a33"
+folder: "GitHub\nerve\BATCH_PIPELINE\01_PROCESS"
+folder_class: "project"
+confidence: 0.6
+dependency_risk: 0.0
+dominant_family: "text"
+dominant_ratio: 0.667
+file_count: 261
+classified_at: "2026-09-07T15:57:51"
+allowed_actions: ["index", "rename_internal", "subfolder_sort", "archive_exports"]
+suggested_name: "01_process"
+---
+
+# FIS Folder Index: 01_PROCESS
+
+**Class**: project  ·  **Confidence**: 60%  ·  **Files**: 261  ·  **Dominant**: text (67%)
+
+## Allowed actions
+- index
+- rename_internal
+- subfolder_sort
+- archive_exports
+
+**Suggested name**: `01_process`  (not applied — review before use)
+
+<!-- FIS folder-index.v1: parseable note; safe to regenerate. -->

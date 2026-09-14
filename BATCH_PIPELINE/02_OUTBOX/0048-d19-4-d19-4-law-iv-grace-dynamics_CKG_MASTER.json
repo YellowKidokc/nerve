@@ -1,0 +1,131 @@
+{
+  "title": "Law IV: Grace Dynamics",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0048_D19.4_D19_4_Law_IV_Grace_Dynamics.md",
+  "source_sha256": "58be96b61e7ce6ffd65348ae46a07c452c3b8d01ea24c5777394e105986f4c69",
+  "captured_at": "2026-09-06T23:47:27.250255+00:00",
+  "tags": [
+    "information-theory",
+    "systems",
+    "theology"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2727,
+    "completion_tokens": 2588,
+    "total_tokens": 5315,
+    "cost": 0.003622687497,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0036592803,
+      "upstream_inference_prompt_cost": 0.0007827183,
+      "upstream_inference_completions_cost": 0.002876562
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "There exists a Grace operator, denoted \u011c.",
+      "role": "Definition / Primitive",
+      "formal": "`\u011c`"
+    },
+    {
+      "id": "P2",
+      "statement": "The Grace operator is a transformation.",
+      "role": "Definition / Primitive",
+      "formal": "`\u011c: ... \u2192 ...`"
+    },
+    {
+      "id": "P3",
+      "statement": "The transformation maps from a state \u03c3(-1).",
+      "role": "Input Specification",
+      "formal": "`\u03c3(-1)`"
+    },
+    {
+      "id": "P4",
+      "statement": "The transformation maps to a state \u03c3(+1).",
+      "role": "Output Specification",
+      "formal": "`\u03c3(+1)`"
+    },
+    {
+      "id": "P5",
+      "statement": "The transformation is non-unitary.",
+      "role": "Property Assertion",
+      "formal": "`non-unitary`"
+    },
+    {
+      "id": "P6",
+      "statement": "Law IV defines Grace Dynamics.",
+      "role": "Classification",
+      "formal": "`Law IV: The Grace Dynamics.`"
+    },
+    {
+      "id": "P7",
+      "statement": "This law is a theological law.",
+      "role": "Domain Classification",
+      "formal": "`Law IV is the theological law.`"
+    },
+    {
+      "id": "P8",
+      "statement": "This law is a central claim of the system.",
+      "role": "Epistemic Weight",
+      "formal": "`Central claim.`"
+    },
+    {
+      "id": "P9",
+      "statement": "The law depends on the Grace Operator Definition (D9.1).",
+      "role": "Dependency Assertion",
+      "formal": "`depends on anchor: D9.1`"
+    },
+    {
+      "id": "P10",
+      "statement": "The law can be defeated by showing grace dynamics are inconsistent.",
+      "role": "Falsifiability Condition",
+      "formal": "`Show grace dynamics are inconsistent.`"
+    },
+    {
+      "id": "P11",
+      "statement": "The law references \"Sola Gratia\" and \"2nd Law (external input)\".",
+      "role": "External Reference",
+      "formal": "`Sola Gratia; 2nd Law (external input)`"
+    },
+    {
+      "id": "P12",
+      "statement": "The law's formal expression is `\u011c: \u03c3(-1) \u2192 \u03c3(+1); non-unitary`.",
+      "role": "Formal Statement",
+      "formal": "`\u011c: \u03c3(-1) \u2192 \u03c3(+1); non-unitary`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0048: D19.4",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.4 \u2014 Law IV: Grace Dynamics",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

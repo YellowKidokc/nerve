@@ -1,0 +1,129 @@
+{
+  "title": "Observation Requirement",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0005_A5.1_A5_1_Observation_Requirement.md",
+  "source_sha256": "a61fe45f6e7447a54b251ab8582edce891be52426182160239f139e6d0ebab84",
+  "captured_at": "2026-09-06T23:03:20.167504+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2248,
+    "completion_tokens": 2142,
+    "total_tokens": 4390,
+    "cost": 0.002956220982,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0029860818,
+      "upstream_inference_prompt_cost": 0.0006052488,
+      "upstream_inference_completions_cost": 0.002380833
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Nothing is actual without being observed.",
+      "role": "Core statement of the axiom.",
+      "formal": "\u2200x: Actual(x) \u2192 \u2203O: Observes(O, x)"
+    },
+    {
+      "id": "P2",
+      "statement": "Observation is constitutive of actuality.",
+      "role": "Elaboration of the core statement.",
+      "formal": "(Conceptual definition; formalized by P1)"
+    },
+    {
+      "id": "P3",
+      "statement": "This is a stance.",
+      "role": "Epistemic status declaration.",
+      "formal": "Framework-dependent."
+    },
+    {
+      "id": "P4",
+      "statement": "The axiom depends on a core root (\u2205).",
+      "role": "Dependency specification.",
+      "formal": "depends_on: \u2205 (core root)"
+    },
+    {
+      "id": "P5",
+      "statement": "MWI (Many-Worlds Interpretation) denies this stance.",
+      "role": "Limitation/defeat condition.",
+      "formal": "MWI denies it."
+    },
+    {
+      "id": "P6",
+      "statement": "Bohmian mechanics denies this stance.",
+      "role": "Limitation/defeat condition.",
+      "formal": "Bohmian mechanics denies it."
+    },
+    {
+      "id": "P7",
+      "statement": "The axiom is classified in the Ontological domain.",
+      "role": "Domain classification.",
+      "formal": "Domain: Ontological"
+    },
+    {
+      "id": "P8",
+      "statement": "The axiom's mode is AX_CORE.",
+      "role": "Structural classification.",
+      "formal": "Mode: AX_CORE"
+    },
+    {
+      "id": "P9",
+      "statement": "The axiom's atlas type is Axiom.",
+      "role": "Structural classification.",
+      "formal": "Atlas Type: Axiom"
+    },
+    {
+      "id": "P10",
+      "statement": "The axiom's status is stance.",
+      "role": "Epistemic classification.",
+      "formal": "Status: stance"
+    },
+    {
+      "id": "P11",
+      "statement": "Defeat condition: Show actuality without observation.",
+      "role": "Falsification criterion.",
+      "formal": "Demonstrate objective reality independent of all observers."
+    },
+    {
+      "id": "P12",
+      "statement": "The axiom is a formal definition / primitive formalization.",
+      "role": "Workbook role specification.",
+      "formal": "Mathematical Use: Formal definition / primitive formalization"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0005: A5.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A5.1 \u2014 Observation Requirement",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

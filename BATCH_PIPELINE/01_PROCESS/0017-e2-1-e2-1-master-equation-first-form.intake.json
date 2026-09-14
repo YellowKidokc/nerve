@@ -1,0 +1,31 @@
+{
+  "title": "Master Equation First Form",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0017_E2.1_E2_1_Master_Equation_First_Form.md",
+  "source_sha256": "6b849490fb968cce4accfb26ad001b5eaaf058a9218505a317657a11b5eba56a",
+  "captured_at": "2026-09-06T23:17:06.386071+00:00",
+  "word_count": 432,
+  "tags": [],
+  "source_outline": [
+    "Canonical Sequential Record 0017: E2.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E2.1 \u2014 Master Equation First Form",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

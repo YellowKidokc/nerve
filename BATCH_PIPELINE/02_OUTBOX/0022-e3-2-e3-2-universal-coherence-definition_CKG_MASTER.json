@@ -1,0 +1,130 @@
+{
+  "title": "Universal Coherence Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0022_E3.2_E3_2_Universal_Coherence_Definition.md",
+  "source_sha256": "d4efd52e9ffb8100a057ad28fab1f335c6a8ac7f263fd96894b06a93eb69a985",
+  "captured_at": "2026-09-06T23:23:07.960319+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2551,
+    "completion_tokens": 3123,
+    "total_tokens": 5674,
+    "cost": 0.004146837552,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0041887248,
+      "upstream_inference_prompt_cost": 0.0007175103,
+      "upstream_inference_completions_cost": 0.0034712145
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Universal coherence is defined as a weighted sum across all scales.",
+      "role": "Statement / Core Definition",
+      "formal": "`C_universal = \u03a3_i w_i \u00b7 C_i`"
+    },
+    {
+      "id": "P2",
+      "statement": "The model for universal coherence is a weighted multi-scale sum.",
+      "role": "Maximum Defensible Position",
+      "formal": "Model: `C_universal = \u03a3_i w_i \u00b7 C_i`"
+    },
+    {
+      "id": "P3",
+      "statement": "The weights `w_i` are unspecified.",
+      "role": "Limitation / Risk",
+      "formal": "`w_i \u2208 ?` (unspecified parameter set)"
+    },
+    {
+      "id": "P4",
+      "statement": "Without specified weights, predictions are qualitative only.",
+      "role": "Limitation / Consequence",
+      "formal": "If `w_i` unknown, then `C_universal` not quantitatively predictive."
+    },
+    {
+      "id": "P5",
+      "statement": "The definition depends on A2.2 (Self-Grounding).",
+      "role": "Dependency",
+      "formal": "`E3.2` \u2287 `A2.2`"
+    },
+    {
+      "id": "P6",
+      "statement": "The definition depends on D3.1 (Coherence Functional Definition).",
+      "role": "Dependency",
+      "formal": "`E3.2` \u2287 `D3.1`"
+    },
+    {
+      "id": "P7",
+      "statement": "Scales exhibit cross-scale coherence.",
+      "role": "Assumption",
+      "formal": "`\u2203` relation `R` such that `C_i` and `C_j` are not independent for `i \u2260 j`."
+    },
+    {
+      "id": "P8",
+      "statement": "A weighting scheme exists and is meaningful.",
+      "role": "Assumption",
+      "formal": "`\u2203` `{w_i}` such that `\u03a3_i w_i \u00b7 C_i` is a valid measure."
+    },
+    {
+      "id": "P9",
+      "statement": "If scales are independent, the universal coherence definition fails.",
+      "role": "Defeat Condition",
+      "formal": "If `C_i \u27c2 C_j` \u2200 `i \u2260 j`, then model `C_universal = \u03a3_i w_i \u00b7 C_i` is invalid."
+    },
+    {
+      "id": "P10",
+      "statement": "A wrong weighting scheme could invalidate the model.",
+      "role": "Defeat Condition",
+      "formal": "If `{w_i}` is incorrect, then `C_universal` is not a valid universal measure."
+    },
+    {
+      "id": "P11",
+      "statement": "The definition is part of the \"Coherence System\" chain tier.",
+      "role": "Classification",
+      "formal": "Chain Tier: 4 \u2014 Coherence System"
+    },
+    {
+      "id": "P12",
+      "statement": "The epistemic status of the definition is `equation`.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `equation`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0022: E3.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E3.2 \u2014 Universal Coherence Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

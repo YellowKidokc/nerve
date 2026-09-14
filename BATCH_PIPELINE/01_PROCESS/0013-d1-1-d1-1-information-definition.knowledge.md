@@ -1,0 +1,152 @@
+---
+type: axiom_companion
+title: "Information Definition"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: pending_ai_analysis
+source_file: "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0013_D1.1_D1_1_Information_Definition.md"
+source_sha256: 3c655539e3e28695e2d18378823279769c33ca2211bb146985ab93eae97af91d
+captured_at: 2026-09-06T23:11:50.253228+00:00
+tags: ["information-theory", "systems"]
+---
+
+# Information Definition
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** Source preserved below. Analytical case file pending.
+
+## Intake assessment
+
+- Inferred type: `axiom_companion`
+- Routing confidence: `0.98`
+- Signals: canonical axiom record, sealed v2.3 authority, axiom companion layout
+- Original words: `365`
+- Original SHA-256: `3c655539e3e28695e2d18378823279769c33ca2211bb146985ab93eae97af91d`
+
+## Source outline
+
+- Canonical Sequential Record 0013: D1.1
+- Sequence Navigation
+- Registered Dependency Links
+- Canonical Source Text
+- 📐 D1.1 — Information Definition
+- Statement
+- Formal Expression
+- Maximum Defensible Position
+- Classification
+- Dependency Chain
+- References
+- Defeat Conditions
+- Limitations (from workbook)
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0013: D1.1
+
+| Field | Value |
+|---|---|
+| Registry position | 13 of 191 |
+| Canonical ID | `D1.1` |
+| Mode | `AX_SCAFFOLD` |
+| Canonical source filename | `D1_1_Information_Definition.md` |
+| Source SHA-256 | `7daeed0ef4232a77bd68f030980ca07f80197d81c4f388a39ac0a817c92ee8b3` |
+
+## Sequence Navigation
+
+Previous: [0012 - BC8 - Voluntary Coupling](0012_BC8_BC8_Voluntary_Coupling.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0014 - D1.2 - Bit Definition](0014_D1.2_D1_2_Bit_Definition.md)
+
+## Registered Dependency Links
+
+[A1.2 - Distinction](0002_A1.2_A1_2_Distinction.md); [A1.1 - Existence](0001_A1.1_A1_1_Existence.md)
+
+## Canonical Source Text
+
+---
+id: "D1.1"
+legacy_id: "AX-004"
+title: "Information Definition"
+mode: "AX_SCAFFOLD"
+atlas_type: "Definition"
+status: "definition"
+domain: "Primordial"
+anchor: "A1.1, A1.2"
+depends_on: "A1.1, A1.2"
+date: "2026-08-17"
+---
+
+# 📐 D1.1 — Information Definition
+
+**Mode:** `AX_SCAFFOLD` | **Atlas Type:** `Definition` | **Status:** `definition`
+**Domain:** Primordial | **Legacy ID:** `AX-004`
+
+---
+
+## Statement
+
+Information is defined as resolved uncertainty — Shannon entropy.
+
+## Formal Expression
+
+```
+I(x) = log₂(1/p(x)); H(X) = -Σp·log p
+```
+
+$$
+I(x) = log₂(1/p(x)); H(X) = -Σp·log p
+$$
+
+## Maximum Defensible Position
+
+Definition: Information = resolved uncertainty.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `AX_SCAFFOLD` |
+| **Atlas Object Type** | `Definition` |
+| **Workbook Role** | `DEFINITION` |
+| **Mathematical Use** | Formal definition / primitive formalization |
+| **Epistemic Status** | `definition` |
+| **Domain** | Primordial |
+
+## Dependency Chain
+
+**Anchor:** A1.1, A1.2
+**Depends On:** A1.1, A1.2
+**Chain Tier:** 1 — Primordial Foundation
+
+## References
+
+Shannon 1948
+
+## Defeat Conditions
+
+Show information is better defined another way. Demonstrate Shannon entropy is wrong measure.
+
+## Limitations (from workbook)
+
+Shannon information is syntactic, not semantic. Framework needs semantic information too.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::608a546e-e0d1-4c1e-9542-db2e3d2e625f::"Information must be defined as resolved uncertainty (Shannon entropy)"::null::@Engineering%%
+%%tag::Requirement::574524a7-47a8-4e82-82e7-d8896b874ead::"The formal expression must use Shannon entropy formula"::null::@Engineering%%
+%%tag::Decision::d5c32d45-4fb2-4b00-af2c-cf351883701b::"Adopt Shannon entropy as the definition of information"::null::@Engineering%%
+%%tag::Dependency::407195e2-4751-411e-8740-390a792945d3::"Depends on A1.1 Existence and A1.2 Distinction"::null::@Engineering%%
+%%tag::Risk::d5eb94c2-9d07-4233-9bf7-e4980b05ff66::"Shannon entropy may be the wrong measure of information"::null::@Engineering%%
+%%tag::Risk::934d8c1e-643c-4e91-ae3d-42781107c2ea::"Shannon information is syntactic, not semantic, limiting framework"::null::@Engineering,Product%%
+%%tag::OpenQuestion::bd5b2e68-d4bf-4c2b-90e3-95809f6ed4ca::"How to incorporate semantic information into the framework"::null::@Engineering,Product%%
+%%tag::Metric::3e3c8198-81c1-420a-9441-af8312efe644::"Shannon entropy H(X) = -Σp·log p"::null::@Engineering%%
+%%tag::Stakeholder::b334a870-efcc-47f1-a9ca-64d3c2319b5c::"Framework users needing semantic information"::null::@Product%%
+%%--- END SEMANTIC TAGS ---%%
+
+<!-- END EXACT SOURCE PROJECTION -->

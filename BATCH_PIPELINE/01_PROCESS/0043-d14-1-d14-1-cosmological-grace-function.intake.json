@@ -1,0 +1,31 @@
+{
+  "title": "Cosmological Grace Function",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0043_D14.1_D14_1_Cosmological_Grace_Function.md",
+  "source_sha256": "af47b79a2d3baa31f65b098dd697897512f627322bf89849ede330e8042adadd",
+  "captured_at": "2026-09-06T23:42:30.576954+00:00",
+  "word_count": 358,
+  "tags": [],
+  "source_outline": [
+    "Canonical Sequential Record 0043: D14.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D14.1 \u2014 Cosmological Grace Function",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

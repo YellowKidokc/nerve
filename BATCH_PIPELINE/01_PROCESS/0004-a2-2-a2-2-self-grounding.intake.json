@@ -1,0 +1,33 @@
+{
+  "title": "Self-Grounding",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0004_A2.2_A2_2_Self-Grounding.md",
+  "source_sha256": "6ac28a93623326a83468b163bdc909e7bef3b6fa294103e2792360cf7efc5a03",
+  "captured_at": "2026-09-06T23:01:47.729401+00:00",
+  "word_count": 416,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0004: A2.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udfe2 A2.2 \u2014 Self-Grounding",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

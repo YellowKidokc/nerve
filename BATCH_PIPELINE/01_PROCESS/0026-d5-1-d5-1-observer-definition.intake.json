@@ -1,0 +1,33 @@
+{
+  "title": "Observer Definition",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0026_D5.1_D5_1_Observer_Definition.md",
+  "source_sha256": "81991962c17548cf916eb5eb0e4dfcb3380e9c0045ffe351f5eb55d5479d4876",
+  "captured_at": "2026-09-06T23:25:28.455345+00:00",
+  "word_count": 419,
+  "tags": [
+    "systems"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0026: D5.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D5.1 \u2014 Observer Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

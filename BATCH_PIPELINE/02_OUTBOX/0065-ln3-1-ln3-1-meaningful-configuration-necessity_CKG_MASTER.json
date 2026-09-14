@@ -1,0 +1,130 @@
+{
+  "title": "Meaningful Configuration Necessity",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0065_LN3.1_LN3_1_Meaningful_Configuration_Necessity.md",
+  "source_sha256": "e783a382bbbb5622d787368865dff818fc9e77b6297b32b1543a1289b23d62be",
+  "captured_at": "2026-09-07T00:00:57.512319+00:00",
+  "tags": [
+    "information-theory",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2149,
+    "completion_tokens": 2322,
+    "total_tokens": 4471,
+    "cost": 0.003343336425,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0033771075,
+      "upstream_inference_prompt_cost": 0.0007962045,
+      "upstream_inference_completions_cost": 0.002580903
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Not all configurations are meaningful.",
+      "role": "Framework claim / Statement",
+      "formal": "\u00ac\u2200config: Meaningful(config)"
+    },
+    {
+      "id": "P2",
+      "statement": "Meaning requires coherent structure.",
+      "role": "Core axiom / Statement",
+      "formal": "Meaningful(config) \u2192 Coherent(config)"
+    },
+    {
+      "id": "P3",
+      "statement": "The formal expression of LN3.1 is `Meaningful(config) \u2192 Coherent(config)`.",
+      "role": "Formal Expression",
+      "formal": "`Meaningful(config) \u2192 Coherent(config)`"
+    },
+    {
+      "id": "P4",
+      "statement": "LN3.1 is a Logical Necessity.",
+      "role": "Classification",
+      "formal": "Atlas Type: `Logical Necessity`"
+    },
+    {
+      "id": "P5",
+      "statement": "LN3.1's domain is Ontological.",
+      "role": "Classification",
+      "formal": "Domain: `Ontological`"
+    },
+    {
+      "id": "P6",
+      "statement": "LN3.1 depends on A2.2 (Self-Grounding).",
+      "role": "Dependency declaration",
+      "formal": "depends_on: \"A2.2\""
+    },
+    {
+      "id": "P7",
+      "statement": "LN3.1 is anchored by A2.2.",
+      "role": "Dependency declaration",
+      "formal": "anchor: \"A2.2\""
+    },
+    {
+      "id": "P8",
+      "statement": "Random noise carries no message.",
+      "role": "Limitation / Support from information theory",
+      "formal": "Empirical claim from information theory"
+    },
+    {
+      "id": "P9",
+      "statement": "Kolmogorov complexity is a relevant reference.",
+      "role": "Supporting reference",
+      "formal": "Reference to mathematical theory"
+    },
+    {
+      "id": "P10",
+      "statement": "Shannon capacity is a relevant reference.",
+      "role": "Supporting reference",
+      "formal": "Reference to information theory"
+    },
+    {
+      "id": "P11",
+      "statement": "The defeat condition for LN3.1 is demonstrating that random configurations carry meaning.",
+      "role": "Defeat condition",
+      "formal": "\u2203config: Random(config) \u2227 Meaningful(config)"
+    },
+    {
+      "id": "P12",
+      "statement": "LN3.1's epistemic status is `logical_necessity`.",
+      "role": "Classification",
+      "formal": "Epistemic Status: `logical_necessity`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0065: LN3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udd36 LN3.1 \u2014 Meaningful Configuration Necessity",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

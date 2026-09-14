@@ -1,0 +1,35 @@
+{
+  "title": "Law IX: Grace Non-Unitarity",
+  "inferred_type": "axiom_companion",
+  "routing_confidence": 0.98,
+  "routing_signals": [
+    "canonical axiom record",
+    "sealed v2.3 authority",
+    "axiom companion layout"
+  ],
+  "canon_status": "candidate_draft",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0053_D19.9_D19_9_Law_IX_Grace_Non-Unitarity.md",
+  "source_sha256": "3b054b1441cd4f49b91c20df9a28b3c4d981660937fabd0db5b9531d4b17cd31",
+  "captured_at": "2026-09-06T23:50:57.928539+00:00",
+  "word_count": 460,
+  "tags": [
+    "quantum-foundations",
+    "systems",
+    "theology"
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0053: D19.9",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D19.9 \u2014 Law IX: Grace Non-Unitarity",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

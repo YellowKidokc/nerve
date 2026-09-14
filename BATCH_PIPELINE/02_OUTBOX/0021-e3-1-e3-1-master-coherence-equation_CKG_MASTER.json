@@ -1,0 +1,129 @@
+{
+  "title": "Master Coherence Equation",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0021_E3.1_E3_1_Master_Coherence_Equation.md",
+  "source_sha256": "308eed3ae83fa337b50aaea37952b4b859546f7a722e78235b0da50edaaa76bd",
+  "captured_at": "2026-09-06T23:22:08.655065+00:00",
+  "tags": [
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2434,
+    "completion_tokens": 2604,
+    "total_tokens": 5038,
+    "cost": 0.003532822722,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0035685078,
+      "upstream_inference_prompt_cost": 0.0006741618,
+      "upstream_inference_completions_cost": 0.002894346
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "Coherence is a dynamic quantity that changes over time.",
+      "role": "Core Model Assumption",
+      "formal": "\\( C = C(t) \\)"
+    },
+    {
+      "id": "P2",
+      "statement": "The rate of change of coherence includes a decay term proportional to its current value.",
+      "role": "Equation Term",
+      "formal": "\\( -\\Gamma_{\\text{decay}} \\cdot C \\)"
+    },
+    {
+      "id": "P3",
+      "statement": "The rate of change of coherence includes a source term driven by an external functional.",
+      "role": "Equation Term",
+      "formal": "\\( +\\Gamma_{\\text{source}} \\cdot J(\\chi) \\)"
+    },
+    {
+      "id": "P4",
+      "statement": "The master equation governing coherence dynamics is a linear first-order ordinary differential equation.",
+      "role": "Formal Expression",
+      "formal": "\\( \\frac{dC}{dt} = -\\Gamma_{\\text{decay}} \\cdot C + \\Gamma_{\\text{source}} \\cdot J(\\chi) \\)"
+    },
+    {
+      "id": "P5",
+      "statement": "The model is a linear approximation.",
+      "role": "Explicit Limitation",
+      "formal": "Stated as \"Linear approximation.\""
+    },
+    {
+      "id": "P6",
+      "statement": "Nonlinear effects may be important at high coherence.",
+      "role": "Explicit Limitation / Risk",
+      "formal": "Stated in Limitations."
+    },
+    {
+      "id": "P7",
+      "statement": "The equation's form is a requirement for coherence dynamics.",
+      "role": "Semantic Tag (Requirement)",
+      "formal": "\"Coherence dynamics must follow the master coherence equation form...\""
+    },
+    {
+      "id": "P8",
+      "statement": "The equation depends on the concept of Self-Grounding (A2.2).",
+      "role": "Dependency Link",
+      "formal": "`depends_on: \"A2.2\"`"
+    },
+    {
+      "id": "P9",
+      "statement": "The equation depends on the Coherence Functional Definition (D3.1).",
+      "role": "Dependency Link",
+      "formal": "`depends_on: \"D3.1\"`"
+    },
+    {
+      "id": "P10",
+      "statement": "The equation can be defeated if coherence dynamics are shown not to follow this form.",
+      "role": "Defeat Condition",
+      "formal": "Stated in Defeat Conditions."
+    },
+    {
+      "id": "P11",
+      "statement": "The equation can be defeated if missing terms are demonstrated.",
+      "role": "Defeat Condition",
+      "formal": "Stated in Defeat Conditions."
+    },
+    {
+      "id": "P12",
+      "statement": "The equation is classified as an ontological model.",
+      "role": "Classification",
+      "formal": "`Domain: Ontological`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0021: E3.1",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 E3.1 \u2014 Master Coherence Equation",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

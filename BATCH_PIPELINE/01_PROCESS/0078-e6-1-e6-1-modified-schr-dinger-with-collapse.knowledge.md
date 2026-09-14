@@ -1,0 +1,152 @@
+---
+type: axiom_companion
+title: "Modified Schrödinger With Collapse"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: pending_ai_analysis
+source_file: "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0078_E6.1_E6_1_Modified_Schr_dinger_With_Collapse.md"
+source_sha256: a14820990c48f56e87cc96933fb27b64507c543277e57b840ca4ba8a851ffa9e
+captured_at: 2026-09-07T00:09:29.545862+00:00
+tags: ["quantum-foundations", "systems"]
+---
+
+# Modified Schrödinger With Collapse
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** Source preserved below. Analytical case file pending.
+
+## Intake assessment
+
+- Inferred type: `axiom_companion`
+- Routing confidence: `0.98`
+- Signals: canonical axiom record, sealed v2.3 authority, axiom companion layout
+- Original words: `364`
+- Original SHA-256: `a14820990c48f56e87cc96933fb27b64507c543277e57b840ca4ba8a851ffa9e`
+
+## Source outline
+
+- Canonical Sequential Record 0078: E6.1
+- Sequence Navigation
+- Registered Dependency Links
+- Canonical Source Text
+- 🔶 E6.1 — Modified Schrödinger With Collapse
+- Statement
+- Formal Expression
+- Maximum Defensible Position
+- Classification
+- Dependency Chain
+- References
+- Defeat Conditions
+- Limitations (from workbook)
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0078: E6.1
+
+| Field | Value |
+|---|---|
+| Registry position | 78 of 191 |
+| Canonical ID | `E6.1` |
+| Mode | `FW_EXTENDED` |
+| Canonical source filename | `E6_1_Modified_Schrödinger_With_Collapse.md` |
+| Source SHA-256 | `4649f5f9d666875ca6b58ae40e3ba496ff6249187ca925a70c89ac99d60e8226` |
+
+## Sequence Navigation
+
+Previous: [0077 - A6.3 - Irreversibility](0077_A6.3_A6_3_Irreversibility.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0079 - P6.1 - Collapse Rate Proportional To Phi](0079_P6.1_P6_1_Collapse_Rate_Proportional_To_Phi.md)
+
+## Registered Dependency Links
+
+[A5.1 - Observation Requirement](0005_A5.1_A5_1_Observation_Requirement.md); [D6.1 - Collapse Rate Gamma](0029_D6.1_D6_1_Collapse_Rate_Gamma.md)
+
+## Canonical Source Text
+
+---
+id: "E6.1"
+legacy_id: "AX-050"
+title: "Modified Schrödinger With Collapse"
+mode: "FW_EXTENDED"
+atlas_type: "Equation"
+status: "equation"
+domain: "Ontological"
+anchor: "A5.1"
+depends_on: "A5.1, D6.1"
+date: "2026-08-17"
+---
+
+# 🔶 E6.1 — Modified Schrödinger With Collapse
+
+**Mode:** `FW_EXTENDED` | **Atlas Type:** `Equation` | **Status:** `equation`
+**Domain:** Ontological | **Legacy ID:** `AX-050`
+
+---
+
+## Statement
+
+Modified Schrödinger equation with objective collapse term.
+
+## Formal Expression
+
+```
+iℏ∂|ψ⟩/∂t = Ĥ|ψ⟩ - (Γ/2)·(|ψ⟩ - P̂|ψ⟩)
+```
+
+$$
+iℏ∂|ψ⟩/∂t = Ĥ|ψ⟩ - (Γ/2)·(|ψ⟩ - P̂|ψ⟩)
+$$
+
+## Maximum Defensible Position
+
+Framework claim: Modified Schrödinger equation with objective collapse term.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `FW_EXTENDED` |
+| **Atlas Object Type** | `Equation` |
+| **Workbook Role** | `FW_EXTENDED` |
+| **Mathematical Use** | Framework commitment |
+| **Epistemic Status** | `equation` |
+| **Domain** | Ontological |
+
+## Dependency Chain
+
+**Anchor:** A5.1
+**Depends On:** A5.1, D6.1
+
+## References
+
+GRW theory; Penrose objective collapse
+
+## Defeat Conditions
+
+Show standard Schrödinger suffices.
+
+## Limitations (from workbook)
+
+Similar to GRW but with Φ-dependent Γ. Distinguishable from GRW experimentally.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::ec3d4b8b-8e03-4b4a-aa9c-42824d8203e7::"Modified Schrödinger equation must include objective collapse term"::null::@Engineering%%
+%%tag::Requirement::1f90f790-056c-4834-95f2-29c34cbba7ad::"Collapse rate Gamma must be proportional to Phi"::null::@Engineering%%
+%%tag::Decision::59b5961f-15ae-4c85-815e-a7822a732402::"Adopt modified Schrödinger equation with objective collapse term"::null::@Engineering%%
+%%tag::Decision::70d245d3-b153-412b-8826-060c686e3ef6::"Use GRW theory and Penrose objective collapse as references"::null::@Engineering%%
+%%tag::Dependency::e494cf1b-0a0a-4b61-9bff-b9498c0cfc0b::"Depends on A5.1 Observation Requirement"::null::@Engineering%%
+%%tag::Dependency::ae87e58b-39b9-4979-adc9-5ca648784445::"Depends on D6.1 Collapse Rate Gamma"::null::@Engineering%%
+%%tag::Risk::394e24f9-cd0d-4181-9a0a-ed15e243b30b::"Risk that standard Schrödinger equation suffices, invalidating this modification"::null::@Engineering%%
+%%tag::Assumption::5e2b0858-e815-44a0-94cc-f2ae172e0980::"Assumption that the modified equation is distinguishable from GRW experimentally"::null::@Engineering%%
+%%tag::Metric::646059e6-341f-41a8-97d5-c2073a65f0e0::"Collapse rate Gamma value"::null::@Engineering%%
+%%tag::Stakeholder::30cc2c9d-06f4-44ff-8d0f-63478ea03a8c::"Framework maintainers interested in ontological equations"::null::@Engineering%%
+%%--- END SEMANTIC TAGS ---%%
+
+<!-- END EXACT SOURCE PROJECTION -->

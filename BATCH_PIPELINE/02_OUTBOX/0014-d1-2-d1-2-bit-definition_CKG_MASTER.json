@@ -1,0 +1,131 @@
+{
+  "title": "Bit Definition",
+  "object_type": "AXIOM",
+  "inferred_type": "axiom_companion",
+  "status": "CANDIDATE_DRAFT",
+  "canon_status": "candidate_draft",
+  "semantic_status": "ai_analyzed_pending_review",
+  "template_version": "CKG_RECORD_V2.0",
+  "source_file": "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0014_D1.2_D1_2_Bit_Definition.md",
+  "source_sha256": "c1c3be4ebf13fcda2afec364a6bed5ccd2e41dd4dd4269d5bf6d3e81a0759cd3",
+  "captured_at": "2026-09-06T23:15:22.018290+00:00",
+  "tags": [
+    "information-theory",
+    "quantum-foundations",
+    "systems"
+  ],
+  "semantic_provider": "openrouter",
+  "semantic_model": "deepseek/deepseek-v3.2",
+  "usage": {
+    "prompt_tokens": 2676,
+    "completion_tokens": 2727,
+    "total_tokens": 5403,
+    "cost": 0.003756934467,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0037948833,
+      "upstream_inference_prompt_cost": 0.0007638228,
+      "upstream_inference_completions_cost": 0.0030310605
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "truth_predicates": [
+    {
+      "id": "P1",
+      "statement": "A bit is the minimal unit of information.",
+      "role": "Definitional Core",
+      "formal": "`bit = minimal information unit`"
+    },
+    {
+      "id": "P2",
+      "statement": "A bit is one binary distinction.",
+      "role": "Definitional Core",
+      "formal": "`bit = one binary distinction`"
+    },
+    {
+      "id": "P3",
+      "statement": "The formal value of a bit is log\u2082(2) = 1.",
+      "role": "Formal Expression",
+      "formal": "`bit = log\u2082(2) = 1`"
+    },
+    {
+      "id": "P4",
+      "statement": "Information is fundamentally discrete and binary.",
+      "role": "Underlying Assumption",
+      "formal": "`information \u2208 {discrete, binary}`"
+    },
+    {
+      "id": "P5",
+      "statement": "The definitions from Shannon (1948) and Landauer (1961) are authoritative for this framework.",
+      "role": "Justificatory Reference",
+      "formal": "`authority(Shannon1948, Landauer1961)`"
+    },
+    {
+      "id": "P6",
+      "statement": "This definition depends on the axioms A1.1 (Existence) and A1.2 (Distinction).",
+      "role": "Dependency Assertion",
+      "formal": "`D1.2 \u2283 (A1.1 \u2227 A1.2)`"
+    },
+    {
+      "id": "P7",
+      "statement": "The definition can be defeated by showing a smaller unit of information exists.",
+      "role": "Defeat Condition",
+      "formal": "`\u2203 unit : information(unit) \u2227 unit < bit`"
+    },
+    {
+      "id": "P8",
+      "statement": "The definition can be defeated by demonstrating continuous information without discretization.",
+      "role": "Defeat Condition",
+      "formal": "`\u2203 system : information(system) \u2227 \u00acdiscrete(system)`"
+    },
+    {
+      "id": "P9",
+      "statement": "Quantum information uses qubits (continuous superposition).",
+      "role": "Limiting Fact",
+      "formal": "`quantum_information \u2283 qubit(continuous_superposition)`"
+    },
+    {
+      "id": "P10",
+      "statement": "The framework may need to address the distinction between qubits and bits.",
+      "role": "Open Question",
+      "formal": "`need(framework, address(qubit_vs_bit))`"
+    },
+    {
+      "id": "P11",
+      "statement": "This record is classified as a `Definition` in the `Primordial` domain.",
+      "role": "Meta-Classification",
+      "formal": "`class(D1.2) = (Definition, Primordial)`"
+    },
+    {
+      "id": "P12",
+      "statement": "The record's status is `definition`.",
+      "role": "Meta-Status",
+      "formal": "`status(D1.2) = definition`"
+    }
+  ],
+  "source_outline": [
+    "Canonical Sequential Record 0014: D1.2",
+    "Sequence Navigation",
+    "Registered Dependency Links",
+    "Canonical Source Text",
+    "\ud83d\udcd0 D1.2 \u2014 Bit Definition",
+    "Statement",
+    "Formal Expression",
+    "Maximum Defensible Position",
+    "Classification",
+    "Dependency Chain",
+    "References",
+    "Defeat Conditions",
+    "Limitations (from workbook)"
+  ]
+}

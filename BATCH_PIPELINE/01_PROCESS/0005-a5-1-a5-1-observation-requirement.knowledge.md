@@ -1,0 +1,151 @@
+---
+type: axiom_companion
+title: "Observation Requirement"
+status: CANDIDATE_DRAFT
+canon_status: candidate_draft
+semantic_status: pending_ai_analysis
+source_file: "D:\\GitHub\\nerve\\BATCH_PIPELINE\\00_INBOX\\0005_A5.1_A5_1_Observation_Requirement.md"
+source_sha256: a61fe45f6e7447a54b251ab8582edce891be52426182160239f139e6d0ebab84
+captured_at: 2026-09-06T23:02:40.059443+00:00
+tags: ["systems"]
+---
+
+# Observation Requirement
+
+> **CANDIDATE_DRAFT — NOT ADMITTED.** Source preserved below. Analytical case file pending.
+
+## Intake assessment
+
+- Inferred type: `axiom_companion`
+- Routing confidence: `0.98`
+- Signals: canonical axiom record, sealed v2.3 authority, axiom companion layout
+- Original words: `365`
+- Original SHA-256: `a61fe45f6e7447a54b251ab8582edce891be52426182160239f139e6d0ebab84`
+
+## Source outline
+
+- Canonical Sequential Record 0005: A5.1
+- Sequence Navigation
+- Registered Dependency Links
+- Canonical Source Text
+- 🟢 A5.1 — Observation Requirement
+- Statement
+- Formal Expression
+- Maximum Defensible Position
+- Classification
+- Dependency Chain
+- References
+- Defeat Conditions
+- Limitations (from workbook)
+
+## Complete preserved source
+
+<!-- BEGIN EXACT SOURCE PROJECTION; authoritative bytes are preserved in ARCHIVE -->
+
+<!-- GENERATED FROM AXIOMS_CANONICAL_ONLY.md; do not edit this projection by hand. -->
+
+# Canonical Sequential Record 0005: A5.1
+
+| Field | Value |
+|---|---|
+| Registry position | 5 of 191 |
+| Canonical ID | `A5.1` |
+| Mode | `AX_CORE` |
+| Canonical source filename | `A5_1_Observation_Requirement.md` |
+| Source SHA-256 | `7b2fa943673bb40cf2b9eb00f24487c37899e41b11ba136b534d17b5294d2c28` |
+
+## Sequence Navigation
+
+Previous: [0004 - A2.2 - Self-Grounding](0004_A2.2_A2_2_Self-Grounding.md)  
+Index: [All Canonical Records](FIS.html)  
+Next: [0006 - BC4 - Three Observers Required](0006_BC4_BC4_Three_Observers_Required.md)
+
+## Registered Dependency Links
+
+_No registered canonical dependency link extracted._
+
+## Canonical Source Text
+
+---
+id: "A5.1"
+legacy_id: "AX-035"
+title: "Observation Requirement"
+mode: "AX_CORE"
+atlas_type: "Axiom"
+status: "stance"
+domain: "Ontological"
+anchor: "A5.1 (Observation Requirement) — ROOT"
+depends_on: "∅ (core root)"
+date: "2026-08-17"
+---
+
+# 🟢 A5.1 — Observation Requirement
+
+**Mode:** `AX_CORE` | **Atlas Type:** `Axiom` | **Status:** `stance`
+**Domain:** Ontological | **Legacy ID:** `AX-035`
+
+---
+
+## Statement
+
+Nothing is actual without being observed. Observation is constitutive of actuality.
+
+## Formal Expression
+
+```
+∀x: Actual(x) → ∃O: Observes(O, x)
+```
+
+$$
+∀x: Actual(x) → ∃O: Observes(O, x)
+$$
+
+## Maximum Defensible Position
+
+Framework stance: Observation is constitutive of actuality.
+
+## Classification
+
+| Field | Value |
+|-------|-------|
+| **Mode** | `AX_CORE` |
+| **Atlas Object Type** | `Axiom` |
+| **Workbook Role** | `AXIOM` |
+| **Mathematical Use** | Formal definition / primitive formalization |
+| **Epistemic Status** | `stance` |
+| **Domain** | Ontological |
+
+## Dependency Chain
+
+**Anchor:** A5.1 (Observation Requirement) — ROOT
+**Depends On:** ∅ (core root)
+**Chain Tier:** 6 — Observer System
+
+## References
+
+Wheeler 1983 (participatory universe); Copenhagen interpretation; Von Neumann 1932
+
+## Defeat Conditions
+
+Show actuality without observation. Demonstrate objective reality independent of all observers.
+
+## Limitations (from workbook)
+
+This is a stance. MWI and Bohmian mechanics deny it. Framework-dependent.
+
+---
+
+*Generated 2026-08-17 from AXIOM_CHAIN_MASTER_v2, AXIOMS_PART1_MODE_CLASSIFICATION, and AX Truth Kernel classifications.*
+
+%%--- SEMANTIC TAGS ---%%
+%%tag::Requirement::a253d55d-c209-4bce-9888-6f3d85e49ddd::"Nothing is actual without being observed"::null::@Engineering%%
+%%tag::Requirement::1230fa33-cfbc-4226-9077-ddcb7148ba0e::"Observation is constitutive of actuality"::null::@Engineering%%
+%%tag::Decision::eaabbae9-e085-476e-836c-3a826bbba557::"Adopt stance that observation is constitutive of actuality"::null::@Engineering%%
+%%tag::Risk::96cce9ac-dbbf-45a2-a9db-4da72f89af77::"MWI and Bohmian mechanics deny the stance"::null::@Engineering%%
+%%tag::Assumption::c85b5e20-5822-4126-8465-1079fc91aea3::"Assumes observation is required for actuality"::null::@Engineering%%
+%%tag::Dependency::826646d7-f2b3-4482-a292-6b9ef6e494a9::"Depends on core root (no external dependencies)"::null::@Engineering%%
+%%tag::OpenQuestion::4d487f54-913c-4905-a31b-8cd72b2f171c::"Can actuality exist without observation?"::null::@Engineering%%
+%%tag::OpenQuestion::7b9b96f5-23f9-42f8-a811-8fe8bab98f99::"Can objective reality be demonstrated independent of all observers?"::null::@Engineering%%
+%%--- END SEMANTIC TAGS ---%%
+
+<!-- END EXACT SOURCE PROJECTION -->
