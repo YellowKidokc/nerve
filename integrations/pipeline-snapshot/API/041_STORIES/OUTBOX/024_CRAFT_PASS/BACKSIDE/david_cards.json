@@ -1,0 +1,37 @@
+[
+  {
+    "card_id": "DAVID-001",
+    "name": "The memorable line",
+    "what_it_does": "Every section earns one line a reader could repeat: a sound bite, a reversal (not X but Y), a short line with rhythm or rhyme. It can be new; it does not have to remake David's line, but it must say what the section says.",
+    "serves": "memorable_line",
+    "rank": "fundamental"
+  },
+  {
+    "card_id": "DAVID-002",
+    "name": "Open inviting, not arguing",
+    "what_it_does": "Openings are heartfelt and human before they are rigorous: a person, a moment, a wound, a question the reader already carries. The proof waits underneath. The reader should lean in, not brace.",
+    "serves": "opening",
+    "rank": "fundamental"
+  },
+  {
+    "card_id": "DAVID-003",
+    "name": "Two things that should never be in the same room",
+    "what_it_does": "An analogy between two things from unrelated worlds that explain each other. Always state the mapping (this part = that part) and where it stops holding, so it stays an honest analogy and never pretends to be a proof.",
+    "serves": "analogy",
+    "rank": "extra"
+  },
+  {
+    "card_id": "DAVID-004",
+    "name": "Situate it",
+    "what_it_does": "Give the abstract idea somewhere to stand: a place, a moment, an object in the reader's world (a hospital hallway, a kitchen table, a courtroom, a field at dusk). Ground before you climb.",
+    "serves": "paragraph",
+    "rank": "extra"
+  },
+  {
+    "card_id": "DAVID-005",
+    "name": "Never claim more than the section does",
+    "what_it_does": "A gate, not a technique. No option and no memorable line may claim more than the original section claims. A beautiful line that overstates is a liability.",
+    "serves": "gate",
+    "rank": "gate"
+  }
+]

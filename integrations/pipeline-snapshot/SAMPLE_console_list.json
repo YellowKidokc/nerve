@@ -1,0 +1,2204 @@
+{
+ "root": "D:\\GitHub\\pipeline-workflows\\API",
+ "system": "D:\\GitHub\\pipeline-workflows\\API\\_system",
+ "stations": [
+  {
+   "number": "00",
+   "label": "00_QUICK_CALL",
+   "name": "QUICK_CALL",
+   "kind": "native",
+   "description": "Send one editable prompt with arbitrary files to DeepSeek; each input is saved immediately.",
+   "uses_api": true,
+   "options": [
+    "workers",
+    "focus",
+    "redo",
+    "outbox"
+   ],
+   "family": "",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\000_QUICK_CALL",
+   "path": "000_QUICK_CALL",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\000_QUICK_CALL\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\000_QUICK_CALL\\2 RUN ON FOLDER.bat"
+    },
+    {
+     "name": "3 RUN A SAVED CALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\000_QUICK_CALL\\3 RUN A SAVED CALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 20,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\000_QUICK_CALL\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\000_QUICK_CALL\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\000_QUICK_CALL\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "01",
+   "label": "01_YT_GRAB",
+   "name": "YT_GRAB",
+   "kind": "legacy",
+   "description": "Download YouTube transcripts (channel, playlist or video URLs) into yt_subtitles. Then asks what to look for in this channel and whether to auto-process new videos.",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "workers"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\001_YT_GRAB",
+   "path": "02_YOUTUBE\\001_YT_GRAB",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 GRAB A CHANNEL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\001_YT_GRAB\\1 GRAB A CHANNEL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\001_YT_GRAB\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\001_YT_GRAB\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\001_YT_GRAB\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "02",
+   "label": "02_YT_CLEAN",
+   "name": "YT_CLEAN",
+   "kind": "legacy",
+   "description": "Clean raw transcripts into readable notes (local Python, never an API).",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "redo"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\002_YT_CLEAN",
+   "path": "02_YOUTUBE\\002_YT_CLEAN",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\002_YT_CLEAN\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\002_YT_CLEAN\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\002_YT_CLEAN\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\002_YT_CLEAN\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "03",
+   "label": "03_YT_INDEX",
+   "name": "YT_INDEX",
+   "kind": "legacy",
+   "description": "Standard CKG argument-first index of each video (DeepSeek). Whole transcript per call.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "redo",
+    "focus",
+    "channel"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\003_YT_INDEX",
+   "path": "02_YOUTUBE\\003_YT_INDEX",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\003_YT_INDEX\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\003_YT_INDEX\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\003_YT_INDEX\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\003_YT_INDEX\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "04",
+   "label": "04_YT_LENSES",
+   "name": "YT_LENSES",
+   "kind": "legacy",
+   "description": "Numbered focus lenses and lettered layers over indexed videos; --ask is free-text focus.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "redo",
+    "focus",
+    "channel"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\004_YT_LENSES",
+   "path": "02_YOUTUBE\\004_YT_LENSES",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\004_YT_LENSES\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\004_YT_LENSES\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\004_YT_LENSES\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\004_YT_LENSES\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "05",
+   "label": "05_YT_CATALOG",
+   "name": "YT_CATALOG",
+   "kind": "legacy",
+   "description": "Channel overviews, debate pages, catalog.xlsx and catalog.sqlite from the index (local).",
+   "uses_api": false,
+   "options": [],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\005_YT_CATALOG",
+   "path": "02_YOUTUBE\\005_YT_CATALOG",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 BUILD CATALOG",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\005_YT_CATALOG\\1 BUILD CATALOG.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\005_YT_CATALOG\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\005_YT_CATALOG\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\005_YT_CATALOG\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "06",
+   "label": "06_YT_WATCH",
+   "name": "YT_WATCH",
+   "kind": "legacy",
+   "description": "Automatic chain for channels in WATCH_CHANNELS: convert, clean, index, channel focus, catalog.",
+   "uses_api": true,
+   "options": [
+    "workers",
+    "focus"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\006_YT_WATCH",
+   "path": "02_YOUTUBE\\006_YT_WATCH",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\006_YT_WATCH\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\006_YT_WATCH\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\006_YT_WATCH\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\006_YT_WATCH\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "07",
+   "label": "07_YT_CONVERT",
+   "name": "YT_CONVERT",
+   "kind": "native",
+   "description": "Convert SRT / VTT / JSON transcripts to ytgrab-style .md; originals kept in <Channel>/_originals (local).",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "channel",
+    "redo"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\007_YT_CONVERT",
+   "path": "02_YOUTUBE\\007_YT_CONVERT",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\007_YT_CONVERT\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\007_YT_CONVERT\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\007_YT_CONVERT\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\007_YT_CONVERT\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "08",
+   "label": "08_YT_SUMMARY",
+   "name": "YT_SUMMARY",
+   "kind": "native",
+   "description": "Base layer for a video: the summary questions in QUESTIONS.md, whole transcript in one call.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\008_YT_SUMMARY",
+   "path": "02_YOUTUBE\\008_YT_SUMMARY",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\008_YT_SUMMARY\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\008_YT_SUMMARY\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\008_YT_SUMMARY\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\008_YT_SUMMARY\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "09",
+   "label": "09_YT_DEEP",
+   "name": "YT_DEEP",
+   "kind": "native",
+   "description": "Detailed, rigorous layer on top of the base summary (reads 08's output + the whole transcript).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\009_YT_DEEP",
+   "path": "02_YOUTUBE\\009_YT_DEEP",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\009_YT_DEEP\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\009_YT_DEEP\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\009_YT_DEEP\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\009_YT_DEEP\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "10",
+   "label": "10_CKG_THEOLOGY",
+   "name": "CKG_THEOLOGY",
+   "kind": "native",
+   "description": "Theology triage after the CKG index: 17 probes (CLEAN / NOTE / FLAG / CLAIM / ??), rules enforced in code, argument layer for the claim graph, YouTube platform notes.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel"
+   ],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\010_CKG_THEOLOGY",
+   "path": "01_CKG\\020_CKG\\OUTBOX\\010_CKG_THEOLOGY",
+   "layer_of": "020_CKG",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\010_CKG_THEOLOGY\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\010_CKG_THEOLOGY\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 66,
+   "last_run": "2026-09-27T22:54",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\010_CKG_THEOLOGY\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\010_CKG_THEOLOGY\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\010_CKG_THEOLOGY\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "11",
+   "label": "11_CKG_PHYSICS",
+   "name": "CKG_PHYSICS",
+   "kind": "native",
+   "description": "Physics mirror pass after the CKG index: which physics process a theological event mirrors (or the reverse), stage by stage, in order, and whether it is identity, structural isomorphism or only analogy (rules enforced in code).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel"
+   ],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\011_CKG_PHYSICS",
+   "path": "01_CKG\\020_CKG\\OUTBOX\\011_CKG_PHYSICS",
+   "layer_of": "020_CKG",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\011_CKG_PHYSICS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\011_CKG_PHYSICS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\011_CKG_PHYSICS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\011_CKG_PHYSICS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\011_CKG_PHYSICS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "12",
+   "label": "12_YT_TIDY",
+   "name": "YT_TIDY",
+   "kind": "native",
+   "description": "One uniform name (Ch 159 - Title) and an Obsidian note (front matter, H1, transcript) per transcript, into yt_markdown/<Channel>/, one for one; --watch waits for a download to finish, then converts, tidies and summarizes (local).",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "channel",
+    "redo"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\012_YT_TIDY",
+   "path": "02_YOUTUBE\\012_YT_TIDY",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\012_YT_TIDY\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\012_YT_TIDY\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\012_YT_TIDY\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\012_YT_TIDY\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "13",
+   "label": "13_YT_CHANNEL_SUMMARY",
+   "name": "YT_CHANNEL_SUMMARY",
+   "kind": "native",
+   "description": "Channel summary folder: a 3-sentence summary, 2-3 keywords and the COLUMNS.md answers per video, one call each; the channel sheet (.xlsx, .tsv, index note) is rebuilt after every video.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel"
+   ],
+   "family": "02_YOUTUBE",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\013_YT_CHANNEL_SUMMARY",
+   "path": "02_YOUTUBE\\013_YT_CHANNEL_SUMMARY",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN ALL",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\013_YT_CHANNEL_SUMMARY\\1 RUN ALL.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\013_YT_CHANNEL_SUMMARY\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\013_YT_CHANNEL_SUMMARY\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_YOUTUBE\\013_YT_CHANNEL_SUMMARY\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "14",
+   "label": "14_STORY",
+   "name": "STORY",
+   "kind": "native",
+   "description": "Story Material System v1.0 (pilot): compact, traceable records for original writing (fast facts, human moments, connections, memorable lines, story devices, story spines). Its cards go at the bottom of the transcript page.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel"
+   ],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\014_STORY",
+   "path": "01_CKG\\020_CKG\\OUTBOX\\014_STORY",
+   "layer_of": "020_CKG",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\014_STORY\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\014_STORY\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 6,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\014_STORY\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\014_STORY\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\014_STORY\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "20",
+   "label": "20_CKG_RUN",
+   "name": "CKG_RUN",
+   "kind": "legacy",
+   "description": "CKG atom run over ckg_root/INBOX (map, S01-S10, audit).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "focus"
+   ],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG",
+   "path": "01_CKG\\020_CKG",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 16,
+   "outbox": 758,
+   "last_run": "2026-10-15T19:22",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "21",
+   "label": "21_CKG_EXTRACT_CPE",
+   "name": "CKG_EXTRACT_CPE",
+   "kind": "legacy",
+   "description": "Split CKG outputs into claims / proofs / evidence (local).",
+   "uses_api": false,
+   "options": [],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\021_CLAIMS_PROOFS_EVIDENCE",
+   "path": "02_C_P_E_L\\021_CLAIMS_PROOFS_EVIDENCE",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\021_CLAIMS_PROOFS_EVIDENCE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\021_CLAIMS_PROOFS_EVIDENCE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 14,
+   "outbox": 10,
+   "last_run": "2026-10-15T19:52",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\021_CLAIMS_PROOFS_EVIDENCE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\021_CLAIMS_PROOFS_EVIDENCE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\021_CLAIMS_PROOFS_EVIDENCE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "22",
+   "label": "22_CKG_INBOX_CHECK",
+   "name": "CKG_INBOX_CHECK",
+   "kind": "legacy",
+   "description": "Show what is waiting in the CKG inbox (no API).",
+   "uses_api": false,
+   "options": [],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\022_CKG_INBOX_CHECK",
+   "path": "01_CKG\\020_CKG\\BACKSIDE\\022_CKG_INBOX_CHECK",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 CHECK CKG INBOX",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\022_CKG_INBOX_CHECK\\1 CHECK CKG INBOX.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\022_CKG_INBOX_CHECK\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\022_CKG_INBOX_CHECK\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\BACKSIDE\\022_CKG_INBOX_CHECK\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "23",
+   "label": "23_CPEL",
+   "name": "CPEL",
+   "kind": "native",
+   "description": "Claims, Proofs, Evidence, Lean: four API calls per paper, in order, each its own folder under calls/ (switch any off in ckg.json).",
+   "uses_api": true,
+   "options": [
+    "workers",
+    "focus",
+    "outbox",
+    "limit"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\023_CPEL",
+   "path": "02_C_P_E_L\\023_CPEL",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\023_CPEL\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\023_CPEL\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\023_CPEL\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\023_CPEL\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\023_CPEL\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "24",
+   "label": "24_CRAFT_PASS",
+   "name": "CRAFT_PASS",
+   "kind": "native",
+   "description": "Craft pass: per-section craft options carried as a loop (2 fundamentals + up to 3 extras, unused carried forward), memorable line, never-in-the-same-room analogy, then DeepSeek's best full version. Markdown (marked) + JSON. No HTML.",
+   "uses_api": true,
+   "options": [
+    "workers",
+    "focus",
+    "outbox",
+    "redo"
+   ],
+   "family": "041_STORIES",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\OUTBOX\\024_CRAFT_PASS",
+   "path": "041_STORIES\\OUTBOX\\024_CRAFT_PASS",
+   "layer_of": "041_STORIES",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\OUTBOX\\024_CRAFT_PASS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\OUTBOX\\024_CRAFT_PASS\\2 RUN ON FOLDER.bat"
+    },
+    {
+     "name": "3 REPAIR FINISHED PAPERS",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\OUTBOX\\024_CRAFT_PASS\\3 REPAIR FINISHED PAPERS.bat"
+    }
+   ],
+   "inbox": 20,
+   "outbox": 66,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\OUTBOX\\024_CRAFT_PASS\\BACKSIDE\\FOCUS.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\OUTBOX\\024_CRAFT_PASS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "25",
+   "label": "25_CKG_V4",
+   "name": "CKG_V4",
+   "kind": "native",
+   "description": "CKG V4 readable review: detailed synopsis, question ladder, every leg of the argument, the argument (who made it before, what is new, where it can go), claim discipline, evidence, paragraph walk, audit and build next. Eight calls per paper; YAML stays in the sidecar.",
+   "uses_api": true,
+   "options": [
+    "workers",
+    "focus",
+    "outbox",
+    "limit"
+   ],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\025_CKG_V4",
+   "path": "01_CKG\\025_CKG_V4",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\025_CKG_V4\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\025_CKG_V4\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\025_CKG_V4\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\025_CKG_V4\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\025_CKG_V4\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "30",
+   "label": "30_EVIDENCE_INTAKE",
+   "name": "EVIDENCE_INTAKE",
+   "kind": "bundle",
+   "description": "Evidence in one station: the intake companion (support, claims, predicates, standing) and the three dials (kind, claimed vs earned strength), 2 calls per paper.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "focus",
+    "redo"
+   ],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\030_EVIDENCE",
+   "path": "01_CKG\\020_CKG\\OUTBOX\\030_EVIDENCE",
+   "layer_of": "020_CKG",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\030_EVIDENCE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\030_EVIDENCE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\030_EVIDENCE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\030_EVIDENCE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\030_EVIDENCE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "31",
+   "label": "31_EVIDENCE_MERGE_ORIGINALS",
+   "name": "EVIDENCE_MERGE_ORIGINALS",
+   "kind": "legacy",
+   "description": "Match companions to their originals by sha256 and merge (local).",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "shelf"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\031_EVIDENCE_MERGE_ORIGINALS",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\031_EVIDENCE_MERGE_ORIGINALS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\031_EVIDENCE_MERGE_ORIGINALS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\031_EVIDENCE_MERGE_ORIGINALS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\031_EVIDENCE_MERGE_ORIGINALS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\031_EVIDENCE_MERGE_ORIGINALS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\031_EVIDENCE_MERGE_ORIGINALS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "32",
+   "label": "32_EVIDENCE_BEST_ARGUMENTS",
+   "name": "EVIDENCE_BEST_ARGUMENTS",
+   "kind": "legacy",
+   "description": "Cluster primary arguments and weaknesses across companions (local TF-IDF).",
+   "uses_api": false,
+   "options": [
+    "shelf",
+    "threshold",
+    "top"
+   ],
+   "family": "07_ARGUMENTS",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\032_EVIDENCE_BEST_ARGUMENTS",
+   "path": "07_ARGUMENTS\\032_EVIDENCE_BEST_ARGUMENTS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\032_EVIDENCE_BEST_ARGUMENTS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\032_EVIDENCE_BEST_ARGUMENTS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\032_EVIDENCE_BEST_ARGUMENTS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\032_EVIDENCE_BEST_ARGUMENTS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\032_EVIDENCE_BEST_ARGUMENTS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "33",
+   "label": "33_EVIDENCE_BUILD_ONE_ARGUMENT",
+   "name": "EVIDENCE_BUILD_ONE_ARGUMENT",
+   "kind": "legacy",
+   "description": "Build one argument from a best-arguments cluster (lineage, originality, dimensions).",
+   "uses_api": true,
+   "options": [
+    "model",
+    "focus",
+    "find",
+    "name",
+    "list",
+    "min_match"
+   ],
+   "family": "07_ARGUMENTS",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\033_EVIDENCE_BUILD_ONE_ARGUMENT",
+   "path": "07_ARGUMENTS\\033_EVIDENCE_BUILD_ONE_ARGUMENT",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\033_EVIDENCE_BUILD_ONE_ARGUMENT\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\033_EVIDENCE_BUILD_ONE_ARGUMENT\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\033_EVIDENCE_BUILD_ONE_ARGUMENT\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\033_EVIDENCE_BUILD_ONE_ARGUMENT\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\033_EVIDENCE_BUILD_ONE_ARGUMENT\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "34",
+   "label": "34_EVIDENCE_SERIES_SYNTHESIS",
+   "name": "EVIDENCE_SERIES_SYNTHESIS",
+   "kind": "legacy",
+   "description": "Grand synthesis master paper for one series.",
+   "uses_api": true,
+   "options": [
+    "provider",
+    "model",
+    "focus",
+    "series"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\034_EVIDENCE_SERIES_SYNTHESIS",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\034_EVIDENCE_SERIES_SYNTHESIS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\034_EVIDENCE_SERIES_SYNTHESIS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\034_EVIDENCE_SERIES_SYNTHESIS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\034_EVIDENCE_SERIES_SYNTHESIS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\034_EVIDENCE_SERIES_SYNTHESIS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\034_EVIDENCE_SERIES_SYNTHESIS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "35",
+   "label": "35_EVIDENCE_SERIES_ARCS",
+   "name": "EVIDENCE_SERIES_ARCS",
+   "kind": "legacy",
+   "description": "Series scorecard, arc report and reorder recommendation.",
+   "uses_api": true,
+   "options": [
+    "provider",
+    "model",
+    "workers",
+    "focus",
+    "series",
+    "all"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\035_EVIDENCE_SERIES_ARCS",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\035_EVIDENCE_SERIES_ARCS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\035_EVIDENCE_SERIES_ARCS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\035_EVIDENCE_SERIES_ARCS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\035_EVIDENCE_SERIES_ARCS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\035_EVIDENCE_SERIES_ARCS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\035_EVIDENCE_SERIES_ARCS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "36",
+   "label": "36_EVIDENCE_THREE_DIALS",
+   "name": "EVIDENCE_THREE_DIALS",
+   "kind": "legacy",
+   "description": "Annotate one article with the three dials (kind, claimed vs earned strength).",
+   "uses_api": true,
+   "options": [
+    "model",
+    "focus"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\036_EVIDENCE_THREE_DIALS",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\036_EVIDENCE_THREE_DIALS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\036_EVIDENCE_THREE_DIALS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\036_EVIDENCE_THREE_DIALS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\036_EVIDENCE_THREE_DIALS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\036_EVIDENCE_THREE_DIALS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\036_EVIDENCE_THREE_DIALS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "37",
+   "label": "37_EVIDENCE_SQLITE_SYNC",
+   "name": "EVIDENCE_SQLITE_SYNC",
+   "kind": "legacy",
+   "description": "Sync companions into the pipeline SQLite database (local).",
+   "uses_api": false,
+   "options": [
+    "db"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\037_EVIDENCE_SQLITE_SYNC",
+   "path": "02_C_P_E_L\\037_EVIDENCE_SQLITE_SYNC",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\037_EVIDENCE_SQLITE_SYNC\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\037_EVIDENCE_SQLITE_SYNC\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\037_EVIDENCE_SQLITE_SYNC\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\037_EVIDENCE_SQLITE_SYNC\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\037_EVIDENCE_SQLITE_SYNC\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "38",
+   "label": "38_EVIDENCE_SIDECARS",
+   "name": "EVIDENCE_SIDECARS",
+   "kind": "legacy",
+   "description": "Write / search evidence sidecars (local).",
+   "uses_api": false,
+   "options": [
+    "search"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\038_EVIDENCE_SIDECARS",
+   "path": "02_C_P_E_L\\038_EVIDENCE_SIDECARS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\038_EVIDENCE_SIDECARS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\038_EVIDENCE_SIDECARS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\038_EVIDENCE_SIDECARS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\038_EVIDENCE_SIDECARS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\038_EVIDENCE_SIDECARS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "39",
+   "label": "39_EVIDENCE_CHAIN_INTAKE_V2",
+   "name": "EVIDENCE_CHAIN_INTAKE_V2",
+   "kind": "legacy",
+   "description": "Epistemic intake v2: extract, evaluate against the rubric, adversarial synthesis (3 JSON calls).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "dry_run",
+    "focus",
+    "all",
+    "check"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\039_EVIDENCE_CHAIN_INTAKE_V2",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\039_EVIDENCE_CHAIN_INTAKE_V2",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\039_EVIDENCE_CHAIN_INTAKE_V2\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\039_EVIDENCE_CHAIN_INTAKE_V2\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\039_EVIDENCE_CHAIN_INTAKE_V2\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\039_EVIDENCE_CHAIN_INTAKE_V2\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\039_EVIDENCE_CHAIN_INTAKE_V2\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "40",
+   "label": "40_ANALYTICAL_ARMS",
+   "name": "ANALYTICAL_ARMS",
+   "kind": "native",
+   "description": "Fruits (flagship) + master equation x2 + axiom nodes + coherence, always together (ANALYTICAL_ARMS_V1).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox"
+   ],
+   "family": "08_API_DEEP",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\040_ANALYTICAL_ARMS",
+   "path": "08_API_DEEP\\040_ANALYTICAL_ARMS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\040_ANALYTICAL_ARMS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\040_ANALYTICAL_ARMS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\040_ANALYTICAL_ARMS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\040_ANALYTICAL_ARMS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\040_ANALYTICAL_ARMS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "41",
+   "label": "41_STORY",
+   "name": "STORY",
+   "kind": "native",
+   "description": "Hook / sequence / coherence per paper -> series pass -> gated memorable lines (STORY_STATION_V2).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox"
+   ],
+   "family": "",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES",
+   "path": "041_STORIES",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 157,
+   "last_run": "2026-10-15T20:26",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\041_STORIES\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "42",
+   "label": "42_STATISTICS_WALL",
+   "name": "STATISTICS_WALL",
+   "kind": "native",
+   "description": "Every academic + Obsidian metric in Python (same numbers every run), with corpus / series percentiles and change since last version.",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\042_STATISTICS_WALL",
+   "path": "04_ACADEMIA\\042_STATISTICS_WALL",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\042_STATISTICS_WALL\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\042_STATISTICS_WALL\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\042_STATISTICS_WALL\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\042_STATISTICS_WALL\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\042_STATISTICS_WALL\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "43",
+   "label": "43_PAPER_GRADER",
+   "name": "PAPER_GRADER",
+   "kind": "native",
+   "description": "Three local passes on each paper: paper_grader 0.2.0 (L15 atom analytics), the July paper-proof-grader, and advanced metrics (causal claims, hedges, idea density, concept drift, topic coherence, self-contradiction, Paper Metrics Engine). No API.",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "workers",
+    "redo",
+    "outbox"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\043_PAPER_GRADER",
+   "path": "04_ACADEMIA\\043_PAPER_GRADER",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\043_PAPER_GRADER\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\043_PAPER_GRADER\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 22,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\043_PAPER_GRADER\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\043_PAPER_GRADER\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\043_PAPER_GRADER\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "44",
+   "label": "44_TAGGER",
+   "name": "TAGGER",
+   "kind": "native",
+   "description": "20 tags scored 0-10 per paper and video; local pass first, DeepSeek confirms scores of 5+.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\044_TAGGER",
+   "path": "04_ACADEMIA\\044_TAGGER",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\044_TAGGER\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\044_TAGGER\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\044_TAGGER\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\044_TAGGER\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\044_TAGGER\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "45",
+   "label": "45_CLAIM_ATOMS",
+   "name": "CLAIM_ATOMS",
+   "kind": "bundle",
+   "description": "Atoms and axioms in one station: claim atoms and axiom-node mapping, 2 calls per paper.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "focus",
+    "redo"
+   ],
+   "family": "01_CKG",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\045_ATOMS",
+   "path": "01_CKG\\020_CKG\\OUTBOX\\045_ATOMS",
+   "layer_of": "020_CKG",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\045_ATOMS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\045_ATOMS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\045_ATOMS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\045_ATOMS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\01_CKG\\020_CKG\\OUTBOX\\045_ATOMS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "46",
+   "label": "46_REPORT_COMBINE",
+   "name": "REPORT_COMBINE",
+   "kind": "native",
+   "description": "Assemble every station's JSON in procedure order (aggregate.json/.md) and build report.html + report.xlsx.",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\046_REPORT_COMBINE",
+   "path": "04_ACADEMIA\\046_REPORT_COMBINE",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\046_REPORT_COMBINE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\046_REPORT_COMBINE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\046_REPORT_COMBINE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\046_REPORT_COMBINE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\046_REPORT_COMBINE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "47",
+   "label": "47_NEW_PAPER",
+   "name": "NEW_PAPER",
+   "kind": "native",
+   "description": "Create the per-paper working folder from templates/PAPER_FOLDER (then tags it).",
+   "uses_api": false,
+   "options": [
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "outbox",
+    "title",
+    "id",
+    "series",
+    "own",
+    "no-tag"
+   ],
+   "family": "",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\047_NEW_PAPER",
+   "path": "047_NEW_PAPER",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\047_NEW_PAPER\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\047_NEW_PAPER\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\047_NEW_PAPER\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\047_NEW_PAPER\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\047_NEW_PAPER\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "48",
+   "label": "48_TOPIC_SYNTHESIS",
+   "name": "TOPIC_SYNTHESIS",
+   "kind": "native",
+   "description": "Bridge layer: best arguments for a topic across all papers, videos and evidence, cross-referenced, with citations; multi-page report.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox",
+    "topic"
+   ],
+   "family": "",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\048_TOPIC_SYNTHESIS",
+   "path": "048_TOPIC_SYNTHESIS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\048_TOPIC_SYNTHESIS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\048_TOPIC_SYNTHESIS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\048_TOPIC_SYNTHESIS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\048_TOPIC_SYNTHESIS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\048_TOPIC_SYNTHESIS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "49",
+   "label": "49_GAP_MAP",
+   "name": "GAP_MAP",
+   "kind": "native",
+   "description": "Overlay a topic synthesis on David's own work: expand / contract / holes, and who said it first (citations).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox",
+    "topic"
+   ],
+   "family": "",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\049_GAP_MAP",
+   "path": "049_GAP_MAP",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\049_GAP_MAP\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\049_GAP_MAP\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\049_GAP_MAP\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\049_GAP_MAP\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\049_GAP_MAP\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "50",
+   "label": "50_LEAN_PAIR_AXIOMS",
+   "name": "LEAN_PAIR_AXIOMS",
+   "kind": "legacy",
+   "description": "Theophysics congruence matrix: evidence status x Lean status per paper (local).",
+   "uses_api": false,
+   "options": [
+    "db"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\050_LEAN_PAIR_AXIOMS",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\050_LEAN_PAIR_AXIOMS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\050_LEAN_PAIR_AXIOMS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\050_LEAN_PAIR_AXIOMS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\050_LEAN_PAIR_AXIOMS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\050_LEAN_PAIR_AXIOMS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\050_LEAN_PAIR_AXIOMS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "51",
+   "label": "51_LEAN_GOD_IS_UNPROVEN",
+   "name": "LEAN_GOD_IS_UNPROVEN",
+   "kind": "legacy",
+   "description": "Pair GOD IS unproven claims with Lean targets (local).",
+   "uses_api": false,
+   "options": [],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\051_LEAN_GOD_IS_UNPROVEN",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\051_LEAN_GOD_IS_UNPROVEN",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\051_LEAN_GOD_IS_UNPROVEN\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\051_LEAN_GOD_IS_UNPROVEN\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 2959,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\051_LEAN_GOD_IS_UNPROVEN\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\051_LEAN_GOD_IS_UNPROVEN\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\051_LEAN_GOD_IS_UNPROVEN\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "52",
+   "label": "52_LEAN_ATOM_EXTRACTOR",
+   "name": "LEAN_ATOM_EXTRACTOR",
+   "kind": "legacy",
+   "description": "Lean atom extractor (scan / classify / verify / audit / enrich / export / pills / briefs / serve).",
+   "uses_api": true,
+   "options": [
+    "focus"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\052_LEAN_ATOM_EXTRACTOR",
+   "path": "02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\052_LEAN_ATOM_EXTRACTOR",
+   "layer_of": "055_LEAN_PAPERS",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\052_LEAN_ATOM_EXTRACTOR\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\052_LEAN_ATOM_EXTRACTOR\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\052_LEAN_ATOM_EXTRACTOR\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\052_LEAN_ATOM_EXTRACTOR\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\052_LEAN_ATOM_EXTRACTOR\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "53",
+   "label": "53_AXIOM_ONE_PAGE_TRANSFORM",
+   "name": "AXIOM_ONE_PAGE_TRANSFORM",
+   "kind": "legacy",
+   "description": "Transform axiom node pages into one-page form (local).",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "in_place"
+   ],
+   "family": "06_ATOMS",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\053_AXIOM_ONE_PAGE_TRANSFORM",
+   "path": "06_ATOMS\\053_AXIOM_ONE_PAGE_TRANSFORM",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\053_AXIOM_ONE_PAGE_TRANSFORM\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\053_AXIOM_ONE_PAGE_TRANSFORM\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\053_AXIOM_ONE_PAGE_TRANSFORM\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\053_AXIOM_ONE_PAGE_TRANSFORM\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\053_AXIOM_ONE_PAGE_TRANSFORM\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "54",
+   "label": "54_AXIOM_NODES_RUNNER",
+   "name": "AXIOM_NODES_RUNNER",
+   "kind": "legacy",
+   "description": "API_DEEP axiom-nodes runner over the atoms workspace (191-node registry).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "provider",
+    "focus"
+   ],
+   "family": "06_ATOMS",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\054_AXIOM_NODES",
+   "path": "06_ATOMS\\054_AXIOM_NODES",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\054_AXIOM_NODES\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\054_AXIOM_NODES\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\054_AXIOM_NODES\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\054_AXIOM_NODES\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\054_AXIOM_NODES\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "55",
+   "label": "55_LEAN_PAPERS",
+   "name": "LEAN_PAPERS",
+   "kind": "native",
+   "description": "Every Lean source in the Lean inbox (priority, series, general) -> formal paper, reader paper, claims in the claim template, a separate assumptions paper to review before running, and a theorem-to-claim reverse ledger; whole file per call, 30+ side by side.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS",
+   "path": "02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 28,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "56",
+   "label": "56_TITLE",
+   "name": "TITLE",
+   "kind": "",
+   "description": "Standard title + keywords + move (runs first; ~1.5k tokens a note)",
+   "uses_api": false,
+   "options": [
+    "workers",
+    "focus",
+    "outbox",
+    "all"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\056_TITLE",
+   "path": "04_ACADEMIA\\056_TITLE",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\056_TITLE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\056_TITLE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\056_TITLE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\056_TITLE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\056_TITLE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "57",
+   "label": "57_API_DEEP",
+   "name": "API_DEEP",
+   "kind": "",
+   "description": "Fruits, Axioms, Atoms, Lean, Stories, Master Equation, Coherence as one chain per paper",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "outbox",
+    "publish",
+    "copy",
+    "parallel"
+   ],
+   "family": "08_API_DEEP",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\057_API_DEEP",
+   "path": "08_API_DEEP\\057_API_DEEP",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\057_API_DEEP\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\057_API_DEEP\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 1319,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\057_API_DEEP\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\057_API_DEEP\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\057_API_DEEP\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "58",
+   "label": "58_ARGUMENT_GRADE",
+   "name": "ARGUMENT_GRADE",
+   "kind": "",
+   "description": "Strength and originality 0-8 per argument from quoted checks",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "outbox",
+    "publish"
+   ],
+   "family": "07_ARGUMENTS",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\058_ARGUMENT_GRADE",
+   "path": "07_ARGUMENTS\\058_ARGUMENT_GRADE",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\058_ARGUMENT_GRADE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\058_ARGUMENT_GRADE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 101,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\058_ARGUMENT_GRADE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\058_ARGUMENT_GRADE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\07_ARGUMENTS\\058_ARGUMENT_GRADE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "59",
+   "label": "59_CHI_EVALUATOR",
+   "name": "CHI_EVALUATOR",
+   "kind": "bundle",
+   "description": "chi-Evaluator v2 (pulled out of API 2): each claim scored on the Master Equation's ten channels, then four synthesized statements. 2 calls per claim, DeepSeek.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "redo"
+   ],
+   "family": "08_API_DEEP",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\059_CHI_EVALUATOR",
+   "path": "08_API_DEEP\\059_CHI_EVALUATOR",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\059_CHI_EVALUATOR\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\059_CHI_EVALUATOR\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\059_CHI_EVALUATOR\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\059_CHI_EVALUATOR\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\08_API_DEEP\\059_CHI_EVALUATOR\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "60",
+   "label": "60_OPENAI_STATIONS",
+   "name": "OPENAI_STATIONS",
+   "kind": "native",
+   "description": "The 23 api_call_NN prompts, grouped into bundles so one whole-document call answers several.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "channel",
+    "outbox"
+   ],
+   "family": "",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\060_OPENAI_STATIONS",
+   "path": "060_OPENAI_STATIONS",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\060_OPENAI_STATIONS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\060_OPENAI_STATIONS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\060_OPENAI_STATIONS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\060_OPENAI_STATIONS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\060_OPENAI_STATIONS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "61",
+   "label": "61_SERIES_SHEET",
+   "name": "SERIES_SHEET",
+   "kind": "native",
+   "description": "Series sheet: every file of an evidence series in one run. One JSON and one markdown per file, one master HTML for the series. Local, no API.",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "workers"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\061_SERIES_SHEET",
+   "path": "02_C_P_E_L\\03_EVIDENCE\\061_SERIES_SHEET",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\061_SERIES_SHEET\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\061_SERIES_SHEET\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\061_SERIES_SHEET\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\061_SERIES_SHEET\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\03_EVIDENCE\\061_SERIES_SHEET\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "62",
+   "label": "62_ATOM_BUILDER",
+   "name": "ATOM_BUILDER",
+   "kind": "native",
+   "description": "ATOM BUILDER per paper: claim atoms (Claim, Evidence, Proof, Process + 10-section Atom Meaning Block, nerve-draft JSON for the Claim Atom Builder) and the axiom companion. 2 calls per paper.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "redo",
+    "outbox"
+   ],
+   "family": "06_ATOMS",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\062_ATOM_BUILDER",
+   "path": "06_ATOMS\\062_ATOM_BUILDER",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\062_ATOM_BUILDER\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\062_ATOM_BUILDER\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\062_ATOM_BUILDER\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\062_ATOM_BUILDER\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\06_ATOMS\\062_ATOM_BUILDER\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "63",
+   "label": "63_PAPER_AUDIT",
+   "name": "PAPER_AUDIT",
+   "kind": "chain",
+   "description": "One paper through the whole audit, in order: local grades (43), Paper Intelligence Suite (65), API Deep chain (57), argument grades (58), chi-Evaluator (59), statistics wall (42), combined report (46), then the series house and pages (64).",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "focus",
+    "outbox"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\063_PAPER_AUDIT",
+   "path": "04_ACADEMIA\\063_PAPER_AUDIT",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\063_PAPER_AUDIT\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\063_PAPER_AUDIT\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\063_PAPER_AUDIT\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\063_PAPER_AUDIT\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\063_PAPER_AUDIT\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "64",
+   "label": "64_SITE_PACKAGE",
+   "name": "SITE_PACKAGE",
+   "kind": "native",
+   "description": "Files each audited paper into one house per series: a page per part (Markdown + HTML) with every audit result, the series title page rebuilt each time, an index of all series. Local, no API.",
+   "uses_api": false,
+   "options": [
+    "outbox"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\064_SITE_PACKAGE",
+   "path": "04_ACADEMIA\\064_SITE_PACKAGE",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\064_SITE_PACKAGE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\064_SITE_PACKAGE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\064_SITE_PACKAGE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\064_SITE_PACKAGE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\064_SITE_PACKAGE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "65",
+   "label": "65_PAPER_INTELLIGENCE",
+   "name": "PAPER_INTELLIGENCE",
+   "kind": "native",
+   "description": "Theophysics Paper Intelligence Suite v2.0 (X:\\THEOPHYSICS_PAPER_INTELLIGENCE): text analytics, academic standard, Theophysics metrics (chi, W/K, fruits, Master Equation variables, CKG tier), NLP deep, Truth Engine, emotion, linguistic depth, idea density, knowledge graph. Local, no API.",
+   "uses_api": false,
+   "options": [
+    "limit",
+    "outbox"
+   ],
+   "family": "04_ACADEMIA",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\065_PAPER_INTELLIGENCE",
+   "path": "04_ACADEMIA\\065_PAPER_INTELLIGENCE",
+   "layer_of": "",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\065_PAPER_INTELLIGENCE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\065_PAPER_INTELLIGENCE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\065_PAPER_INTELLIGENCE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\065_PAPER_INTELLIGENCE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\04_ACADEMIA\\065_PAPER_INTELLIGENCE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "66",
+   "label": "66_SORRY_AXIOM_AUDIT",
+   "name": "SORRY_AXIOM_AUDIT",
+   "kind": "native",
+   "description": "Every sorry/admit/axiom/native_decide in a Lean source, found in code first (free), then classified by one JSON call per file; remediation docket, blockers first.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "outbox"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\066_SORRY_AXIOM_AUDIT",
+   "path": "02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\066_SORRY_AXIOM_AUDIT",
+   "layer_of": "055_LEAN_PAPERS",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\066_SORRY_AXIOM_AUDIT\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\066_SORRY_AXIOM_AUDIT\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\066_SORRY_AXIOM_AUDIT\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\066_SORRY_AXIOM_AUDIT\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\066_SORRY_AXIOM_AUDIT\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "67",
+   "label": "67_LEAN_TRIAGE",
+   "name": "LEAN_TRIAGE",
+   "kind": "native",
+   "description": "Whole-corpus Lean triage: one compact JSON call per file — file kind, purpose, quality, duplicate hint, action; master 00_TRIAGE.md sorted by action.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "outbox"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\067_LEAN_TRIAGE",
+   "path": "02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\067_LEAN_TRIAGE",
+   "layer_of": "055_LEAN_PAPERS",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\067_LEAN_TRIAGE\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\067_LEAN_TRIAGE\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\067_LEAN_TRIAGE\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\067_LEAN_TRIAGE\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\067_LEAN_TRIAGE\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "68",
+   "label": "68_FORMALIZE_TARGETS",
+   "name": "FORMALIZE_TARGETS",
+   "kind": "native",
+   "description": "One claim note in (canon docket, HOLD claims especially), one proposed Lean 4 statement out — always labelled PROPOSED; the compiler adjudicates later.",
+   "uses_api": true,
+   "options": [
+    "limit",
+    "workers",
+    "provider",
+    "model",
+    "focus",
+    "redo",
+    "outbox"
+   ],
+   "family": "02_C_P_E_L",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\068_FORMALIZE_TARGETS",
+   "path": "02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\068_FORMALIZE_TARGETS",
+   "layer_of": "055_LEAN_PAPERS",
+   "buttons": [
+    {
+     "name": "1 RUN HERE",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\068_FORMALIZE_TARGETS\\1 RUN HERE.bat"
+    },
+    {
+     "name": "2 RUN ON FOLDER",
+     "path": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\068_FORMALIZE_TARGETS\\2 RUN ON FOLDER.bat"
+    }
+   ],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\068_FORMALIZE_TARGETS\\BACKSIDE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\068_FORMALIZE_TARGETS\\BACKSIDE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\02_C_P_E_L\\05_LEAN\\055_LEAN_PAPERS\\OUTBOX\\068_FORMALIZE_TARGETS\\BACKSIDE\\README.md"
+   }
+  },
+  {
+   "number": "90",
+   "label": "90_HEALTHCHECK",
+   "name": "HEALTHCHECK",
+   "kind": "native",
+   "description": "Every station, every path key, every API key; checks each declared option against the script's real --help.",
+   "uses_api": false,
+   "options": [],
+   "family": "_system",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\90_HEALTHCHECK",
+   "path": "_system\\stations\\90_HEALTHCHECK",
+   "layer_of": "",
+   "buttons": [],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\90_HEALTHCHECK\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\90_HEALTHCHECK\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\90_HEALTHCHECK\\README.md"
+   }
+  },
+  {
+   "number": "91",
+   "label": "91_RELOCATE",
+   "name": "RELOCATE",
+   "kind": "native",
+   "description": "After moving the folder: find every external path again (auto-search), confirm, save, health check.",
+   "uses_api": false,
+   "options": [],
+   "family": "_system",
+   "front": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\91_RELOCATE",
+   "path": "_system\\stations\\91_RELOCATE",
+   "layer_of": "",
+   "buttons": [],
+   "inbox": 0,
+   "outbox": 0,
+   "last_run": "",
+   "text": {
+    "FOCUS.md": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\91_RELOCATE\\FOCUS.md",
+    "PROMPT.md": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\91_RELOCATE\\PROMPT.md",
+    "README.md": "D:\\GitHub\\pipeline-workflows\\API\\_system\\stations\\91_RELOCATE\\README.md"
+   }
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+You are writing the BEST VERSION of a piece by David Lowe. It must mirror his piece: same sections in the same order, same claims, same voice, same short-line rhythm where he uses it. You are making it more memorable, more human, and more inviting, not making it say more.
+
+REGISTER: declaration piece. Heartfelt, unhedged, inviting. No added caveats, citations, or academic language.
+
+THE ORIGINAL, with unit IDs (PROTECTED units must be copied exactly, word for word):
+{{original}}
+
+THE CRAFT PASS RESULTS for each section (options marked best, memorable lines, analogies). Use them where they make the piece better; you may improve on them; you may leave a unit as David wrote it if it is already strong:
+{{passes}}
+
+RULES:
+- Keep the title exactly as David wrote it.
+- Never invent first-person experience for David ("I used to...", "When I was..."). Use "you", "we", or a third person.
+- Use an analogy from the passes only where it is rated strong and genuinely helps.
+- Every unit you write carries source_ids: the original unit ID(s) it comes from. A unit you add that has no source gets ["NEW"]. Keep NEW units few.
+- Never claim more than the original section claims.
+- Keep every section heading.
+- Name the technique card(s) behind each changed unit; use [] for a unit you left unchanged.
+
+Return ONLY a JSON object in exactly this shape:
+{
+  "title": "the title",
+  "sections": [
+    {
+      "section_id": "S00",
+      "heading": "the heading text, or null for the opening section",
+      "units": [
+        {"source_ids": ["S00.U01"], "text": "the unit", "changed": true, "techniques": ["CARD-ID"]}
+      ]
+    }
+  ]
+}

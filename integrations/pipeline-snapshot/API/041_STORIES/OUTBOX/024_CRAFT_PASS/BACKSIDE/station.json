@@ -1,0 +1,11 @@
+{
+  "number": "24",
+  "name": "CRAFT_PASS",
+  "label": "24_CRAFT_PASS",
+  "kind": "native",
+  "description": "Craft pass: per-section craft options carried as a loop (2 fundamentals + up to 3 extras, unused carried forward), memorable line, never-in-the-same-room analogy, then DeepSeek's best full version. Markdown (marked) + JSON. No HTML.",
+  "items": "papers",
+  "options": ["workers", "focus", "outbox", "redo"],
+  "uses_api": true,
+  "goals": []
+}

@@ -1,0 +1,111 @@
+{
+  "status": "design-prototype",
+  "assemblies": [
+    {
+      "id": "01A_CKG_HTML",
+      "group": "01_CKG",
+      "name": "CKG HTML assembly",
+      "layout": "shared",
+      "template": "shared-report",
+      "input": "Completed JSON outputs from 01_CKG",
+      "output": "D:/GitHub/pipeline-workflows/API/01A_CKG_HTML/OUTBOX",
+      "sections": [
+        "Overview",
+        "Audit",
+        "Atom map",
+        "Full CKG explanation",
+        "Source and provenance"
+      ]
+    },
+    {
+      "id": "02A_C_P_E_L_HTML",
+      "group": "02_C_P_E_L",
+      "name": "C P E L HTML assembly",
+      "layout": "custom",
+      "template": "02_c_p_e_l-report",
+      "input": "Completed JSON outputs from 02_C_P_E_L",
+      "output": "D:/GitHub/pipeline-workflows/API/02A_C_P_E_L_HTML/OUTBOX",
+      "sections": [
+        "Claims",
+        "Proofs",
+        "Evidence",
+        "Links and source spans"
+      ]
+    },
+    {
+      "id": "02A_YOUTUBE_HTML",
+      "group": "02_YOUTUBE",
+      "name": "YouTube HTML assembly",
+      "layout": "shared",
+      "template": "shared-report",
+      "input": "Completed JSON outputs from 02_YOUTUBE",
+      "output": "D:/GitHub/pipeline-workflows/API/02A_YOUTUBE_HTML/OUTBOX",
+      "sections": [
+        "Overview",
+        "Transcript analysis",
+        "Findings",
+        "Sources"
+      ]
+    },
+    {
+      "id": "04A_ACADEMIA_HTML",
+      "group": "04_ACADEMIA",
+      "name": "Academia HTML assembly",
+      "layout": "custom",
+      "template": "04_academia-report",
+      "input": "Completed JSON outputs from 04_ACADEMIA",
+      "output": "D:/GitHub/pipeline-workflows/API/04A_ACADEMIA_HTML/OUTBOX",
+      "sections": [
+        "Paper overview",
+        "Metrics and grading",
+        "Evidence",
+        "Limitations"
+      ]
+    },
+    {
+      "id": "06A_ATOMS_HTML",
+      "group": "06_ATOMS",
+      "name": "Atoms HTML assembly",
+      "layout": "custom",
+      "template": "06_atoms-report",
+      "input": "Completed JSON outputs from 06_ATOMS",
+      "output": "D:/GitHub/pipeline-workflows/API/06A_ATOMS_HTML/OUTBOX",
+      "sections": [
+        "Atom index",
+        "Individual atom records",
+        "Relationships",
+        "Source references"
+      ]
+    },
+    {
+      "id": "07A_ARGUMENTS_HTML",
+      "group": "07_ARGUMENTS",
+      "name": "Arguments HTML assembly",
+      "layout": "shared",
+      "template": "shared-report",
+      "input": "Completed JSON outputs from 07_ARGUMENTS",
+      "output": "D:/GitHub/pipeline-workflows/API/07A_ARGUMENTS_HTML/OUTBOX",
+      "sections": [
+        "Overview",
+        "Argument structure",
+        "Objections",
+        "Sources"
+      ]
+    },
+    {
+      "id": "08A_API_DEEP_HTML",
+      "group": "08_API_DEEP",
+      "name": "API Deep HTML assembly",
+      "layout": "custom",
+      "template": "08_api_deep-report",
+      "input": "Completed JSON outputs from 08_API_DEEP",
+      "output": "D:/GitHub/pipeline-workflows/API/08A_API_DEEP_HTML/OUTBOX",
+      "sections": [
+        "Analysis overview",
+        "Analytical arms",
+        "Separate station results",
+        "Cross-checks"
+      ]
+    }
+  ]
+}

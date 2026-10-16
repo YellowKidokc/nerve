@@ -1,0 +1,16 @@
+{
+  "number": "25",
+  "name": "CKG_V4",
+  "label": "25_CKG_V4",
+  "kind": "native",
+  "description": "CKG V4 readable review: detailed synopsis, question ladder, every leg of the argument, the argument (who made it before, what is new, where it can go), claim discipline, evidence, paragraph walk, audit and build next. Eight calls per paper; YAML stays in the sidecar.",
+  "items": "papers",
+  "options": [
+    "workers",
+    "focus",
+    "outbox",
+    "limit"
+  ],
+  "uses_api": true,
+  "goals": []
+}

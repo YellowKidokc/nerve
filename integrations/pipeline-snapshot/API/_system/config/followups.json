@@ -1,0 +1,25 @@
+{
+  "_about": "Extra passes offered at the end of '2 RUN ON FOLDER' (engine/ask.py), per station number; 'default' for the rest.",
+  "57": [
+    "58",
+    "10",
+    "11"
+  ],
+  "58": [
+    "57",
+    "10",
+    "11"
+  ],
+  "20": [
+    "10",
+    "11",
+    "57",
+    "58"
+  ],
+  "default": [
+    "10",
+    "11",
+    "57",
+    "58"
+  ]
+}

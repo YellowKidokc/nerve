@@ -1,0 +1,110 @@
+{
+  "variant": "ckg_v4",
+  "label": "CKG V4 — readable: synopsis, question ladder, every leg, argument, claim discipline, evidence, paragraph walk, audit",
+  "source_template": "designed 2026-10-16 with David; V3.2 kept as its own lane",
+  "source_sha256": null,
+  "model": "deepseek-chat",
+  "workers": 4,
+  "write_to": "outbox",
+  "output_as": "markdown",
+  "calls": [
+    {
+      "id": "SYNOPSIS",
+      "title": "What this paper is",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/001_SYNOPSIS",
+      "run_group": 1,
+      "page_order": 1,
+      "output_format": "markdown",
+      "run_order": 1
+    },
+    {
+      "id": "LADDER",
+      "title": "The question ladder",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/002_LADDER",
+      "run_group": 2,
+      "page_order": 2,
+      "output_format": "markdown",
+      "run_order": 2
+    },
+    {
+      "id": "LEGS",
+      "title": "Every leg of the argument",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/003_LEGS",
+      "run_group": 3,
+      "page_order": 3,
+      "output_format": "markdown",
+      "run_order": 3
+    },
+    {
+      "id": "ARGUMENTS",
+      "title": "The paper's own argument",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/004_ARGUMENTS",
+      "run_group": 4,
+      "page_order": 4,
+      "output_format": "markdown",
+      "run_order": 4
+    },
+    {
+      "id": "CLAIMS",
+      "title": "Claim discipline",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/005_CLAIMS",
+      "run_group": 5,
+      "page_order": 5,
+      "output_format": "markdown",
+      "run_order": 5
+    },
+    {
+      "id": "EVIDENCE",
+      "title": "Evidence",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/006_EVIDENCE",
+      "run_group": 6,
+      "page_order": 6,
+      "output_format": "markdown",
+      "run_order": 6
+    },
+    {
+      "id": "WALK",
+      "title": "Paragraph walk",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/007_WALK",
+      "run_group": 7,
+      "page_order": 7,
+      "output_format": "markdown",
+      "run_order": 7
+    },
+    {
+      "id": "AUDIT",
+      "title": "Audit and build next",
+      "kind": "ai",
+      "on": true,
+      "folder": "calls/008_AUDIT",
+      "run_group": 8,
+      "page_order": 8,
+      "output_format": "markdown",
+      "run_order": 8
+    },
+    {
+      "id": "ORIGINAL",
+      "title": "ORIGINAL ARTICLE",
+      "kind": "paste_source",
+      "on": true,
+      "folder": "calls/099_ORIGINAL",
+      "run_group": null,
+      "page_order": 99,
+      "output_format": "markdown"
+    }
+  ]
+}

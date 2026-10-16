@@ -1,0 +1,586 @@
+[
+  {
+    "number": "00",
+    "name": "QUICK_CALL",
+    "label": "00_QUICK_CALL",
+    "folder": "../000_QUICK_CALL/BACKSIDE",
+    "script": "00_quick_call.py",
+    "rank": 0,
+    "retired": false
+  },
+  {
+    "number": "01",
+    "name": "YT_GRAB",
+    "label": "01_YT_GRAB",
+    "folder": "../02_YOUTUBE/001_YT_GRAB/BACKSIDE",
+    "script": "01_yt_grab.py",
+    "rank": 1,
+    "retired": false
+  },
+  {
+    "number": "02",
+    "name": "YT_CLEAN",
+    "label": "02_YT_CLEAN",
+    "folder": "../02_YOUTUBE/002_YT_CLEAN/BACKSIDE",
+    "script": "02_yt_clean.py",
+    "rank": 2,
+    "retired": false
+  },
+  {
+    "number": "03",
+    "name": "YT_INDEX",
+    "label": "03_YT_INDEX",
+    "folder": "../02_YOUTUBE/003_YT_INDEX/BACKSIDE",
+    "script": "03_yt_index.py",
+    "rank": 3,
+    "retired": false
+  },
+  {
+    "number": "04",
+    "name": "YT_LENSES",
+    "label": "04_YT_LENSES",
+    "folder": "../02_YOUTUBE/004_YT_LENSES/BACKSIDE",
+    "script": "04_yt_lenses.py",
+    "rank": 4,
+    "retired": false
+  },
+  {
+    "number": "05",
+    "name": "YT_CATALOG",
+    "label": "05_YT_CATALOG",
+    "folder": "../02_YOUTUBE/005_YT_CATALOG/BACKSIDE",
+    "script": "05_yt_catalog.py",
+    "rank": 5,
+    "retired": false
+  },
+  {
+    "number": "06",
+    "name": "YT_WATCH",
+    "label": "06_YT_WATCH",
+    "folder": "../02_YOUTUBE/006_YT_WATCH/BACKSIDE",
+    "script": "06_yt_watch.py",
+    "rank": 6,
+    "retired": false
+  },
+  {
+    "number": "07",
+    "name": "YT_CONVERT",
+    "label": "07_YT_CONVERT",
+    "folder": "../02_YOUTUBE/007_YT_CONVERT/BACKSIDE",
+    "script": "07_yt_convert.py",
+    "rank": 15,
+    "retired": false
+  },
+  {
+    "number": "08",
+    "name": "YT_SUMMARY",
+    "label": "08_YT_SUMMARY",
+    "folder": "../02_YOUTUBE/008_YT_SUMMARY/BACKSIDE",
+    "script": "08_yt_summary.py",
+    "rank": 37,
+    "retired": false
+  },
+  {
+    "number": "09",
+    "name": "YT_DEEP",
+    "label": "09_YT_DEEP",
+    "folder": "../02_YOUTUBE/009_YT_DEEP/BACKSIDE",
+    "script": "09_yt_deep.py",
+    "rank": 38,
+    "retired": false
+  },
+  {
+    "number": "10",
+    "name": "CKG_THEOLOGY",
+    "label": "10_CKG_THEOLOGY",
+    "folder": "../01_CKG/020_CKG/OUTBOX/010_CKG_THEOLOGY/BACKSIDE",
+    "script": "10_ckg_theology.py",
+    "rank": 41,
+    "retired": false
+  },
+  {
+    "number": "11",
+    "name": "CKG_PHYSICS",
+    "label": "11_CKG_PHYSICS",
+    "folder": "../01_CKG/020_CKG/OUTBOX/011_CKG_PHYSICS/BACKSIDE",
+    "script": "11_ckg_physics.py",
+    "rank": 42,
+    "retired": false
+  },
+  {
+    "number": "12",
+    "name": "YT_TIDY",
+    "label": "12_YT_TIDY",
+    "folder": "../02_YOUTUBE/012_YT_TIDY/BACKSIDE",
+    "script": "12_yt_tidy.py",
+    "rank": 43,
+    "retired": false
+  },
+  {
+    "number": "13",
+    "name": "YT_CHANNEL_SUMMARY",
+    "label": "13_YT_CHANNEL_SUMMARY",
+    "folder": "../02_YOUTUBE/013_YT_CHANNEL_SUMMARY/BACKSIDE",
+    "script": "13_yt_channel_summary.py",
+    "rank": 44,
+    "retired": false
+  },
+  {
+    "number": "14",
+    "name": "STORY",
+    "label": "14_STORY",
+    "folder": "../01_CKG/020_CKG/OUTBOX/014_STORY/BACKSIDE",
+    "script": "14_story.py",
+    "rank": 42,
+    "retired": false
+  },
+  {
+    "number": "20",
+    "name": "CKG_RUN",
+    "label": "20_CKG_RUN",
+    "folder": "../01_CKG/020_CKG/BACKSIDE",
+    "script": "20_ckg_run.py",
+    "rank": 7,
+    "retired": false
+  },
+  {
+    "number": "21",
+    "name": "CKG_EXTRACT_CPE",
+    "label": "21_CKG_EXTRACT_CPE",
+    "folder": "../02_C_P_E_L/021_CLAIMS_PROOFS_EVIDENCE/BACKSIDE",
+    "script": "21_ckg_extract_cpe.py",
+    "rank": 16,
+    "retired": false
+  },
+  {
+    "number": "22",
+    "name": "CKG_INBOX_CHECK",
+    "label": "22_CKG_INBOX_CHECK",
+    "folder": "../01_CKG/020_CKG/BACKSIDE/022_CKG_INBOX_CHECK/BACKSIDE",
+    "script": "22_ckg_inbox_check.py",
+    "rank": 30,
+    "retired": false
+  },
+  {
+    "number": "23",
+    "name": "CPEL",
+    "label": "23_CPEL",
+    "folder": "../02_C_P_E_L/023_CPEL/BACKSIDE",
+    "script": "23_cpel.py",
+    "rank": 17,
+    "retired": false
+  },
+  {
+    "number": "24",
+    "name": "CRAFT_PASS",
+    "label": "24_CRAFT_PASS",
+    "folder": "../041_STORIES/OUTBOX/024_CRAFT_PASS/BACKSIDE",
+    "script": "24_craft_pass.py",
+    "rank": 18,
+    "retired": false
+  },
+  {
+    "number": "25",
+    "name": "CKG_V4",
+    "label": "25_CKG_V4",
+    "folder": "../01_CKG/025_CKG_V4/BACKSIDE",
+    "script": "25_ckg_v4.py",
+    "rank": 19,
+    "retired": false
+  },
+  {
+    "number": "30",
+    "name": "EVIDENCE_INTAKE",
+    "label": "30_EVIDENCE_INTAKE",
+    "folder": "../01_CKG/020_CKG/OUTBOX/030_EVIDENCE/BACKSIDE",
+    "script": "30_evidence_intake.py",
+    "rank": 8,
+    "retired": false,
+    "description": "Evidence in one station: intake companion + three dials per paper (2 calls), papers in parallel"
+  },
+  {
+    "number": "31",
+    "name": "EVIDENCE_MERGE_ORIGINALS",
+    "label": "31_EVIDENCE_MERGE_ORIGINALS",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/031_EVIDENCE_MERGE_ORIGINALS/BACKSIDE",
+    "script": "31_evidence_merge_originals.py",
+    "rank": 25,
+    "retired": false
+  },
+  {
+    "number": "32",
+    "name": "EVIDENCE_BEST_ARGUMENTS",
+    "label": "32_EVIDENCE_BEST_ARGUMENTS",
+    "folder": "../07_ARGUMENTS/032_EVIDENCE_BEST_ARGUMENTS/BACKSIDE",
+    "script": "32_evidence_best_arguments.py",
+    "rank": 12,
+    "retired": false
+  },
+  {
+    "number": "33",
+    "name": "EVIDENCE_BUILD_ONE_ARGUMENT",
+    "label": "33_EVIDENCE_BUILD_ONE_ARGUMENT",
+    "folder": "../07_ARGUMENTS/033_EVIDENCE_BUILD_ONE_ARGUMENT/BACKSIDE",
+    "script": "33_evidence_build_one_argument.py",
+    "rank": 13,
+    "retired": false
+  },
+  {
+    "number": "34",
+    "name": "EVIDENCE_SERIES_SYNTHESIS",
+    "label": "34_EVIDENCE_SERIES_SYNTHESIS",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/034_EVIDENCE_SERIES_SYNTHESIS/BACKSIDE",
+    "script": "34_evidence_series_synthesis.py",
+    "rank": 22,
+    "retired": false
+  },
+  {
+    "number": "35",
+    "name": "EVIDENCE_SERIES_ARCS",
+    "label": "35_EVIDENCE_SERIES_ARCS",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/035_EVIDENCE_SERIES_ARCS/BACKSIDE",
+    "script": "35_evidence_series_arcs.py",
+    "rank": 23,
+    "retired": false
+  },
+  {
+    "number": "36",
+    "name": "EVIDENCE_THREE_DIALS",
+    "label": "36_EVIDENCE_THREE_DIALS",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/036_EVIDENCE_THREE_DIALS/BACKSIDE",
+    "script": "36_evidence_three_dials.py",
+    "rank": 26,
+    "retired": false
+  },
+  {
+    "number": "37",
+    "name": "EVIDENCE_SQLITE_SYNC",
+    "label": "37_EVIDENCE_SQLITE_SYNC",
+    "folder": "../02_C_P_E_L/037_EVIDENCE_SQLITE_SYNC/BACKSIDE",
+    "script": "37_evidence_sqlite_sync.py",
+    "rank": 27,
+    "retired": false
+  },
+  {
+    "number": "38",
+    "name": "EVIDENCE_SIDECARS",
+    "label": "38_EVIDENCE_SIDECARS",
+    "folder": "../02_C_P_E_L/038_EVIDENCE_SIDECARS/BACKSIDE",
+    "script": "38_evidence_sidecars.py",
+    "rank": 31,
+    "retired": false
+  },
+  {
+    "number": "39",
+    "name": "EVIDENCE_CHAIN_INTAKE_V2",
+    "label": "39_EVIDENCE_CHAIN_INTAKE_V2",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/039_EVIDENCE_CHAIN_INTAKE_V2/BACKSIDE",
+    "script": "39_evidence_chain_intake_v2.py",
+    "rank": 32,
+    "retired": false
+  },
+  {
+    "number": "40",
+    "name": "ANALYTICAL_ARMS",
+    "label": "40_ANALYTICAL_ARMS",
+    "folder": "../08_API_DEEP/040_ANALYTICAL_ARMS/BACKSIDE",
+    "script": "40_analytical_arms.py",
+    "rank": 9,
+    "retired": false
+  },
+  {
+    "number": "41",
+    "name": "STORY",
+    "label": "41_STORY",
+    "folder": "../041_STORIES/BACKSIDE",
+    "script": "41_story.py",
+    "rank": 14,
+    "retired": false
+  },
+  {
+    "number": "42",
+    "name": "STATISTICS_WALL",
+    "label": "42_STATISTICS_WALL",
+    "folder": "../04_ACADEMIA/042_STATISTICS_WALL/BACKSIDE",
+    "script": "42_statistics_wall.py",
+    "rank": 10,
+    "retired": false
+  },
+  {
+    "number": "43",
+    "name": "PAPER_GRADER",
+    "label": "43_PAPER_GRADER",
+    "folder": "../04_ACADEMIA/043_PAPER_GRADER/BACKSIDE",
+    "script": "43_paper_grader.py",
+    "rank": 17,
+    "retired": false
+  },
+  {
+    "number": "44",
+    "name": "TAGGER",
+    "label": "44_TAGGER",
+    "folder": "../04_ACADEMIA/044_TAGGER/BACKSIDE",
+    "script": "44_tagger.py",
+    "rank": 11,
+    "retired": false
+  },
+  {
+    "number": "45",
+    "name": "CLAIM_ATOMS",
+    "label": "45_CLAIM_ATOMS",
+    "folder": "../01_CKG/020_CKG/OUTBOX/045_ATOMS/BACKSIDE",
+    "script": "45_claim_atoms.py",
+    "rank": 28,
+    "retired": false,
+    "description": "Atoms and axioms in one station: claim atoms + axiom nodes per paper (2 calls), papers in parallel"
+  },
+  {
+    "number": "46",
+    "name": "REPORT_COMBINE",
+    "label": "46_REPORT_COMBINE",
+    "folder": "../04_ACADEMIA/046_REPORT_COMBINE/BACKSIDE",
+    "script": "46_report_combine.py",
+    "rank": 18,
+    "retired": false
+  },
+  {
+    "number": "47",
+    "name": "NEW_PAPER",
+    "label": "47_NEW_PAPER",
+    "folder": "../047_NEW_PAPER/BACKSIDE",
+    "script": "47_new_paper.py",
+    "rank": 19,
+    "retired": false
+  },
+  {
+    "number": "48",
+    "name": "TOPIC_SYNTHESIS",
+    "label": "48_TOPIC_SYNTHESIS",
+    "folder": "../048_TOPIC_SYNTHESIS/BACKSIDE",
+    "script": "48_topic_synthesis.py",
+    "rank": 39,
+    "retired": false
+  },
+  {
+    "number": "49",
+    "name": "GAP_MAP",
+    "label": "49_GAP_MAP",
+    "folder": "../049_GAP_MAP/BACKSIDE",
+    "script": "49_gap_map.py",
+    "rank": 40,
+    "retired": false
+  },
+  {
+    "number": "50",
+    "name": "LEAN_PAIR_AXIOMS",
+    "label": "50_LEAN_PAIR_AXIOMS",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/050_LEAN_PAIR_AXIOMS/BACKSIDE",
+    "script": "50_lean_pair_axioms.py",
+    "rank": 24,
+    "retired": false
+  },
+  {
+    "number": "51",
+    "name": "LEAN_GOD_IS_UNPROVEN",
+    "label": "51_LEAN_GOD_IS_UNPROVEN",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/051_LEAN_GOD_IS_UNPROVEN/BACKSIDE",
+    "script": "51_lean_god_is_unproven.py",
+    "rank": 29,
+    "retired": false
+  },
+  {
+    "number": "52",
+    "name": "LEAN_ATOM_EXTRACTOR",
+    "label": "52_LEAN_ATOM_EXTRACTOR",
+    "folder": "../02_C_P_E_L/05_LEAN/055_LEAN_PAPERS/OUTBOX/052_LEAN_ATOM_EXTRACTOR/BACKSIDE",
+    "script": "52_lean_atom_extractor.py",
+    "rank": 33,
+    "retired": false
+  },
+  {
+    "number": "53",
+    "name": "AXIOM_ONE_PAGE_TRANSFORM",
+    "label": "53_AXIOM_ONE_PAGE_TRANSFORM",
+    "folder": "../06_ATOMS/053_AXIOM_ONE_PAGE_TRANSFORM/BACKSIDE",
+    "script": "53_axiom_one_page_transform.py",
+    "rank": 34,
+    "retired": false
+  },
+  {
+    "number": "54",
+    "name": "AXIOM_NODES_RUNNER",
+    "label": "54_AXIOM_NODES_RUNNER",
+    "folder": "../06_ATOMS/054_AXIOM_NODES/BACKSIDE",
+    "script": "54_axiom_nodes_runner.py",
+    "rank": 36,
+    "retired": false
+  },
+  {
+    "number": "55",
+    "name": "LEAN_PAPERS",
+    "label": "55_LEAN_PAPERS",
+    "folder": "../02_C_P_E_L/05_LEAN/055_LEAN_PAPERS/BACKSIDE",
+    "script": "55_lean_papers.py",
+    "rank": 45,
+    "retired": false
+  },
+  {
+    "number": "56",
+    "name": "TITLE",
+    "label": "56_TITLE",
+    "folder": "../04_ACADEMIA/056_TITLE/BACKSIDE",
+    "script": "56_title.py",
+    "rank": 56,
+    "options": [],
+    "retired": false,
+    "description": "Standard title + keywords + move (runs first; ~1.5k tokens a note)"
+  },
+  {
+    "number": "57",
+    "name": "API_DEEP",
+    "label": "57_API_DEEP",
+    "folder": "../08_API_DEEP/057_API_DEEP/BACKSIDE",
+    "script": "57_api_deep.py",
+    "rank": 57,
+    "options": [
+      "limit",
+      "workers",
+      "provider",
+      "model",
+      "focus",
+      "redo",
+      "publish",
+      "out"
+    ],
+    "retired": false,
+    "description": "Fruits, Axioms, Atoms, Lean, Stories, Master Equation, Coherence as one chain per paper"
+  },
+  {
+    "number": "58",
+    "name": "ARGUMENT_GRADE",
+    "label": "58_ARGUMENT_GRADE",
+    "folder": "../07_ARGUMENTS/058_ARGUMENT_GRADE/BACKSIDE",
+    "script": "58_argument_grade.py",
+    "rank": 58,
+    "options": [
+      "limit",
+      "workers",
+      "provider",
+      "model",
+      "focus",
+      "redo",
+      "publish",
+      "out"
+    ],
+    "retired": false,
+    "description": "Strength and originality 0-8 per argument from quoted checks"
+  },
+  {
+    "number": "60",
+    "name": "OPENAI_STATIONS",
+    "label": "60_OPENAI_STATIONS",
+    "folder": "../060_OPENAI_STATIONS/BACKSIDE",
+    "script": "60_openai_stations.py",
+    "rank": 20,
+    "retired": false
+  },
+  {
+    "number": "90",
+    "name": "HEALTHCHECK",
+    "label": "90_HEALTHCHECK",
+    "folder": "stations/90_HEALTHCHECK",
+    "script": "90_healthcheck.py",
+    "rank": 21,
+    "retired": false
+  },
+  {
+    "number": "91",
+    "name": "RELOCATE",
+    "label": "91_RELOCATE",
+    "folder": "stations/91_RELOCATE",
+    "script": "91_relocate.py",
+    "rank": 35,
+    "retired": false
+  },
+  {
+    "number": "59",
+    "name": "CHI_EVALUATOR",
+    "label": "59_CHI_EVALUATOR",
+    "folder": "../08_API_DEEP/059_CHI_EVALUATOR/BACKSIDE",
+    "script": "59_chi_evaluator.py",
+    "rank": 59,
+    "retired": false
+  },
+  {
+    "number": "61",
+    "name": "SERIES_SHEET",
+    "label": "61_SERIES_SHEET",
+    "folder": "../02_C_P_E_L/03_EVIDENCE/061_SERIES_SHEET/BACKSIDE",
+    "script": "61_series_sheet.py",
+    "rank": 61,
+    "retired": false
+  },
+  {
+    "number": "62",
+    "name": "ATOM_BUILDER",
+    "label": "62_ATOM_BUILDER",
+    "folder": "../06_ATOMS/062_ATOM_BUILDER/BACKSIDE",
+    "script": "62_atom_builder.py",
+    "rank": 52,
+    "retired": false
+  },
+  {
+    "number": "63",
+    "name": "PAPER_AUDIT",
+    "label": "63_PAPER_AUDIT",
+    "folder": "../04_ACADEMIA/063_PAPER_AUDIT/BACKSIDE",
+    "script": "63_paper_audit.py",
+    "rank": 52,
+    "retired": false
+  },
+  {
+    "number": "64",
+    "name": "SITE_PACKAGE",
+    "label": "64_SITE_PACKAGE",
+    "folder": "../04_ACADEMIA/064_SITE_PACKAGE/BACKSIDE",
+    "script": "64_site_package.py",
+    "rank": 54,
+    "retired": false
+  },
+  {
+    "number": "65",
+    "name": "PAPER_INTELLIGENCE",
+    "label": "65_PAPER_INTELLIGENCE",
+    "folder": "../04_ACADEMIA/065_PAPER_INTELLIGENCE/BACKSIDE",
+    "script": "65_paper_intelligence.py",
+    "rank": 55,
+    "retired": false
+  },
+  {
+    "number": "66",
+    "name": "SORRY_AXIOM_AUDIT",
+    "label": "66_SORRY_AXIOM_AUDIT",
+    "folder": "../02_C_P_E_L/05_LEAN/055_LEAN_PAPERS/OUTBOX/066_SORRY_AXIOM_AUDIT/BACKSIDE",
+    "script": "66_sorry_axiom_audit.py",
+    "rank": 62,
+    "retired": false
+  },
+  {
+    "number": "67",
+    "name": "LEAN_TRIAGE",
+    "label": "67_LEAN_TRIAGE",
+    "folder": "../02_C_P_E_L/05_LEAN/055_LEAN_PAPERS/OUTBOX/067_LEAN_TRIAGE/BACKSIDE",
+    "script": "67_lean_triage.py",
+    "rank": 63,
+    "retired": false
+  },
+  {
+    "number": "68",
+    "name": "FORMALIZE_TARGETS",
+    "label": "68_FORMALIZE_TARGETS",
+    "folder": "../02_C_P_E_L/05_LEAN/055_LEAN_PAPERS/OUTBOX/068_FORMALIZE_TARGETS/BACKSIDE",
+    "script": "68_formalize_targets.py",
+    "rank": 64,
+    "retired": false
+  }
+]
