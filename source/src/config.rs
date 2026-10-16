@@ -676,6 +676,32 @@ impl Default for ScriptsConfig {
     }
 }
 
+/// Station Console: the pipeline-workflows folders Nerve can run stations in.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PipelineConfig {
+    #[serde(default = "default_true")]
+    pub enabled: bool,
+    /// Pipeline folders (one per drive), each carrying `_system\engine\console.py`.
+    #[serde(default = "default_pipeline_roots")]
+    pub roots: Vec<String>,
+    #[serde(default = "default_python_exe")]
+    pub python_exe: String,
+}
+
+fn default_pipeline_roots() -> Vec<String> {
+    vec![r"D:\GitHub\pipeline-workflows\API".into()]
+}
+
+impl Default for PipelineConfig {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            roots: default_pipeline_roots(),
+            python_exe: default_python_exe(),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
     #[serde(default = "default_api_url")]
@@ -712,6 +738,9 @@ pub struct Config {
 
     #[serde(default)]
     pub scripts: ScriptsConfig,
+
+    #[serde(default)]
+    pub pipeline: PipelineConfig,
 
     #[serde(default)]
     pub idle_worker: IdleWorkerConfig,
@@ -771,6 +800,11 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
         HotkeyBinding {
             keys: "Ctrl+Alt+M".into(),
             action: "toggle_mission-control".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Alt+W".into(),
+            action: "toggle_station-console".into(),
             runtime_id: None,
         },
         HotkeyBinding {
@@ -1084,6 +1118,33 @@ fn default_panels() -> Vec<PanelDef> {
             follow_cursor: false,
             open_at_startup: false,
         },
+        // FIS rename queue: old name -> new name, scored by the preference engines (approval-gui/server.py).
+        PanelDef {
+            name: "rename-queue".into(),
+            title: "Rename Queue".into(),
+            url: "http://127.0.0.1:10778/".into(),
+            width: 1100,
+            height: 760,
+            x: None,
+            y: None,
+            always_on_top: false,
+            decorations: true,
+            follow_cursor: false,
+            open_at_startup: false,
+        },
+        PanelDef {
+            name: "station-console".into(),
+            title: "Station Console".into(),
+            url: to_url("hubs/station-console.html"),
+            width: 1280,
+            height: 860,
+            x: None,
+            y: None,
+            always_on_top: false,
+            decorations: true,
+            follow_cursor: false,
+            open_at_startup: false,
+        },
         PanelDef {
             name: "mission-control".into(),
             title: "Theophysics Mission Control".into(),
@@ -1117,6 +1178,7 @@ impl Default for Config {
             selection: SelectionConfig::default(),
             canon: CanonConfig::default(),
             scripts: ScriptsConfig::default(),
+            pipeline: PipelineConfig::default(),
             idle_worker: IdleWorkerConfig::default(),
             hotkey_map: HashMap::new(),
         }

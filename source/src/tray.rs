@@ -19,6 +19,8 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
     let item_tts_panel = MenuItem::new("TTS Engine", true, None);
     let item_shortcuts = MenuItem::new("Shortcuts & Hotstrings (Ctrl+Alt+S)", true, None);
     let item_mission_control = MenuItem::new("Mission Control   (Ctrl+Alt+M)", true, None);
+    let item_station_console = MenuItem::new("Station Console   (Ctrl+Alt+W)", true, None);
+    let item_rename_queue = MenuItem::new("Rename Queue      (FIS)", true, None);
     let item_workbench = MenuItem::new("Canon Workbench   (Ctrl+Alt+U)", true, None);
     let item_atom_builder = MenuItem::new("Axiom Builder     (Ctrl+Alt+B)", true, None);
     let item_lean_registry = MenuItem::new("Lean 4 Registry   (Port 8989)", true, None);
@@ -28,6 +30,8 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
 
     menu.append(&item_shortcuts)?;
     menu.append(&item_mission_control)?;
+    menu.append(&item_station_console)?;
+    menu.append(&item_rename_queue)?;
     menu.append(&item_clipboard)?;
     menu.append(&item_prompts)?;
     menu.append(&item_links)?;
@@ -48,6 +52,8 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
 
     let shortcuts_id = item_shortcuts.id().clone();
     let mission_control_id = item_mission_control.id().clone();
+    let station_console_id = item_station_console.id().clone();
+    let rename_queue_id = item_rename_queue.id().clone();
     let clipboard_id = item_clipboard.id().clone();
     let prompts_id = item_prompts.id().clone();
     let links_id = item_links.id().clone();
@@ -70,6 +76,10 @@ pub fn create_tray(proxy: &EventLoopProxy<AppEvent>) -> Result<TrayIcon> {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("shortcuts".into()));
             } else if event.id == mission_control_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("mission-control".into()));
+            } else if event.id == station_console_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("station-console".into()));
+            } else if event.id == rename_queue_id {
+                let _ = proxy_clone.send_event(AppEvent::TogglePanel("rename-queue".into()));
             } else if event.id == clipboard_id {
                 let _ = proxy_clone.send_event(AppEvent::TogglePanel("clipboard".into()));
             } else if event.id == prompts_id {

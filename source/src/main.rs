@@ -12,6 +12,7 @@ mod hotstrings;
 mod idle;
 mod mouse;
 mod panels;
+mod pipeline;
 mod review;
 mod scripts;
 mod selection;
@@ -1610,6 +1611,9 @@ fn handle_ipc(
             });
         }
 
+        // Station Console (hubs/station-console.html)
+        t if t.starts_with("pipeline_") => handle_pipeline_ipc(panel_mgr, cfg, panel, t, &msg),
+
         // Internal: evaluate script from async callback
         "_eval" => {
             if let Some(script) = msg.get("script").and_then(|v| v.as_str()) {
@@ -1619,6 +1623,101 @@ fn handle_ipc(
 
         _ => {
             info!("Unknown IPC message type: '{}'", msg_type);
+        }
+    }
+}
+
+/// Station Console messages. Every reply is `onPipeline(kind, request_id, payload)`,
+/// where payload is `{ ok: true, ... }` or `{ ok: false, error }`; run output
+/// arrives separately through `stationOutput` / `stationExit`.
+fn handle_pipeline_ipc(
+    panel_mgr: &mut panels::PanelManager,
+    cfg: &Arc<Mutex<config::Config>>,
+    panel: &str,
+    msg_type: &str,
+    msg: &serde_json::Value,
+) {
+    let pipe_cfg = cfg.lock().unwrap().pipeline.clone();
+    let field = |k: &str| msg.get(k).and_then(|v| v.as_str()).unwrap_or("").to_string();
+    let request_id = field("request_id");
+    let proxy = panel_mgr.proxy().clone();
+    let panel_name = panel.to_string();
+    let emit: pipeline::Emit = Arc::new(move |script: String| {
+        let _ = proxy.send_event(AppEvent::IpcMessage {
+            panel: panel_name.clone(),
+            body: serde_json::json!({ "type": "_eval", "script": script }).to_string(),
+        });
+    });
+    let reply = {
+        let emit = Arc::clone(&emit);
+        let kind = msg_type.to_string();
+        move |payload: serde_json::Value| {
+            emit(format!(
+                "onPipeline({}, {}, {});",
+                serde_json::to_string(&kind).unwrap(),
+                serde_json::to_string(&request_id).unwrap(),
+                payload
+            ));
+        }
+    };
+    let done = |r: anyhow::Result<serde_json::Value>| match r {
+        Ok(v) => {
+            let mut v = v;
+            v["ok"] = serde_json::json!(true);
+            v
+        }
+        Err(e) => serde_json::json!({ "ok": false, "error": format!("{:#}", e) }),
+    };
+
+    match msg_type {
+        // console.py takes about a second per root: keep it off the event loop.
+        "pipeline_list" => {
+            std::thread::spawn(move || {
+                let listing = pipeline::list(&pipe_cfg);
+                let mut v = listing;
+                v["ok"] = serde_json::json!(true);
+                reply(v);
+            });
+        }
+        "pipeline_run" => {
+            let r = pipeline::start(&pipe_cfg, &field("button"), &field("run_id"), Arc::clone(&emit))
+                .map(|_| serde_json::json!({ "run_id": field("run_id") }));
+            reply(done(r));
+        }
+        "pipeline_answer" => {
+            let r = pipeline::answer(&field("run_id"), &field("text")).map(|_| serde_json::json!({}));
+            reply(done(r));
+        }
+        "pipeline_stop" => {
+            let r = pipeline::stop(&field("run_id")).map(|_| serde_json::json!({}));
+            reply(done(r));
+        }
+        "pipeline_read" => {
+            let r = pipeline::read_text(&pipe_cfg, &field("path"))
+                .map(|text| serde_json::json!({ "path": field("path"), "text": text }));
+            reply(done(r));
+        }
+        "pipeline_save_focus" => {
+            let r = pipeline::save_focus(&pipe_cfg, &field("path"), &field("text"))
+                .map(|_| serde_json::json!({ "path": field("path") }));
+            reply(done(r));
+        }
+        "pipeline_ledger" => {
+            let r = pipeline::ledger_read(&pipe_cfg, &field("root"), 300)
+                .map(|entries| serde_json::json!({ "root": field("root"), "entries": entries }));
+            reply(done(r));
+        }
+        "pipeline_ledger_add" => {
+            let entry = msg.get("entry").cloned().unwrap_or(serde_json::Value::Null);
+            let r = pipeline::ledger_append(&pipe_cfg, &field("root"), &entry).map(|_| serde_json::json!({}));
+            reply(done(r));
+        }
+        "pipeline_open" => {
+            let r = pipeline::open_folder(&pipe_cfg, &field("path")).map(|_| serde_json::json!({}));
+            reply(done(r));
+        }
+        other => {
+            info!("Unknown pipeline message: '{}'", other);
         }
     }
 }

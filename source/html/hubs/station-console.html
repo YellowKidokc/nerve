@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en" data-system="STATION_CONSOLE_V2">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station Console</title>
+<style>
+:root{color-scheme:dark;--bg:#060708;--panel:#0c0f14;--panel2:#090b0f;--line:#222a35;--text:#e7edf5;--muted:#8b97a7;--gold:#d1a922;--gold2:#f1d37a;--red:#b0413e;--green:#5f9e6a;--blue:#4a7fb5;--orange:#b5854a}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,sans-serif}
+.wrap{max-width:1600px;margin:auto;padding:18px 22px;display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px}
+.eyebrow,code,pre,.mono{font-family:ui-monospace,Consolas,monospace}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:1.5px}
+h1{font:600 26px Georgia,serif;margin:4px 0 2px}.muted{color:var(--muted)}
+.panel{border:1px solid var(--line);background:var(--panel);margin-bottom:12px}
+.panel>h2{margin:0;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.panel .body{padding:12px}
+.side{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto;padding-right:4px}
+.family{font:10.5px ui-monospace,monospace;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin:12px 0 4px}
+.station{padding:6px 9px;border:1px solid var(--line);background:var(--panel2);border-radius:4px;margin-bottom:4px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.station:hover{border-color:var(--gold)}
+.station.on{border-color:var(--gold);background:linear-gradient(90deg,rgba(209,169,34,.10),transparent)}
+.station.layer{margin-left:14px}
+.station .num{font:600 11px ui-monospace,monospace;color:var(--gold2);min-width:20px}
+.station b{font-size:12.5px;font-weight:600;flex:1}
+.station .dot{width:7px;height:7px;border-radius:50%;background:var(--green);align-self:center;box-shadow:0 0 6px var(--green)}
+.idline{border-left:3px solid var(--gold);padding:6px 0 6px 12px;margin:6px 0 10px;background:linear-gradient(90deg,rgba(209,169,34,.07),transparent)}
+.idline code{display:block;font-size:15px;color:var(--gold2);word-break:break-all}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:4px 10px;font-size:12.5px}.kv b{color:var(--muted);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;padding-top:2px}
+.badge{display:inline-block;border:1px solid var(--line);padding:1px 7px;border-radius:3px;font:10.5px ui-monospace,monospace;margin:1px 2px;white-space:nowrap}
+.badge.api{border-color:var(--blue);color:#9ec3e8}.badge.warn{border-color:var(--orange);color:var(--orange)}
+.badge.ok{border-color:var(--green);color:var(--green)}.badge.prop{border-color:var(--gold);color:var(--gold2)}.badge.bad{border-color:var(--red);color:#e08a88}
+input[type=text],textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:3px;padding:7px 9px;font:12.5px system-ui,sans-serif}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
+textarea{resize:vertical;font-family:ui-monospace,Consolas,monospace;font-size:11.5px}
+button{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:6px 11px;border-radius:3px;cursor:pointer;font-size:12px}
+button:hover{border-color:var(--gold)}button:disabled{opacity:.45;cursor:default}
+button.gold{background:linear-gradient(135deg,rgba(209,169,34,.22),rgba(209,169,34,.08));border-color:var(--gold);color:var(--gold2);font-weight:700}
+button.gold:hover{background:var(--gold);color:#000}
+button.red{border-color:var(--red);color:#e08a88}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.term{background:#000;border:1px solid var(--line);border-radius:4px;padding:10px 12px;font:12px/1.45 ui-monospace,Consolas,monospace;color:#d7dde6;white-space:pre-wrap;word-break:break-word;height:340px;overflow:auto;margin:10px 0 8px}
+.term .sys{color:var(--gold)}.term .err{color:#e08a88}
+.answer{display:grid;grid-template-columns:1fr auto auto auto;gap:6px}
+.statusline{font:11px ui-monospace,monospace;color:var(--gold)}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+tr:hover td{background:#10141b}
+.banner{border:1px solid var(--orange);color:var(--orange);background:rgba(181,133,74,.08);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-size:12.5px}
+.empty{padding:40px 10px;text-align:center}
+footer{grid-column:1/-1;color:var(--muted);font-size:11.5px;border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:960px){.wrap{grid-template-columns:1fr}.side{position:static;max-height:none}}
+</style></head>
+<body><div class="wrap">
+
+<aside class="side">
+  <div class="eyebrow">NERVE · PIPELINE WORKFLOWS</div>
+  <h1>Station Console</h1>
+  <p class="muted" style="font-size:12px;margin:2px 0 10px">Every station's real buttons. Running one here is the same as double-clicking it.</p>
+  <div class="toolbar" style="margin-bottom:8px">
+    <select id="root" title="Pipeline folder" style="flex:1"></select>
+    <button onclick="refresh()" title="Read the stations again">↻</button>
+  </div>
+  <input type="text" id="filter" placeholder="Filter: number, name, family…" oninput="renderDir()">
+  <div id="dir"></div>
+</aside>
+
+<main>
+  <div id="banner"></div>
+  <div class="eyebrow">STATION · POF 2828</div>
+  <div class="idline"><code id="st-label">select a station</code><span class="muted mono" id="st-path" style="font-size:11px"></span></div>
+
+  <div id="station-view" style="display:none">
+    <div class="panel"><h2>Station</h2><div class="body">
+      <div class="kv" id="st-kv"></div>
+      <div style="margin-top:8px" id="st-badges"></div>
+      <div class="toolbar" style="margin-top:10px" id="st-folders"></div>
+    </div></div>
+
+    <div class="panel"><h2><span>Buttons</span><span class="statusline" id="run-status"></span></h2><div class="body">
+      <div class="toolbar" id="st-buttons"></div>
+      <div class="term" id="term"></div>
+      <div class="answer">
+        <input type="text" id="answer" class="mono" placeholder="Answer the question above, then Enter (blank = take the default)" onkeydown="if(event.key==='Enter')sendAnswer()">
+        <button onclick="sendAnswer()" id="btn-send">Send ↵</button>
+        <button onclick="clearTerm()">Clear</button>
+        <button class="red" onclick="stopRun()" id="btn-stop">■ Stop</button>
+      </div>
+    </div></div>
+
+    <div class="panel"><h2><span>FOCUS.md · standing focus points (# lines are comments)</span><button onclick="saveFocus()" id="btn-focus">💾 Save</button></h2><div class="body">
+      <textarea id="focus" rows="5" placeholder="This station has no FOCUS.md"></textarea>
+    </div></div>
+
+    <div class="panel"><h2>PROMPT.md · how this station speaks</h2><div class="body">
+      <textarea id="promptmd" rows="6" readonly style="color:var(--muted)" placeholder="This station has no PROMPT.md"></textarea>
+    </div></div>
+  </div>
+  <div id="pick-hint" class="panel"><div class="body empty muted">Pick a station on the left.</div></div>
+
+  <div class="panel"><h2><span>Run ledger · nothing lands until ruled</span><span class="muted mono" style="font-size:10px;text-transform:none;letter-spacing:0" id="ledger-path"></span></h2><div class="body">
+    <table><thead><tr><th>Run</th><th>Started</th><th>Station</th><th>Button</th><th>Result</th><th>Standing</th><th></th></tr></thead>
+    <tbody id="ledger"><tr><td colspan="7" class="muted">no runs yet</td></tr></tbody></table>
+  </div></div>
+</main>
+
+<footer>station.json is the contract · PROMPT.md is the voice · FOCUS.md is the standing intent · this console is a view of the pipeline folder — it proposes, a human rules · POF 2828</footer>
+</div>
+
+<script>
+/* The pipeline folder is the truth: Nerve runs _system/engine/console.py there and this page draws what it prints.
+   Messages go out as pipeline_* (main.rs handle_pipeline_ipc); replies come back as onPipeline(kind, id, payload),
+   run output as stationOutput(run_id, text) and stationExit(run_id, code). */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const HAS_IPC = !!(window.ipc && window.ipc.postMessage);
+let ROOTS = [], ROOT = null, STATIONS = [], ACTIVE = null;
+let RUNS = {};          // run_id -> {station, button, output, live, code}
+let LEDGER = {};        // run_id -> merged ledger row
+let VIEW_RUN = null;    // the run whose output the terminal shows
+let FOCUS_PATH = null, seq = 0;
+const pending = {};
+
+function send(type, body = {}) {
+  if (!HAS_IPC) return Promise.reject(new Error("not inside Nerve"));
+  const request_id = "r" + (++seq);
+  return new Promise((resolve, reject) => {
+    pending[request_id] = {resolve, reject};
+    window.ipc.postMessage(JSON.stringify({type, request_id, ...body}));
+  });
+}
+window.onPipeline = (kind, id, payload) => {
+  const p = pending[id]; if (!p) return; delete pending[id];
+  payload && payload.ok ? p.resolve(payload) : p.reject(new Error((payload && payload.error) || kind + " failed"));
+};
+
+function banner(msg) { $("#banner").innerHTML = msg ? `<div class="banner">${msg}</div>` : ""; }
+
+/* ---------- stations ---------- */
+async function refresh() {
+  if (!HAS_IPC) { banner("This page talks to Nerve. Open it from the tray menu or with <b>Ctrl+Alt+W</b>."); return; }
+  banner("");
+  try {
+    const res = await send("pipeline_list");
+    ROOTS = res.roots || [];
+    const keep = ROOT;
+    $("#root").innerHTML = ROOTS.map((r, i) => `<option value="${i}">${esc(r.root)}${r.ok ? "" : " (unavailable)"}</option>`).join("");
+    const idx = Math.max(0, ROOTS.findIndex(r => r.root === keep));
+    $("#root").value = idx; useRoot(idx);
+  } catch (e) { banner("Could not read the pipeline folders: " + esc(e.message)); }
+}
+$("#root").addEventListener("change", e => useRoot(+e.target.value));
+
+function useRoot(i) {
+  const r = ROOTS[i]; if (!r) return;
+  ROOT = r.root;
+  if (!r.ok) { STATIONS = []; banner("Pipeline folder unavailable: " + esc(r.error)); renderDir(); return; }
+  STATIONS = r.data.stations || [];
+  renderDir();
+  if (ACTIVE) { const again = STATIONS.find(s => s.label === ACTIVE.label); if (again) select(again.label, false); }
+  loadLedger();
+}
+
+function renderDir() {
+  const q = $("#filter").value.trim().toLowerCase();
+  const shown = STATIONS.filter(s => !q || [s.number, s.label, s.family, s.layer_of, s.description].join(" ").toLowerCase().includes(q));
+  const groups = {};
+  shown.forEach(s => (groups[s.family || "Front"] ||= []).push(s));
+  const live = new Set(Object.values(RUNS).filter(r => r.live).map(r => r.station));
+  $("#dir").innerHTML = Object.entries(groups).map(([fam, list]) =>
+    `<div class="family">${esc(fam)}</div>` + list.map(s =>
+      `<div class="station${s.layer_of ? " layer" : ""}${ACTIVE && ACTIVE.label === s.label ? " on" : ""}" onclick="select('${esc(s.label)}')" title="${esc(s.description || "")}">
+        <span class="num">${esc(s.number)}</span><b>${esc(s.name || s.label)}</b>
+        ${s.inbox ? `<span class="badge prop" title="files waiting in INBOX">${s.inbox}</span>` : ""}
+        ${live.has(s.label) ? `<span class="dot" title="running"></span>` : ""}
+      </div>`).join("")).join("") || `<p class="muted" style="font-size:12px">No stations match.</p>`;
+}
+
+function select(label, logIt = true) {
+  ACTIVE = STATIONS.find(s => s.label === label); if (!ACTIVE) return;
+  renderDir();
+  $("#pick-hint").style.display = "none"; $("#station-view").style.display = "";
+  $("#st-label").textContent = `${ACTIVE.number} · ${ACTIVE.label}`;
+  $("#st-path").textContent = ACTIVE.front || "";
+  if (ACTIVE.error) { $("#st-kv").innerHTML = `<b>Error</b><span>${esc(ACTIVE.error)}</span>`; return; }
+  $("#st-kv").innerHTML = [
+    ["Description", esc(ACTIVE.description || "—")],
+    ["Kind", esc(ACTIVE.kind || "—")],
+    ["Folder", `<span class="mono" style="font-size:11.5px">${esc(ACTIVE.path)}</span>`],
+    ["Layer of", ACTIVE.layer_of ? esc(ACTIVE.layer_of) + " — runs on the notes its parent just ran" : "—"],
+    ["Options", esc((ACTIVE.options || []).join(", ") || "none")],
+    ["INBOX / OUTBOX", `${ACTIVE.inbox} waiting · ${ACTIVE.outbox} results`],
+    ["Last run", esc(ACTIVE.last_run || "never")],
+  ].map(([k, v]) => `<b>${k}</b><span>${v}</span>`).join("");
+  $("#st-badges").innerHTML = (ACTIVE.uses_api ? `<span class="badge api">USES API · costs money</span>` : `<span class="badge">LOCAL</span>`)
+    + `<span class="badge ok">station.json</span><span class="badge prop">PROPOSES · human rules</span>`;
+  const f = ACTIVE.front;
+  $("#st-folders").innerHTML = [["📁 Folder", f], ["📥 INBOX", f + "\\INBOX"], ["📤 OUTBOX", f + "\\OUTBOX"]]
+    .map(([t, p]) => `<button onclick='openFolder(${JSON.stringify(p)})'>${t}</button>`).join("");
+  $("#st-buttons").innerHTML = (ACTIVE.buttons || []).map((b, i) =>
+    `<button class="gold" onclick="runButton(${i})">⚡ ${esc(b.name)}</button>`).join("")
+    || `<span class="muted" style="font-size:12px">This station has no .bat button in its folder.</span>`;
+  // Show this station's latest run, if any.
+  const mine = Object.entries(RUNS).filter(([, r]) => r.station === ACTIVE.label);
+  VIEW_RUN = mine.length ? mine[mine.length - 1][0] : null;
+  drawTerm(); loadTexts();
+}
+
+async function loadTexts() {
+  const t = ACTIVE.text || {};
+  FOCUS_PATH = t["FOCUS.md"] || null;
+  $("#focus").value = ""; $("#promptmd").value = "";
+  $("#focus").disabled = $("#btn-focus").disabled = !FOCUS_PATH;
+  for (const [name, el] of [["FOCUS.md", "#focus"], ["PROMPT.md", "#promptmd"]]) {
+    if (!t[name]) continue;
+    const want = ACTIVE.label;
+    try { const r = await send("pipeline_read", {path: t[name]}); if (ACTIVE.label === want) $(el).value = r.text; }
+    catch (e) { $(el).value = "Could not read " + name + ": " + e.message; }
+  }
+}
+
+async function saveFocus() {
+  if (!FOCUS_PATH) return;
+  try { await send("pipeline_save_focus", {path: FOCUS_PATH, text: $("#focus").value}); status("FOCUS.md saved (old text kept in BACKSIDE\\_older)"); }
+  catch (e) { status("FOCUS.md not saved: " + e.message, true); }
+}
+
+function openFolder(p) { send("pipeline_open", {path: p}).catch(e => status(e.message, true)); }
+
+/* ---------- runs ---------- */
+function status(msg, bad) { const el = $("#run-status"); el.textContent = msg; el.style.color = bad ? "#e08a88" : ""; }
+
+async function runButton(i) {
+  const b = ACTIVE.buttons[i];
+  if (ACTIVE.uses_api && !confirm(`${ACTIVE.label} calls a paid API.\n\nRun "${b.name}" now?`)) return;
+  const run_id = "RUN_" + new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "_" + ACTIVE.number;
+  RUNS[run_id] = {station: ACTIVE.label, button: b.name, output: "", live: true, code: null};
+  VIEW_RUN = run_id; drawTerm();
+  sysLine(`▶ ${b.name}  (${run_id})`);
+  try {
+    await send("pipeline_run", {button: b.path, run_id});
+    status(`${run_id} running`);
+    const row = {event: "run", run_id, at: new Date().toISOString(), station: ACTIVE.label, button: b.name, path: b.path, uses_api: ACTIVE.uses_api};
+    ledgerAdd(row);
+    $("#answer").focus();
+  } catch (e) {
+    RUNS[run_id].live = false; sysLine("could not start: " + e.message, true); status(e.message, true);
+  }
+  renderDir();
+}
+
+window.stationOutput = (run_id, text) => {
+  const r = RUNS[run_id]; if (!r) return;
+  r.output = (r.output + text).slice(-400000);
+  if (run_id === VIEW_RUN) { const t = $("#term"); const stick = t.scrollTop + t.clientHeight >= t.scrollHeight - 30;
+    t.append(document.createTextNode(text)); if (stick) t.scrollTop = t.scrollHeight; }
+};
+window.stationExit = (run_id, code) => {
+  const r = RUNS[run_id]; if (!r) return;
+  r.live = false; r.code = code;
+  const line = code === 0 ? `■ finished · exit 0` : `■ stopped · exit ${code}`;
+  r.output += `\n${line}\n`;
+  if (run_id === VIEW_RUN) sysLine(line, code !== 0);
+  status(`${run_id} · exit ${code}`, code !== 0);
+  ledgerAdd({event: "exit", run_id, at: new Date().toISOString(), code});
+  renderDir();
+};
+
+function drawTerm() {
+  const t = $("#term"); t.textContent = "";
+  if (!VIEW_RUN) { t.innerHTML = `<span class="sys">Press a button to run it. Its questions show up here; answer them in the box below.</span>`; status(""); return; }
+  const r = RUNS[VIEW_RUN]; t.textContent = r.output; t.scrollTop = t.scrollHeight;
+  status(r.live ? `${VIEW_RUN} running` : `${VIEW_RUN} · exit ${r.code}`, !r.live && r.code !== 0);
+}
+function sysLine(msg, bad) {
+  const r = VIEW_RUN && RUNS[VIEW_RUN]; if (r) r.output += `\n${msg}\n`;
+  const s = document.createElement("span"); s.className = bad ? "err" : "sys"; s.textContent = `\n${msg}\n`;
+  const t = $("#term"); t.append(s); t.scrollTop = t.scrollHeight;
+}
+function clearTerm() { if (VIEW_RUN) RUNS[VIEW_RUN].output = ""; $("#term").textContent = ""; }
+
+async function sendAnswer() {
+  const text = $("#answer").value;
+  if (!VIEW_RUN || !RUNS[VIEW_RUN].live) { status("nothing is running", true); return; }
+  try { await send("pipeline_answer", {run_id: VIEW_RUN, text}); stationOutput(VIEW_RUN, text + "\n"); $("#answer").value = ""; }
+  catch (e) { status(e.message, true); }
+}
+async function stopRun() {
+  if (!VIEW_RUN || !RUNS[VIEW_RUN].live) { status("nothing is running", true); return; }
+  if (!confirm("Stop this run and everything it started?")) return;
+  try { await send("pipeline_stop", {run_id: VIEW_RUN}); status("stopping…"); } catch (e) { status(e.message, true); }
+}
+
+/* ---------- ledger (ROOT\_system\LOGS\console-ledger.jsonl) ---------- */
+async function loadLedger() {
+  LEDGER = {};
+  $("#ledger-path").textContent = ROOT ? ROOT + "\\_system\\LOGS\\console-ledger.jsonl" : "";
+  try { const r = await send("pipeline_ledger", {root: ROOT}); (r.entries || []).forEach(mergeLedger); } catch (e) { /* no ledger yet */ }
+  renderLedger();
+}
+function mergeLedger(e) {
+  if (!e || !e.run_id) return;
+  const row = LEDGER[e.run_id] ||= {run_id: e.run_id};
+  if (e.event === "run") Object.assign(row, {at: e.at, station: e.station, button: e.button, uses_api: e.uses_api});
+  if (e.event === "exit") row.code = e.code;
+  if (e.event === "ruling") row.ruling = `${e.by} · ${String(e.at).slice(0, 10)}`;
+}
+function ledgerAdd(entry) {
+  mergeLedger(entry); renderLedger();
+  send("pipeline_ledger_add", {root: ROOT, entry}).catch(e => status("ledger not written: " + e.message, true));
+}
+function renderLedger() {
+  const rows = Object.values(LEDGER).sort((a, b) => String(b.at || "").localeCompare(String(a.at || ""))).slice(0, 150);
+  if (!rows.length) { $("#ledger").innerHTML = `<tr><td colspan="7" class="muted">no runs yet</td></tr>`; return; }
+  $("#ledger").innerHTML = rows.map(r => {
+    const live = RUNS[r.run_id] && RUNS[r.run_id].live;
+    const result = live ? `<span class="badge warn">RUNNING</span>` : r.code === 0 ? `<span class="badge ok">PASSED</span>`
+      : r.code == null ? `<span class="badge">UNKNOWN</span>` : `<span class="badge bad">FAILED · ${r.code}</span>`;
+    const standing = r.ruling ? `<span class="badge ok">RULED</span>` : `<span class="badge prop">PROPOSED</span>`;
+    const act = r.ruling ? `<span class="mono" style="font-size:10.5px">${esc(r.ruling)}</span>`
+      : `<button style="font-size:10.5px;padding:3px 8px" onclick="rule('${esc(r.run_id)}')">rule</button>`;
+    const view = RUNS[r.run_id] ? ` style="cursor:pointer" onclick="viewRun('${esc(r.run_id)}')"` : "";
+    return `<tr><td class="mono" style="font-size:11px"${view}>${esc(r.run_id)}</td><td class="mono" style="font-size:11px">${esc(String(r.at || "").replace("T", " ").slice(0, 19))}</td>
+      <td>${esc(r.station)}</td><td>${esc(r.button)}</td><td>${result}</td><td>${standing}</td><td>${act}</td></tr>`;
+  }).join("");
+}
+function viewRun(id) {
+  const r = RUNS[id]; if (!r) return;
+  if (!ACTIVE || ACTIVE.label !== r.station) select(r.station);
+  VIEW_RUN = id; drawTerm();
+}
+function rule(id) {
+  const by = prompt("Ruled by (your name):", "David"); if (!by) return;
+  ledgerAdd({event: "ruling", run_id: id, by, at: new Date().toISOString()});
+}
+
+drawTerm();
+refresh();
+</script></body></html>
