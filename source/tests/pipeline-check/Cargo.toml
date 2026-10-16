@@ -1,0 +1,12 @@
+# Exercise the production filesystem/process module without the Windows desktop shell.
+[package]
+name = "nerve-pipeline-check"
+version = "0.1.0"
+edition = "2021"
+publish = false
+[lib]
+path = "lib.rs"
+[dependencies]
+anyhow = "1"
+serde_json = "1"
+tracing = "0.1"

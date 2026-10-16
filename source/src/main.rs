@@ -1702,6 +1702,31 @@ fn handle_pipeline_ipc(
                 .map(|_| serde_json::json!({ "path": field("path") }));
             reply(done(r));
         }
+        "pipeline_backside" => {
+            reply(done(pipeline::backside(&pipe_cfg, &field("front"))));
+        }
+        "pipeline_save_backside" => {
+            let r = pipeline::save_backside(&pipe_cfg, &field("path"), &field("text"))
+                .map(|_| serde_json::json!({}));
+            reply(done(r));
+        }
+        "pipeline_reorder" => {
+            let order: anyhow::Result<Vec<String>> =
+                serde_json::from_value(msg.get("order").cloned().unwrap_or_default())
+                    .map_err(Into::into);
+            let r = order
+                .and_then(|order| pipeline::reorder(&pipe_cfg, &field("front"), &order, &field("field")))
+                .map(|_| serde_json::json!({}));
+            reply(done(r));
+        }
+        "pipeline_results" => {
+            reply(done(pipeline::results(&pipe_cfg, &field("front"))));
+        }
+        "pipeline_open_result" => {
+            let r = pipeline::open_result(&pipe_cfg, &field("front"), &field("path"))
+                .map(|_| serde_json::json!({}));
+            reply(done(r));
+        }
         "pipeline_ledger" => {
             let r = pipeline::ledger_read(&pipe_cfg, &field("root"), 300)
                 .map(|entries| serde_json::json!({ "root": field("root"), "entries": entries }));

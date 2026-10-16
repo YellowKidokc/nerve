@@ -1,336 +1,251 @@
 <!doctype html>
-<html lang="en" data-system="STATION_CONSOLE_V2">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Station Console</title>
-<style>
-:root{color-scheme:dark;--bg:#060708;--panel:#0c0f14;--panel2:#090b0f;--line:#222a35;--text:#e7edf5;--muted:#8b97a7;--gold:#d1a922;--gold2:#f1d37a;--red:#b0413e;--green:#5f9e6a;--blue:#4a7fb5;--orange:#b5854a}
-*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,sans-serif}
-.wrap{max-width:1600px;margin:auto;padding:18px 22px;display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px}
-.eyebrow,code,pre,.mono{font-family:ui-monospace,Consolas,monospace}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:1.5px}
-h1{font:600 26px Georgia,serif;margin:4px 0 2px}.muted{color:var(--muted)}
-.panel{border:1px solid var(--line);background:var(--panel);margin-bottom:12px}
-.panel>h2{margin:0;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);display:flex;justify-content:space-between;align-items:center;gap:8px}
-.panel .body{padding:12px}
-.side{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto;padding-right:4px}
-.family{font:10.5px ui-monospace,monospace;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin:12px 0 4px}
-.station{padding:6px 9px;border:1px solid var(--line);background:var(--panel2);border-radius:4px;margin-bottom:4px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
-.station:hover{border-color:var(--gold)}
-.station.on{border-color:var(--gold);background:linear-gradient(90deg,rgba(209,169,34,.10),transparent)}
-.station.layer{margin-left:14px}
-.station .num{font:600 11px ui-monospace,monospace;color:var(--gold2);min-width:20px}
-.station b{font-size:12.5px;font-weight:600;flex:1}
-.station .dot{width:7px;height:7px;border-radius:50%;background:var(--green);align-self:center;box-shadow:0 0 6px var(--green)}
-.idline{border-left:3px solid var(--gold);padding:6px 0 6px 12px;margin:6px 0 10px;background:linear-gradient(90deg,rgba(209,169,34,.07),transparent)}
-.idline code{display:block;font-size:15px;color:var(--gold2);word-break:break-all}
-.kv{display:grid;grid-template-columns:130px 1fr;gap:4px 10px;font-size:12.5px}.kv b{color:var(--muted);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;padding-top:2px}
-.badge{display:inline-block;border:1px solid var(--line);padding:1px 7px;border-radius:3px;font:10.5px ui-monospace,monospace;margin:1px 2px;white-space:nowrap}
-.badge.api{border-color:var(--blue);color:#9ec3e8}.badge.warn{border-color:var(--orange);color:var(--orange)}
-.badge.ok{border-color:var(--green);color:var(--green)}.badge.prop{border-color:var(--gold);color:var(--gold2)}.badge.bad{border-color:var(--red);color:#e08a88}
-input[type=text],textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:3px;padding:7px 9px;font:12.5px system-ui,sans-serif}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
-textarea{resize:vertical;font-family:ui-monospace,Consolas,monospace;font-size:11.5px}
-button{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:6px 11px;border-radius:3px;cursor:pointer;font-size:12px}
-button:hover{border-color:var(--gold)}button:disabled{opacity:.45;cursor:default}
-button.gold{background:linear-gradient(135deg,rgba(209,169,34,.22),rgba(209,169,34,.08));border-color:var(--gold);color:var(--gold2);font-weight:700}
-button.gold:hover{background:var(--gold);color:#000}
-button.red{border-color:var(--red);color:#e08a88}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.term{background:#000;border:1px solid var(--line);border-radius:4px;padding:10px 12px;font:12px/1.45 ui-monospace,Consolas,monospace;color:#d7dde6;white-space:pre-wrap;word-break:break-word;height:340px;overflow:auto;margin:10px 0 8px}
-.term .sys{color:var(--gold)}.term .err{color:#e08a88}
-.answer{display:grid;grid-template-columns:1fr auto auto auto;gap:6px}
-.statusline{font:11px ui-monospace,monospace;color:var(--gold)}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
-th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
-tr:hover td{background:#10141b}
-.banner{border:1px solid var(--orange);color:var(--orange);background:rgba(181,133,74,.08);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-size:12.5px}
-.empty{padding:40px 10px;text-align:center}
-footer{grid-column:1/-1;color:var(--muted);font-size:11.5px;border-top:1px solid var(--line);padding-top:10px}
-@media(max-width:960px){.wrap{grid-template-columns:1fr}.side{position:static;max-height:none}}
-</style></head>
-<body><div class="wrap">
-
-<aside class="side">
-  <div class="eyebrow">NERVE · PIPELINE WORKFLOWS</div>
-  <h1>Station Console</h1>
-  <p class="muted" style="font-size:12px;margin:2px 0 10px">Every station's real buttons. Running one here is the same as double-clicking it.</p>
-  <div class="toolbar" style="margin-bottom:8px">
-    <select id="root" title="Pipeline folder" style="flex:1"></select>
-    <button onclick="refresh()" title="Read the stations again">↻</button>
-  </div>
-  <input type="text" id="filter" placeholder="Filter: number, name, family…" oninput="renderDir()">
-  <div id="dir"></div>
-</aside>
-
-<main>
-  <div id="banner"></div>
-  <div class="eyebrow">STATION · POF 2828</div>
-  <div class="idline"><code id="st-label">select a station</code><span class="muted mono" id="st-path" style="font-size:11px"></span></div>
-
-  <div id="station-view" style="display:none">
-    <div class="panel"><h2>Station</h2><div class="body">
-      <div class="kv" id="st-kv"></div>
-      <div style="margin-top:8px" id="st-badges"></div>
-      <div class="toolbar" style="margin-top:10px" id="st-folders"></div>
-    </div></div>
-
-    <div class="panel"><h2><span>Buttons</span><span class="statusline" id="run-status"></span></h2><div class="body">
-      <div class="toolbar" id="st-buttons"></div>
-      <div class="term" id="term"></div>
-      <div class="answer">
-        <input type="text" id="answer" class="mono" placeholder="Answer the question above, then Enter (blank = take the default)" onkeydown="if(event.key==='Enter')sendAnswer()">
-        <button onclick="sendAnswer()" id="btn-send">Send ↵</button>
-        <button onclick="clearTerm()">Clear</button>
-        <button class="red" onclick="stopRun()" id="btn-stop">■ Stop</button>
-      </div>
-    </div></div>
-
-    <div class="panel"><h2><span>FOCUS.md · standing focus points (# lines are comments)</span><button onclick="saveFocus()" id="btn-focus">💾 Save</button></h2><div class="body">
-      <textarea id="focus" rows="5" placeholder="This station has no FOCUS.md"></textarea>
-    </div></div>
-
-    <div class="panel"><h2>PROMPT.md · how this station speaks</h2><div class="body">
-      <textarea id="promptmd" rows="6" readonly style="color:var(--muted)" placeholder="This station has no PROMPT.md"></textarea>
-    </div></div>
-  </div>
-  <div id="pick-hint" class="panel"><div class="body empty muted">Pick a station on the left.</div></div>
-
-  <div class="panel"><h2><span>Run ledger · nothing lands until ruled</span><span class="muted mono" style="font-size:10px;text-transform:none;letter-spacing:0" id="ledger-path"></span></h2><div class="body">
-    <table><thead><tr><th>Run</th><th>Started</th><th>Station</th><th>Button</th><th>Result</th><th>Standing</th><th></th></tr></thead>
-    <tbody id="ledger"><tr><td colspan="7" class="muted">no runs yet</td></tr></tbody></table>
-  </div></div>
-</main>
-
-<footer>station.json is the contract · PROMPT.md is the voice · FOCUS.md is the standing intent · this console is a view of the pipeline folder — it proposes, a human rules · POF 2828</footer>
-</div>
-
+<html lang="en" data-system="STATION_CONSOLE_V3"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>API PIPELINE · Nerve</title><style>
+:root{color-scheme:dark;--bg:#050505;--panel:#0a0a0a;--surface:#111;--line:#292929;--text:#e8e6e1;--muted:#aaa7a0;--gold:#d4af37}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button,input,select,textarea{border:1px solid #3d3a32;background:#101010;color:var(--text);border-radius:5px;padding:9px 12px}button:hover{border-color:var(--gold);color:#e6cc79}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px}button.active{background:#191609;color:var(--gold);border-color:#5c4b20}button.primary{background:var(--gold);color:#090909;border-color:var(--gold);font-weight:700}button:disabled{opacity:.45;cursor:default}header{min-height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:30px;padding:0 28px;background:var(--panel)}.brand{letter-spacing:.3em;color:var(--gold);font-size:17px}.topnav{display:flex;align-self:stretch;gap:18px}.topnav button,.tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;padding:18px 12px}.topnav button.active,.tabs button.active{color:var(--gold);border-bottom-color:var(--gold)}.prototype{margin-left:auto;color:var(--muted);font-size:12px}.shell{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:calc(100vh - 70px)}aside{background:var(--panel);border-right:1px solid var(--line);padding:28px 18px}aside h2,.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}aside button{display:flex;justify-content:space-between;width:100%;text-align:left;margin:7px 0;background:transparent;border-color:transparent}aside hr{border:0;border-top:1px solid var(--line);margin:28px 0}.count{color:var(--muted)}main{padding:28px 32px 0;max-width:1600px;width:100%;margin:auto;align-self:start}h1{font-size:30px;line-height:1.2;margin:0}h2{font-size:15px;margin:0 0 4px}p{margin:5px 0 18px;color:var(--muted)}.heading{display:flex;align-items:center;gap:16px;margin-bottom:7px}.small{font-size:12px;color:var(--muted)}.tabs{display:flex;gap:22px;border-bottom:1px solid var(--line);margin:12px 0 22px}.folders{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:20px}.folder{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.folder label{font-size:12px}.folder input{min-width:100px;flex:1;width:100%}.panel{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:20px;margin-bottom:20px}.panel-head{display:flex;justify-content:space-between;gap:15px;align-items:start;margin-bottom:18px}.panel-head p{margin:3px 0 0;font-size:12px}.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.fields label,.editor label{display:block;font-size:12px}.fields select,.fields input{display:block;width:100%;margin-top:6px}.work{display:grid;grid-template-columns:minmax(240px,.75fr) minmax(0,1.4fr);gap:20px}.checks{display:grid;gap:15px;margin:20px 0 28px}.checks label{display:flex;align-items:center;gap:12px}.checks input{accent-color:var(--gold);width:17px;height:17px}.progresshead{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.meter{height:6px;background:#262626;border-radius:8px;flex:1;max-width:190px;overflow:hidden}.meter span{display:block;background:var(--gold);height:100%;width:3%}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}th,td{padding:12px 10px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-weight:500}.saved{color:#a6c8a3}.running{color:var(--gold)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.status{border-top:1px solid var(--line);padding:15px 0;color:var(--muted);font-size:12px;margin-top:12px}.editors{display:grid;grid-template-columns:1fr 1fr;gap:20px}.editor textarea{width:100%;height:340px;display:block;margin-top:8px;resize:vertical;font:13px/1.8 ui-monospace,monospace}.hidden,[hidden]{display:none!important}.workflowgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.workflowcard button{margin-top:12px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#201b0b;border:1px solid var(--gold);padding:12px 20px;border-radius:6px;max-width:90vw;z-index:5}.folder-items{list-style:none;padding:0}.folder-items li{padding:13px;border-bottom:1px solid var(--line)}@media(min-width:1600px){main{padding:40px 48px 0}}@media(max-width:1000px){.shell{grid-template-columns:180px 1fr}main{padding:24px 20px 0}.work{grid-template-columns:1fr}.fields{grid-template-columns:repeat(2,1fr)}.prototype{max-width:120px}.folders{grid-template-columns:1fr}}@media(max-width:640px){header{padding:12px 16px;gap:8px;flex-wrap:wrap}.brand{font-size:15px}.prototype{max-width:none;font-size:10px}.topnav{order:3;width:100%;gap:10px}.topnav button{padding:10px}.shell{display:block}aside{padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}aside h2,aside hr,.foldernav{display:none}aside .workflowbuttons{display:flex;gap:7px;overflow:auto}aside button{white-space:nowrap;width:auto;min-width:95px;margin:0}main{padding:22px 16px 0}h1{font-size:26px}.tabs{gap:10px}.fields,.editors,.workflowgrid{grid-template-columns:1fr}.panel{padding:16px}.progresshead{flex-wrap:wrap}.folder{gap:8px}.folder label{flex-basis:100%}.panel-head{flex-wrap:wrap}.editor textarea{height:250px}.work{display:flex;flex-direction:column}.progresspanel{order:-1}}
+aside{max-height:calc(100vh - 70px);overflow:auto;position:sticky;top:0}.reviewrow{padding:18px 0;border-bottom:1px solid var(--line)}.reviewrow h3{margin:0 0 5px;font-size:15px}.sequence-actions{display:flex;gap:6px}.sequence-actions button{padding:5px 9px}dialog{background:#0a0a0a;color:var(--text);border:1px solid #5c4b20;border-radius:8px;max-width:720px;width:90%;padding:28px}dialog::backdrop{background:#000b}@media(max-width:640px){aside{position:static;max-height:none}.workflowbuttons{flex-wrap:nowrap}.fields{gap:12px}} .record-layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px}.record-parts{max-height:760px;overflow:auto;display:grid;gap:5px}.record-parts button{text-align:left;font-size:12px}.record-editor{display:block;width:100%;height:240px;margin:8px 0 16px;font:12px/1.7 ui-monospace,monospace;resize:vertical}#part-preview-body{white-space:pre-wrap;overflow-wrap:anywhere}summary{cursor:pointer;color:var(--gold)}@media(max-width:800px){.record-layout{grid-template-columns:1fr}.record-parts{max-height:220px}} .run-green{background:#258347;border-color:#3aab62;color:white;font-size:20px;font-weight:750;min-width:180px;padding:14px 28px}.stop-red{background:#9d3030;border-color:#d04e4e;color:white;font-size:20px;font-weight:700;min-width:130px;padding:14px 24px}.run-stages{list-style:none;display:flex;gap:8px;padding:0;flex-wrap:wrap;margin:0 0 20px;counter-reset:stage}.run-stages li{counter-increment:stage;border:1px solid var(--line);border-radius:5px;padding:8px 10px;color:var(--muted);font-size:12px}.run-stages li::before{content:counter(stage) " · "}.run-stages li.current{border-color:var(--gold);color:var(--gold);background:#191609}.run-stages li.done{color:#9ed0ac;border-color:#365b40}#verbose-log{background:#070907;border:1px solid #26382b;color:#b8d2bf;padding:20px;min-height:300px;max-height:460px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.85 ui-monospace,Consolas,monospace;margin:12px 0}.receipt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}.receipt-grid strong{display:block;font-size:21px;color:var(--text)}@media(max-width:640px){.receipt-grid{grid-template-columns:1fr 1fr}}
+textarea{width:100%}.notice{color:var(--gold);overflow-wrap:anywhere;white-space:pre-wrap}.station-list button{font-size:12px}.station-list button.active{border-color:var(--gold)}.path{overflow-wrap:anywhere;font:12px/1.6 ui-monospace,Consolas,monospace}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toolbar select{max-width:100%}#root{width:100%;font-size:11px}#notice{padding:12px 0;min-height:44px}#term{background:#070907;border:1px solid #26382b;color:#b8d2bf;padding:20px;height:360px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.85 ui-monospace,Consolas,monospace}.answer{display:flex;gap:8px}.answer input{flex:1;min-width:80px}.record-parts{align-content:start}.record-parts button.active{border-color:var(--gold)}.result{display:block;width:100%;text-align:left;margin:8px 0;overflow-wrap:anywhere}#focus{min-height:240px}#order-controls{margin-bottom:16px}.run-green,.stop-red{min-width:100px}.badge{font-size:11px;color:var(--gold)}
+</style></head><body>
+<header><strong class="brand">API PIPELINE</strong><nav class="topnav" aria-label="Workspace"><button class="active">API Calls</button></nav><span class="prototype">NERVE · STATION CONSOLE</span></header>
+<div class="shell"><aside><h2>Pipeline root</h2><select id="root" aria-label="Pipeline root"></select><button id="refresh">↻ Refresh inventory</button><hr><h2>API groups</h2><div id="groups" class="workflowbuttons"></div><h2>Stations</h2><div id="stations" class="station-list"></div><p class="small">Live inventory from your configured pipeline folders.</p></aside>
+<main><div class="eyebrow" id="family">CKG + STORIES</div><div class="heading"><h1 id="title">Select a station</h1></div><p id="description">Run the pipeline’s own buttons inside Nerve.</p><div id="path" class="path"></div>
+<div id="notice" class="notice" role="status" aria-live="polite"></div>
+<div id="workspace" hidden>
+<nav class="tabs" aria-label="Station views"><button data-tab="run" class="active">Run</button><button data-tab="settings">Settings</button><button data-tab="results">Results</button><button data-tab="backside">Backside</button></nav>
+<section id="run" class="view"><div class="folders"><div class="panel"><h2>INBOX</h2><p id="inbox"></p><button id="open-inbox">Open INBOX</button></div><div class="panel"><h2>OUTBOX</h2><p id="outbox"></p><button id="open-outbox">Open OUTBOX</button></div></div>
+<div class="panel"><div class="panel-head"><div><h2>Run this station</h2><p id="api-note"></p></div><span id="run-status" class="badge"></span></div>
+<label for="button">Station button</label><select id="button"></select><p class="small">The station asks for a folder or paper, selection, output destination, and confirmation in the log below. Answer each question through stdin.</p>
+<div class="actions"><button class="run-green" id="start">▶ Run</button><button class="stop-red" id="stop" disabled>■ Stop</button></div></div>
+<div class="panel"><div class="panel-head"><div><h2>Activity log</h2><p>Actual process output · no simulated progress</p></div><select id="runs" aria-label="Run history"></select></div>
+<pre id="term" aria-label="Process output"></pre><div class="answer"><input id="answer" aria-label="Answer station question" placeholder="Answer the station’s question · blank = default"><button id="send">Send ↵</button><button id="use-workers">Send workers</button></div><p class="small">The Settings worker count answers the standard “How many at once?” prompt automatically. “Send workers” is a fallback for a different prompt. Other questions stay under your control. A final PAUSE may need Enter.</p></div></section>
+<section id="settings" class="view" hidden><div class="panel"><h2>Station settings</h2><p>FOCUS.md lives in the pipeline. Worker preference is kept in this Nerve panel.</p><label for="workers">Workers · automatically sent to the standard worker prompt</label><input id="workers" type="number" min="1" max="30" value="4"><hr><label for="focus">FOCUS.md</label><textarea id="focus" spellcheck="false"></textarea><div class="actions"><button id="save-focus" class="primary">Save focus</button></div><p class="small">Each changed file gets a timestamped backup beside it before writing. Models and pipeline options remain owned by the station.</p></div></section>
+<section id="results" class="view" hidden><div class="panel"><div class="panel-head"><div><h2>Results</h2><p>OUTBOX files · newest first · click to open</p></div><button id="refresh-results">Refresh results</button></div><div id="result-files"></div></div></section>
+<section id="backside" class="view" hidden><div class="panel"><div class="panel-head"><div><h2>Backside</h2><p>Each call pairs its prompt with its output template. Run order and document order are independent.</p></div><button id="reload-backside">Reload from disk</button></div><div id="backside-message"></div><div id="call-workspace" hidden>
+<div class="toolbar" id="order-controls"><label for="order-field">Order</label><select id="order-field"><option value="run_order">Call execution</option><option value="page_order">Assembled document</option></select><button id="move-up">↑</button><button id="move-down">↓</button><label for="position">Move to</label><select id="position"></select><button id="save-order" class="primary">Save order</button></div>
+<div class="record-layout"><div id="calls" class="record-parts"></div><div><h2 id="call-title"></h2><div class="editors"><label>Prompt<textarea id="call-prompt" class="record-editor" spellcheck="false"></textarea></label><label>Output template<textarea id="call-output" class="record-editor" spellcheck="false"></textarea></label></div><button id="save-call" class="primary">Save call files</button><p class="small">Timestamped backups are written before changes. Calls without editable files are shown as unavailable. Order changes retain call identities and other configuration.</p></div></div></div></div></section>
+</div><div class="status">01_CKG · 041_STORIES · real pipeline paths · no server</div></main></div>
 <script>
-/* The pipeline folder is the truth: Nerve runs _system/engine/console.py there and this page draws what it prints.
-   Messages go out as pipeline_* (main.rs handle_pipeline_ipc); replies come back as onPipeline(kind, id, payload),
-   run output as stationOutput(run_id, text) and stationExit(run_id, code). */
+'use strict';
 const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const HAS_IPC = !!(window.ipc && window.ipc.postMessage);
-let ROOTS = [], ROOT = null, STATIONS = [], ACTIVE = null;
-let RUNS = {};          // run_id -> {station, button, output, live, code}
-let LEDGER = {};        // run_id -> merged ledger row
-let VIEW_RUN = null;    // the run whose output the terminal shows
-let FOCUS_PATH = null, seq = 0;
-const pending = {};
-
+const pending = new Map();
+let seq = 0, roots = [], root = null, stations = [], active = null, group = '01_CKG';
+let runs = new Map(), viewRun = null, back = null, callId = null, callDirty = false, orderDirty = false, focusDirty = false;
+let view = 'run', generation = 0, orderField = 'run_order';
+const allowed = {'20_CKG_RUN':'01_CKG','25_CKG_V4':'01_CKG','41_STORY':'041_STORIES','24_CRAFT_PASS':'041_STORIES'};
+function notify(text) { $('#notice').textContent = text; }
 function send(type, body = {}) {
-  if (!HAS_IPC) return Promise.reject(new Error("not inside Nerve"));
-  const request_id = "r" + (++seq);
+  if (!window.ipc?.postMessage) return Promise.reject(new Error('Open this panel inside Nerve with Ctrl+Alt+W or the tray’s Station Console.'));
+  const request_id = 'panel-' + ++seq;
   return new Promise((resolve, reject) => {
-    pending[request_id] = {resolve, reject};
+    const timer = setTimeout(() => { pending.delete(request_id); reject(new Error(type + ' timed out')); }, 60000);
+    pending.set(request_id, {resolve, reject, timer});
     window.ipc.postMessage(JSON.stringify({type, request_id, ...body}));
   });
 }
 window.onPipeline = (kind, id, payload) => {
-  const p = pending[id]; if (!p) return; delete pending[id];
-  payload && payload.ok ? p.resolve(payload) : p.reject(new Error((payload && payload.error) || kind + " failed"));
+  const p = pending.get(id); if (!p) return;
+  clearTimeout(p.timer); pending.delete(id);
+  payload?.ok ? p.resolve(payload) : p.reject(new Error(payload?.error || kind + ' failed'));
 };
-
-function banner(msg) { $("#banner").innerHTML = msg ? `<div class="banner">${msg}</div>` : ""; }
-
-/* ---------- stations ---------- */
+function action(fn) { return async () => { try { await fn(); } catch(e) { notify(e.message); } }; }
+function button(text, fn, cls = '') { const el = document.createElement('button'); el.textContent = text; el.className = cls; el.onclick = action(fn); return el; }
+function join(path, suffix) { return path + (path.includes('\\') ? '\\' : '/') + suffix; }
+function key(s = active) { return root.root + '|' + s.front; }
+function workers() { const n = Number($('#workers').value); if (!Number.isInteger(n) || n < 1 || n > 30) throw new Error('Workers must be an integer from 1 to 30.'); return String(n); }
+function savedWorkers() { try { return localStorage.getItem('pipeline-workers:' + key()) || '4'; } catch { return '4'; } }
+function canLeave() { return !(focusDirty || callDirty || orderDirty) || confirm('Discard unsaved focus, call, or order edits?'); }
+function inventory() {
+  stations = (root?.ok ? root.data?.stations || [] : []).filter(s => allowed[s.label]);
+  // console.py reports an empty family for a station directly under API (41_STORY).
+  stations = stations.map(s => ({...s, family: s.family || allowed[s.label]})).filter(s => s.family === allowed[s.label]);
+}
 async function refresh() {
-  if (!HAS_IPC) { banner("This page talks to Nerve. Open it from the tray menu or with <b>Ctrl+Alt+W</b>."); return; }
-  banner("");
-  try {
-    const res = await send("pipeline_list");
-    ROOTS = res.roots || [];
-    const keep = ROOT;
-    $("#root").innerHTML = ROOTS.map((r, i) => `<option value="${i}">${esc(r.root)}${r.ok ? "" : " (unavailable)"}</option>`).join("");
-    const idx = Math.max(0, ROOTS.findIndex(r => r.root === keep));
-    $("#root").value = idx; useRoot(idx);
-  } catch (e) { banner("Could not read the pipeline folders: " + esc(e.message)); }
+  if (!canLeave()) return;
+  const res = await send('pipeline_list');
+  const prior = root?.root;
+  roots = res.roots || []; root = roots.find(r => r.root === prior) || roots[0] || null;
+  $('#root').replaceChildren(...roots.map((r, i) => new Option(r.root + (r.ok ? '' : ' · unavailable'), String(i))));
+  $('#root').value = String(roots.indexOf(root));
+  await useRoot();
 }
-$("#root").addEventListener("change", e => useRoot(+e.target.value));
-
-function useRoot(i) {
-  const r = ROOTS[i]; if (!r) return;
-  ROOT = r.root;
-  if (!r.ok) { STATIONS = []; banner("Pipeline folder unavailable: " + esc(r.error)); renderDir(); return; }
-  STATIONS = r.data.stations || [];
-  renderDir();
-  if (ACTIVE) { const again = STATIONS.find(s => s.label === ACTIVE.label); if (again) select(again.label, false); }
-  loadLedger();
+async function useRoot() {
+  const previous = active?.label; inventory(); active = null; generation++;
+  focusDirty = callDirty = orderDirty = false; back = null;
+  $('#workspace').hidden = true;
+  $('#title').textContent = 'Select a station'; $('#description').textContent = ''; $('#path').textContent = '';
+  renderDirectory();
+  if (!root?.ok) { notify(root?.error || 'No pipeline roots configured in Nerve Settings.'); return; }
+  notify('');
+  const first = stations.find(s => s.label === previous) || stations.find(s => s.family === group) || stations[0];
+  if (first) await selectStation(first);
+  else notify('The four CKG / Stories stations were not returned by console.py. Check the configured real pipeline root.');
 }
-
-function renderDir() {
-  const q = $("#filter").value.trim().toLowerCase();
-  const shown = STATIONS.filter(s => !q || [s.number, s.label, s.family, s.layer_of, s.description].join(" ").toLowerCase().includes(q));
-  const groups = {};
-  shown.forEach(s => (groups[s.family || "Front"] ||= []).push(s));
-  const live = new Set(Object.values(RUNS).filter(r => r.live).map(r => r.station));
-  $("#dir").innerHTML = Object.entries(groups).map(([fam, list]) =>
-    `<div class="family">${esc(fam)}</div>` + list.map(s =>
-      `<div class="station${s.layer_of ? " layer" : ""}${ACTIVE && ACTIVE.label === s.label ? " on" : ""}" onclick="select('${esc(s.label)}')" title="${esc(s.description || "")}">
-        <span class="num">${esc(s.number)}</span><b>${esc(s.name || s.label)}</b>
-        ${s.inbox ? `<span class="badge prop" title="files waiting in INBOX">${s.inbox}</span>` : ""}
-        ${live.has(s.label) ? `<span class="dot" title="running"></span>` : ""}
-      </div>`).join("")).join("") || `<p class="muted" style="font-size:12px">No stations match.</p>`;
+function renderDirectory() {
+  $('#groups').replaceChildren(...['01_CKG','041_STORIES'].map(f => button(f, async () => {
+    if (!canLeave()) return;
+    group = f; const first = stations.find(s => s.family === f);
+    if (first) await selectStation(first, true); else { renderDirectory(); notify(f + ' is unavailable in this pipeline root.'); }
+  }, f === group ? 'active' : '')));
+  $('#stations').replaceChildren(...stations.filter(s => s.family === group).map(s => button(s.label + (Array.from(runs.values()).some(r => r.key === key(s) && r.live) ? ' · running' : ''), () => selectStation(s), active?.front === s.front ? 'active' : '')));
 }
-
-function select(label, logIt = true) {
-  ACTIVE = STATIONS.find(s => s.label === label); if (!ACTIVE) return;
-  renderDir();
-  $("#pick-hint").style.display = "none"; $("#station-view").style.display = "";
-  $("#st-label").textContent = `${ACTIVE.number} · ${ACTIVE.label}`;
-  $("#st-path").textContent = ACTIVE.front || "";
-  if (ACTIVE.error) { $("#st-kv").innerHTML = `<b>Error</b><span>${esc(ACTIVE.error)}</span>`; return; }
-  $("#st-kv").innerHTML = [
-    ["Description", esc(ACTIVE.description || "—")],
-    ["Kind", esc(ACTIVE.kind || "—")],
-    ["Folder", `<span class="mono" style="font-size:11.5px">${esc(ACTIVE.path)}</span>`],
-    ["Layer of", ACTIVE.layer_of ? esc(ACTIVE.layer_of) + " — runs on the notes its parent just ran" : "—"],
-    ["Options", esc((ACTIVE.options || []).join(", ") || "none")],
-    ["INBOX / OUTBOX", `${ACTIVE.inbox} waiting · ${ACTIVE.outbox} results`],
-    ["Last run", esc(ACTIVE.last_run || "never")],
-  ].map(([k, v]) => `<b>${k}</b><span>${v}</span>`).join("");
-  $("#st-badges").innerHTML = (ACTIVE.uses_api ? `<span class="badge api">USES API · costs money</span>` : `<span class="badge">LOCAL</span>`)
-    + `<span class="badge ok">station.json</span><span class="badge prop">PROPOSES · human rules</span>`;
-  const f = ACTIVE.front;
-  $("#st-folders").innerHTML = [["📁 Folder", f], ["📥 INBOX", f + "\\INBOX"], ["📤 OUTBOX", f + "\\OUTBOX"]]
-    .map(([t, p]) => `<button onclick='openFolder(${JSON.stringify(p)})'>${t}</button>`).join("");
-  $("#st-buttons").innerHTML = (ACTIVE.buttons || []).map((b, i) =>
-    `<button class="gold" onclick="runButton(${i})">⚡ ${esc(b.name)}</button>`).join("")
-    || `<span class="muted" style="font-size:12px">This station has no .bat button in its folder.</span>`;
-  // Show this station's latest run, if any.
-  const mine = Object.entries(RUNS).filter(([, r]) => r.station === ACTIVE.label);
-  VIEW_RUN = mine.length ? mine[mine.length - 1][0] : null;
-  drawTerm(); loadTexts();
-}
-
-async function loadTexts() {
-  const t = ACTIVE.text || {};
-  FOCUS_PATH = t["FOCUS.md"] || null;
-  $("#focus").value = ""; $("#promptmd").value = "";
-  $("#focus").disabled = $("#btn-focus").disabled = !FOCUS_PATH;
-  for (const [name, el] of [["FOCUS.md", "#focus"], ["PROMPT.md", "#promptmd"]]) {
-    if (!t[name]) continue;
-    const want = ACTIVE.label;
-    try { const r = await send("pipeline_read", {path: t[name]}); if (ACTIVE.label === want) $(el).value = r.text; }
-    catch (e) { $(el).value = "Could not read " + name + ": " + e.message; }
+async function selectStation(s, discard = false) {
+  if (!discard && !canLeave()) return;
+  active = s; group = s.family; generation++; focusDirty = callDirty = orderDirty = false;
+  back = null; callId = null;
+  $('#workspace').hidden = false; $('#title').textContent = s.label; $('#family').textContent = s.family;
+  $('#description').textContent = s.description || ''; $('#path').textContent = s.front;
+  $('#inbox').textContent = s.inbox + ' files waiting'; $('#outbox').textContent = s.outbox + ' files saved';
+  $('#api-note').textContent = s.uses_api ? 'This station uses an API. Credentials come from the user environment.' : 'Local station button.';
+  $('#button').replaceChildren(...(s.buttons || []).map((b, i) => new Option(b.name, String(i))));
+  $('#start').disabled = !s.buttons?.length;
+  $('#workers').value = savedWorkers();
+  $('#focus').value = ''; $('#focus').disabled = $('#save-focus').disabled = true;
+  $('#result-files').textContent = ''; $('#call-workspace').hidden = true;
+  const mine = Array.from(runs.entries()).filter(([,r]) => r.key === key());
+  viewRun = mine.at(-1)?.[0] || null; drawRun(); renderDirectory();
+  const g = generation;
+  const focusPath = s.text?.['FOCUS.md'];
+  if (focusPath) {
+    try { const r = await send('pipeline_read', {path: focusPath}); if (g === generation) { $('#focus').value = r.text; $('#focus').disabled = $('#save-focus').disabled = false; } }
+    catch(e) { if (g === generation) notify('FOCUS.md unavailable: ' + e.message); }
   }
+  if (g === generation) await setView(view);
 }
-
-async function saveFocus() {
-  if (!FOCUS_PATH) return;
-  try { await send("pipeline_save_focus", {path: FOCUS_PATH, text: $("#focus").value}); status("FOCUS.md saved (old text kept in BACKSIDE\\_older)"); }
-  catch (e) { status("FOCUS.md not saved: " + e.message, true); }
+async function setView(name) {
+  view = name;
+  document.querySelectorAll('.view').forEach(el => el.hidden = el.id !== name);
+  document.querySelectorAll('[data-tab]').forEach(el => el.classList.toggle('active', el.dataset.tab === name));
+  if (name === 'results') await loadResults();
+  if (name === 'backside' && !back) await loadBackside();
 }
-
-function openFolder(p) { send("pipeline_open", {path: p}).catch(e => status(e.message, true)); }
-
-/* ---------- runs ---------- */
-function status(msg, bad) { const el = $("#run-status"); el.textContent = msg; el.style.color = bad ? "#e08a88" : ""; }
-
-async function runButton(i) {
-  const b = ACTIVE.buttons[i];
-  if (ACTIVE.uses_api && !confirm(`${ACTIVE.label} calls a paid API.\n\nRun "${b.name}" now?`)) return;
-  const run_id = "RUN_" + new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "_" + ACTIVE.number;
-  RUNS[run_id] = {station: ACTIVE.label, button: b.name, output: "", live: true, code: null};
-  VIEW_RUN = run_id; drawTerm();
-  sysLine(`▶ ${b.name}  (${run_id})`);
+async function loadResults() {
+  if (!active) return;
+  const g = generation, front = active.front;
+  $('#result-files').textContent = 'Reading OUTBOX…';
   try {
-    await send("pipeline_run", {button: b.path, run_id});
-    status(`${run_id} running`);
-    const row = {event: "run", run_id, at: new Date().toISOString(), station: ACTIVE.label, button: b.name, path: b.path, uses_api: ACTIVE.uses_api};
-    ledgerAdd(row);
-    $("#answer").focus();
-  } catch (e) {
-    RUNS[run_id].live = false; sysLine("could not start: " + e.message, true); status(e.message, true);
+    const r = await send('pipeline_results', {front}); if (g !== generation) return;
+    const nodes = (r.files || []).map(f => button(f.name + ' · ' + (f.modified == null ? 'date unavailable' : new Date(f.modified * 1000).toLocaleString()) + ' · ' + f.bytes + ' bytes', () => send('pipeline_open_result', {front, path: f.path}), 'result'));
+    $('#result-files').replaceChildren(...nodes); if (!nodes.length) $('#result-files').textContent = 'No result files in this station’s OUTBOX.';
+  } catch(e) { if (g === generation) $('#result-files').textContent = 'Could not read results: ' + e.message; }
+}
+async function loadBackside() {
+  if (!active) return;
+  const g = generation;
+  $('#call-workspace').hidden = true; $('#backside-message').textContent = 'Reading Backside…';
+  try {
+    const r = await send('pipeline_backside', {front: active.front}); if (g !== generation) return;
+    back = r; callDirty = orderDirty = false;
+    for (const c of r.calls || []) for (const name of ['prompt.md','output.md']) if(c[name]) c[name].saved = c[name].text;
+    $('#backside-message').textContent = r.available ? '' : 'This station has no BACKSIDE/ckg.json call editor. Its pipeline scripts and prompts remain owned by the pipeline.';
+    if (!r.available) return;
+    $('#call-workspace').hidden = false;
+    const first = sortedCalls()[0]; callId = first?.id || null; renderCalls();
+  } catch(e) { if (g === generation) $('#backside-message').textContent = 'Could not read Backside: ' + e.message; }
+}
+function sortedCalls() { return (back?.calls || []).filter(c => c[orderField] != null).slice().sort((a,b) => a[orderField] - b[orderField]); }
+function captureCall() {
+  const c = back?.calls.find(c => c.id === callId); if (!c) return;
+  if (c['prompt.md']) c['prompt.md'].text = $('#call-prompt').value;
+  if (c['output.md']) c['output.md'].text = $('#call-output').value;
+}
+function renderCalls() {
+  const calls = sortedCalls();
+  $('#calls').replaceChildren(...calls.map((c,i) => button((i+1) + '. ' + c.id + ' · ' + c.title + (c.on === false ? ' · off' : ''), () => {
+    if (callDirty && !confirm('Discard unsaved edits to this call?')) return;
+    const old = back.calls.find(c => c.id === callId);
+    if(callDirty && old) for(const name of ['prompt.md','output.md']) if(old[name]) old[name].text = old[name].saved;
+    callDirty = false; callId = c.id; renderCalls();
+  }, c.id === callId ? 'active' : '')));
+  const c = calls.find(c => c.id === callId);
+  $('#call-title').textContent = c ? c.title + ' · ' + c.id : 'No call selected';
+  for (const [name,id] of [['prompt.md','#call-prompt'],['output.md','#call-output']]) { $(id).disabled = !c?.[name]; $(id).value = c?.[name]?.text || ''; $(id).placeholder = 'No editable ' + name + ' for this call'; }
+  $('#save-call').disabled = !c || (!c['prompt.md'] && !c['output.md']);
+  $('#position').replaceChildren(...calls.map((_,i) => new Option(String(i+1),String(i))));
+  const i = calls.findIndex(c => c.id === callId); $('#position').value = String(i);
+  $('#move-up').disabled = i <= 0; $('#move-down').disabled = i < 0 || i === calls.length-1;
+  $('#save-order').disabled = !orderDirty;
+}
+function moveCall(to) {
+  const calls = sortedCalls(), from = calls.findIndex(c => c.id === callId);
+  if (from < 0 || to < 0 || to >= calls.length) return;
+  captureCall(); const [c] = calls.splice(from,1); calls.splice(to,0,c);
+  calls.forEach((c,i) => c[orderField] = i+1); orderDirty = true; renderCalls();
+}
+async function saveCall() {
+  const g = generation, c = back.calls.find(c => c.id === callId); captureCall();
+  const saved = {};
+  for (const name of ['prompt.md','output.md']) if (c[name]) { const text=c[name].text; await send('pipeline_save_backside', {path:c[name].path, text}); c[name].saved=text; saved[name]=text; }
+  if (g === generation && callId === c.id) { callDirty = (!!c['prompt.md'] && $('#call-prompt').value !== saved['prompt.md']) || (!!c['output.md'] && $('#call-output').value !== saved['output.md']); notify('Call files saved. Each changed file has a timestamped sibling backup.'); }
+}
+async function saveOrder() {
+  const g = generation;
+  await send('pipeline_reorder', {front:active.front, field:orderField, order:sortedCalls().map(c => c.id)});
+  if (g === generation) { orderDirty = false; $('#save-order').disabled = true; notify('Order saved in ckg.json with a timestamped backup.'); }
+}
+async function startRun() {
+  const b = active.buttons[Number($('#button').value)]; if (!b) return;
+  const count = workers(), run_id = 'RUN_' + Date.now() + '_' + ++seq;
+  const r = {key:key(), front:active.front, root:root.root, station:active.label, button:b.name, workers:count, output:'', live:true, code:null};
+  runs.set(run_id,r); viewRun = run_id; drawRun(); renderDirectory();
+  try { await send('pipeline_run', {button:b.path, run_id}); }
+  catch(e) { r.live=false; r.output += 'Could not start: ' + e.message + '\n'; if(viewRun === run_id) drawRun(); renderDirectory(); throw e; }
+}
+window.stationOutput = (id,text) => {
+  const r = runs.get(id); if (!r) return; r.output = (r.output + text).slice(-500000);
+  if (!r.workersSent && /How many at once\? \(1-30, Enter = \d+\)\s*$/.test(r.output)) {
+    r.workersSent=true;
+    send('pipeline_answer',{run_id:id,text:r.workers}).then(() => stationOutput(id,'\n[stdin · workers setting] '+r.workers+'\n')).catch(e => { r.workersSent=false; notify('Worker answer failed: '+e.message); });
   }
-  renderDir();
-}
-
-window.stationOutput = (run_id, text) => {
-  const r = RUNS[run_id]; if (!r) return;
-  r.output = (r.output + text).slice(-400000);
-  if (run_id === VIEW_RUN) { const t = $("#term"); const stick = t.scrollTop + t.clientHeight >= t.scrollHeight - 30;
-    t.append(document.createTextNode(text)); if (stick) t.scrollTop = t.scrollHeight; }
+  if (id === viewRun) { const el = $('#term'), stick = el.scrollTop + el.clientHeight >= el.scrollHeight - 40; el.textContent = r.output; if(stick) el.scrollTop = el.scrollHeight; }
 };
-window.stationExit = (run_id, code) => {
-  const r = RUNS[run_id]; if (!r) return;
-  r.live = false; r.code = code;
-  const line = code === 0 ? `■ finished · exit 0` : `■ stopped · exit ${code}`;
-  r.output += `\n${line}\n`;
-  if (run_id === VIEW_RUN) sysLine(line, code !== 0);
-  status(`${run_id} · exit ${code}`, code !== 0);
-  ledgerAdd({event: "exit", run_id, at: new Date().toISOString(), code});
-  renderDir();
+window.stationExit = (id,code) => {
+  const r = runs.get(id); if(!r) return; r.live=false; r.code=code; r.output += '\nProcess exited with code ' + code + '\n';
+  if (id === viewRun) drawRun(); renderDirectory();
+  if (active && r.key === key()) {
+    if(view === 'results') loadResults();
+    // Refresh counts without replacing editors or unsaved work.
+    const g = generation;
+    send('pipeline_list').then(res => { if(g !== generation) return; const s = res.roots?.find(x => x.root === r.root)?.data?.stations?.find(s => s.front === r.front); if(s) { active.inbox=s.inbox; active.outbox=s.outbox; $('#inbox').textContent=s.inbox+' files waiting'; $('#outbox').textContent=s.outbox+' files saved'; } }).catch(e => notify('Could not refresh counts: '+e.message));
+  }
 };
-
-function drawTerm() {
-  const t = $("#term"); t.textContent = "";
-  if (!VIEW_RUN) { t.innerHTML = `<span class="sys">Press a button to run it. Its questions show up here; answer them in the box below.</span>`; status(""); return; }
-  const r = RUNS[VIEW_RUN]; t.textContent = r.output; t.scrollTop = t.scrollHeight;
-  status(r.live ? `${VIEW_RUN} running` : `${VIEW_RUN} · exit ${r.code}`, !r.live && r.code !== 0);
+function drawRun() {
+  const mine = Array.from(runs.entries()).filter(([,r]) => active && r.key === key());
+  $('#runs').replaceChildren(...mine.map(([id,r]) => new Option(r.button + ' · ' + (r.live?'running':'exit '+r.code),id)));
+  $('#runs').value = viewRun || '';
+  const r = runs.get(viewRun);
+  $('#term').textContent = r?.output || 'Choose a station button and press Run. Its questions and output will appear here.';
+  $('#term').scrollTop = $('#term').scrollHeight;
+  $('#run-status').textContent = r ? (r.live ? 'Running · workers setting '+r.workers : 'Exit '+r.code) : 'Idle';
+  $('#stop').disabled = $('#send').disabled = $('#use-workers').disabled = !r?.live;
 }
-function sysLine(msg, bad) {
-  const r = VIEW_RUN && RUNS[VIEW_RUN]; if (r) r.output += `\n${msg}\n`;
-  const s = document.createElement("span"); s.className = bad ? "err" : "sys"; s.textContent = `\n${msg}\n`;
-  const t = $("#term"); t.append(s); t.scrollTop = t.scrollHeight;
+async function answer(text) {
+  const id = viewRun, r = runs.get(id); if (!r?.live) throw new Error('No live run selected.');
+  await send('pipeline_answer', {run_id:id, text});
+  // Keep stdin separate from stdout: this is explicitly a user response.
+  stationOutput(id,'\n[stdin] '+text+'\n');
 }
-function clearTerm() { if (VIEW_RUN) RUNS[VIEW_RUN].output = ""; $("#term").textContent = ""; }
-
-async function sendAnswer() {
-  const text = $("#answer").value;
-  if (!VIEW_RUN || !RUNS[VIEW_RUN].live) { status("nothing is running", true); return; }
-  try { await send("pipeline_answer", {run_id: VIEW_RUN, text}); stationOutput(VIEW_RUN, text + "\n"); $("#answer").value = ""; }
-  catch (e) { status(e.message, true); }
-}
-async function stopRun() {
-  if (!VIEW_RUN || !RUNS[VIEW_RUN].live) { status("nothing is running", true); return; }
-  if (!confirm("Stop this run and everything it started?")) return;
-  try { await send("pipeline_stop", {run_id: VIEW_RUN}); status("stopping…"); } catch (e) { status(e.message, true); }
-}
-
-/* ---------- ledger (ROOT\_system\LOGS\console-ledger.jsonl) ---------- */
-async function loadLedger() {
-  LEDGER = {};
-  $("#ledger-path").textContent = ROOT ? ROOT + "\\_system\\LOGS\\console-ledger.jsonl" : "";
-  try { const r = await send("pipeline_ledger", {root: ROOT}); (r.entries || []).forEach(mergeLedger); } catch (e) { /* no ledger yet */ }
-  renderLedger();
-}
-function mergeLedger(e) {
-  if (!e || !e.run_id) return;
-  const row = LEDGER[e.run_id] ||= {run_id: e.run_id};
-  if (e.event === "run") Object.assign(row, {at: e.at, station: e.station, button: e.button, uses_api: e.uses_api});
-  if (e.event === "exit") row.code = e.code;
-  if (e.event === "ruling") row.ruling = `${e.by} · ${String(e.at).slice(0, 10)}`;
-}
-function ledgerAdd(entry) {
-  mergeLedger(entry); renderLedger();
-  send("pipeline_ledger_add", {root: ROOT, entry}).catch(e => status("ledger not written: " + e.message, true));
-}
-function renderLedger() {
-  const rows = Object.values(LEDGER).sort((a, b) => String(b.at || "").localeCompare(String(a.at || ""))).slice(0, 150);
-  if (!rows.length) { $("#ledger").innerHTML = `<tr><td colspan="7" class="muted">no runs yet</td></tr>`; return; }
-  $("#ledger").innerHTML = rows.map(r => {
-    const live = RUNS[r.run_id] && RUNS[r.run_id].live;
-    const result = live ? `<span class="badge warn">RUNNING</span>` : r.code === 0 ? `<span class="badge ok">PASSED</span>`
-      : r.code == null ? `<span class="badge">UNKNOWN</span>` : `<span class="badge bad">FAILED · ${r.code}</span>`;
-    const standing = r.ruling ? `<span class="badge ok">RULED</span>` : `<span class="badge prop">PROPOSED</span>`;
-    const act = r.ruling ? `<span class="mono" style="font-size:10.5px">${esc(r.ruling)}</span>`
-      : `<button style="font-size:10.5px;padding:3px 8px" onclick="rule('${esc(r.run_id)}')">rule</button>`;
-    const view = RUNS[r.run_id] ? ` style="cursor:pointer" onclick="viewRun('${esc(r.run_id)}')"` : "";
-    return `<tr><td class="mono" style="font-size:11px"${view}>${esc(r.run_id)}</td><td class="mono" style="font-size:11px">${esc(String(r.at || "").replace("T", " ").slice(0, 19))}</td>
-      <td>${esc(r.station)}</td><td>${esc(r.button)}</td><td>${result}</td><td>${standing}</td><td>${act}</td></tr>`;
-  }).join("");
-}
-function viewRun(id) {
-  const r = RUNS[id]; if (!r) return;
-  if (!ACTIVE || ACTIVE.label !== r.station) select(r.station);
-  VIEW_RUN = id; drawTerm();
-}
-function rule(id) {
-  const by = prompt("Ruled by (your name):", "David"); if (!by) return;
-  ledgerAdd({event: "ruling", run_id: id, by, at: new Date().toISOString()});
-}
-
-drawTerm();
-refresh();
+$('#root').onchange = action(async () => { if(!canLeave()) { $('#root').value=String(roots.indexOf(root)); return; } root=roots[Number($('#root').value)]; await useRoot(); });
+$('#refresh').onclick = action(refresh);
+document.querySelectorAll('[data-tab]').forEach(el => el.onclick = action(() => setView(el.dataset.tab)));
+$('#start').onclick = action(startRun);
+$('#stop').onclick = action(async () => { if(viewRun && confirm('Stop this run and all its child processes?')) await send('pipeline_stop',{run_id:viewRun}); });
+$('#send').onclick = action(async () => { const text=$('#answer').value; await answer(text); $('#answer').value=''; });
+$('#answer').onkeydown = e => { if(e.key === 'Enter') $('#send').click(); };
+$('#use-workers').onclick = action(() => answer(runs.get(viewRun)?.workers || workers()));
+$('#runs').onchange = () => { viewRun=$('#runs').value; drawRun(); };
+$('#workers').onchange = action(() => { const n=workers(); try { localStorage.setItem('pipeline-workers:'+key(),n); } catch { notify('Worker preference could not be retained; this session’s value is available.'); } });
+$('#focus').oninput = () => focusDirty=true;
+$('#save-focus').onclick = action(async () => { const g=generation, text=$('#focus').value; await send('pipeline_save_focus',{path:active.text['FOCUS.md'],text}); if(g === generation) { focusDirty=$('#focus').value !== text; notify('FOCUS.md saved with a timestamped backup if changed.'); } });
+$('#open-inbox').onclick = action(() => send('pipeline_open',{path:join(active.front,'INBOX')}));
+$('#open-outbox').onclick = action(() => send('pipeline_open',{path:join(active.front,'OUTBOX')}));
+$('#refresh-results').onclick = action(loadResults);
+$('#reload-backside').onclick = action(async () => { if((callDirty || orderDirty) && !confirm('Discard unsaved Backside edits?')) return; await loadBackside(); });
+$('#call-prompt').oninput = $('#call-output').oninput = () => callDirty=true;
+$('#save-call').onclick = action(saveCall); $('#save-order').onclick = action(saveOrder);
+$('#order-field').onchange = () => { if(callDirty) { $('#order-field').value=orderField; notify('Save call edits before switching order type.'); return; } if(orderDirty) { $('#order-field').value=orderField; notify('Save the current order or reload Backside before switching order type.'); return; } captureCall(); orderField=$('#order-field').value; const calls=sortedCalls(); if(!calls.some(c => c.id === callId)) callId=calls[0]?.id; renderCalls(); };
+$('#move-up').onclick = () => moveCall(sortedCalls().findIndex(c => c.id === callId)-1);
+$('#move-down').onclick = () => moveCall(sortedCalls().findIndex(c => c.id === callId)+1);
+$('#position').onchange = () => moveCall(Number($('#position').value));
+window.addEventListener('beforeunload',e => { if(focusDirty || callDirty || orderDirty || Array.from(runs.values()).some(r => r.live)) { e.preventDefault(); e.returnValue=''; } });
+action(refresh)();
 </script></body></html>
