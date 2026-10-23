@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paper Intelligence v0.1</title>
+<link rel="stylesheet" href="paper_intelligence.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════
+     GOVERNANCE BANNER — projection, not canon
+     ════════════════════════════════════════════════════════════════════════════════ -->
+<div id="candidate-banner" class="candidate-banner">
+  <span class="gov-icon">⚠</span>
+  <span id="candidate-text">CANDIDATE_DRAFT — NOT ADMITTED</span>
+  <span class="gov-sub">This HTML is a projection. No generated object is admitted to canon without a separate human ruling.</span>
+</div>
+
+<div id="validation-banner" class="validation-banner hidden">
+  <strong>Validation error</strong>
+  <span id="validation-message"></span>
+  <button id="validation-close">✕</button>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════
+     IDENTITY BAND
+     ════════════════════════════════════════════════════════════════════════════════ -->
+<header class="identity-band">
+  <div class="identity-inner">
+    <div class="id-row">
+      <span class="id-uuid" id="paper-id">PAPER-ID</span>
+      <span class="id-code" id="paper-version">v0.0</span>
+      <span class="id-label" id="paper-title">Paper Title</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-pill status-candidate" id="paper-status-pill"><span class="dot"></span><span id="paper-status">CANDIDATE_DRAFT</span></span>
+      <span class="meta-pill" id="paper-type">TYPE</span>
+      <span class="meta-pill" id="paper-series">SERIES</span>
+      <span class="meta-pill" id="paper-date">DATE</span>
+      <span class="meta-pill" id="paper-source-hash">sha256:…</span>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════
+     CONTROL BAR — view tabs + JSON loader
+     ════════════════════════════════════════════════════════════════════════════════ -->
+<nav class="control-bar">
+  <div class="view-toggle" id="view-toggle">
+    <button class="view-btn active" data-view="overview">Paper Overview</button>
+    <button class="view-btn" data-view="full">Full Paper</button>
+    <button class="view-btn" data-view="structure">Structure / Axioms / Spines</button>
+    <button class="view-btn" data-view="atoms">Atoms</button>
+  </div>
+  <div class="loader-controls">
+    <button class="loader-btn" id="load-embedded">Reload Embedded</button>
+    <button class="loader-btn" id="load-file-btn">Load JSON File</button>
+    <button class="loader-btn" id="paste-btn">Paste JSON</button>
+    <input type="file" id="file-input" accept=".json" class="hidden">
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════
+     MAIN VIEWPORT
+     ════════════════════════════════════════════════════════════════════════════════ -->
+<main class="main-wrap">
+
+  <!-- PAPER OVERVIEW -->
+  <section class="view-pane active" id="view-overview" data-view="overview">
+    <div class="overview-grid">
+      <div class="overview-card hero">
+        <div class="section-title">What this paper is</div>
+        <div class="hero-type" id="overview-type">Philosophical paper</div>
+        <p class="hero-claim" id="overview-central-claim">Central claim will appear here.</p>
+      </div>
+
+      <div class="overview-card">
+        <div class="section-title">Central question</div>
+        <p id="overview-central-question">—</p>
+      </div>
+
+      <div class="overview-card">
+        <div class="section-title">What it tries to establish</div>
+        <p id="overview-establishes">—</p>
+      </div>
+
+      <div class="overview-card">
+        <div class="section-title">How it tries to establish it</div>
+        <p id="overview-method">—</p>
+      </div>
+
+      <div class="overview-card list-card">
+        <div class="section-title">Strongest contributions</div>
+        <ul id="overview-contributions"></ul>
+      </div>
+
+      <div class="overview-card list-card">
+        <div class="section-title">Weakest / most vulnerable points</div>
+        <ul id="overview-weaknesses"></ul>
+      </div>
+
+      <div class="overview-card list-card">
+        <div class="section-title">Dependencies</div>
+        <ul id="overview-dependencies"></ul>
+      </div>
+
+      <div class="overview-card list-card">
+        <div class="section-title">Major findings</div>
+        <ul id="overview-findings"></ul>
+      </div>
+
+      <div class="overview-card list-card">
+        <div class="section-title">Unresolved burdens</div>
+        <ul id="overview-burdens"></ul>
+      </div>
+
+      <div class="overview-card list-card">
+        <div class="section-title">Defeat / falsification conditions</div>
+        <ul id="overview-defeat"></ul>
+      </div>
+
+      <div class="overview-card wide">
+        <div class="section-title">Relationship to the surrounding series</div>
+        <p id="overview-series-rel">—</p>
+      </div>
+
+      <div class="overview-card wide">
+        <div class="section-title">Summary prose <span class="trace-note">click references to trace</span></div>
+        <div id="overview-summary"></div>
+      </div>
+    </div>
+
+    <div class="coverage-graphic" id="coverage-graphic">
+      <div class="section-title">Question disposition</div>
+      <div class="coverage-bars" id="coverage-bars"></div>
+      <div class="coverage-legend" id="coverage-legend"></div>
+    </div>
+  </section>
+
+  <!-- FULL PAPER -->
+  <section class="view-pane" id="view-full" data-view="full">
+    <div class="full-paper-shell" id="full-paper-shell"></div>
+  </section>
+
+  <!-- STRUCTURE / AXIOMS / SPINES -->
+  <section class="view-pane" id="view-structure" data-view="structure">
+    <div class="structure-wrap">
+      <div class="structure-col">
+        <div class="section-title">Analysis stages</div>
+        <div id="structure-stages"></div>
+      </div>
+      <div class="structure-col wide">
+        <div class="section-title">Dependency spine</div>
+        <div id="structure-spine"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATOMS -->
+  <section class="view-pane" id="view-atoms" data-view="atoms">
+    <div class="atoms-wrap">
+      <div class="atoms-filter">
+        <label>Filter</label>
+        <select id="atoms-filter">
+          <option value="all">All objects</option>
+          <option value="claims">Claims</option>
+          <option value="evidence">Evidence</option>
+          <option value="proofs">Proofs</option>
+          <option value="processes">Processes</option>
+        </select>
+        <input type="text" id="atoms-search" placeholder="Search IDs or statements…">
+        <span class="atoms-count" id="atoms-count"></span>
+      </div>
+      <div class="atoms-grid" id="atoms-grid"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════
+     BOTTOM ANALYSIS CENSUS
+     ════════════════════════════════════════════════════════════════════════════════ -->
+<section class="census-section">
+  <button class="census-toggle" id="census-toggle">
+    ANALYSIS CENSUS / QUESTION ACCOUNTING
+    <span class="census-hint">computed from question records</span>
+    <span class="census-chevron" id="census-chevron">▼</span>
+  </button>
+  <div class="census-body" id="census-body">
+    <div class="census-note">
+      Categories overlap. A single question can be PARTIAL, anomalous, and lossy simultaneously, so sub-totals do not have to sum to the declared question count.
+    </div>
+    <div class="census-grid" id="census-grid"></div>
+    <div class="census-disagreement hidden" id="census-disagreement"></div>
+    <div class="census-questions" id="census-questions"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════
+     PASTE MODAL
+     ════════════════════════════════════════════════════════════════════════════════ -->
+<div id="paste-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Paste JSON</h3>
+      <button class="modal-close" id="paste-close">✕</button>
+    </div>
+    <textarea id="paste-area" placeholder="Paste a complete paper-intelligence JSON payload here…"></textarea>
+    <div class="modal-actions">
+      <button id="paste-cancel">Cancel</button>
+      <button id="paste-load" class="primary">Load</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════════════
+     DRILL-DOWN PANEL
+     ════════════════════════════════════════════════════════════════════════════════ -->
+<div id="drilldown-panel" class="drilldown hidden">
+  <button class="drilldown-close" id="drilldown-close">✕</button>
+  <div id="drilldown-content"></div>
+</div>
+
+<script src="paper_intelligence.js"></script>
+</body>
+</html>

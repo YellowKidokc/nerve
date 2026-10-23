@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atom Interior v2 — Canonical Schema</title>
+<style>
+:root{--bg:#07090c;--s1:#0d1117;--s2:#121821;--s3:#18212c;--line:#26313d;--txt:#e8edf2;--muted:#8793a0;--gold:#d4af37;--golddim:#8a7129;--blue:#5b9bd5;--teal:#3bb39a;--red:#c94040;--purple:#a78bfa;--green:#7fc77f;--amber:#d7a94b;--void:#050505}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--txt);font-size:13px;line-height:1.55;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0a0d11}::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+button{font:inherit;cursor:pointer}
+
+/* ═══ IDENTITY BAND ═══ */
+.idband{position:sticky;top:0;z-index:100;background:rgba(7,9,12,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:10px 20px}
+.idinner{max-width:1480px;margin:auto}
+.idrow{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.iduuid{font:10px ui-monospace,Consolas,monospace;color:#5a5f66;letter-spacing:.05em}
+.idcode{font:11px ui-monospace,Consolas,monospace;color:var(--golddim);background:var(--s2);padding:2px 8px;border-radius:4px;border:1px solid var(--line);letter-spacing:.08em}
+.idlabel{font:700 20px Georgia,serif;color:var(--gold);letter-spacing:.03em}
+.idtype{font:10px ui-monospace,Consolas,monospace;color:var(--blue);background:rgba(91,155,213,.1);border:1px solid rgba(91,155,213,.25);padding:2px 8px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase}
+.metarow{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted)}
+.mpill{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:4px;background:var(--s2);border:1px solid var(--line);font:10px ui-monospace,Consolas,monospace;letter-spacing:.06em;text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dg{background:var(--green)}.da{background:var(--amber)}.dr{background:var(--red)}.db{background:var(--blue)}
+
+/* ═══ DOMAIN BANNER (top of atom, your request) ═══ */
+.domainbanner{background:var(--void);border-bottom:1px solid var(--line);padding:10px 20px}
+.domaininner{max-width:1480px;margin:auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.domlabel{font:9px ui-monospace,Consolas,monospace;color:var(--golddim);letter-spacing:.18em;text-transform:uppercase;flex-shrink:0}
+.domgrid{display:flex;gap:6px;flex-wrap:wrap}
+.domtile{display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:var(--s1);cursor:pointer;transition:all .15s}
+.domtile:hover{border-color:var(--golddim);background:var(--s2)}
+.domtile.home{border-color:var(--gold);background:rgba(212,175,55,.08)}
+.domtile.native{border-color:var(--blue);background:rgba(91,155,213,.06)}
+.domtile.bridge{border-color:var(--teal);background:rgba(59,179,154,.06)}
+.domtile.candidate{border-color:var(--amber);border-style:dashed;background:rgba(215,169,75,.04)}
+.domglyph{font-size:16px;width:20px;text-align:center}
+.domname{font-size:11px;font-weight:600}.domrole{font:9px ui-monospace,Consolas,monospace;color:var(--muted);text-transform:uppercase}
+
+/* ═══ 3-COLUMN LAYOUT ═══ */
+.shell{max-width:1480px;margin:auto;padding:12px 20px 60px;display:grid;grid-template-columns:200px minmax(0,1fr) 220px;gap:12px}
+
+/* ═══ LEFT RAIL ═══ */
+.rail{display:flex;flex-direction:column;gap:8px}
+.railcard{border:1px solid var(--line);border-radius:8px;background:var(--s1);padding:10px;font-size:11px}
+.railhead{font:9px ui-monospace,Consolas,monospace;color:var(--golddim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.railrow{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(38,49,61,.5)}
+.railrow:last-child{border:0}
+.railkey{color:var(--muted);font-size:10px}
+.railval{font:10px ui-monospace,Consolas,monospace;color:var(--txt);text-align:right}
+
+/* Five axes compact */
+.axisbar{display:flex;flex-direction:column;gap:3px}
+.axisrow{display:flex;align-items:center;gap:6px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;background:var(--s2)}
+.axisdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.axislabel{font:9px ui-monospace,Consolas,monospace;color:var(--muted);flex:1;text-transform:uppercase;letter-spacing:.04em}
+.axisval{font:10px ui-monospace,Consolas,monospace;color:var(--txt);text-align:right;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ═══ CENTER PANEL ═══ */
+.center{display:flex;flex-direction:column;gap:8px}
+
+/* Atom card hero */
+.atomhero{border:2px solid var(--blue);border-radius:14px;background:linear-gradient(145deg,#111923,#0c1117);padding:18px;position:relative;overflow:hidden}
+.atomhero::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--blue),var(--teal),var(--gold))}
+.herosym{font:52px Georgia,serif;color:white;text-align:center;margin:10px 0 4px}
+.heroname{font:700 16px Georgia,serif;color:var(--gold);text-align:center}
+.herosub{font-size:11px;color:var(--muted);text-align:center;margin-top:4px}
+/* 15 markers around atom card */
+.markers{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:12px}
+.mkr{min-width:26px;height:20px;padding:0 4px;border:1px solid #495766;background:#202a35;color:#e8edf2;border-radius:4px;display:grid;place-items:center;font:700 8px ui-monospace,Consolas,monospace}
+.mkr.dom{background:#153b54;border-color:#2d739b}.mkr.sem{background:#332d5a;border-color:#655a9c}.mkr.epi{background:#16463b;border-color:#287962}.mkr.warn{background:#553614;border-color:#9a6428}
+
+/* Expandable blocks */
+.block{border:1px solid var(--line);border-radius:9px;background:var(--s1);overflow:hidden}
+.block.open{border-color:var(--golddim)}
+.bhead{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;user-select:none;transition:background .15s}
+.bhead:hover{background:var(--s2)}
+.bicon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.btitle{font:700 13px Georgia,serif;color:var(--gold);flex:1;letter-spacing:.02em}
+.bsummary{font-size:10px;color:var(--muted);max-width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bchev{font-size:11px;color:#5a5f66;transition:transform .2s;flex-shrink:0}
+.block.open .bchev{transform:rotate(90deg);color:var(--gold)}
+.bbody{display:none;padding:10px 12px 12px;border-top:1px solid var(--line);background:rgba(5,5,5,.4)}
+.block.open .bbody{display:block}
+
+/* Inside blocks */
+.fr{display:flex;gap:8px;margin-bottom:5px;align-items:baseline}
+.fk{font:10px ui-monospace,Consolas,monospace;color:var(--golddim);letter-spacing:.08em;text-transform:uppercase;min-width:100px;flex-shrink:0}
+.fv{font-size:12px;color:var(--txt)}
+.fv.dim{color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font:10px ui-monospace,Consolas,monospace;border:1px solid var(--line);background:var(--s2);margin:1px 2px}
+.pill.bl{color:var(--blue);border-color:rgba(91,155,213,.3);background:rgba(91,155,213,.08)}
+.pill.gr{color:var(--green);border-color:rgba(127,199,127,.3);background:rgba(127,199,127,.08)}
+.pill.tl{color:var(--teal);border-color:rgba(59,179,154,.3);background:rgba(59,179,154,.08)}
+.pill.pr{color:var(--purple);border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.08)}
+.pill.am{color:var(--amber);border-color:rgba(215,169,75,.3);background:rgba(215,169,75,.08)}
+.pill.rd{color:var(--red);border-color:rgba(201,64,64,.3);background:rgba(201,64,64,.08)}
+.pill.gd{color:var(--gold);border-color:rgba(212,175,55,.3);background:rgba(212,175,55,.08)}
+.eq{font:13px ui-monospace,Consolas,monospace;color:var(--green);background:#08120f;border:1px solid #1f4a3d;border-radius:7px;padding:12px;text-align:center;overflow:auto;white-space:pre-wrap;margin:6px 0}
+.step{display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:start;margin:5px 0}
+.stepnum{width:22px;height:22px;border:1px solid #3d4b58;border-radius:50%;display:grid;place-items:center;font:10px ui-monospace,Consolas,monospace;color:var(--teal)}
+.step p{margin:0;color:#b4bec8;font-size:12px}
+.depnode{display:flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--s2);margin-bottom:3px;cursor:pointer;transition:border-color .15s;font-size:11px}
+.depnode:hover{border-color:var(--golddim)}
+.depdir{font:9px ui-monospace,Consolas,monospace;color:#5a5f66;width:60px;flex-shrink:0;text-transform:uppercase}
+.depid{font:10px ui-monospace,Consolas,monospace;color:var(--golddim)}
+.kill{margin-top:6px;padding:8px 10px;background:rgba(201,64,64,.06);border:1px solid rgba(201,64,64,.25);border-radius:6px;font-size:12px;color:#dc8b8b}
+.sub{margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
+.subh{font:9px ui-monospace,Consolas,monospace;color:var(--golddim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+.proof{padding:10px;background:#0c1218;border:1px solid #24313d;border-radius:7px;margin:4px 0}
+.proof b{font-size:12px}.proof p{margin:3px 0 0;color:var(--muted);font-size:11px}
+.grade-bar{display:flex;gap:2px;margin-top:4px}.grade-step{flex:1;height:6px;border-radius:3px;background:var(--s2);border:1px solid var(--line)}.grade-step.filled{background:var(--teal);border-color:var(--teal)}.grade-step.current{background:var(--gold);border-color:var(--gold);box-shadow:0 0 5px rgba(212,175,55,.4)}
+.auditgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.acol{border:1px solid var(--line);border-radius:7px;padding:10px}.acol h4{font-size:11px;margin:0 0 6px}.acol ul{margin:0;padding-left:16px;color:#aab4bd;font-size:11px}.acol li{margin:5px 0}
+.acol.ri h4{color:var(--green)}.acol.ov h4{color:var(--amber)}.acol.wr h4{color:var(--red)}
+
+/* ═══ RIGHT RAIL ═══ */
+.rcard{border:1px solid var(--line);border-radius:8px;background:var(--s1);padding:10px;font-size:11px;margin-bottom:8px}
+.rhead{font:9px ui-monospace,Consolas,monospace;color:var(--golddim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.metric{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(38,49,61,.4);font-size:11px}
+.metric:last-child{border:0}
+.metric span:first-child{color:var(--muted)}
+.metric span:last-child{font-family:ui-monospace,Consolas,monospace;color:var(--txt)}
+.alertbox{border:1px solid rgba(201,64,64,.3);background:rgba(201,64,64,.04);border-radius:6px;padding:8px;margin-top:6px;font-size:11px;color:#dc8b8b}
+
+@media(max-width:1100px){.shell{grid-template-columns:1fr}.rail{display:none}}
+@media(max-width:800px){.auditgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══ IDENTITY BAND ═══ -->
+<header class="idband"><div class="idinner">
+  <div class="idrow">
+    <span class="iduuid">550e8400-e29b-41d4-a716-446655440000</span>
+    <span class="idcode">CLM-GQ-00042</span>
+    <span class="idtype">◆ CLAIM</span>
+    <span class="idlabel">Grace Curvature Couples to Quantum Coherence</span>
+  </div>
+  <div class="metarow">
+    <span class="mpill"><span class="dot dg"></span> ADMITTED</span>
+    <span class="mpill">Paper 03</span>
+    <span class="mpill">Grace → Quantum</span>
+    <span class="mpill">v2.1</span>
+    <span style="font:10px ui-monospace,Consolas,monospace;color:#5a5f66">2026-03-14T08:22Z</span>
+  </div>
+</div></header>
+
+<!-- ═══ DOMAIN BANNER — at the top per your request ═══ -->
+<section class="domainbanner"><div class="domaininner">
+  <span class="domlabel">Domains</span>
+  <div class="domgrid" id="domainGrid"></div>
+</div></section>
+
+<!-- ═══ THREE-COLUMN SHELL ═══ -->
+<div class="shell">
+
+<!-- LEFT RAIL — Five Axes + Admission -->
+<aside class="rail" id="leftRail"></aside>
+
+<!-- CENTER — Atom hero + expandable blocks -->
+<main class="center" id="centerPanel"></main>
+
+<!-- RIGHT RAIL — Receipts, Runs, Quick Stats, Alerts -->
+<aside class="rail" id="rightRail"></aside>
+
+</div>
+
+<script>
+// ═══ CANONICAL ATOM DATA (mirrors atom_envelope_v1_1.schema.json) ═══
+const ATOM = {
+  identity: {
+    id: "CLM-GQ-00042",
+    object_type: "CLAIM",
+    parent_id: null,
+    atom_family: "Grace-Quantum Coupling",
+    layer: "master-equation",
+    component: "κ_GQ coupling term",
+    version: "2.1",
+    content_hash: "sha256:a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+    ordinal: 42,
+    child_role: null
+  },
+  provenance: {
+    raw_statement: "The curvature tensor of grace, when projected onto the quantum domain via the master equation, preserves coherence rather than destroying it — grace is the anti-decoherence field.",
+    source_uri: "papers/POF2828-2026-0003.md",
+    source_span: "§4.2, lines 118-122",
+    source_hash: "sha256:deadbeef...",
+    author_or_witness: "David Lowe",
+    date_received: "2026-03-14T08:22:00Z",
+    ai_contribution_declared: true
+  },
+  axes: {
+    lifecycle_state: "ADMITTED",
+    proof_class: "FORMALIZED_NOT_BUILT",
+    register: "FORMAL_MATHEMATICAL",
+    ic_grade: "IC-3",
+    why_outcome: "WHY_CLOSED"
+  },
+  admission: {
+    graph: "admitted",
+    human_ruling: "admitted",
+    ruling_actor: "David Lowe",
+    ruling_date: "2026-03-20T14:00:00Z",
+    rationale: "Derivation chain holds under Master Equation assumptions. Kill condition well-defined."
+  },
+  dependencies: {
+    depends_on: ["AXM-A012", "CLM-GQ-00017", "PRF-GQ-00003"],
+    supports: ["CLM-GQ-00058"],
+    challenges: [],
+    expands: [],
+    bridges_to: ["CLM-IT-00022"],
+    supersedes: ["CLM-GQ-00041"]
+  },
+  classification: {
+    emergent_labels: ["grace-curvature", "anti-decoherence", "coupling"],
+    inherited_labels: ["master-equation", "law-1", "law-10"],
+    reconciliation_status: "NO_CONFLICT"
+  },
+  why_closure: {
+    ladder_levels: ["descriptive", "mechanistic", "structural"],
+    explanation_types: ["deductive", "model-based"],
+    non_restatement_pass: true,
+    outcome: "WHY_CLOSED",
+    closure_level: "structural",
+    next_discriminating_test: null
+  },
+  truth_space: {
+    if_true: ["Coherence maintenance has a grace-field mechanism", "Prayer operates through κ_GQ coupling"],
+    if_false: ["Grace and quantum coherence are coincidentally correlated", "Master Equation overcounts degrees of freedom"],
+    false_worlds: ["Any world where coherence events occur without grace-field input"],
+    countermodels: []
+  },
+  gauntlet: {
+    countermodels: [],
+    kill_conditions: [
+      "Find a coherence event that demonstrably occurs without grace-field input",
+      "Show R_grace(ψ)·C(ψ) < C(ψ) for any W > W_threshold"
+    ],
+    preregistration_receipt: null,
+    execution_receipts: []
+  },
+
+  // Extended fields (not in envelope but your classification ask)
+  domains: [
+    {role:"home", name:"Consciousness", glyph:"ψ"},
+    {role:"native", name:"Physics", glyph:"Φ"},
+    {role:"native", name:"Mathematics", glyph:"⟐"},
+    {role:"bridge", name:"Information Theory", glyph:"ℹ"},
+    {role:"candidate", name:"Theology", glyph:"Θ"}
+  ],
+  law_associations: [1, 7, 10],
+  master_eq_terms: ["κ_GQ (grace-quantum coupling)", "R_μν (curvature)", "C(χ) (coherence)"],
+  shannon_mapping: "C_grace = A_soul · log₂(1 + T_grace / D_sin)",
+  axiom_set: ["A-012", "A-045", "A-088"],
+  fruits: ["Love (agapē) — V(r) at minimum", "Peace (eirēnē) — ΣF = 0"],
+  math_components: ["Riemann curvature tensor", "Hilbert space projection", "coherence function C(χ)", "free will coupling W"],
+  keywords: ["grace curvature", "quantum coherence", "anti-decoherence", "Law 10", "master equation"],
+
+  // Formal statement
+  formal_statement: "∀ψ ∈ H_soul : R_grace(ψ) · C(ψ) ≥ C(ψ) when W > W_threshold",
+  plain_statement: "Grace doesn't just forgive — it structurally holds things together at the quantum level. Decoherence (falling apart) is what happens WITHOUT grace.",
+  equation: "S_χ = ∫ d⁴x √(-g) [ (1 + ξ κ₀ χ²) R / (2 κ₀) - (1/2) g^{μν} ∂_μ χ ∂_ν χ - (1/2) m_χ² χ² - (λ/4) χ⁴ + L_matter ]",
+
+  // Warrant
+  warrant_type: "Deduction",
+  warrant_source: "Master Equation §4.2 + Law 10 (Coherence)",
+  warrant_chain: [
+    "Axiom A-012: Grace field definition",
+    "Law 1: Gravitation/Grace symmetry",
+    "Law 10: C IS χ (Christ = Coherence)",
+    "Master Equation coupling term κ_GQ"
+  ],
+
+  // Support
+  support_objects: [
+    {id:"EVD-GQ-00091", label:"PEAR-LAB 6.35σ", grade:"empirical"},
+    {id:"EVD-GQ-00134", label:"GCP network correlation 6σ", grade:"empirical"},
+    {id:"PRF-GQ-00003", label:"Law 10 non-duality proof", grade:"formal_derivation"}
+  ],
+  defeaters: [
+    {id:"DEF-001", label:"Materialist: correlation ≠ causation", status:"ADDRESSED", response:"Addressed via PROP-COSMOS 5.7σ directional test"}
+  ],
+
+  // Lean
+  lean_status: "FORMALIZED_NOT_BUILT",
+  lean_note: "Core tensor identity verified in Lean 4. Coupling bound pending.",
+
+  // Receipts
+  receipts: {lean:"1 partial",python:"—",colab:"—",literature:"2 refs",heuristic:"—",corpus_commit:"sha256:a1b2...",prompt_hash:"—"},
+
+  // Audit
+  audit: {
+    right: ["Curvature tensor projection is mathematically valid under stated assumptions","GR limit recovers correctly when χ → constant"],
+    overstated: ["'Anti-decoherence field' implies universal scope; actual scope is conditional on W > W_threshold"],
+    wrong: ["Claim that consciousness coupling is 'required' by the action — the action is compatible with consciousness coupling but does not require it"]
+  },
+
+  // Boundary
+  boundary: "Does not claim grace operates through known physical forces. Does not extend to W < W_threshold. Does not establish Grace → Quantum as the only coherence pathway.",
+  open_burdens: ["Experimental protocol to isolate grace-field contribution", "Lean formalization of coupling bound"],
+  scope_limits: "Local to Grace → Quantum series. Global promotion requires cross-series replication."
+};
+
+// ═══ RENDER DOMAIN BANNER ═══
+document.getElementById("domainGrid").innerHTML = ATOM.domains.map(d => {
+  const cls = d.role === "home" ? "home" : d.role === "native" ? "native" : d.role === "bridge" ? "bridge" : "candidate";
+  return `<div class="domtile ${cls}"><span class="domglyph">${d.glyph}</span><div><div class="domname">${d.name}</div><div class="domrole">${d.role}</div></div></div>`;
+}).join("") +
+`<div style="display:flex;gap:6px;align-items:center;margin-left:8px;flex-wrap:wrap">` +
+ATOM.law_associations.map(l => `<span class="pill pr">Law ${l}</span>`).join("") +
+`</div>`;
+
+// ═══ RENDER LEFT RAIL ═══
+const IC_GRADES = ["IC-0","IC-1","IC-2","IC-3","IC-4","IC-5"];
+const icIdx = IC_GRADES.indexOf(ATOM.axes.ic_grade);
+
+const axisColors = {
+  lifecycle_state: ATOM.axes.lifecycle_state === "ADMITTED" ? "var(--green)" : "var(--amber)",
+  proof_class: ATOM.axes.proof_class.includes("BUILT") ? "var(--green)" : "var(--amber)",
+  register: "var(--blue)",
+  ic_grade: "var(--teal)",
+  why_outcome: ATOM.axes.why_outcome === "WHY_CLOSED" ? "var(--green)" : ATOM.axes.why_outcome === "WHY_OPEN" ? "var(--amber)" : "var(--red)"
+};
+
+document.getElementById("leftRail").innerHTML = `
+<div class="railcard">
+  <div class="railhead">Five Axes</div>
+  <div class="axisbar">
+    ${Object.entries(ATOM.axes).map(([k,v]) => `<div class="axisrow"><div class="axisdot" style="background:${axisColors[k]||'var(--muted)'}"></div><div class="axislabel">${k.replace(/_/g,' ')}</div><div class="axisval" title="${v}">${v.replace(/_/g,' ')}</div></div>`).join("")}
+  </div>
+</div>
+<div class="railcard">
+  <div class="railhead">IC Grade</div>
+  <div class="grade-bar">${IC_GRADES.map((g,i) => `<div class="grade-step ${i<=icIdx?'filled':''} ${i===icIdx?'current':''}" title="${g}"></div>`).join("")}</div>
+  <div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:8px;color:#5a5f66">IC-0</span><span style="font-size:8px;color:#5a5f66">IC-5</span></div>
+</div>
+<div class="railcard">
+  <div class="railhead">Admission</div>
+  <div class="railrow"><span class="railkey">Graph</span><span class="railval">${ATOM.admission.graph}</span></div>
+  <div class="railrow"><span class="railkey">Ruling</span><span class="railval">${ATOM.admission.human_ruling}</span></div>
+  <div class="railrow"><span class="railkey">Actor</span><span class="railval">${ATOM.admission.ruling_actor}</span></div>
+  <div class="railrow"><span class="railkey">Date</span><span class="railval" style="font-size:9px">${ATOM.admission.ruling_date?.split('T')[0]||'—'}</span></div>
+</div>
+<div class="railcard">
+  <div class="railhead">Classification</div>
+  <div style="margin-bottom:4px">${ATOM.classification.emergent_labels.map(l=>`<span class="pill gd">${l}</span>`).join("")}</div>
+  <div>${ATOM.classification.inherited_labels.map(l=>`<span class="pill">${l}</span>`).join("")}</div>
+  <div class="railrow" style="margin-top:4px"><span class="railkey">Reconcile</span><span class="railval">${ATOM.classification.reconciliation_status}</span></div>
+</div>
+<div class="railcard">
+  <div class="railhead">Dependencies</div>
+  <div class="railrow"><span class="railkey">Depends on</span><span class="railval">${ATOM.dependencies.depends_on.length}</span></div>
+  <div class="railrow"><span class="railkey">Supports</span><span class="railval">${ATOM.dependencies.supports.length}</span></div>
+  <div class="railrow"><span class="railkey">Bridges to</span><span class="railval">${ATOM.dependencies.bridges_to.length}</span></div>
+  <div class="railrow"><span class="railkey">Supersedes</span><span class="railval">${ATOM.dependencies.supersedes.length}</span></div>
+</div>`;
+
+// ═══ RENDER CENTER ═══
+const BLOCKS = [
+  {icon:"📜", title:"Statement", summary: ATOM.provenance.raw_statement.slice(0,55)+"…",
+    body: `
+    <div class="subh">Source Statement</div>
+    <p style="font:16px Georgia,serif;line-height:1.5;color:#cbd3da;margin-bottom:10px">${ATOM.provenance.raw_statement}</p>
+    <div class="sub"><div class="subh">Formal Restatement</div>
+    <div class="eq">${ATOM.formal_statement}</div></div>
+    <div class="sub"><div class="subh">Plain English</div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.5">${ATOM.plain_statement}</p></div>
+    <div class="sub"><div class="subh">Defining Equation</div>
+    <div class="eq">${ATOM.equation}</div></div>`
+  },
+  {icon:"⚖️", title:"Warrant & Derivation", summary: `${ATOM.warrant_type} — ${ATOM.warrant_source}`,
+    body: `
+    <div class="fr"><span class="fk">Warrant</span><span class="pill am">${ATOM.warrant_type}</span></div>
+    <div class="fr"><span class="fk">Source</span><span class="fv">${ATOM.warrant_source}</span></div>
+    <div class="sub"><div class="subh">Derivation Chain</div>
+    ${ATOM.warrant_chain.map((s,i) => `<div class="step"><span class="stepnum">${i+1}</span><p>${s}</p></div>`).join("")}</div>`
+  },
+  {icon:"🔗", title:"Dependencies", summary: `${ATOM.dependencies.depends_on.length} upstream · ${ATOM.dependencies.supports.length} downstream · ${ATOM.dependencies.bridges_to.length} bridges`,
+    body: `
+    <div class="subh">Depends On (upstream)</div>
+    ${ATOM.dependencies.depends_on.map(d => `<div class="depnode"><span class="depdir">depends</span><span class="depid">${d}</span></div>`).join("")}
+    <div class="sub"><div class="subh">Supports (downstream)</div>
+    ${ATOM.dependencies.supports.map(d => `<div class="depnode"><span class="depdir">supports</span><span class="depid">${d}</span></div>`).join("")}</div>
+    <div class="sub"><div class="subh">Bridges To</div>
+    ${ATOM.dependencies.bridges_to.map(d => `<div class="depnode"><span class="depdir">bridge</span><span class="depid">${d}</span><span class="pill tl">cross-domain</span></div>`).join("")}</div>
+    <div class="sub"><div class="subh">Supersedes</div>
+    ${ATOM.dependencies.supersedes.map(d => `<div class="depnode"><span class="depdir">replaces</span><span class="depid">${d}</span></div>`).join("")}</div>`
+  },
+  {icon:"🗺️", title:"Domain Map & Classification", summary: `${ATOM.domains.length} domains · Laws ${ATOM.law_associations.join(',')} · ${ATOM.axiom_set.length} axioms`,
+    body: `
+    <div class="fr"><span class="fk">Master Eq</span><span class="fv">${ATOM.master_eq_terms.map(t=>`<span class="pill">${t}</span>`).join("")}</span></div>
+    <div class="fr"><span class="fk">Shannon</span><span class="fv" style="font:11px ui-monospace,Consolas,monospace;color:var(--teal)">${ATOM.shannon_mapping}</span></div>
+    <div class="fr"><span class="fk">Axiom Set</span><span class="fv">${ATOM.axiom_set.map(a=>`<span class="pill am">${a}</span>`).join("")}</span></div>
+    <div class="fr"><span class="fk">Fruits</span><span class="fv">${ATOM.fruits.map(f=>`<span class="pill gr">${f}</span>`).join("")}</span></div>
+    <div class="fr"><span class="fk">Math</span><span class="fv">${ATOM.math_components.map(m=>`<span class="pill">${m}</span>`).join("")}</span></div>
+    <div class="fr"><span class="fk">Keywords</span><span class="fv">${ATOM.keywords.map(k=>`<span class="pill">${k}</span>`).join("")}</span></div>`
+  },
+  {icon:"🔬", title:"Evidence & Proof", summary: `${ATOM.support_objects.length} support · ${ATOM.defeaters.length} defeater · Lean: ${ATOM.lean_status.replace(/_/g,' ')}`,
+    body: `
+    <div class="subh">Support Objects</div>
+    ${ATOM.support_objects.map(s => `<div class="depnode"><span class="depid">${s.id}</span><span class="pill gr">${s.grade}</span><span style="flex:1;color:var(--muted)">${s.label}</span></div>`).join("")}
+    <div class="sub"><div class="subh">Defeaters</div>
+    ${ATOM.defeaters.map(d => `<div class="depnode" style="border-color:rgba(201,64,64,.25)"><span class="depid" style="color:var(--red)">${d.id}</span><span class="pill ${d.status==='ADDRESSED'?'gr':'rd'}">${d.status}</span><span style="flex:1;color:var(--muted)">${d.label}</span></div><div style="font-size:11px;color:var(--muted);padding:2px 8px 6px;margin-left:66px">${d.response}</div>`).join("")}</div>
+    <div class="sub"><div class="subh">Lean Verification</div>
+    <div class="fr"><span class="fk">Status</span><span class="pill ${ATOM.lean_status.includes('BUILT')?'gr':'am'}">${ATOM.lean_status.replace(/_/g,' ')}</span></div>
+    <div class="fr"><span class="fk">Note</span><span class="fv dim">${ATOM.lean_note}</span></div></div>`
+  },
+  {icon:"⛔", title:"Gauntlet & Kill Conditions", summary: `${ATOM.gauntlet.kill_conditions.length} kill conditions`,
+    body: `
+    <div class="subh">Kill Conditions</div>
+    ${ATOM.gauntlet.kill_conditions.map(k => `<div class="kill"><strong>Kill if — </strong>${k}</div>`).join("")}
+    <div class="sub"><div class="subh">Truth Space</div>
+    <div class="fr"><span class="fk">If True</span><span class="fv">${ATOM.truth_space.if_true.map(t=>`<div style="margin-bottom:3px">• ${t}</div>`).join("")}</span></div>
+    <div class="fr"><span class="fk">If False</span><span class="fv">${ATOM.truth_space.if_false.map(t=>`<div style="margin-bottom:3px">• ${t}</div>`).join("")}</span></div></div>
+    <div class="sub"><div class="subh">WHY-Closure</div>
+    <div class="fr"><span class="fk">Outcome</span><span class="pill gr">${ATOM.why_closure.outcome}</span></div>
+    <div class="fr"><span class="fk">Level</span><span class="fv">${ATOM.why_closure.closure_level}</span></div>
+    <div class="fr"><span class="fk">Restatement</span><span class="pill ${ATOM.why_closure.non_restatement_pass?'gr':'rd'}">${ATOM.why_closure.non_restatement_pass?'PASSED':'FAILED'}</span></div></div>`
+  },
+  {icon:"🚧", title:"Boundary & Open Burdens", summary: `${ATOM.open_burdens.length} open burdens`,
+    body: `
+    <div class="subh">Boundary Statement</div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.5;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--s2);margin-bottom:8px">${ATOM.boundary}</p>
+    <div class="subh">Open Burdens</div>
+    ${ATOM.open_burdens.map(b => `<div style="display:flex;gap:6px;margin-bottom:3px;align-items:baseline"><span class="pill am">OPEN</span><span style="font-size:12px">${b}</span></div>`).join("")}
+    <div class="sub"><div class="subh">Scope Limits</div>
+    <p style="font-size:12px;color:var(--muted)">${ATOM.scope_limits}</p></div>`
+  },
+  {icon:"📋", title:"Audit", summary: `${ATOM.audit.right.length} right · ${ATOM.audit.overstated.length} overstated · ${ATOM.audit.wrong.length} wrong`,
+    body: `
+    <div class="auditgrid">
+    <div class="acol ri"><h4>Right / Supported</h4><ul>${ATOM.audit.right.map(r=>`<li>${r}</li>`).join("")}</ul></div>
+    <div class="acol ov"><h4>Overstated</h4><ul>${ATOM.audit.overstated.map(o=>`<li>${o}</li>`).join("")}</ul></div>
+    <div class="acol wr"><h4>Wrong / Repair</h4><ul>${ATOM.audit.wrong.map(w=>`<li>${w}</li>`).join("")}</ul></div>
+    </div>`
+  }
+];
+
+document.getElementById("centerPanel").innerHTML = `
+<div class="atomhero">
+  <div class="herosym">◆</div>
+  <div class="heroname">${ATOM.provenance.raw_statement.slice(0,60)}…</div>
+  <div class="herosub">Atom ${ATOM.identity.id} · ${ATOM.identity.atom_family} · Paper 03</div>
+  <div class="markers">
+    <span class="mkr">χA</span><span class="mkr dom">CON</span><span class="mkr dom">PHY</span><span class="mkr dom">MAT</span>
+    <span class="mkr sem">EQ</span><span class="mkr sem">REL</span><span class="mkr sem">CLM</span>
+    <span class="mkr epi">INT</span><span class="mkr epi">DED</span><span class="mkr warn">WRK</span>
+    <span class="mkr warn">ACT</span><span class="mkr">—</span><span class="mkr">—</span>
+    <span class="mkr">—</span><span class="mkr warn">!</span>
+  </div>
+</div>
+${BLOCKS.map((b,i) => `
+<div class="block${i===0?' open':''}" data-block="${i}">
+  <div class="bhead">
+    <span class="bicon">${b.icon}</span>
+    <span class="btitle">${b.title}</span>
+    <span class="bsummary">${b.summary}</span>
+    <span class="bchev">▸</span>
+  </div>
+  <div class="bbody">${b.body}</div>
+</div>`).join("")}`;
+
+// ═══ RENDER RIGHT RAIL ═══
+document.getElementById("rightRail").innerHTML = `
+<div class="rcard">
+  <div class="rhead">Receipts / Runs</div>
+  ${Object.entries(ATOM.receipts).map(([k,v]) => `<div class="metric"><span>${k.replace(/_/g,' ')}</span><span>${v}</span></div>`).join("")}
+</div>
+<div class="rcard">
+  <div class="rhead">Quick Stats</div>
+  <div class="metric"><span>Object type</span><span>${ATOM.identity.object_type}</span></div>
+  <div class="metric"><span>Register</span><span style="font-size:9px">${ATOM.axes.register.replace(/_/g,' ')}</span></div>
+  <div class="metric"><span>Proof class</span><span style="font-size:9px">${ATOM.axes.proof_class.replace(/_/g,' ')}</span></div>
+  <div class="metric"><span>Content hash</span><span style="font-size:8px">${ATOM.identity.content_hash.slice(0,16)}…</span></div>
+  <div class="metric"><span>Ordinal</span><span>#${ATOM.identity.ordinal}</span></div>
+</div>
+<div class="rcard">
+  <div class="rhead">Provenance</div>
+  <div class="metric"><span>Source</span><span style="font-size:9px">${ATOM.provenance.source_uri}</span></div>
+  <div class="metric"><span>Span</span><span>${ATOM.provenance.source_span}</span></div>
+  <div class="metric"><span>Author</span><span>${ATOM.provenance.author_or_witness}</span></div>
+  <div class="metric"><span>AI declared</span><span>${ATOM.provenance.ai_contribution_declared?'Yes':'No'}</span></div>
+</div>
+<div class="rcard">
+  <div class="rhead">Alerts</div>
+  ${ATOM.audit.wrong.length > 0 ? `<div class="alertbox">⚠ ${ATOM.audit.wrong.length} finding(s) flagged for repair</div>` : '<div style="color:var(--muted)">No active alerts</div>'}
+  ${ATOM.open_burdens.length > 0 ? `<div class="alertbox" style="border-color:rgba(215,169,75,.3);background:rgba(215,169,75,.04);color:var(--amber);margin-top:4px">⬒ ${ATOM.open_burdens.length} open burden(s)</div>` : ''}
+</div>`;
+
+// ═══ TOGGLE BLOCKS ═══
+document.querySelectorAll(".bhead").forEach(h => h.onclick = () => h.parentElement.classList.toggle("open"));
+</script>
+</body>
+</html>

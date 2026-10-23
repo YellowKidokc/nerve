@@ -1,0 +1,20 @@
+RESEARCH WORKBENCH — LOCAL COPY
+
+1. Unzip this folder (Extract All on Windows).
+2. Open index.html in a current Chrome, Edge, or Firefox browser.
+3. Keep index.html, app.js, and style.css together.
+
+This package contains the current Research Workbench site, including Links & source notes.
+
+MOVING YOUR EXISTING RESEARCH
+The hosted site's records are stored in your browser. They are not included in this download.
+On the hosted site, select each record and use Review & export > Export full JSON.
+In this local copy, use Import a Workbench JSON backup to import each exported record.
+Attached original files are stored separately and are NOT included in JSON backups.
+Use Download preserved source on the hosted site to save each attachment, then attach it again locally.
+
+BACKUPS
+Browser storage can be cleared or restricted, especially for local files. Keep JSON exports and original attachments as separate backups. If the page reports storage unavailable, export JSON before closing it.
+The workbench does not call an AI or write directly to your OUTBOX.
+
+Source snapshot: 2bb28d02310f3b7cdbb7cf70ba05c8184b14a3e9

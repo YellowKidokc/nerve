@@ -1,0 +1,683 @@
+<title>The Worldview Dependency Engine · 001 Theophysics — One Axiom (48)</title>
+<style>
+
+:root{--bg:#0e1218;--panel:#151c25;--panel2:#1b2531;--ink:#e6edf4;--mut:#8ea3b8;--line:#2b3a4b;
+--grid:rgba(73,180,224,.05);--accent:#49b4e0;--edge:rgba(142,163,184,.20);--edge-hot:#49b4e0;
+--prim:#4fb8a8;--axiom:#d9a94a;--definition:#8f7fe0;--theorem:#5bbf8a;--lemma:#e08f6a;--empirical:#49b4e0;
+--primbg:#12241f;--axiombg:#2b2413;--definitionbg:#221f33;--theorembg:#132318;--lemmabg:#2a1f18;--empiricalbg:#0f2530;
+--ok:#5bbf8a;--bad:#c0433a;--shadow:0 8px 24px rgba(0,0,0,.35)}
+@media(prefers-color-scheme:light){:root{--bg:#eef1f4;--panel:#fff;--panel2:#f4f7fa;--ink:#16202b;--mut:#556678;--line:#d3dbe4;--grid:rgba(30,90,130,.06);--accent:#1c7fb0;--edge:rgba(70,90,110,.22);--edge-hot:#1c7fb0;--prim:#2f9a8a;--axiom:#a9761a;--definition:#6a58c4;--theorem:#2f9a63;--lemma:#b5623a;--empirical:#1c7fb0;--primbg:#e6f4f1;--axiombg:#faf4e6;--definitionbg:#f0edfa;--theorembg:#e9f6ee;--lemmabg:#f7ece5;--empiricalbg:#e6f3f8;--ok:#2f9a63;--bad:#c0433a;--shadow:0 6px 18px rgba(20,40,60,.10)}}
+:root[data-theme="dark"]{--bg:#0e1218;--panel:#151c25;--panel2:#1b2531;--ink:#e6edf4;--mut:#8ea3b8;--line:#2b3a4b;--grid:rgba(73,180,224,.05);--accent:#49b4e0;--edge:rgba(142,163,184,.20);--edge-hot:#49b4e0;--prim:#4fb8a8;--axiom:#d9a94a;--definition:#8f7fe0;--theorem:#5bbf8a;--lemma:#e08f6a;--empirical:#49b4e0;--primbg:#12241f;--axiombg:#2b2413;--definitionbg:#221f33;--theorembg:#132318;--lemmabg:#2a1f18;--empiricalbg:#0f2530;--ok:#5bbf8a;--bad:#c0433a}
+:root[data-theme="light"]{--bg:#eef1f4;--panel:#fff;--panel2:#f4f7fa;--ink:#16202b;--mut:#556678;--line:#d3dbe4;--grid:rgba(30,90,130,.06);--accent:#1c7fb0;--edge:rgba(70,90,110,.22);--edge-hot:#1c7fb0;--prim:#2f9a8a;--axiom:#a9761a;--definition:#6a58c4;--theorem:#2f9a63;--lemma:#b5623a;--empirical:#1c7fb0;--primbg:#e6f4f1;--axiombg:#faf4e6;--definitionbg:#f0edfa;--theorembg:#e9f6ee;--lemmabg:#f7ece5;--empiricalbg:#e6f3f8;--ok:#2f9a63;--bad:#c0433a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px}
+.mono{font-family:ui-monospace,"Cascadia Code",Menlo,Consolas,monospace}
+header{max-width:1320px;margin:0 auto;padding:28px 22px 4px}
+.eyebrow{font:600 12px/1 ui-monospace,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(22px,3vw,33px);margin:.3em 0 .12em;letter-spacing:-.01em}
+.sub{color:var(--mut);max-width:74ch;font-size:14.5px;line-height:1.55}
+.tax{max-width:1320px;margin:12px auto 0;padding:0 22px}
+.taxbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 15px;font-size:12.5px;color:var(--mut);line-height:1.7}
+.taxbox b{color:var(--ink)}
+.taxrow{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px}
+.metaphor{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-style:italic;color:var(--mut)}
+.controls{max-width:1320px;margin:12px auto 0;padding:0 22px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{background:var(--panel);color:var(--mut);border:0;padding:7px 13px;font:600 12px/1 ui-sans-serif;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff}
+.lg{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--mut)}
+.sw{width:12px;height:12px;border-radius:3px}
+.hint{margin-left:auto;font-size:12px;color:var(--mut)}
+.kobanner{max-width:1320px;margin:10px auto 0;padding:0 22px}
+.kobox{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:8px;padding:11px 15px;font-size:13px;display:none}
+.kobox.on{display:block}.kobox b{color:#c8695f}.kobox .rest{margin-left:10px;cursor:pointer;color:var(--accent);font-weight:600;border-bottom:1px dashed var(--accent)}
+.wrap{max-width:1320px;margin:10px auto 40px;padding:0 22px}
+.stage{position:relative;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel2);box-shadow:var(--shadow);max-height:82vh}
+.canvas{position:relative;min-width:1100px}
+svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.tier{position:relative;z-index:2;padding:13px 20px;border-bottom:1px dashed var(--line)}
+.tl{font:600 10.5px/1 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin:0 0 9px;display:flex;gap:10px;align-items:center}
+.tl::after{content:"";flex:1;height:1px;background:var(--line)}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.node{position:relative;width:186px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 10px 10px;cursor:pointer;border-top:3px solid var(--k);transition:transform .1s,box-shadow .1s,opacity .12s}
+.node:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--k)}
+.node .id{font:700 10.5px/1 ui-monospace,monospace;color:var(--k);letter-spacing:.03em;display:flex;justify-content:space-between}
+.node .shield{font-size:10px}
+.node .title{font-weight:640;font-size:12.5px;margin:4px 0 3px;line-height:1.2}
+.node .claim{font-size:11px;color:var(--mut);line-height:1.35;max-height:3.9em;overflow:hidden}
+.node .tag{margin-top:6px;font:600 9px/1 ui-monospace,monospace;color:var(--k);text-transform:uppercase;letter-spacing:.08em}
+.k-primitive{--k:var(--prim)}.k-axiom{--k:var(--axiom)}.k-definition{--k:var(--definition)}.k-theorem{--k:var(--theorem)}.k-lemma{--k:var(--lemma)}.k-empirical{--k:var(--empirical)}
+.dim{opacity:.16}.hot{box-shadow:0 0 0 1px var(--k),var(--shadow)}
+.kx{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--mut);font:700 12px/1 ui-monospace,monospace;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .1s;z-index:4}
+.node:hover .kx{opacity:1}.kx:hover{background:var(--bad);color:#fff;border-color:var(--bad)}
+.removed{border-style:dashed!important;border-color:var(--bad)!important;opacity:.55;filter:grayscale(.4)}.removed .title{text-decoration:line-through}.removed .kx{opacity:1;background:var(--bad);color:#fff}
+.collapsed{opacity:.38;border-color:#8a3b34!important;filter:grayscale(.7)}.collapsed .title{color:#c8695f}
+/* defense view overrides */
+body.view-defense .node{border-top-color:var(--dk)}
+.dk-ok{--dk:var(--ok)}.dk-bad{--dk:var(--bad)}
+/* generativity view */
+body.view-gen .node{border-top-color:var(--gk,var(--line))}
+body.view-gen .node .claim{opacity:.7}
+body.view-gen .node.sink{border-top-color:var(--bad)!important}
+body.view-gen .node.sink::after{content:"⊥ terminus";position:absolute;bottom:-8px;left:9px;font:600 8.5px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--bad);background:var(--panel);padding:2px 5px;border-radius:4px;border:1px solid #8a3b34}
+body.view-gen .node.gensrc{box-shadow:0 0 0 1px var(--evidence),0 0 18px rgba(232,195,74,.22)}
+.reachbadge{font:700 9px/1 ui-monospace,monospace;color:var(--evidence)}
+#backdrop{position:fixed;inset:0;background:rgba(6,10,14,.5);opacity:0;pointer-events:none;transition:opacity .18s;z-index:40}
+#backdrop.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(470px,94vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:-16px 0 40px rgba(0,0,0,.35);transform:translateX(102%);transition:transform .22s cubic-bezier(.4,0,.2,1);z-index:50;overflow:auto}
+.drawer.on{transform:translateX(0)}
+.dh{position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);padding:16px 18px 13px;border-top:4px solid var(--k)}
+.dh .id{font:700 12px/1 ui-monospace,monospace;color:var(--k)}.dh h2{margin:6px 0 2px;font-size:19px;line-height:1.2}
+.dh .role{font:600 10px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--k)}
+.dclose{position:absolute;top:12px;right:12px;width:26px;height:26px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);color:var(--mut);cursor:pointer;font-size:15px}
+.db{padding:14px 18px 40px}.sec{margin:0 0 15px}.sec h3{font:600 10.5px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--mut);margin:0 0 7px}
+.sec p{margin:0;font-size:13px;line-height:1.5}
+.statement{background:var(--k-bg);border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:14px;line-height:1.5}
+.k-primitive .statement,.k-primitive .dh{--k-bg:var(--primbg)}.k-axiom .statement,.k-axiom .dh{--k-bg:var(--axiombg)}.k-definition .statement,.k-definition .dh{--k-bg:var(--definitionbg)}.k-theorem .statement,.k-theorem .dh{--k-bg:var(--theorembg)}.k-lemma .statement,.k-lemma .dh{--k-bg:var(--lemmabg)}.k-empirical .statement,.k-empirical .dh{--k-bg:var(--empiricalbg)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{font:600 11px/1 ui-monospace,monospace;padding:5px 8px;border-radius:6px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);cursor:pointer}.chip:hover{border-color:var(--accent);color:var(--accent)}.chip.dead{color:#c8695f;border-color:#8a3b34}
+.maps{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:12.5px}.maps dt{color:var(--k);font:600 11px/1.4 ui-monospace,monospace}.maps dd{margin:0;line-height:1.4}
+.defeat{border-left:3px solid var(--bad);background:var(--lemmabg);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px;line-height:1.45}
+.obj{border:1px solid var(--line);border-radius:7px;padding:8px 10px;margin-bottom:6px;font-size:12px;color:var(--ink)}
+.obj b{color:var(--k)}
+.guard{border-left:3px solid var(--empirical);background:var(--empiricalbg);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px;line-height:1.45}
+.more{font:600 12px/1 ui-monospace,monospace;color:var(--accent);cursor:pointer;background:none;border:1px dashed var(--accent);border-radius:6px;padding:7px 10px}
+.koline{display:flex;gap:8px;margin-top:8px}.kobtn{flex:1;text-align:center;border:1px solid #8a3b34;color:#c8695f;background:none;border-radius:7px;padding:8px;cursor:pointer;font-weight:600;font-size:12.5px}.kobtn:hover{background:var(--bad);color:#fff;border-color:var(--bad)}
+footer{max-width:1320px;margin:0 auto 50px;padding:0 22px;color:var(--mut);font-size:12.5px;line-height:1.6}
+footer code{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:11px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== v2 additions: reader page, math, search, theme, reach meter ===== */
+.serif{font-family:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif}
+.themebtn{margin-left:4px;border:1px solid var(--line);background:var(--panel);color:var(--mut);border-radius:8px;padding:7px 11px;font:600 12px/1 ui-sans-serif;cursor:pointer}
+.themebtn:hover{color:var(--ink);border-color:var(--accent)}
+.searchwrap{position:relative}
+#search{width:230px;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:7px 11px;font:400 12.5px/1 ui-sans-serif;outline:none}
+#search:focus{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 25%,transparent)}
+#search::placeholder{color:var(--mut)}
+#sdrop{position:absolute;top:calc(100% + 6px);left:0;width:340px;max-height:330px;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);z-index:60;display:none}
+#sdrop.on{display:block}
+.sitem{padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--line);display:flex;gap:9px;align-items:baseline}
+.sitem:last-child{border-bottom:0}
+.sitem:hover,.sitem.sel{background:var(--panel2)}
+.sitem .sid{font:700 11px/1.3 ui-monospace,monospace;color:var(--k2,var(--accent));white-space:nowrap}
+.sitem .stit{font-size:12px;color:var(--ink);line-height:1.3}
+.snone{padding:10px 12px;font-size:12px;color:var(--mut)}
+.rmeter{display:none;height:3px;background:var(--line);border-radius:2px;margin-top:7px;overflow:hidden}
+.rmeter i{display:block;height:100%;border-radius:2px}
+body.view-gen .rmeter{display:block}
+.node:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* math */
+.math{font-family:Georgia,'Times New Roman',serif;white-space:nowrap}
+.math i,.dmath i{font-style:italic}
+.math .fn,.dmath .fn{font-style:normal}
+.math .op{font-size:1.22em;line-height:1}
+.dmath{display:block;text-align:center;margin:.85em 0;font-family:Georgia,'Times New Roman',serif;font-size:1.1em;overflow-x:auto;padding:.35em 0;line-height:1.5}
+.frac{display:inline-flex;flex-direction:column;vertical-align:-.55em;text-align:center;margin:0 .18em;font-size:.92em}
+.frac .fnum{border-bottom:1.5px solid currentColor;padding:0 .35em .08em;line-height:1.25}
+.frac .fden{padding:.08em .35em 0;line-height:1.25}
+.rad .radicand{border-top:1.5px solid currentColor;padding:0 .15em}
+.boxed{border:1.5px solid currentColor;border-radius:3px;padding:.08em .35em}
+.envc{display:inline-block;text-align:left;vertical-align:middle}
+.envc .erow{display:block;line-height:1.5}
+.lbrace{font-size:2.1em;line-height:1;vertical-align:-.28em;font-weight:200;margin-right:.08em}
+.xarr{display:inline-grid;grid-template-rows:auto auto;text-align:center;vertical-align:middle;line-height:1.1}
+.xarr .xlab{font-size:.72em}
+.xarr .xglyph{font-size:1.05em}
+/* reader overlay */
+#rbackdrop{position:fixed;inset:0;background:rgba(6,10,14,.62);opacity:0;pointer-events:none;transition:opacity .2s;z-index:64}
+#rbackdrop.on{opacity:1;pointer-events:auto}
+#reader{position:fixed;top:0;right:0;height:100%;width:min(940px,97vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:-22px 0 64px rgba(0,0,0,.45);transform:translateX(103%);transition:transform .26s cubic-bezier(.4,0,.2,1);z-index:70;display:flex;flex-direction:column}
+#reader.on{transform:translateX(0)}
+.rh{padding:20px 40px 14px;border-bottom:1px solid var(--line);border-top:5px solid var(--k);position:relative;flex:none}
+.rh .rid{font:700 11.5px/1.6 ui-monospace,monospace;color:var(--k);letter-spacing:.04em}
+.rh h2{margin:8px 0 6px;font-size:clamp(21px,2.6vw,28px);line-height:1.18;letter-spacing:-.01em}
+.rh .rmeta{font:600 11px/1.7 ui-monospace,monospace;color:var(--mut);text-transform:uppercase;letter-spacing:.09em}
+.rh .rmeta b{color:var(--k)}
+.rclose{position:absolute;top:14px;right:14px;width:30px;height:30px;border:1px solid var(--line);border-radius:7px;background:var(--panel2);color:var(--mut);cursor:pointer;font-size:16px}
+.rclose:hover{color:var(--ink);border-color:var(--accent)}
+.rbody{overflow-y:auto;flex:1;padding:10px 40px 90px}
+.rarticle{max-width:71ch;margin:0 auto}
+.rsec{margin-top:34px}
+.rsec>h3{font:600 11px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.15em;color:var(--k);margin:0 0 14px;display:flex;gap:12px;align-items:center}
+.rsec>h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.rprose{font-family:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;font-size:16.5px;line-height:1.8;color:var(--ink)}
+.rprose p{margin:0 0 .9em}
+.rprose h4{font:600 13px/1.3 ui-monospace,monospace;color:var(--k);margin:1.6em 0 .5em;letter-spacing:.02em}
+.rprose hr{border:0;border-top:1px dashed var(--line);margin:1.4em auto;width:42%}
+.rprose ul,.rprose ol{margin:.2em 0 1em;padding-left:1.5em}
+.rprose li{margin-bottom:.45em}
+.rprose strong{font-weight:700}
+.trunc{margin-top:10px;font:400 11px/1.5 ui-monospace,monospace;color:var(--mut);border-top:1px dotted var(--line);padding-top:8px}
+.dc{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:0 8px 8px 0;padding:11px 14px;margin-bottom:9px}
+.dc .dctag{font:700 11px/1 ui-monospace,monospace;color:var(--bad);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:5px}
+.dc .dcbody{font-size:14.5px;line-height:1.65}
+.nodef{background:var(--panel2);border:1px solid #8a3b34;border-left:3px solid var(--bad);border-radius:0 8px 8px 0;padding:12px 14px;font-size:13.5px;color:#c8695f;line-height:1.5}
+.rguard{border-left:3px solid var(--empirical);background:var(--empiricalbg);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.6}
+.rweb{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.rweb{grid-template-columns:1fr}.rh,.rbody{padding-left:20px;padding-right:20px}}
+.rweb h4{font:600 10.5px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--mut);margin:0 0 8px}
+.rnav{display:flex;gap:10px;margin-top:12px}
+.rnavbtn{flex:1;text-align:center;border:1px solid var(--line);background:var(--panel2);color:var(--ink);border-radius:8px;padding:10px 12px;cursor:pointer;font:600 12px/1.4 ui-sans-serif}
+.rnavbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.rnavbtn:disabled{opacity:.35;cursor:default}
+.rnavbtn .rnid{display:block;font:700 10.5px/1 ui-monospace,monospace;color:var(--mut);margin-bottom:4px}
+.rkoline{margin-top:34px;display:flex;gap:10px}
+.rkobtn{flex:1;text-align:center;border:1px solid #8a3b34;color:#c8695f;background:none;border-radius:8px;padding:11px;cursor:pointer;font-weight:600;font-size:13px}
+.rkobtn:hover{background:var(--bad);color:#fff;border-color:var(--bad)}
+.rread{flex:1;text-align:center;border:1px solid var(--accent);color:var(--accent);background:none;border-radius:8px;padding:11px;cursor:pointer;font-weight:600;font-size:13px}
+.rread:hover{background:var(--accent);color:#fff}
+
+body.view-gen .node.gensrc{box-shadow:0 0 0 1px #d9a94a,0 0 18px rgba(232,195,74,.22)}
+.reachbadge{color:#d9a94a}
+
+.mmd{border:1px dashed var(--line);border-radius:8px;margin:1em 0;overflow:hidden}
+.mmd .mmdtag{font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);padding:8px 12px;border-bottom:1px dashed var(--line);background:var(--panel2)}
+.mmd pre{margin:0;padding:10px 12px;font:400 11px/1.55 ui-monospace,monospace;color:var(--mut);white-space:pre-wrap;word-break:break-word;max-height:220px;overflow:auto}
+
+/* ===== v3: The Human Questions + Known Unknowns (the engine layer) ===== */
+:root{--q:#7aa2f0;--qbg:#141c2e}
+@media(prefers-color-scheme:light){:root{--q:#3b62c4;--qbg:#e9effb}}
+:root[data-theme="dark"]{--q:#7aa2f0;--qbg:#141c2e}
+:root[data-theme="light"]{--q:#3b62c4;--qbg:#e9effb}
+.questions,.burdens{max-width:1320px;margin:14px auto 0;padding:0 22px}
+.burdens{margin-bottom:30px}
+.qhead{margin-bottom:11px}
+.qtitle{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.qsub{color:var(--mut);font-size:13px;line-height:1.55;max-width:96ch;margin-top:3px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:10px}
+.qcard{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--q);border-radius:10px;padding:13px 15px 12px;cursor:pointer;transition:transform .1s,box-shadow .1s}
+.qcard:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--q)}
+.qcard:focus-visible{outline:2px solid var(--q);outline-offset:2px}
+.qq{font-size:15.5px;font-weight:650;line-height:1.3}
+.qmeta{margin-top:9px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.qtype{font:600 9.5px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--q);background:var(--qbg);border:1px solid var(--q);border-radius:5px;padding:4px 7px}
+.qn{font:500 11px/1 ui-monospace,monospace;color:var(--mut)}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(430px,100%),1fr));gap:10px}
+.bcard{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:10px;padding:13px 15px}
+.bcard h4{margin:0 0 6px;font-size:14px;color:#c8695f}
+.bcard p{margin:0 0 10px;font-size:12.5px;color:var(--mut);line-height:1.6}
+.bstats{margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 15px;font-size:12.5px;color:var(--mut);line-height:1.75}
+.bstats b{color:var(--ink)}
+.rqchip{display:inline-block;font:600 10px/1 ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--q);background:var(--qbg);border:1px solid var(--q);border-radius:5px;padding:5px 8px;margin-left:8px;vertical-align:middle}
+
+
+</style>
+<header>
+<div class="eyebrow">The Worldview Dependency Engine</div>
+<h1>One Axiom. Everything cascades.</h1>
+<p class="sub"><b>This is not an argument for a worldview — it is a machine that interrogates worldviews.</b> Every framework must answer the same perennial questions, expose its primitives and bridge claims, and survive the same knockout test: <i>"If you reject this one premise, here are the things that fall apart."</i> Loaded now: <b>Framework 001 · Theophysics (One Axiom)</b> — 48 nodes from a single root (<code>GOD</code>), the real dependency web. Click a node for the quick drawer; <b>double-click</b> for its full reading page; hover + <b class="mono">✕</b> to knock it out and watch the cascade.</p>
+</header>
+<div class="tax"><div class="taxbox">
+<b>Formal taxonomy</b> (the roles reviewers engage on their own terms):
+<div class="taxrow">
+<span class="lg"><span class="sw" style="background:var(--prim)"></span><b>Primitive</b> — lexical foundation</span>
+<span class="lg"><span class="sw" style="background:var(--axiom)"></span><b>Axiom</b> — framework commitment</span>
+<span class="lg"><span class="sw" style="background:var(--definition)"></span><b>Definition</b> — vocabulary</span>
+<span class="lg"><span class="sw" style="background:var(--theorem)"></span><b>Theorem</b> — derived consequence</span>
+<span class="lg"><span class="sw" style="background:var(--lemma)"></span><b>Lemma/Logical-Necessity</b> — supporting proof</span>
+<span class="lg"><span class="sw" style="background:var(--empirical)"></span><b>Prediction/Evidence</b> — falsifiable claim</span>
+</div>
+<div class="metaphor">Framework metaphor (kept separate, on purpose): axiom = God's court · theorem = the physics · definition = the bridge · lemma = the verification.</div>
+</div></div>
+<div class="questions"><div class="qhead">
+<div class="qtitle">The Human Questions <span style="color:var(--q)">— the center of the machine</span></div>
+<div class="qsub">Not Theophysics questions — <b>human questions</b>. Every worldview must answer all eleven, and "we don't know," stated honestly, counts as an answer. <span class="lg"><span class="sw" style="background:var(--q)"></span><b>Blue</b> = the shared interrogation</span> · click a question to see how this framework answers, what the answer rests on, and where it bends. When frameworks 002+ load (naturalism, physicalism, panpsychism, classical theism…), each one answers these exact slots.</div>
+</div><div class="qgrid" id="qgrid"></div></div>
+<div class="controls">
+<div class="seg" id="viewseg"><button class="on" data-v="role">Role view</button><button data-v="defense">Defense view</button><button data-v="gen">Generativity</button></div>
+<div class="searchwrap"><input id="search" type="text" placeholder="search 48 nodes — id or title  ( / )" autocomplete="off" aria-label="search nodes"><div id="sdrop"></div></div>
+<button class="themebtn" id="themebtn" title="cycle auto / light / dark">◐ auto</button>
+<span class="hint">click = open &amp; trace · double-click = reading page · ✕ = knockout · Defense view: green = defended, red = soft target</span>
+</div>
+<div class="kobanner"><div class="kobox" id="kobox"></div></div>
+<div class="wrap"><div class="stage" id="stageEl"><div class="canvas" id="canvas">
+<svg class="edges" id="edges" xmlns="http://www.w3.org/2000/svg"></svg><div id="tiers"></div></div></div></div>
+<div class="burdens"><div class="qhead">
+<div class="qtitle" style="color:var(--bad)">Known Unknowns — where this framework is still working</div>
+<div class="qsub">A worldview that names its soft spots is more credible than one that pretends to have none. These are Theophysics' stated burdens — shown on purpose, in red. Every framework loaded into the engine owes the same section.</div>
+</div><div class="bgrid" id="bgrid"></div><div class="bstats" id="bstats"></div></div>
+<div id="backdrop"></div><aside class="drawer" id="drawer" role="dialog" aria-label="Node quick view"></aside>
+<div id="rbackdrop"></div><section id="reader" role="dialog" aria-modal="true" aria-label="Node reading page"></section>
+<footer id="foot"></footer>
+<script>
+const N=[{"id": "GOD", "kind": "primitive", "stage": 0, "tier": 0, "title": "GOD — The Axiom", "claim": "Self-existent, necessary being. The single axiom from which everything else derives. Not proven — axiomatized. Aseity: God's existence depends on nothing outside God.", "fullclaim": "Self-existent, necessary being. The single axiom from which everything else derives. Not proven — axiomatized. Aseity: God's existence depends on nothing outside God. This is the framework's foundational commitment: reject it and every downstream node falls. Accept it and see what it builds.\n\nThe formal boundary proof (Feb 14, 2026) establishes three results from this axiom: Trinity isomorphism, free will, and God-as-axiom as a mathematical floor. Do not push past this boundary — it is where derivation ends and naming begins.\n\n$$\\text{Axiom: } \\exists\\, G \\text{ such that } G \\text{ is self-grounding (aseity)}$$", "deps": [], "cls": "Foundation", "status": "canonical", "maps": {"Physics": "The uncaused cause — cosmological contingency argument formalized", "Theology": "'I AM THAT I AM' (Exodus 3:14) — self-referential existence", "Mathematics": "Axiom — undefined, assumed, everything built on it"}, "defeat": "### DC-1: Demonstrate self-grounding is incoherent\nShow that the concept of a self-existent being contains a logical contradiction. Not 'seems unlikely' — prove the concept is formally inconsistent.\n\n### DC-2: Derive everything from nothing\nProduce a complete framework (consciousness, morality, purpose, laws) from no axiom at all — from the empty set. If that works, this axiom is unnecessary.\n\n### DC-3: Find a simpler axiom\nIf a different single axiom generates the same downstream structure with fewer bridge claims, Occam favors it.", "objs": ["Who created God?", "Special pleading", "Unnecessary hypothesis", "Multiple necessary beings possible"], "nobj": 4, "defended": true, "chainpos": "1"}, {"id": "TRINITY", "kind": "axiom", "stage": 1, "tier": 1, "title": "TRINITY — Three Persons, One Substance", "claim": "God is inherently relational: three persons (Father, Son, Spirit) in one substance. Perichoresis — mutual indwelling. Not three Gods, not one person wearing three masks.", "fullclaim": "God is inherently relational: three persons (Father, Son, Spirit) in one substance. Perichoresis — mutual indwelling. Not three Gods, not one person wearing three masks.\n\nThis is not imposed from theology onto physics. It is derived: the triadic structure (source / mediation / witness) appears independently in the pre-cosmology ladder and maps isomorphically onto the Trinity. The boundary proof (Feb 14, 2026) establishes the Trinity isomorphism as a mathematical floor.\n\nThe three roles:\n- **Source** (Father): generator, that from which\n- **Mediation** (Son/Logos): the structure that carries meaning\n- **Witness** (Spirit): actualizer, that which makes potential real\n\n$$\\text{Perichoresis: } F \\leftrightarrow S \\leftrightarrow H \\text{ (mutual indwelling, no hierarchy)}$$", "deps": ["GOD"], "cls": "Foundation", "status": "canonical", "maps": {"Physics": "Triadic structure appears in measurement (system, apparatus, observer)", "Mathematics": "Three distinct roles, one operation — like a group with three generators", "Consciousness": "Knower, known, knowing — the structure of awareness itself"}, "defeat": "### DC-1: Find a non-triadic self-grounding structure\nIf a dyadic or quadratic structure generates the same downstream, the triad is contingent, not necessary.\n\n### DC-2: Show the isomorphism is forced\nIf any three-part structure maps equally well, the mapping is trivial and proves nothing specific about the Trinity.", "objs": ["Logical contradiction (3=1)", "Modalism", "Tritheism", "Any triad maps — not specific"], "nobj": 4, "defended": true, "chainpos": "2"}, {"id": "ASEITY", "kind": "definition", "stage": 1, "tier": 1, "title": "ASEITY — Self-Existence", "claim": "God exists a se — from himself. Existence is not received, not contingent, not dependent. The ontological debt of existence (why is there something?) is paid by the one being whose existence is not borrowed.", "fullclaim": "God exists a se — from himself. Existence is not received, not contingent, not dependent. The ontological debt of existence (why is there something?) is paid by the one being whose existence is not borrowed.\n\nAseity is not a property God has — it is what God IS. Everything else has received existence. The axiom (GOD) asserts one being for which this is not true.", "deps": ["GOD"], "cls": "Foundation", "status": "canonical", "maps": {"Physics": "Uncaused first cause", "Mathematics": "Axiom that requires no prior axiom"}, "defeat": "### DC-1: Show existence can be self-bootstrapping without a ground\nDemonstrate a coherent ontology where existence requires no ground at all — not even a brute fact.", "objs": ["Brute fact alternative", "Necessary existence is incoherent"], "nobj": 2, "defended": true, "chainpos": "3"}, {"id": "DEBT-EXIST", "kind": "definition", "stage": 2, "tier": 2, "title": "Debt of Existence — Why Anything?", "claim": "Why is there something rather than nothing? The first ontological debt. Paid by aseity: God's self-existence grounds all contingent existence.", "fullclaim": "Why is there something rather than nothing? The first ontological debt. Paid by aseity: God's self-existence grounds all contingent existence.\n\nThis is not an argument — it is a debt-and-payment structure. The debt is real (existence demands explanation). The payment is GOD + ASEITY. Reject the payment and the debt remains open.", "deps": ["ASEITY"], "cls": "Debt", "status": "canonical", "maps": {"Physics": "Cosmological contingency", "Theology": "Creation ex nihilo"}, "defeat": "### DC-1: Show existence needs no explanation\nEstablish that 'why something?' is a malformed question — that existence is necessary without any ground.", "objs": ["Existence is brute — no debt to pay", "Multiverse pays it without God"], "nobj": 2, "defended": true, "chainpos": "4"}, {"id": "DEBT-DISTINCTION", "kind": "definition", "stage": 2, "tier": 2, "title": "Debt of Distinction — Why Difference?", "claim": "Why are things different from each other? The second ontological debt. Paid by the Trinity's internal distinction — the Persons are distinct within unity, grounding the possibility of difference itself.", "fullclaim": "Why are things different from each other? The second ontological debt. Paid by the Trinity's internal distinction — the Persons are distinct within unity, grounding the possibility of difference itself.\n\nDistinction is not trivial. A purely simple, undifferentiated One cannot generate multiplicity without something external. The Trinity's internal differentiation (three Persons) means distinction exists at the foundational level.", "deps": ["TRINITY"], "cls": "Debt", "status": "canonical", "maps": {"Physics": "Symmetry breaking", "Mathematics": "The existence of distinct objects"}, "defeat": "### DC-1: Derive distinction from unity without internal differentiation\nShow how a purely simple being generates genuine difference.", "objs": ["Distinction is primitive, needs no explanation", "Random symmetry breaking suffices"], "nobj": 2, "defended": true, "chainpos": "5"}, {"id": "DEBT-RELATION", "kind": "definition", "stage": 2, "tier": 2, "title": "Debt of Relation — Why Connection?", "claim": "Why do things relate to each other? The third ontological debt. Paid by perichoresis — the Trinity's mutual indwelling means relation is fundamental, not emergent.", "fullclaim": "Why do things relate to each other? The third ontological debt. Paid by perichoresis — the Trinity's mutual indwelling means relation is fundamental, not emergent.\n\nIf distinct things exist but never interact, you have a universe of isolated atoms — no physics, no chemistry, no consciousness. Relation must be grounded. Perichoresis grounds it: the three Persons relate to each other inherently.", "deps": ["TRINITY"], "cls": "Debt", "status": "canonical", "maps": {"Physics": "Fundamental forces — why particles interact at all", "Mathematics": "Relations, functions, mappings"}, "defeat": "### DC-1: Show relation emerges from distinction alone\nDerive interaction from mere existence + difference without any relational ground.", "objs": ["Relations are mathematical abstractions, not ontological", "Brute law grounds relation"], "nobj": 2, "defended": true, "chainpos": "6"}, {"id": "DEBT-ORIENT", "kind": "definition", "stage": 2, "tier": 2, "title": "Debt of Orientation — Why Direction?", "claim": "Why does anything have a 'toward' and an 'away'? The fourth ontological debt. Paid by love — God's nature is oriented (outward, generous, self-giving), grounding directionality itself.", "fullclaim": "Why does anything have a 'toward' and an 'away'? The fourth ontological debt. Paid by love — God's nature is oriented (outward, generous, self-giving), grounding directionality itself.\n\nOrientation grounds the arrow of time, the direction of entropy, the distinction between sin and grace, and the possibility of moral choice. Without it, reality is directionless — a static web with no movement, no story, no fall, no redemption.", "deps": ["TRINITY"], "cls": "Debt", "status": "canonical", "maps": {"Physics": "Arrow of time, CP violation", "Theology": "Love as self-giving direction", "Morality": "Toward coherence vs. away from it"}, "defeat": "### DC-1: Derive directionality from symmetry alone\nShow that a directionless ground state necessarily produces direction without any oriented cause.", "objs": ["Arrow of time is thermodynamic, not moral", "Direction doesn't need love as ground"], "nobj": 2, "defended": true, "chainpos": "7"}, {"id": "BEING", "kind": "definition", "stage": 3, "tier": 3, "title": "Being — That Which Exists", "claim": "The first step: something IS. Being is the most basic category — that which has existence. Grounded in the Debt of Existence.", "fullclaim": "The first step: something IS. Being is the most basic category — that which has existence. Grounded in the Debt of Existence.\n\nThe pre-cosmology ladder: Being → Distinction → Relation → Order → Possibility → Constraint → Actualization → Record → Cost. Each step is necessary given the prior step.", "deps": ["DEBT-EXIST"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "8"}, {"id": "DISTINCTION", "kind": "definition", "stage": 3, "tier": 3, "title": "Distinction — Things Differ", "claim": "Given being, things must be distinguishable. Distinction requires separation, separation requires geometry. This step makes space necessary.", "fullclaim": "Given being, things must be distinguishable. Distinction requires separation, separation requires geometry. This step makes space necessary.\n\nDistinction + Information: if you have distinguishable states, you have information (Shannon). This is not a metaphor — it is the definition.", "deps": ["BEING", "DEBT-DISTINCTION"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "9"}, {"id": "RELATION", "kind": "definition", "stage": 3, "tier": 3, "title": "Relation — Things Connect", "claim": "Distinct things that exist must be able to interact. Relation requires a carrier (signal) and produces information (Shannon channel). This step makes forces necessary.", "fullclaim": "Distinct things that exist must be able to interact. Relation requires a carrier (signal) and produces information (Shannon channel). This step makes forces necessary.\n\nRelation is not optional in a universe with distinct beings. Without it, you have isolated monads — no physics, no measurement, no knowledge.", "deps": ["DISTINCTION", "DEBT-RELATION"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "10"}, {"id": "ORDER", "kind": "definition", "stage": 3, "tier": 3, "title": "Order — Structure Emerges", "claim": "Relations that persist form patterns. Patterns that compress form laws. Order is not imposed — it emerges from relation + time.", "fullclaim": "Relations that persist form patterns. Patterns that compress form laws. Order is not imposed — it emerges from relation + time. This step makes binding necessary — without it, no stable composites, no atoms, no chemistry.", "deps": ["RELATION"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "11"}, {"id": "POSSIBILITY", "kind": "definition", "stage": 3, "tier": 3, "title": "Possibility — Multiple Futures", "claim": "Ordered systems with sufficient complexity admit multiple possible states. Possibility requires the distinction between actual and potential.", "fullclaim": "Ordered systems with sufficient complexity admit multiple possible states. Possibility requires the distinction between actual and potential. This step makes measurement necessary — something must select one actuality from the space of possibilities.", "deps": ["ORDER"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "12"}, {"id": "ACTUALIZATION", "kind": "definition", "stage": 3, "tier": 3, "title": "Actualization — One Outcome Becomes Real", "claim": "From among possibilities, one becomes actual. Actualization is irreversible (Landauer). This step makes thermodynamics and the arrow of time necessary.", "fullclaim": "From among possibilities, one becomes actual. Actualization is irreversible (Landauer). This step makes thermodynamics and the arrow of time necessary.\n\nActualization + irreversibility + direction: this is where the pre-cosmology ladder connects to the Debt of Orientation. The arrow of time is not just physical — it is grounded in the directionality of God's nature.", "deps": ["POSSIBILITY", "DEBT-ORIENT"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "13"}, {"id": "RECORD", "kind": "definition", "stage": 3, "tier": 3, "title": "Record — The Past Cannot Be Undone", "claim": "Actualization that is irreversible creates record — history. What happened, happened. The ledger does not forget. This is the Second Law of Thermodynamics in pre-cosmological form.", "fullclaim": "Actualization that is irreversible creates record — history. What happened, happened. The ledger does not forget. This is the Second Law of Thermodynamics in pre-cosmological form.", "deps": ["ACTUALIZATION"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "14"}, {"id": "COST", "kind": "definition", "stage": 3, "tier": 3, "title": "Cost — Choices Are Not Free", "claim": "Irreversible actualization that creates record means choices have consequences. Cost is real. This is where thermodynamics, judgment, and the moral ledger converge.", "fullclaim": "Irreversible actualization that creates record means choices have consequences. Cost is real. This is where thermodynamics, judgment, and the moral ledger converge.\n\nCost is the last rung of the pre-cosmology ladder. Everything above this is implementation — how our universe instantiates these necessary capabilities.", "deps": ["RECORD"], "cls": "Ladder", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "15"}, {"id": "CAP-GEOMETRY", "kind": "definition", "stage": 4, "tier": 4, "title": "Geometry — Capability Class 1", "claim": "Distinction requires separation. Separation requires geometry. Grammar necessity: A. Our universe implements this as General Relativity (Grade: B+).", "fullclaim": "Distinction requires separation. Separation requires geometry. Grammar necessity: A. Our universe implements this as General Relativity.\n\nGrammatically Necessary, Physically Contingent (GNPC): the grammar requires geometry — it does not require Einstein's specific field equations. The step from 'geometry is necessary' to 'GR is necessary' is physics, not grammar.\n\n**Grade: B+**", "deps": ["DISTINCTION"], "cls": "Capability", "status": "canonical", "maps": {"Physics": "General Relativity — $G_{\\mu\\nu} + \\Lambda g_{\\mu\\nu} = 8\\pi T_{\\mu\\nu}$", "Theology": "Sin bends the path (Grace as geodesic)"}, "defeat": "### DC-1: Show distinction without geometry\nDemonstrate distinguishable objects that require no spatial separation whatsoever.", "objs": ["Grammar needs geometry, not GR specifically"], "nobj": 1, "defended": true, "chainpos": "16"}, {"id": "CAP-SUBSTANCE", "kind": "definition", "stage": 4, "tier": 4, "title": "Substance — Capability Class 2", "claim": "Distinct things require properties. The most fundamental property is the capacity to act — mass-energy. Grammar necessity: A. Grade: A−.", "fullclaim": "Distinct things require properties. The most fundamental property is the capacity to act — to curve spacetime, to carry momentum, to do work. That is mass-energy.\n\nOne of the strongest derivations. You cannot have a created order without things that have the capacity to act. The concept is deeper than the specific physics — even in a universe with different laws, 'stuff that does things' is required.\n\n**Grade: A−**", "deps": ["BEING"], "cls": "Capability", "status": "canonical", "maps": {"Physics": "Mass-Energy — $E = mc^2$", "Theology": "Meaning as that which carries weight, consequence, substance"}, "defeat": "### DC-1: Show distinction without properties\nDemonstrate a universe of propertyless objects that remain distinguishable.", "objs": ["Grammar needs substance, not mass-energy specifically"], "nobj": 1, "defended": true, "chainpos": "17"}, {"id": "CAP-SIGNAL", "kind": "definition", "stage": 4, "tier": 4, "title": "Signal Carrier — Capability Class 3", "claim": "Relation requires interaction. Interaction requires a carrier. Grammar necessity: A. Our universe implements this primarily as Electromagnetism (Grade: B). Under review for redundancy with Information.", "fullclaim": "Relation requires interaction. Interaction requires a carrier. In the triadic grammar, the witness role requires that what the source generates can be received — which requires transmission.\n\nThe grammar requires a signal carrier. It does not require electromagnetism specifically. Gravity also carries information. What the grammar demands is the CATEGORY 'faithful transmission.'\n\n**Grade: B** — weakest independence argument (redundancy threat with Information factor)\n\nAdversarial note: this is one of three cracked factors. The E/K redundancy needs resolution.", "deps": ["RELATION"], "cls": "Capability", "status": "canonical — under review", "maps": {"Physics": "Electromagnetism — Maxwell's equations, U(1) gauge symmetry", "Theology": "Truth as that which carries meaning faithfully across distance"}, "defeat": "### DC-1: Show signal is fully reducible to information\nIf Shannon information subsumes all signal-carrying, this factor is redundant with CAP-INFORMATION. That is an open question.", "objs": ["Redundant with Information", "EM is implementation, not grammar"], "nobj": 2, "defended": true, "chainpos": "18"}, {"id": "CAP-BINDING", "kind": "definition", "stage": 4, "tier": 4, "title": "Binding — Capability Class 4", "claim": "Distinct things that interact must form stable composites. Without binding: no atoms, no molecules, no structure. Grammar necessity: A. Implemented as Strong Force / QCD (Grade: B+).", "fullclaim": "Distinct things that interact must form stable composites. Without binding, you get a gas of elementary particles — no atoms, no molecules, no structure, no complexity.\n\nThe Strong Force mapping to Love: that which holds together what would otherwise fly apart. The Yukawa potential derivation gives this the strongest physics-to-theology bridge. Three Fruits derived from equilibrium conditions (Love, Peace, Joy).\n\n$$V(r) = -\\frac{\\alpha_s}{r} + k \\cdot r$$\n\n**Grade: B+**", "deps": ["RELATION", "ORDER"], "cls": "Capability", "status": "canonical", "maps": {"Physics": "Strong Force — Yukawa potential, color confinement", "Theology": "Love (agapē) — that which holds together. 9 Fruits of the Spirit derived from equilibrium"}, "defeat": "### DC-1: Show complexity without binding\nDemonstrate structured complexity from unbound elementary particles.\n\n### DC-2: Break the Yukawa-to-Fruits derivation\nShow that the three derived Fruits (Love, Peace, Joy) don't actually follow from the Yukawa equilibrium conditions.", "objs": ["Grammar needs binding, not QCD specifically", "Yukawa-Fruit mapping is analogy not derivation"], "nobj": 2, "defended": true, "chainpos": "19"}, {"id": "CAP-IRREVERSIBILITY", "kind": "definition", "stage": 4, "tier": 4, "title": "Irreversibility — Capability Class 5", "claim": "Actualization requires irreversibility (Landauer). Record requires that the past cannot be undone. Cost requires that choices are not free. All three ARE thermodynamics. Grammar necessity: A. Grade: A.", "fullclaim": "This is one of two factors where grammar and physics are the same object. Actualization requires irreversibility. Record requires that the past cannot be undone. Cost requires that choices are not free. All three — actualization, record, cost — are the final three steps of the pre-cosmology ladder, and all three ARE thermodynamics.\n\n$$\\frac{dS}{dt} \\geq 0 \\quad \\text{(Second Law)}$$\n\nThe grammar requires irreversibility, and irreversibility IS thermodynamics. Not an analogy, not a correspondence — the same thing in the same register.\n\n**Grade: A**", "deps": ["ACTUALIZATION", "RECORD", "COST"], "cls": "Capability", "status": "canonical", "maps": {"Physics": "Thermodynamics — Second Law, entropy, Landauer's principle", "Theology": "Judgment — irreversible consequences; the ledger that does not forget"}, "defeat": "### DC-1: Show irreversibility without thermodynamics\nDemonstrate actualization and record-keeping that doesn't involve entropy increase. If you can't, the grammar IS the physics.", "objs": ["Specific form (Boltzmann) is physics, not grammar"], "nobj": 1, "defended": true, "chainpos": "20"}, {"id": "CAP-INFORMATION", "kind": "definition", "stage": 4, "tier": 4, "title": "Information — Capability Class 6", "claim": "Distinction + Relation = Information. This IS Shannon's definition. The grammar's own mathematics. Grammar necessity: A. Grade: A.", "fullclaim": "The other factor where grammar and physics are the same object. Distinction + Relation = Information. This is not a metaphor — it is Shannon's actual definition. If you have distinguishable states and they are related, you have a channel carrying bits.\n\nThe Shannon base layer sits underneath every law:\n$$C_i = A_i \\cdot \\log_2\\left(1 + \\frac{T_i}{D_i}\\right)$$\nWhere $T$ = Truth/signal, $D$ = Drift/noise, $A$ = bandwidth, $W$ = free will coupling.\n\n**Grade: A**", "deps": ["DISTINCTION", "RELATION"], "cls": "Capability", "status": "canonical", "maps": {"Physics": "Information Theory — Shannon channel capacity", "Theology": "Logos — the structure that carries meaning without loss"}, "defeat": "### DC-1: Show information without distinction\nDemonstrate a form of information that doesn't require distinguishable states. If you can't, the grammar IS the information theory.", "objs": ["Shannon ≠ meaning (syntax/semantics gap)", "Could be different kind of information"], "nobj": 2, "defended": true, "chainpos": "21"}, {"id": "CAP-MEASUREMENT", "kind": "definition", "stage": 4, "tier": 4, "title": "Measurement — Capability Class 7", "claim": "Actualization requires that one outcome become actual from among possibilities. That is measurement. Grammar necessity: A. Implemented as Quantum Mechanics (Grade: B+).", "fullclaim": "The Watcher argument: actualization requires that one outcome become actual from among possibilities. That is measurement. The triadic structure (generator / distinguisher / actualizer) maps onto the quantum measurement process (superposition / observable / eigenvalue).\n\n**Grade: B+** — the grammar requires actualization mechanics, but whether that mechanism must be quantum is contested. A classical deterministic universe would also actualize one history from initial conditions.", "deps": ["POSSIBILITY", "ACTUALIZATION"], "cls": "Capability", "status": "canonical", "maps": {"Physics": "Quantum Mechanics — superposition, measurement, Born rule", "Theology": "Faith — the act that collapses possibility into commitment"}, "defeat": "### DC-1: Show actualization without measurement\nDemonstrate selection from possibilities that requires no measurement-like process.\n\n### DC-2: Show classical actualization suffices\nIf classical determinism handles actualization, quantum mechanics is contingent implementation, not grammatical necessity.", "objs": ["Classical determinism also actualizes", "Bool-to-Hilbert bridge is weakest Lean link"], "nobj": 2, "defended": true, "chainpos": "22"}, {"id": "CAP-PERSPECTIVE", "kind": "definition", "stage": 4, "tier": 4, "title": "Perspective — Capability Class 8", "claim": "Multiple witnesses require multiple frames. Multiple frames + finite signal speed gives relativity. Grammar necessity: A. Implemented as Special/General Relativity (Grade: B). Grace-Frame mapping under repair.", "fullclaim": "If there are multiple witnesses (the triadic grammar requires at least three distinct roles), there are multiple frames. Multiple frames with a finite signal speed gives you relativity.\n\n**Grade: B** — the grammar requires multiple perspectives. Whether they must take the specific form of Lorentzian relativity is contingent.\n\nAdversarial note: Grace-Frame mapping contradicts GR general covariance. Repair: reframe as perspective-fluidity rather than a privileged frame.", "deps": ["DISTINCTION", "RELATION", "CAP-SIGNAL"], "cls": "Capability", "status": "canonical — mapping under repair", "maps": {"Physics": "Relativity — Lorentz invariance, frame dependence", "Theology": "Grace as the frame in which all measurements are reconciled"}, "defeat": "### DC-1: Show perspectives without frame dependence\nDemonstrate multiple observers that all see the same thing. If you can't, frame-dependence follows from genuine otherness.\n\n### DC-2: Repair the Grace-Frame covariance contradiction\nGR says no frame is privileged. 'Grace-Frame' implies one is. This tension is real and under repair.", "objs": ["Galilean universe has frames without relativity", "Grace-Frame contradicts GR covariance"], "nobj": 2, "defended": true, "chainpos": "23"}, {"id": "CAP-DIRECTION", "kind": "definition", "stage": 4, "tier": 4, "title": "Directionality — Capability Class 9", "claim": "Moral agency requires the possibility of turning toward or away. Thermodynamic irreversibility is statistical; moral directionality is chosen. Implemented as Weak Force / CP violation (Grade: B−). Weakest factor.", "fullclaim": "The most contested factor. The grammar requires directionality — the possibility of turning toward or away. The Weak Force is the only fundamental force that violates parity (CP violation). It is directional in a way no other force is.\n\n$$\\psi_{whole} \\rightarrow \\psi_{broken} + \\delta + \\nu_{loss} \\quad \\text{(three-body, conserved)}$$\n\nThe Noether derivation for moral conservation is LOCKED. But: does it need a moral Lagrangian? That's one of three repair priorities.\n\n**Grade: B−** — weakest link. Thermodynamic irreversibility may be sufficient for directionality, making this factor redundant with CAP-IRREVERSIBILITY.", "deps": ["ACTUALIZATION", "DEBT-ORIENT"], "cls": "Capability", "status": "canonical", "maps": {"Physics": "Weak Force — CP violation, parity breaking, beta decay", "Theology": "Moral Conservation — sin is directional and irreversible, but moral energy is conserved (Noether)"}, "defeat": "### DC-1: Show thermodynamic irreversibility suffices for moral directionality\nIf statistical irreversibility (Factor 5) covers directionality, Factor 9 is redundant.\n\n### DC-2: Produce the moral Lagrangian\nThe Noether claim for moral conservation requires a Lagrangian. No moral Lagrangian has been formally constructed. This is an open problem.", "objs": ["Parity violation ≠ moral directionality", "Noether without Lagrangian is incomplete", "May be redundant with thermodynamics"], "nobj": 3, "defended": true, "chainpos": "24"}, {"id": "LAW-1", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 1 — Gravitation / Sin ↔ Grace", "claim": "Gravitation (GR). Spiritual pair: Sin and Grace. Symmetry partner: Law 8. The geometry of separation — sin curves the path, grace straightens it.", "fullclaim": "Gravitation (GR). Variable: $G$. Conjugate pair: $T$ (energy-time). Spiritual pair: Sin and Grace. Symmetry number: 8.\n\nThe geometry of separation — sin curves the path away from the geodesic, grace is the force that restores the shortest path. Bridge grade: B+ (grammar) / C (Grace as geodesic mapping).", "deps": ["CAP-GEOMETRY"], "cls": "Law", "status": "canonical", "maps": {"Variable": "G", "Conjugate": "T (energy-time)", "Sym": "8"}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "25"}, {"id": "LAW-2", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 2 — Mass-Energy / Sin Nature ↔ Grace-as-Force", "claim": "Mass-Energy ($F=ma$). Spiritual pair: Sin Nature and Grace-as-Force. Symmetry partner: Law 9. The capacity to act — and what acts on it.", "fullclaim": "Mass-Energy ($F=ma$). Variable: $M$. Conjugate pair: $Q$ (Legendre transform). Spiritual pair: Sin Nature and Grace-as-Force. Symmetry number: 9. Bridge grade: A−.", "deps": ["CAP-SUBSTANCE"], "cls": "Law", "status": "canonical", "maps": {"Variable": "M", "Conjugate": "Q (Legendre transform)", "Sym": "9"}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "26"}, {"id": "LAW-3", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 3 — Electromagnetism / Truth ↔ Deception", "claim": "Electromagnetism (Maxwell). Spiritual pair: Truth and Deception. Symmetry partner: Law 10. Under review for redundancy with Law 6 (Information).", "fullclaim": "Electromagnetism. Variable: $E$. Conjugate pair: $K$ (U(1) phase symmetry). Spiritual pair: Truth and Deception. Symmetry number: 10.\n\nAdversarial note: weakest independence argument — redundancy threat with $K$ (Information). This is one of three cracked factors requiring resolution.\n\nBridge grade: B−.", "deps": ["CAP-SIGNAL"], "cls": "Law", "status": "canonical — under review for redundancy", "maps": {"Variable": "E", "Conjugate": "K (U(1) phase symmetry)", "Sym": "10"}, "defeat": "### DC-1: Show E is redundant with K\nIf signal-carrying is fully subsumed by information theory, Law 3 collapses into Law 6.", "objs": ["Redundancy with Law 6/Information"], "nobj": 1, "defended": true, "chainpos": "27"}, {"id": "LAW-4", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 4 — Strong Force / Love ↔ Captivity", "claim": "Strong Force (QCD). Spiritual pair: Love (agapē) and Captivity. Symmetry partner: Law 9. Three Fruits derived from Yukawa equilibrium. Derivation status: LOCKED.", "fullclaim": "Strong Force (QCD). Variable: $S$. Conjugate pair: $F$ (position-momentum). Spiritual pair: Love and Captivity. Symmetry number: 7.\n\nDerivation status: THREE FRUITS DERIVED (Love, Peace, Joy). Six structural correspondences. The Yukawa potential:\n$$V(r) = -\\frac{\\alpha_s}{r} + k \\cdot r$$\nAt equilibrium → Love. At resonance ($\\omega = \\omega_0$) → Joy. At force balance ($\\Sigma F = 0$) → Peace.\n\nBridge grade: B.", "deps": ["CAP-BINDING"], "cls": "Law", "status": "canonical", "maps": {"Variable": "S", "Conjugate": "F (position-momentum)", "Sym": "7"}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "28"}, {"id": "LAW-5", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 5 — Thermodynamics / Judgment ↔ Heat Death", "claim": "Thermodynamics (Second Law). Spiritual pair: Judgment and Heat Death. Symmetry partner: Law 6. Grammar IS physics — irreversibility IS thermodynamics. Grade: A.", "fullclaim": "Thermodynamics. Variable: $T$. Conjugate pair: $G$ (energy-time). Spiritual pair: Judgment and Heat Death. Symmetry number: 6.\n\nHeld clean under adversarial testing. Grammar IS physics — the pre-cosmology ladder's 'cost' step IS the Second Law.\n\nJustice/Mercy derivation LOCKED:\n$$R(\\text{offense}, \\alpha): \\alpha=1 \\Rightarrow \\text{Justice}; \\quad \\alpha=0 \\Rightarrow \\text{Mercy}; \\quad \\alpha=0 + \\text{judge=payer} \\Rightarrow \\text{Cross}$$\n\nBridge grade: A.", "deps": ["CAP-IRREVERSIBILITY"], "cls": "Law", "status": "canonical", "maps": {"Variable": "T", "Conjugate": "G (energy-time)", "Sym": "6"}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "29"}, {"id": "LAW-6", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 6 — Information / Logos ↔ Chaos", "claim": "Information Theory (Shannon). Spiritual pair: Logos and Chaos. Symmetry partner: Law 5. Grammar IS physics — distinguishable-states-in-relation IS information. Grade: A.", "fullclaim": "Information Theory (Shannon). Variable: $K$. Conjugate pair: $E$ (U(1) phase symmetry). Spiritual pair: Logos and Chaos. Symmetry number: 5.\n\nThe Shannon base layer sits underneath every law:\n$$C_i = A_i \\cdot \\log_2\\left(1 + \\frac{T_i}{D_i}\\right)$$\n\nAdversarial note: Syntax/semantics gap in Logos mapping. Shannon ≠ meaning.\n\nBridge grade: A (grammar) / B+ (Logos bridge).", "deps": ["CAP-INFORMATION"], "cls": "Law", "status": "canonical", "maps": {"Variable": "K", "Conjugate": "E (U(1) phase)", "Sym": "5"}, "defeat": "### DC-1: Show Shannon ≠ Logos\nShannon measures channel capacity (syntax). Logos is meaning (semantics). If the bridge can't cross the syntax/semantics gap, the identification weakens.", "objs": ["Shannon is syntax, Logos is semantics"], "nobj": 1, "defended": true, "chainpos": "30"}, {"id": "LAW-7", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 7 — Quantum / Faith ↔ Doubt/Control", "claim": "Quantum Mechanics (measurement, Born rule). Spiritual pair: Faith and Doubt/Control. Symmetry partner: Law 2. Faith as commitment — collapsing possibility into actuality.", "fullclaim": "Quantum Mechanics. Variable: $Q$. Conjugate pair: $M$ (Legendre transform — Faith as canonical momentum of meaning). Spiritual pair: Faith and Doubt/Control. Symmetry number: 4.\n\nThe Watcher argument: three jobs (generation, distinction, actualization), type distinction kills the regress.\n\nBridge grade: B+.", "deps": ["CAP-MEASUREMENT"], "cls": "Law", "status": "canonical", "maps": {"Variable": "Q", "Conjugate": "M (Legendre transform)", "Sym": "4"}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "31"}, {"id": "LAW-8", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 8 — Relativity / Grace ↔ Frame Lock", "claim": "Relativity (SR/GR). Spiritual pair: Grace and Frame Lock. Symmetry partner: Law 1. Mapping under repair — Grace-Frame contradicts GR general covariance.", "fullclaim": "Relativity. Variable: $R$. Conjugate pair: $C_W$ (path integral — path and endpoint). Spiritual pair: Grace and Frame Lock. Symmetry number: 1.\n\nAdversarial note: Grace-Frame contradicts GR general covariance. Repair: reframe as perspective-fluidity.\n\nBridge grade: B (grammar) / C+ (Grace-Frame mapping).", "deps": ["CAP-PERSPECTIVE"], "cls": "Law", "status": "canonical — mapping under repair", "maps": {"Variable": "R", "Conjugate": "C_W (path integral)", "Sym": "1"}, "defeat": "### DC-1: Resolve the covariance contradiction\nGR says no frame is privileged. 'Grace as the reconciling frame' implies one is. This needs repair, not dismissal.", "objs": ["Grace-Frame contradicts GR covariance"], "nobj": 1, "defended": true, "chainpos": "32"}, {"id": "LAW-9", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 9 — Weak Force / Moral Conservation", "claim": "Weak Force (CP violation). Asymmetric — breaks parity. Moral Conservation: sin is directional and irreversible, but moral energy is conserved (Noether). Derivation: LOCKED.", "fullclaim": "Weak Force. Variable: $F$. Conjugate pair: $S$ (position-momentum). Asymmetric — NOT symmetric like Laws 1–8. Breaks parity (CP violation), preserves time-translation → Noether guarantees moral conservation.\n\n$$\\psi_{whole} \\rightarrow \\psi_{broken} + \\delta + \\nu_{loss}$$\n$$\\Gamma_{sin} = \\frac{G^2_{fall} \\cdot \\psi^5}{192\\pi^3} \\cdot P_{will}$$\n\nAtonement tensor LOCKED. Two kill conditions tested.\n\nBridge grade: B− (grammar) / C+ (Weak Force mapping).", "deps": ["CAP-DIRECTION"], "cls": "Law", "status": "canonical", "maps": {"Variable": "F", "Conjugate": "S (position-momentum)", "Sym": "asymmetric"}, "defeat": "### DC-1: Find a moral event where the ledger closes without invisible remainder\nThe three-body decay always has a neutrino-like loss term. Find a moral event with no hidden cost.\n\n### DC-2: Produce the moral Lagrangian\nNoether requires a Lagrangian. Construct one for the moral domain.", "objs": ["Noether without Lagrangian", "Weakest factor — may be redundant with thermodynamics", "Three stacked problems"], "nobj": 3, "defended": true, "chainpos": "33"}, {"id": "LAW-10", "kind": "theorem", "stage": 5, "tier": 5, "title": "Law 10 — Coherence / Christ ↔ Decoherence", "claim": "Not a tenth factor — the wrapper. C_W is the coherence operator that asks whether the nine factors cohere. Christ is not a factor among factors but the ground of their coherence (Col 1:17). Grade: A (structural) / C (identification).", "fullclaim": "Coherence. Variable: $C_W$. Conjugate pair: $R$ (path integral). Asymmetric — IS the integral of the asymmetries.\n\n$C_W$ is not the tenth variable. It is the wrapper — the coherence operator. Christ is not a factor among factors but the ground of their coherence: 'in whom all things hold together' (Col 1:17).\n\n**Grade: A (structural) / C (identification)**\n\nThe structural necessity of a wrapper/integrator is strong — nine independent measurements without a common measure give you nine numbers, not an answer. The theological identification with Christ is the framework's central claim and its most contestable one. The grade splits because the structure and the identification are different claims.", "deps": ["LAW-1", "LAW-2", "LAW-3", "LAW-4", "LAW-5", "LAW-6", "LAW-7", "LAW-8", "LAW-9"], "cls": "Law", "status": "canonical", "maps": {"Variable": "C_W (wrapper)", "Conjugate": "R (path integral)", "Sym": "asymmetric"}, "defeat": "### DC-1: Show the nine factors cohere without a wrapper\nIf nine independent measurements self-organize into a verdict without any integrating operator, the wrapper is unnecessary.\n\n### DC-2: Contest the identification\nThe structure (wrapper is necessary) is separate from the name (wrapper = Christ). A critic can accept A and reject C.", "objs": ["Structure ≠ identification", "Any integrator works, not specifically Christ"], "nobj": 2, "defended": true, "chainpos": "34"}, {"id": "MASTER-EQ", "kind": "theorem", "stage": 6, "tier": 6, "title": "The Master Equation", "claim": "$\\chi(X) = C_W\\left[\\prod_{i=1}^{9} X_i\\right]$ — nine dimensionless factors, multiplicative (noncompensatory), wrapped by coherence. The product form means a zero in any factor zeros the whole.", "fullclaim": "The Master Equation:\n$$\\chi(X) = C_W\\left[\\prod_{i=1}^{9} X_i\\right]$$\n\nDomain: $X \\in [0,1]^9$, $\\chi \\in [0,1]$.\n\nLevel 0 (Shannon base): $\\Lambda_i = A_i \\cdot \\log_2(1 + T_i/D_i)$\nLevel 1 (normalization): $X_i = \\Lambda_i / \\Lambda_i^{ref}$\n\nThe product form is structural: it means coherence is noncompensatory across the nine capability classes. You cannot compensate for zero love with infinite knowledge — the product goes to zero.\n\nThis is Object B (the measurement/diagnostic tool). Object A is the $\\chi$-field Lagrangian:\n$$\\mathcal{L} = \\frac{1}{2}\\partial_\\mu\\chi\\partial^\\mu\\chi - \\frac{1}{2}m^2\\chi^2 - \\frac{\\lambda}{4!}\\chi^4 + J(x)\\chi$$\n\nObject A is real physics. Object B is not derived from Object A. The derivation gap between them is an open problem.", "deps": ["LAW-10", "CAP-INFORMATION"], "cls": "Equation", "status": "canonical", "maps": {"Object A": "χ-field Lagrangian (real physics)", "Object B": "Product form (diagnostic tool)", "Gap": "A→B derivation is open"}, "defeat": "### DC-1: Derive the product form from the Lagrangian\nIf Object B can be derived from Object A, the gap closes and the equation is fully grounded. Currently open.\n\n### DC-2: Show an additive form works equally well\nIf compensation IS allowed (high knowledge offsets low love), the multiplicative structure is wrong.", "objs": ["Product form not derived from Lagrangian", "Why multiplicative not additive?", "Two Objects problem"], "nobj": 3, "defended": true, "chainpos": "35"}, {"id": "SHANNON-BASE", "kind": "theorem", "stage": 6, "tier": 6, "title": "Shannon Base Layer", "claim": "$C_i = A_i \\cdot \\log_2(1 + T_i/D_i)$ — every law runs on a Shannon channel. Truth is signal, drift is noise, bandwidth is soul capacity. No-drift condition: $D \\to 0$, capacity diverges.", "fullclaim": "The Shannon base layer underneath every law:\n$$C_i = A_i \\cdot \\log_2\\left(1 + \\frac{T_i}{D_i}\\right)$$\n\n$T$ = Truth/signal, $D$ = Drift/sin/noise, $A$ = soul bandwidth, $W$ = free will coupling.\n\nNo-drift condition: $D \\to 0 \\Rightarrow C \\to \\infty$ (channel capacity diverges — perfect fidelity). This is the mathematical content of sanctification: reducing drift increases capacity without bound.", "deps": ["CAP-INFORMATION", "LAW-6"], "cls": "Equation", "status": "canonical", "maps": {}, "defeat": "", "objs": [], "nobj": 0, "defended": false, "chainpos": "36"}, {"id": "LAGRANGIAN", "kind": "theorem", "stage": 6, "tier": 6, "title": "χ-Field Lagrangian (Object A)", "claim": "$\\mathcal{L} = \\frac{1}{2}\\partial_\\mu\\chi\\partial^\\mu\\chi - \\frac{1}{2}m^2\\chi^2 - \\frac{\\lambda}{4!}\\chi^4 + J(x)\\chi$ — real scalar field theory. This IS physics. Tier 1, survives review.", "fullclaim": "The χ-field Lagrangian (Object A):\n$$\\mathcal{L} = \\frac{1}{2}\\partial_\\mu\\chi\\partial^\\mu\\chi - \\frac{1}{2}m^2\\chi^2 - \\frac{\\lambda}{4!}\\chi^4 + J(x)\\chi$$\n\nThis is standard scalar field theory with a source term $J(x)$. It is real physics — a legitimate QFT Lagrangian. Status: SOLID, Tier 1.\n\nThe open problem: deriving the product form (Object B) from this Lagrangian (Object A). Until that bridge is built, the two objects coexist but are not formally connected.", "deps": ["CAP-GEOMETRY", "CAP-SUBSTANCE", "CAP-INFORMATION"], "cls": "Equation", "status": "canonical — SOLID", "maps": {}, "defeat": "", "objs": ["Standard φ⁴ theory, nothing novel"], "nobj": 1, "defended": false, "chainpos": "37"}, {"id": "FRUITS", "kind": "theorem", "stage": 7, "tier": 7, "title": "Fruits of the Spirit — 9 Terms Derived", "claim": "Nine Fruits from Strong Force equilibrium. Love (V at minimum), Joy (resonance), Peace (force balance), Patience (high heat capacity), Kindness (low activation energy), Goodness (net positive work), Faithfulness (Noether invariant), Gentleness (proportional response), Self-Control (PID feedback).", "fullclaim": "Nine Fruits of the Spirit derived from the Strong Force (Law 4) parent equation — Yukawa potential $V(r) = -\\alpha_s/r + k \\cdot r$:\n\n- **Love** (agapē): $V(r)$ at minimum\n- **Joy** (chara): $\\omega = \\omega_0$ (resonance)\n- **Peace** (eirēnē): $\\Sigma F = 0$ (force balance)\n- **Patience** (hypomonē): $C = dQ/dT$ (high heat capacity)\n- **Kindness** (chrēstotēs): $E_{activation} \\to \\min$\n- **Goodness** (agathōsynē): $W_{out} > W_{in}$\n- **Faithfulness** (pistis): $\\partial L / \\partial t = 0$ (Noether invariant)\n- **Gentleness** (prautēs): $F = k \\cdot F_{needed}$, $k \\leq 1$\n- **Self-Control** (enkrateia): $u(t) = -K \\cdot e(t)$ (PID feedback)\n\nPhase form: $\\Phi_L(\\chi) = \\tanh(\\beta_L(\\chi - \\chi_c))$\n\nDerivation status: Love, Peace, Joy LOCKED. Full vector: ✅", "deps": ["LAW-4"], "cls": "Derivation", "status": "canonical — LOCKED", "maps": {}, "defeat": "### DC-1: Show any 9 virtues map to any force\nIf the mapping is arbitrary (any list of 9 things maps to Yukawa equilibrium), the derivation is trivial.\n\n### DC-2: Break specific Fruit derivations\nShow Love ≠ potential minimum, or Joy ≠ resonance, by finding a better physical interpretation.", "objs": ["Mapping may be post-hoc", "Not all 9 from one Hamiltonian (blocked overclaim)"], "nobj": 2, "defended": true, "chainpos": "38"}, {"id": "JUSTICE-MERCY", "kind": "theorem", "stage": 7, "tier": 7, "title": "Justice and Mercy — The Cross Equation", "claim": "$R(\\text{offense}, \\alpha)$: $\\alpha=1$ → Justice (offender pays). $\\alpha=0$ → Mercy (third party pays). $\\alpha=0$ + judge = payer → The Cross. Both maximal, no contradiction.", "fullclaim": "From Law 5 (Thermodynamics) parent equation $F = E - TS$, $dS/dt \\geq 0$:\n\n$$R(\\text{offense}, \\alpha): \\alpha \\in [0,1]$$\n\n- $\\alpha = 1$: offender pays = Justice\n- $\\alpha = 0$: third party pays = Mercy  \n- $\\alpha = 0$ + judge IS the payer = The Cross\n\nAt the Cross: both Justice and Mercy are MAXIMAL simultaneously. No contradiction — the cost is paid (Justice satisfied) by someone other than the offender (Mercy satisfied) who happens to be the judge himself.\n\nAnti-Justice = Vengeance. Anti-Mercy = Enabling.\n\nDerivation status: LOCKED ✅", "deps": ["LAW-5"], "cls": "Derivation", "status": "canonical — LOCKED", "maps": {}, "defeat": "### DC-1: Find α where Justice and Mercy are contradictory\nIf there exists a value of α where satisfying one necessarily violates the other (outside the Cross solution), the framework has a gap.", "objs": ["Cross solution is theological, not mathematical"], "nobj": 1, "defended": true, "chainpos": "39"}, {"id": "MORAL-CONSERVATION", "kind": "theorem", "stage": 7, "tier": 7, "title": "Moral Conservation — Atonement Tensor", "claim": "Three-body decay: $\\psi_{whole} \\to \\psi_{broken} + \\delta + \\nu_{loss}$. Moral energy is conserved (Noether). Grace: external source term $G = G_0 \\cdot e^{\\int r(t')dt'} \\cdot (1 - R(t))$. Derivation: LOCKED.", "fullclaim": "From Law 9 (Weak Force):\n\nThree-body moral decay:\n$$\\psi_{whole} \\rightarrow \\psi_{broken} + \\delta + \\nu_{loss}$$\n\nDecay rate:\n$$\\Gamma_{sin} = \\frac{G^2_{fall} \\cdot \\psi^5}{192\\pi^3} \\cdot P_{will}$$\n\nAtonement = $W_{grace}$: external source term satisfying:\n$$\\frac{dS_m}{dt} = \\sigma - \\frac{W_{grace}}{T}$$\n\nGrace (charis):\n$$G = G_0 \\cdot e^{\\int r(t')dt'} \\cdot (1 - R(t))$$\n\nKill condition 1: behavioral suppression without grace → $\\nu_{loss}$ maximizes (conserved displacement)\nKill condition 2: find moral event where ledger closes without invisible remainder\n\nLove (agapē): Overlayer $\\mathcal{L}$ — not a term IN the equation, the field the equation runs in.\n\nDerivation status: LOCKED ✅", "deps": ["LAW-9"], "cls": "Derivation", "status": "canonical — LOCKED", "maps": {}, "defeat": "### DC-1: Close the moral ledger without remainder\nFind a moral event where no invisible cost persists — no hidden $\\nu_{loss}$.\n\n### DC-2: Produce the moral Lagrangian\nNoether conservation requires a Lagrangian. Constructing one for moral domain is an open problem.", "objs": ["Noether needs a moral Lagrangian", "Analogy, not derivation"], "nobj": 2, "defended": true, "chainpos": "40"}, {"id": "PAIRS", "kind": "definition", "stage": 8, "tier": 8, "title": "Physics-Conjugate Pairs — Canonical Ruling", "claim": "Five canonical pairs: G-T (energy-time), S-F (position-momentum), E-K (U(1) phase), M-Q (Legendre transform), R-C_W (path integral). r = −1 anti-correlation is definitional, not derived.", "fullclaim": "Five canonical physics-conjugate pairs (RULED Aug 3, 2026):\n\n- $G$-$T$ (energy-time conjugate)\n- $S$-$F$ (position-momentum conjugate)\n- $E$-$K$ (U(1) phase symmetry)\n- $M$-$Q$ (Legendre transform)\n- $R$-$C_W$ (path integral — path and endpoint)\n\nThe $r = -1$ anti-correlation between pairs is definitional — imposed by construction, not derived. 'Empirically verified' language has been retired.\n\nRetired theological pairing: Grace-Faith, Meaning-Decay, Truth-Christ, Love-Relationship, Entropy-Logos.", "deps": ["LAW-1", "LAW-2", "LAW-3", "LAW-4", "LAW-5", "LAW-6", "LAW-7", "LAW-8", "LAW-9"], "cls": "Structure", "status": "canonical — RULED", "maps": {}, "defeat": "", "objs": ["Anti-correlation is imposed, not derived"], "nobj": 1, "defended": false, "chainpos": "41"}, {"id": "FREE-WILL", "kind": "axiom", "stage": 9, "tier": 9, "title": "Free Will — W Coupling Variable", "claim": "Agency is primitive — irreducible to mechanism. Free will ($W$) determines regime: $W$ high = constructive (grace), $W$ low = destructive (sin). Grace coupling is voluntary and stays voluntary.", "fullclaim": "Free will is not derived from physics — it is axiomatized. The boundary proof (Feb 14, 2026) establishes free will as part of the mathematical floor.\n\n$W$ (free will) is the coupling variable that determines which regime each law operates in:\n- $W$ high → constructive direction (grace, truth, love)\n- $W$ low → destructive direction (sin, deception, captivity)\n\nGrace coupling is voluntary (BC8) and stays voluntary (P9.2). Even grace respects free will — determinism is rejected at the floor.", "deps": ["GOD", "TRINITY"], "cls": "Foundation", "status": "canonical", "maps": {}, "defeat": "### DC-1: Derive will from physics\nIf consciousness and will can be fully reduced to deterministic physics, the axiom is unnecessary.\n\n### DC-2: Show voluntary coupling contradicts grace\nIf grace must sometimes override will (irresistible grace), the framework has a theological problem.", "objs": ["Free will may be illusory", "Determinism", "Compatibilism suffices"], "nobj": 3, "defended": true, "chainpos": "42"}, {"id": "CONSCIOUSNESS", "kind": "axiom", "stage": 9, "tier": 9, "title": "Consciousness — Fundamental, Not Emergent", "claim": "Consciousness is an ontological primitive — fundamental, not emergent from complexity. Measured as integrated information Φ. The mutual-knowing insight: consciousness requires the triadic structure (knower, known, knowing).", "fullclaim": "Consciousness is fundamental, not emergent. It is an ontological primitive — not reducible to computation, not explained by complexity alone.\n\nMeasured as integrated information $\\Phi$ (per IIT). The mutual-knowing insight: consciousness requires the triadic structure:\n- Knower (subject)\n- Known (object) \n- Knowing (the relation itself)\n\nThis maps onto the Trinity's internal structure. Consciousness is not an accident of sufficient complexity — it is the inside view of information integration. The chi-field unifies them: $\\chi$ is information that experiences itself.\n\n**Page 19 — Consciousness placeholder**: this is the least developed section. The mutual-knowing insight needs a formal home.", "deps": ["TRINITY", "CAP-INFORMATION"], "cls": "Foundation", "status": "canonical — placeholder", "maps": {"Physics": "Integrated Information Theory (IIT)", "Theology": "Imago Dei — consciousness as reflection of divine self-awareness"}, "defeat": "### DC-1: Derive consciousness from physics\nProduce a complete theory of consciousness from physics alone — no primitive consciousness axiom needed. The Hard Problem solved.\n\n### DC-2: Show Φ measures the wrong thing\nIf integrated information doesn't track consciousness (high Φ in non-conscious systems), the measure fails.", "objs": ["Hard Problem unsolved", "Panpsychism is absurd", "Chinese Room", "Zombies"], "nobj": 4, "defended": true, "chainpos": "43"}, {"id": "PRED-PEAR", "kind": "empirical", "stage": 10, "tier": 10, "title": "PEAR-LAB Correlation — 6.35σ", "claim": "Princeton Engineering Anomalies Research laboratory: consciousness-correlated deviations in random number generators at 6.35 sigma. Contested but consistent with framework predictions.", "fullclaim": "PEAR-LAB: consciousness-correlated deviations in random number generators at 6.35σ.\n\nThis is contested evidence — labeled as such. The framework predicts that consciousness ($\\Phi > 0$) should produce measurable effects on physical systems via the chi-field coupling. PEAR-LAB is consistent with this prediction but does not constitute proof.\n\nStatus: contested, labeled honestly.", "deps": ["CONSCIOUSNESS", "LAW-7"], "cls": "Evidence", "status": "contested", "maps": {}, "defeat": "### DC-1: Replicate and fail\nIndependent replication that fails to reproduce the effect at any significance level.", "objs": ["Replication concerns", "Statistical methodology questioned", "File drawer effect"], "nobj": 3, "defended": true, "chainpos": "44"}, {"id": "PRED-GCP", "kind": "empirical", "stage": 10, "tier": 10, "title": "Global Consciousness Project — 6σ", "claim": "Global Consciousness Project: aggregate deviation in worldwide RNG network during major global events at 6 sigma. Consistent with chi-field prediction at social scale.", "fullclaim": "Global Consciousness Project: aggregate deviation in worldwide random number generator network during major global events at 6σ.\n\nConsistent with framework prediction that consciousness operates at multiple scales (individual, social, cosmic). The chi-field should show measurable effects at the social scale when many minds cohere.\n\nStatus: contested, labeled honestly.", "deps": ["CONSCIOUSNESS", "MASTER-EQ"], "cls": "Evidence", "status": "contested", "maps": {}, "defeat": "### DC-1: Show the statistical methodology is flawed\nDemonstrate that the 6σ result is an artifact of event selection, multiple testing, or data processing.", "objs": ["Post-hoc event selection", "Statistical methodology", "Not independently replicated"], "nobj": 3, "defended": true, "chainpos": "45"}, {"id": "KILL-1", "kind": "empirical", "stage": 10, "tier": 10, "title": "Kill Condition: Euclid w(z) = −1 Exactly", "claim": "If Euclid (Oct 2026) shows dark energy equation of state $w(z) = -1$ exactly (cosmological constant, no dynamics), the chi-field has no room to operate as a physical field.", "fullclaim": "Kill Condition 1: Euclid space telescope (expected Oct 2026) measures $w(z)$.\n\nIf $w(z) = -1$ exactly — pure cosmological constant, no dynamics — the chi-field has no room to operate as a physical field with measurable effects. The Lagrangian (Object A) becomes a formal exercise rather than physics.\n\nThis is a genuine kill condition. The framework states it openly.", "deps": ["LAGRANGIAN"], "cls": "Kill", "status": "pending — Oct 2026", "maps": {}, "defeat": "Self-defeating: this IS the defeat condition.", "objs": [], "nobj": 0, "defended": true, "chainpos": "46"}, {"id": "KILL-2", "kind": "empirical", "stage": 10, "tier": 10, "title": "Kill Condition: Closed System Matches", "claim": "If a closed-system model (no consciousness, no chi-field, no God) matches the framework's predictive power across all domains, Occam kills the open-system axiom.", "fullclaim": "Kill Condition 3: If a closed-system model — one that assumes no consciousness primitive, no chi-field, no God — matches the framework's predictive power across all domains (physics, consciousness, morality, purpose), then Occam's razor kills the open-system axiom.\n\nThe framework is honest about what would destroy it.", "deps": ["MASTER-EQ", "GOD"], "cls": "Kill", "status": "standing challenge", "maps": {}, "defeat": "Self-defeating: this IS the defeat condition.", "objs": [], "nobj": 0, "defended": true, "chainpos": "47"}, {"id": "GNPC", "kind": "definition", "stage": 11, "tier": 11, "title": "GNPC — Grammatically Necessary, Physically Contingent", "claim": "The honest grade for 7 of 9 factors: the grammar requires the capability class, but the specific physics implementation is contingent. Two factors (T, K) are grade A — grammar IS physics.", "fullclaim": "GNPC: Grammatically Necessary, Physically Contingent.\n\nThe honest shape of the bridge:\n- **Grade A** (grammar IS physics): Thermodynamics (T), Information (K)\n- **Grade A−**: Mass-Energy (M)\n- **Grade B+**: Gravitation (G), Strong Force (S), Quantum (Q)\n- **Grade B**: Electromagnetism (E), Relativity (R)\n- **Grade B−**: Weak Force (F)\n- **Grade A/C split**: Coherence wrapper (structural A, identification C)\n\nThis is not a derivation of the Standard Model from theology. It is a demonstration that the grammar requires nine capability classes, our physics implements all nine, and two of them are so fundamental that the grammar and the physics are the same object.", "deps": ["CAP-GEOMETRY", "CAP-SUBSTANCE", "CAP-SIGNAL", "CAP-BINDING", "CAP-IRREVERSIBILITY", "CAP-INFORMATION", "CAP-MEASUREMENT", "CAP-PERSPECTIVE", "CAP-DIRECTION"], "cls": "Bridge", "status": "canonical", "maps": {}, "defeat": "### DC-1: Show the nine classes are not all necessary\nReduce the count below nine — show one or more capability classes are redundant.\n\n### DC-2: Show a different set of nine works equally well\nIf a different partition of capabilities maps just as cleanly, the current nine are arbitrary.", "objs": ["Nine may not be the right number", "Some classes overlap (E/K redundancy)"], "nobj": 2, "defended": true, "chainpos": "48"}];
+const BY=Object.fromEntries(N.map(n=>[n.id,n]));
+// generativity: downstream reach (how many nodes ultimately depend on this one)
+const kidsOf={};N.forEach(n=>kidsOf[n.id]=[]);N.forEach(n=>n.deps.forEach(p=>{if(kidsOf[p])kidsOf[p].push(n.id);}));
+function downreach(id){const seen=new Set();const st=[id];while(st.length){const x=st.pop();for(const c of kidsOf[x]||[]){if(!seen.has(c)){seen.add(c);st.push(c);}}}return seen.size;}
+N.forEach(n=>{n.reach=downreach(n.id);});
+const maxReach=Math.max(1,...N.map(n=>n.reach));
+const chain=N.slice().sort((a,b)=>(+a.chainpos)-(+b.chainpos)||a.id.localeCompare(b.id));
+function ttl(n){let t=n.title||n.id;const p=n.id+' - ';if(t.indexOf(p)===0)t=t.slice(p.length);return t;}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// =================== TeX-subset renderer (self-contained, no CDN) ===================
+const GREEK={alpha:'α',beta:'β',gamma:'γ',delta:'δ',epsilon:'ε',varepsilon:'ε',zeta:'ζ',eta:'η',theta:'θ',vartheta:'ϑ',iota:'ι',kappa:'κ',lambda:'λ',mu:'μ',nu:'ν',xi:'ξ',pi:'π',rho:'ρ',sigma:'σ',tau:'τ',upsilon:'υ',phi:'φ',varphi:'φ',chi:'χ',psi:'ψ',omega:'ω',Gamma:'Γ',Delta:'Δ',Theta:'Θ',Lambda:'Λ',Xi:'Ξ',Pi:'Π',Sigma:'Σ',Upsilon:'Υ',Phi:'Φ',Psi:'Ψ',Omega:'Ω',ell:'ℓ',hbar:'ℏ',nabla:'∇',partial:'∂',infty:'∞',emptyset:'∅',aleph:'ℵ',Re:'ℜ',Im:'ℑ',wp:'℘'};
+const OPS={cdot:'·',times:'×',otimes:'⊗',oplus:'⊕',odot:'⊙',pm:'±',mp:'∓',le:'≤',leq:'≤',ge:'≥',geq:'≥',neq:'≠',approx:'≈',simeq:'≃',sim:'∼',equiv:'≡',cong:'≅',propto:'∝',to:'→',rightarrow:'→',leftarrow:'←',Rightarrow:'⇒',Leftarrow:'⇐',implies:'⟹',iff:'⟺',Leftrightarrow:'⟺',mapsto:'↦',in:'∈',ni:'∋',notin:'∉',subset:'⊂',supset:'⊃',subseteq:'⊆',supseteq:'⊇',cup:'∪',cap:'∩',setminus:'∖',land:'∧',wedge:'∧',lor:'∨',vee:'∨',neg:'¬',lnot:'¬',forall:'∀',exists:'∃',nexists:'∄',models:'⊨',vdash:'⊢',dashv:'⊣',perp:'⊥',circ:'∘',dagger:'†',ddagger:'‡',ast:'∗',star:'⋆',bullet:'•',angle:'∠',langle:'⟨',rangle:'⟩',ll:'≪',gg:'≫',mid:'∣',parallel:'∥',top:'⊤',bot:'⊥',because:'∵',therefore:'∴',hspace:' ',owns:'∋'};
+const BIGOP={sum:'∑',prod:'∏',int:'∫',iint:'∬',iiint:'∭',oint:'∮',bigcup:'⋃',bigcap:'⋂',bigoplus:'⨁',bigotimes:'⨂',bigvee:'⋁',bigwedge:'⋀'};
+const FNS=['sin','cos','tan','cot','sec','csc','arcsin','arccos','arctan','sinh','cosh','tanh','ln','log','exp','lim','sup','inf','max','min','arg','det','deg','dim','ker','hom','gcd','Pr','mod','limsup','liminf','tr','rank','sgn'];
+const CALX={B:'ℬ',E:'ℰ',F:'ℱ',H:'ℋ',I:'ℐ',L:'ℒ',M:'ℳ',R:'ℛ',e:'ℯ',g:'ℊ',o:'ℴ'};
+const BBX={C:'ℂ',H:'ℍ',N:'ℕ',P:'ℙ',Q:'ℚ',R:'ℝ',Z:'ℤ'};
+function calMap(ch,up){if(CALX[ch])return CALX[ch];const c=ch.charCodeAt(0);if(c>=65&&c<=90)return String.fromCodePoint(0x1D49C+c-65);if(c>=97&&c<=122)return String.fromCodePoint(0x1D4B6+c-97);return ch;}
+function bbMap(ch){if(BBX[ch])return BBX[ch];const c=ch.charCodeAt(0);if(c>=65&&c<=90)return String.fromCodePoint(0x1D538+c-65);if(c>=48&&c<=57)return String.fromCodePoint(0x1D7D8+c-48);return ch;}
+function tex(src){
+  src=String(src||'');
+  let i=0;
+  function skip(){while(i<src.length&&(src[i]===' '||src[i]==='\n'))i++;}
+  function esc1(c){return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':c;}
+  function rawGroup(){skip();if(src[i]==='{'){i++;let d=1,s='';while(i<src.length&&d>0){const c=src[i];if(c==='{'){d++;s+=c;i++;}else if(c==='}'){d--;i++;if(d>0)s+=c;}else{s+=c;i++;}}return s;}if(i<src.length){const c=src[i];i++;return c;}return '';}
+  function group(){skip();if(src[i]==='{'){i++;return parse('}');}if(src[i]==='\\')return cmd();if(i<src.length){const c=src[i];i++;if(c==='_'||c==='^'){const t=c==='_'?'sub':'sup';return '<'+t+'>'+group()+'</'+t+'>';}if(/[a-zA-Z]/.test(c))return '<i>'+c+'</i>';return esc1(c);}return '';}
+  function parse(end){let out='';while(i<src.length){const c=src[i];
+    if(end&&c===end){i++;break;}
+    if(c==='{'){i++;out+=parse('}');}
+    else if(c==='}'){if(end)break;i++;}
+    else if(c==='\\'){out+=cmd();}
+    else if(c==='_'||c==='^'){i++;const t=c==='_'?'sub':'sup';out+='<'+t+'>'+group()+'</'+t+'>';}
+    else if(c==="'"){i++;out+='′';}
+    else if(c==='$'||c==='%'){i++;}
+    else if(c==='&'){i++;out+='&nbsp;&nbsp;';}
+    else if(c==='~'){i++;out+='&nbsp;';}
+    else if(/[a-zA-Z]/.test(c)){out+='<i>'+c+'</i>';i++;}
+    else if(c==='\n'){i++;out+=' ';}
+    else{out+=esc1(c);i++;}
+  }return out;}
+  function cmdName(){i++;let m='';while(i<src.length&&/[a-zA-Z]/.test(src[i])){m+=src[i];i++;}if(!m&&i<src.length){m=src[i];i++;}return m;}
+  function envBlock(env){const close='\\end{'+env+'}';let body='';const idx=src.indexOf(close,i);if(idx<0){body=src.slice(i);i=src.length;}else{body=src.slice(i,idx);i=idx+close.length;}
+    const rows=body.split('\\\\').map(r=>r.trim()).filter(r=>r.length);
+    const rowsHtml=rows.map(r=>{const cells=r.split('&').map(c=>tex(c.trim()));return '<span class="erow">'+cells.join('&nbsp;&nbsp;')+'</span>';}).join('');
+    if(env==='cases')return '<span class="lbrace">{</span><span class="envc">'+rowsHtml+'</span>';
+    return '<span class="envc">'+rowsHtml+'</span>';}
+  function accent(comb){const raw=rawGroup().trim();if(raw.length===1&&/[a-zA-Z]/.test(raw))return '<i>'+raw+comb+'</i>';return tex(raw)+comb;}
+  function cmd(){
+    const save=i;const name=cmdName();
+    if(GREEK[name])return GREEK[name];
+    if(OPS[name])return OPS[name];
+    if(BIGOP[name])return '<span class="op">'+BIGOP[name]+'</span>';
+    if(FNS.indexOf(name)>=0)return '<span class="fn">'+name+'</span>';
+    switch(name){
+      case 'text': case 'mathrm': case 'operatorname': case 'textbf': case 'math': return '<span class="fn">'+esc(rawGroup())+'</span>';
+      case 'mathcal': return rawGroup().split('').map(ch=>calMap(ch)).join('');
+      case 'mathbb': return rawGroup().split('').map(ch=>bbMap(ch)).join('');
+      case 'mathbf': case 'boldsymbol': return '<b>'+tex(rawGroup())+'</b>';
+      case 'mathit': return '<i>'+esc(rawGroup())+'</i>';
+      case 'frac': case 'dfrac': case 'tfrac': {const a=group(),b=group();return '<span class="frac"><span class="fnum">'+a+'</span><span class="fden">'+b+'</span></span>';}
+      case 'sqrt': {skip();if(src[i]==='['){while(i<src.length&&src[i]!==']')i++;i++;}return '<span class="rad">√<span class="radicand">'+group()+'</span></span>';}
+      case 'hat': return accent('\u0302');
+      case 'bar': case 'overline': return accent('\u0304');
+      case 'dot': return accent('\u0307');
+      case 'ddot': return accent('\u0308');
+      case 'vec': return accent('\u20D7');
+      case 'tilde': return accent('\u0303');
+      case 'begin': {const env=rawGroup();return envBlock(env);}
+      case 'end': {rawGroup();return '';}
+      case 'left': case 'right': case 'big': case 'Big': case 'bigg': case 'Bigg': case 'middle': {skip();if(src[i]==='\\'){i++;let d='';while(i<src.length&&/[a-zA-Z]/.test(src[i])){d+=src[i];i++;}return GREEK[d]||OPS[d]||esc(d);}if(i<src.length){const d=src[i];i++;return d==='.'?'':esc1(d);}return '';}
+      case 'quad': return '&emsp;';
+      case 'qquad': return '&emsp;&emsp;';
+      case ',': return '&thinsp;';
+      case ';': return '&ensp;';
+      case ':': return '&ensp;';
+      case '!': return '';
+      case ' ': return ' ';
+      case 'xrightarrow': {const lab=rawGroup();return '<span class="xarr"><span class="xlab">'+tex(lab)+'</span><span class="xglyph">⟶</span></span>';}
+      case 'boxed': return '<span class="boxed">'+group()+'</span>';
+      case 'n': return ' ';
+      default:
+        if(name.length>1&&name[0]==='n'){
+          const rest=name.slice(1);
+          if(GREEK[rest])return ' '+GREEK[rest];
+          if(OPS[rest])return ' '+OPS[rest];
+          return ' <span class="fn">'+esc(rest)+'</span>';
+        }
+        return '<span class="fn">'+esc(name)+'</span>';
+    }
+  }
+  return parse(null);
+}
+
+// =================== rich text: markdown-lite + math ===================
+function splitMath(s){
+  const store=[];let out='';let i=0;
+  while(i<s.length){
+    if(s[i]==='$'){
+      if(s[i+1]==='$'){
+        const j=s.indexOf('$$',i+2);
+        if(j>0){store.push({d:1,t:s.slice(i+2,j)});out+='\x00'+(store.length-1)+'\x00';i=j+2;continue;}
+      }else{
+        const j=s.indexOf('$',i+1);
+        if(j>i+1){store.push({d:0,t:s.slice(i+1,j)});out+='\x00'+(store.length-1)+'\x00';i=j+1;continue;}
+      }
+    }
+    out+=s[i];i++;
+  }
+  return {text:out,store:store};
+}
+function inlineMath(s){const r=splitMath(s);let h=esc(r.text);h=h.replace(/\x00(\d+)\x00/g,(m,k)=>'<span class="math">'+tex(r.store[+k].t)+'</span>');return h;}
+function rich(s){
+  if(!s)return '';
+  const r=splitMath(s);
+  let t=r.text.replace(/\\n/g,'\n');
+  t=t.replace(/\s*---\s*/g,'\n---\n').replace(/\s*###\s*/g,'\n### ');
+  t=t.replace(/\s+-\s+(?=\x00|\\|[A-Z\u201c(])/g,'\n- ');
+  t=t.replace(/([.:;])\s+(\d{1,2})\.\s+(?=[A-Z\u201c\\(])/g,'$1\n$2. ');
+  const lines=t.split('\n');
+  let html='',para=[],list=null,mmd=null;
+  function fmt(x){return esc(x.trim()).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');}
+  function flushPara(){if(para.length){html+='<p>'+fmt(para.join(' '))+'</p>';para=[];}}
+  function flushList(){if(list){html+='<'+list.t+'>'+list.items.map(x=>'<li>'+x+'</li>').join('')+'</'+list.t+'>';list=null;}}
+  function flushMmd(){if(mmd){html+='<div class="mmd"><div class="mmdtag">◈ framework diagram — mermaid source</div><pre>'+esc(mmd.join('\n'))+'</pre></div>';mmd=null;}}
+  function pushItem(ty,content){if(!list||list.t!==ty){flushPara();flushList();list={t:ty,items:[]};}list.items.push(fmt(content));}
+  for(let li=0;li<lines.length;li++){
+    const raw=lines[li].trim();
+    if(!raw){flushPara();flushList();continue;}
+    if(raw==='---'){flushPara();flushList();flushMmd();html+='<hr>';continue;}
+    if(raw.indexOf('### ')===0){flushPara();flushList();flushMmd();
+      const h=raw.slice(4).trim();
+      const mm=h.match(/^(.*?)\bmermaid\b\s*(.*)$/i);
+      if(mm){html+='<h4>'+fmt(mm[1].trim()||'Framework diagram')+'</h4>';mmd=[];if(mm[2])mmd.push(mm[2]);continue;}
+      const dcm=h.match(/^(DC-\d+|DC\s*\d+|Falsification|Kill condition)[:.]?\s*(.*)$/i);
+      if(dcm){html+='<h4><span style="color:var(--bad)">'+esc(dcm[1])+'</span>'+(dcm[2]?' — '+fmt(dcm[2]):'')+'</h4>';}
+      else html+='<h4>'+fmt(h)+'</h4>';continue;}
+    if(/^mermaid\b/i.test(raw)){flushPara();flushList();flushMmd();mmd=[];const rest=raw.replace(/^mermaid\s*/i,'');if(rest)mmd.push(rest);continue;}
+    if(mmd){mmd.push(raw);continue;}
+    if(raw.indexOf('- ')===0){pushItem('ul',raw.slice(2));continue;}
+    const om=raw.match(/^(\d+)[.)]\s+(.*)$/);
+    if(om){pushItem('ol',om[2]);continue;}
+    if(list)flushList();
+    para.push(raw);
+  }
+  flushPara();flushList();flushMmd();
+  html=html.replace(/\x00(\d+)\x00/g,(m,k)=>{const st=r.store[+k];return st.d?'<span class="dmath">'+tex(st.t)+'</span>':'<span class="math">'+tex(st.t)+'</span>';});
+  return html;
+}
+function clipped(s,cap){return s&&s.length>=cap&&!/[.!?)}\]"“”]$/.test(s.trim());}
+
+// =================== graph ===================
+const stages=[...new Set(N.map(n=>n.stage))].sort((a,b)=>a-b);
+const tiersEl=document.getElementById('tiers');
+for(const s of stages){const w=document.createElement('div');w.className='tier';
+  const l=document.createElement('div');l.className='tl';l.textContent='Stage '+s;w.appendChild(l);
+  const r=document.createElement('div');r.className='row';
+  for(const n of N.filter(x=>x.stage===s))r.appendChild(mkNode(n));w.appendChild(r);tiersEl.appendChild(w);}
+function mkNode(n){const d=document.createElement('div');d.className='node k-'+n.kind+(n.defended?' dk-ok':' dk-bad');d.id='node-'+n.id;
+  d.tabIndex=0;d.setAttribute('role','button');d.setAttribute('aria-label',n.id+' '+ttl(n));
+  const t=n.reach/maxReach;
+  const mc=n.reach===0?'var(--bad)':(t>0.33?'#d9a94a':'var(--mut)');
+  d.innerHTML='<div class="kx" title="knock out">✕</div><div class="id mono"><span>'+n.id+'</span><span class="shield">'+(n.defended?'🛡':'⚠')+'</span></div>'+
+    '<div class="title">'+esc(ttl(n))+'</div><div class="claim">'+inlineMath(n.claim||'')+'</div><div class="tag">'+n.kind+' · reach '+n.reach+'</div>'+
+    '<div class="rmeter" title="generativity '+n.reach+' / '+maxReach+'"><i style="width:'+Math.max(2,Math.round(t*100))+'%;background:'+mc+'"></i></div>';
+  d.querySelector('.kx').addEventListener('click',e=>{e.stopPropagation();toggleKO(n.id);});
+  d.addEventListener('click',e=>{e.stopPropagation();select(n.id);openDrawer(n.id);});
+  d.addEventListener('dblclick',e=>{e.stopPropagation();select(n.id);openReader(n.id);});
+  d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(n.id);openDrawer(n.id);}});
+  return d;}
+const svg=document.getElementById('edges'),canvas=document.getElementById('canvas');
+function anc(id,a){a=a||new Set();for(const p of(BY[id]?BY[id].deps:[])){if(!a.has(p)){a.add(p);anc(p,a);}}return a;}
+const removed=new Set();let alive={};
+function computeAlive(){alive={};const visiting=new Set();const al=id=>{if(id in alive)return alive[id];if(removed.has(id))return alive[id]=false;if(visiting.has(id))return true;visiting.add(id);let ok=true;for(const p of BY[id].deps){if(!al(p)){ok=false;break;}}visiting.delete(id);return alive[id]=ok;};for(const n of N)al(n.id);}
+function draw(hot){const cb=canvas.getBoundingClientRect();svg.setAttribute('viewBox','0 0 '+canvas.offsetWidth+' '+canvas.offsetHeight);let s='';const hs=hot?anc(hot).add(hot):null;
+  for(const n of N)for(const p of n.deps){const a=document.getElementById('node-'+p),b=document.getElementById('node-'+n.id);if(!a||!b)continue;
+    const ra=a.getBoundingClientRect(),rb=b.getBoundingClientRect();const x1=ra.left+ra.width/2-cb.left,y1=ra.bottom-cb.top,x2=rb.left+rb.width/2-cb.left,y2=rb.top-cb.top,my=(y1+y2)/2;
+    const on=hs&&hs.has(p)&&hs.has(n.id);const dead=removed.has(p)||removed.has(n.id)||alive[p]===false||alive[n.id]===false;
+    let col='var(--edge)',wd=1,op=1,da='';
+    if(!hs&&dead){col='var(--bad)';wd=1.2;op=.5;da='4 4';}else if(on){col='var(--edge-hot)';wd=2;}else if(hs){op=.16;}
+    s+='<path d="M'+x1+','+y1+' C'+x1+','+my+' '+x2+','+my+' '+x2+','+y2+'" fill="none" stroke="'+col+'" stroke-width="'+wd+'" opacity="'+op+'"'+(da?' stroke-dasharray="'+da+'"':'')+'/>';}
+  svg.innerHTML=s;}
+function select(id){const keep=anc(id);keep.add(id);for(const n of N){const el=document.getElementById('node-'+n.id);el.classList.toggle('dim',!keep.has(n.id));el.classList.toggle('hot',keep.has(n.id));}draw(id);}
+function roleGuard(k){return k==='theorem'||k==='empirical'?'Derived / empirical. The cross-domain identification is a <b>bridge claim</b>, not a proof.':k==='definition'?'A <b>bridge definition</b> — names an object built from prior nodes; asserts nothing empirical alone.':k==='primitive'?'A <b>primitive term</b> — undefined anchor; the lexical floor.':'A <b>framework commitment</b>. Structural, not empirical — a critic rejects it by denying the premise (and accepting what falls with it).';}
+
+// =================== drawer (quick view) ===================
+const drawer=document.getElementById('drawer'),backdrop=document.getElementById('backdrop');
+function chipsFor(ids){return ids.length?ids.map(d=>`<span class="chip${alive[d]===false||removed.has(d)?' dead':''}" data-go="${d}">${d}</span>`).join(''):'<span class="chip" style="cursor:default">— none (anchor)</span>';}
+function openDrawer(id){const n=BY[id];if(!n)return;computeAlive();
+  const kids=N.filter(x=>x.deps.includes(id));
+  const dc=chipsFor(n.deps);
+  const fc=kids.length?kids.map(k=>`<span class="chip" data-go="${k.id}">${k.id}</span>`).join(''):'<span class="chip" style="cursor:default">— terminal</span>';
+  const mp=Object.keys(n.maps||{}).length?`<div class="sec"><h3>Cross-domain mappings</h3><dl class="maps">${Object.entries(n.maps).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>`:'';
+  const df=n.defeat?`<div class="sec"><h3>Defeat conditions — how to break it</h3><div class="defeat serif" style="font-size:12.5px">${rich(n.defeat)}</div></div>`:'<div class="sec"><h3>Defeat conditions</h3><div class="defeat" style="border-left-color:#8a3b34">⚠ none documented — this node is undefended.</div></div>';
+  const ob=(n.objs&&n.objs.length)?`<div class="sec"><h3>Standard objections (${n.nobj})</h3>${n.objs.map(o=>`<div class="obj">▸ ${esc(o)}</div>`).join('')}</div>`:'';
+  drawer.className='drawer on k-'+n.kind;
+  drawer.innerHTML=`<div class="dh"><button class="dclose" id="dc" aria-label="close">✕</button>
+    <div class="id mono">${id}${n.chainpos?' · chain '+esc(n.chainpos):''} · ${n.defended?'🛡 defended':'⚠ undefended'}</div>
+    <h2>${esc(ttl(n))}</h2><div class="role">${n.kind} · stage ${n.stage} · <span class="reachbadge">generativity ${n.reach}${n.reach===0?' ⊥ terminus':' downstream'}</span></div></div>
+    <div class="db">
+      <div class="sec"><h3>Statement</h3><div class="statement serif">${rich(n.claim)||'<span style="color:var(--mut)">— none parsed</span>'}</div></div>
+      <div class="sec"><h3>Depends on (${n.deps.length})</h3><div class="chips">${dc}</div></div>
+      <div class="sec"><h3>Feeds into (${kids.length})</h3><div class="chips">${fc}</div></div>
+      ${df}${ob}${mp}
+      <div class="sec"><h3>Interpretation guard</h3><div class="guard">${roleGuard(n.kind)}</div></div>
+      <div class="koline"><button class="kobtn" id="dko">${removed.has(id)?'↺ restore this node':'✕ knock this node out'}</button><button class="more" id="dmore">open reading page ⤢</button></div>
+    </div>`;
+  backdrop.classList.add('on');document.getElementById('dc').onclick=closeDrawer;
+  document.getElementById('dmore').onclick=()=>openReader(id);
+  document.getElementById('dko').onclick=()=>{toggleKO(id);openDrawer(id);};
+  drawer.querySelectorAll('.chip[data-go]').forEach(c=>c.onclick=()=>{const g=c.dataset.go;select(g);openDrawer(g);});}
+function closeDrawer(){drawer.className='drawer';backdrop.classList.remove('on');}
+backdrop.addEventListener('click',closeDrawer);
+
+// =================== reader (the full page) ===================
+const reader=document.getElementById('reader'),rbackdrop=document.getElementById('rbackdrop');
+function openReader(id){const n=BY[id];if(!n)return;computeAlive();reader.style.removeProperty('--k');
+  const kids=N.filter(x=>x.deps.includes(id));
+  const dc=chipsFor(n.deps);
+  const fc=kids.length?kids.map(k=>`<span class="chip" data-go="${k.id}">${k.id}</span>`).join(''):'<span class="chip" style="cursor:default">— terminal ⊥</span>';
+  const full=n.fullclaim||n.claim||'';
+  const truncNote=clipped(n.fullclaim,700)?`<div class="trunc">◈ excerpt clipped by the exporter at 700 chars — re-export this node uncapped and the full text flows in here automatically.</div>`:'';
+  const stmt=full?`<div class="rprose">${rich(full)}</div>${truncNote}`:'<p style="color:var(--mut)">— no statement parsed for this node.</p>';
+  let dfsec;
+  if(n.defeat){
+    const dtrunc=clipped(n.defeat,600)?`<div class="trunc">◈ defeat conditions clipped by the exporter at 600 chars.</div>`:'';
+    dfsec=`<div class="rsec"><h3>Defeat conditions — how to break it</h3><div class="dc"><div class="dcbody rprose" style="font-size:14.5px">${rich(n.defeat)}</div></div>${dtrunc}</div>`;
+  }else{
+    dfsec=`<div class="rsec"><h3>Defeat conditions</h3><div class="nodef">⚠ None documented — this node is currently <b>undefended</b>. In Defense view it shows red: a soft target to shore up.</div></div>`;
+  }
+  const ob=(n.objs&&n.objs.length)?`<div class="rsec"><h3>Standard objections (${n.nobj})</h3>${n.objs.map(o=>`<div class="obj" style="font-size:13px">▸ ${esc(o)}</div>`).join('')}</div>`:'';
+  const mp=Object.keys(n.maps||{}).length?`<div class="rsec"><h3>Cross-domain mappings</h3><dl class="maps" style="font-size:13.5px">${Object.entries(n.maps).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>`:'';
+  const ci=chain.findIndex(x=>x.id===id);
+  const prev=ci>0?chain[ci-1]:null, next=ci>=0&&ci<chain.length-1?chain[ci+1]:null;
+  reader.className='on k-'+n.kind;reader.id='reader';
+  reader.innerHTML=`<div class="rh"><button class="rclose" id="rc" aria-label="close reading page">✕</button>
+    <div class="rid">${id} · ${n.kind.toUpperCase()} · STAGE ${n.stage}${n.chainpos?' · CHAIN '+esc(n.chainpos):''} · ${n.defended?'🛡 DEFENDED':'⚠ UNDEFENDED'}</div>
+    <h2>${esc(ttl(n))}</h2>
+    <div class="rmeta">generativity <b>${n.reach}</b> ${n.reach===0?'⊥ terminus':'downstream'} · depends on <b>${n.deps.length}</b> · feeds <b>${kids.length}</b></div>
+    <div class="rnav">
+      <button class="rnavbtn" id="rprev" ${prev?'':'disabled'}>${prev?'<span class="rnid">← '+prev.id+'</span>'+esc(ttl(prev)):'— start of chain —'}</button>
+      <button class="rnavbtn" id="rnext" ${next?'':'disabled'}>${next?'<span class="rnid">'+next.id+' →</span>'+esc(ttl(next)):'— end of chain —'}</button>
+    </div></div>
+    <div class="rbody"><div class="rarticle">
+      <div class="rsec" style="margin-top:18px"><h3>Formal statement</h3>${stmt}</div>
+      ${dfsec}${ob}${mp}
+      <div class="rsec"><h3>Position in the web</h3>
+        <div class="rweb">
+          <div><h4>Depends on (${n.deps.length})</h4><div class="chips">${dc}</div></div>
+          <div><h4>Feeds into (${kids.length})</h4><div class="chips">${fc}</div></div>
+        </div></div>
+      <div class="rsec"><h3>Interpretation guard</h3><div class="rguard">${roleGuard(n.kind)}</div></div>
+      <div class="rkoline"><button class="rkobtn" id="rko">${removed.has(id)?'↺ restore this node':'✕ knock this node out'}</button><button class="rread" id="rback">← back to quick view</button></div>
+    </div></div>`;
+  rbackdrop.classList.add('on');
+  document.getElementById('rc').onclick=closeReader;
+  document.getElementById('rko').onclick=()=>{toggleKO(id);openReader(id);};
+  document.getElementById('rback').onclick=()=>{closeReader();openDrawer(id);};
+  if(prev)document.getElementById('rprev').onclick=()=>{select(prev.id);openReader(prev.id);};
+  if(next)document.getElementById('rnext').onclick=()=>{select(next.id);openReader(next.id);};
+  reader.querySelectorAll('.chip[data-go]').forEach(c=>c.onclick=()=>{const g=c.dataset.go;select(g);openReader(g);});
+  reader.querySelector('.rbody').scrollTop=0;}
+function closeReader(){reader.className='';reader.id='reader';rbackdrop.classList.remove('on');}
+rbackdrop.addEventListener('click',closeReader);
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(reader.classList.contains('on'))closeReader();else closeDrawer();}
+  if(e.key==='/'&&document.activeElement!==document.getElementById('search')){e.preventDefault();document.getElementById('search').focus();}
+});
+
+// =================== knockout ===================
+function applyKO(){computeAlive();for(const n of N){const el=document.getElementById('node-'+n.id);el.classList.remove('removed','collapsed','dim','hot');if(removed.has(n.id))el.classList.add('removed');else if(!alive[n.id])el.classList.add('collapsed');}
+  const rem=[...removed],col=N.filter(n=>!removed.has(n.id)&&!alive[n.id]),stand=N.filter(n=>alive[n.id]).length;const b=document.getElementById('kobox');
+  if(rem.length){b.classList.add('on');b.innerHTML='<b>Removed:</b> '+rem.map(id=>esc(ttl(BY[id]))+' ('+id+')').join(', ')+'. '+(col.length?'<b>Collapse cascade — '+col.length+' node(s) orphaned.</b> ':'No downstream requires it — <b>no cascade.</b> ')+'<b>'+stand+'</b>/'+N.length+' still standing.<span class="rest" id="ra">↺ restore all</span>';document.getElementById('ra').addEventListener('click',e=>{e.stopPropagation();removed.clear();applyKO();});}else{b.classList.remove('on');b.innerHTML='';}draw(null);}
+function toggleKO(id){removed.has(id)?removed.delete(id):removed.add(id);applyKO();}
+
+// =================== views ===================
+function applyView(v){
+  document.body.classList.toggle('view-defense',v==='defense');
+  document.body.classList.toggle('view-gen',v==='gen');
+  for(const n of N){const el=document.getElementById('node-'+n.id);
+    el.classList.remove('sink','gensrc');el.style.removeProperty('--gk');
+    if(v==='gen'){
+      const t=n.reach/maxReach;
+      el.style.setProperty('--gk', n.reach===0?'var(--bad)':(t>0.33?'var(--evidence,#d9a94a)':'var(--mut)'));
+      if(n.reach===0 && (n.kind==='empirical'||n.kind==='theorem'||n.deps.length))el.classList.add('sink');
+      if(n.reach>=maxReach*0.4)el.classList.add('gensrc');
+    }
+  }
+  draw(null);
+  document.getElementById('foot').innerHTML = v==='gen'
+    ? '<b>Generativity view.</b> Gold glow = <b>source</b> nodes whose downstream cone is large (they <i>generate</i> structure). Red ⊥ = <b>terminus</b> nodes nothing builds on (a ceiling). The meter under each card is its reach share. This framework tops out at reach '+maxReach+' (GOD) and cascades through Trinity, Four Debts, pre-cosmology ladder, nine capabilities, ten laws, and three locked derivations. Pull GOD and everything falls — that is the shape of a one-axiom system.'
+    : footBase;
+}
+document.getElementById('viewseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  [...e.currentTarget.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');applyView(b.dataset.v);});
+
+// =================== search ===================
+const sIn=document.getElementById('search'),sDrop=document.getElementById('sdrop');let sIdx=-1;
+function goNode(id){const el=document.getElementById('node-'+id);if(el)el.scrollIntoView({block:'center',inline:'center'});select(id);openDrawer(id);}
+function renderDrop(q){const qq=q.trim().toLowerCase();
+  if(!qq){sDrop.classList.remove('on');sDrop.innerHTML='';return;}
+  const hits=N.filter(n=>n.id.toLowerCase().includes(qq)||ttl(n).toLowerCase().includes(qq)).slice(0,12);
+  sIdx=-1;
+  sDrop.innerHTML=hits.length?hits.map(n=>`<div class="sitem k-${n.kind}" data-go="${n.id}"><span class="sid" style="--k2:var(--k)">${n.id}</span><span class="stit">${esc(ttl(n))}</span></div>`).join(''):'<div class="snone">no match</div>';
+  sDrop.classList.add('on');
+  sDrop.querySelectorAll('.sitem').forEach(el=>el.addEventListener('mousedown',e=>{e.preventDefault();sDrop.classList.remove('on');sIn.value='';goNode(el.dataset.go);}));}
+sIn.addEventListener('input',()=>renderDrop(sIn.value));
+sIn.addEventListener('keydown',e=>{
+  const items=[...sDrop.querySelectorAll('.sitem')];
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!items.length)return;sIdx=(sIdx+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;items.forEach((x,i)=>x.classList.toggle('sel',i===sIdx));}
+  else if(e.key==='Enter'){e.preventDefault();const t=items[sIdx>=0?sIdx:0];if(t){sDrop.classList.remove('on');sIn.value='';sIn.blur();goNode(t.dataset.go);}}
+  else if(e.key==='Escape'){sDrop.classList.remove('on');sIn.blur();}});
+sIn.addEventListener('blur',()=>setTimeout(()=>sDrop.classList.remove('on'),120));
+
+// =================== theme ===================
+const tBtn=document.getElementById('themebtn');
+function themeLabel(){const t=document.documentElement.dataset.theme;tBtn.textContent=t==='light'?'☀ light':(t==='dark'?'☾ dark':'◐ auto');}
+tBtn.addEventListener('click',()=>{const cur=document.documentElement.dataset.theme;const next=cur==='light'?'dark':cur==='dark'?'':'light';
+  if(next)document.documentElement.dataset.theme=next;else document.documentElement.removeAttribute('data-theme');
+  try{next?localStorage.setItem('tp-theme',next):localStorage.removeItem('tp-theme');}catch(_){}themeLabel();});
+try{const saved=localStorage.getItem('tp-theme');if(saved)document.documentElement.dataset.theme=saved;}catch(_){}
+themeLabel();
+
+// =================== footer + init ===================
+const undef=N.filter(n=>!n.defended).length;
+const footBase='<b>How to read it.</b> '+N.length+' nodes · '+N.reduce((a,n)=>a+n.deps.length,0)+' dependency edges · avg '+(N.reduce((a,n)=>a+n.deps.length,0)/N.length).toFixed(2)+' deps/node. <b>Defense view</b> flags <b>'+undef+'</b> undefended nodes (no documented defeat conditions) — the soft targets to shore up. <b>Click</b> a node for the quick drawer; <b>double-click</b> for the full reading page. Pull <code>GOD</code> and watch everything fall.';
+function reset(){for(const n of N){const el=document.getElementById('node-'+n.id);el.classList.remove('dim','hot');if(removed.has(n.id))el.classList.add('removed');else if(alive[n.id]===false)el.classList.add('collapsed');}draw(null);document.getElementById('foot').innerHTML=footBase;}
+document.getElementById('foot').innerHTML=footBase;document.getElementById('stageEl').addEventListener('click',reset);
+addEventListener('resize',()=>draw(null));requestAnimationFrame(()=>draw(null));setTimeout(()=>draw(null),150);
+
+// =================== THE HUMAN QUESTIONS (shared interrogation) ===================
+const QUESTIONS=[
+{q:'Why is there something rather than nothing?',type:'primitive commitment',
+ prose:'Because God exists a se — from himself. <b>GOD</b> is the single axiom: self-existent, necessary being. <b>ASEITY</b> names this property: existence not received, not contingent. The <b>DEBT-EXIST</b> (why is there something?) is paid by the one being whose existence is not borrowed. Reject aseity and the debt remains open.',
+ limit:'The self-grounding move is a framework commitment. Reject it and the ground — plus everything anchored to it — falls.',
+ nodes:['GOD','ASEITY','DEBT-EXIST','BEING']},
+{q:'Why is reality intelligible?',type:'derived from Trinity',
+ prose:'Because distinction is grounded in the Trinity\'s internal differentiation (<b>DEBT-DISTINCTION</b>), and relation is grounded in perichoresis (<b>DEBT-RELATION</b>). Distinction + Relation = Information (<b>CAP-INFORMATION</b>). Intelligibility is not a happy accident — it is built into the relational ground of reality.',
+ limit:'',
+ nodes:['TRINITY','DEBT-DISTINCTION','DEBT-RELATION','DISTINCTION','RELATION','CAP-INFORMATION']},
+{q:'Why do the laws of nature exist?',type:'derived — pre-cosmology ladder',
+ prose:'The pre-cosmology ladder (Being → Distinction → Relation → Order → Possibility → Actualization → Record → Cost) generates nine necessary capability classes. Our physics implements all nine as the Ten Laws (<b>LAW-1</b> through <b>LAW-10</b>), crowned by the Master Equation (<b>MASTER-EQ</b>). Not brute: derived from what any created order must have.',
+ limit:'The grammar requires the capability classes. Whether our specific physics is the only implementation is GNPC — Grammatically Necessary, Physically Contingent.',
+ nodes:['ORDER','POSSIBILITY','ACTUALIZATION','LAW-5','LAW-6','LAW-10','MASTER-EQ','GNPC']},
+{q:'Why is mathematics so effective?',type:'derived',
+ prose:'Because Distinction + Relation IS information (<b>CAP-INFORMATION</b>), and information IS mathematics in the Shannon sense. The universe is not described by math — it runs on a Shannon channel (<b>SHANNON-BASE</b>). Two of nine factors (Thermodynamics, Information) are Grade A: grammar IS physics.',
+ limit:'',
+ nodes:['CAP-INFORMATION','LAW-6','SHANNON-BASE','GNPC']},
+{q:'What is consciousness?',type:'primitive commitment',
+ prose:'Fundamental, not emergent. <b>CONSCIOUSNESS</b> is an ontological primitive — measured as integrated information Φ, requiring the triadic structure (knower, known, knowing) that maps onto the Trinity. Not an accident of sufficient complexity — the inside view of information integration.',
+ limit:'The bridge from information to experience is exactly that — a bridge claim. It carries the whole answer and is flagged as the least developed section.',
+ nodes:['CONSCIOUSNESS','TRINITY','CAP-INFORMATION','CAP-MEASUREMENT']},
+{q:'What grounds morality?',type:'objective — derived',
+ prose:'Objective, not constructed. The pre-cosmology ladder makes cost real (<b>COST</b>), thermodynamics makes consequences irreversible (<b>CAP-IRREVERSIBILITY</b>), and the Weak Force mapping gives moral conservation (<b>MORAL-CONSERVATION</b>). The Fruits of the Spirit are measurable coherence signatures (<b>FRUITS</b>). Justice and Mercy converge at the Cross (<b>JUSTICE-MERCY</b>).',
+ limit:'The coherence–morality identification is the load-bearing claim. A critic who severs it keeps the ethics of coherence but loses the claim that it IS morality.',
+ nodes:['COST','CAP-IRREVERSIBILITY','CAP-DIRECTION','LAW-9','MORAL-CONSERVATION','FRUITS','JUSTICE-MERCY']},
+{q:'Is free will real?',type:'primitive commitment',
+ prose:'Yes — agency is primitive. <b>FREE-WILL</b> is axiomatized, not derived. The boundary proof (Feb 14, 2026) establishes it as part of the mathematical floor. W (free will) is the coupling variable that determines regime: high W = constructive (grace), low W = destructive (sin). Grace coupling is voluntary and stays voluntary.',
+ limit:'',
+ nodes:['FREE-WILL','GOD','TRINITY']},
+{q:'Is purpose fundamental or emergent?',type:'fundamental — derived',
+ prose:'Fundamental. The framework has direction at every level: the <b>DEBT-ORIENT</b> grounds directionality in God\'s self-giving nature, the pre-cosmology ladder points from Being toward Cost, and the Master Equation\'s product form means coherence is directional. Purpose is not emergent from complexity — it is built into the grammar.',
+ limit:'',
+ nodes:['DEBT-ORIENT','ACTUALIZATION','COST','MASTER-EQ','LAW-10']},
+{q:'What happens at death?',type:'derived — downstream',
+ prose:'The framework predicts persistence, not annihilation — via moral conservation (<b>MORAL-CONSERVATION</b>). The three-body decay always has a conserved remainder. Grace is the external source term that can cover the cost. But this is the furthest reach of the formalism — derived downstream of every bridge the framework flags as contestable.',
+ limit:'The furthest reach of the formalism. Every contested bridge sits between the axiom and this answer.',
+ nodes:['MORAL-CONSERVATION','LAW-9','LAW-5','JUSTICE-MERCY']},
+{q:'Can this framework be killed?',type:'empirical — honest',
+ prose:'Yes. The framework names its own kill conditions: <b>KILL-1</b> (Euclid shows w(z) = −1 exactly, no room for chi-field) and <b>KILL-2</b> (a closed-system model matches predictive power without God). A framework that names what would destroy it is more credible than one that cannot be falsified.',
+ limit:'',
+ nodes:['KILL-1','KILL-2','LAGRANGIAN','MASTER-EQ','GOD']},
+{q:'Why Christianity specifically?',type:'derived — identification',
+ prose:'The framework derives nine capability classes and a coherence wrapper from grammar. The wrapper (Law 10, <b>LAW-10</b>) is structurally necessary. The identification of that wrapper with Christ is the framework\'s central and most contestable claim. The Trinity isomorphism, the Four Debts, and the Fruits derivation narrow the theological space — but the final step from structure to name is an identification, not a proof.',
+ limit:'The structure (wrapper is necessary) is separate from the name (wrapper = Christ). A critic can accept A and reject C. The grade splits: A for structure, C for identification.',
+ nodes:['LAW-10','TRINITY','FRUITS','JUSTICE-MERCY','MORAL-CONSERVATION','GOD']}
+];
+const qgrid=document.getElementById('qgrid');
+QUESTIONS.forEach((Q,qi)=>{
+  const c=document.createElement('div');c.className='qcard';c.tabIndex=0;c.setAttribute('role','button');
+  c.innerHTML='<div class="qq">'+esc(Q.q)+'</div><div class="qmeta"><span class="qtype">'+esc(Q.type)+'</span><span class="qn">'+Q.nodes.length+' nodes carry the answer</span></div>';
+  c.addEventListener('click',()=>openQuestion(qi));
+  c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openQuestion(qi);}});
+  qgrid.appendChild(c);});
+function spotlight(ids){const keep=new Set(ids);for(const n of N){const el=document.getElementById('node-'+n.id);if(!el)continue;el.classList.toggle('dim',!keep.has(n.id));el.classList.toggle('hot',keep.has(n.id));}draw(null);}
+function openQuestion(qi){const Q=QUESTIONS[qi];
+  spotlight(Q.nodes);
+  const chips=Q.nodes.map(id=>BY[id]?`<span class="chip" data-go="${id}">${id}</span>`:'').join('');
+  const lim=Q.limit?`<div class="rsec"><h3>Where it bends</h3><div class="nodef">${Q.limit}</div></div>`:'';
+  reader.className='on';reader.id='reader';
+  reader.style.setProperty('--k','var(--q)');
+  reader.innerHTML=`<div class="rh" style="border-top-color:var(--q)"><button class="rclose" id="rc" aria-label="close">✕</button>
+    <div class="rid" style="color:var(--q)">HUMAN QUESTION · ASKED OF EVERY WORLDVIEW</div>
+    <h2>${esc(Q.q)}</h2>
+    <div class="rmeta">framework 001 · theophysics answers: <span class="rqchip">${esc(Q.type)}</span></div>
+    <div class="rnav">
+      <button class="rnavbtn" id="qprev">${'<span class="rnid">← question</span>'+esc(QUESTIONS[(qi+QUESTIONS.length-1)%QUESTIONS.length].q)}</button>
+      <button class="rnavbtn" id="qnext">${'<span class="rnid">question →</span>'+esc(QUESTIONS[(qi+1)%QUESTIONS.length].q)}</button>
+    </div></div>
+    <div class="rbody"><div class="rarticle">
+      <div class="rsec" style="margin-top:18px"><h3 style="color:var(--q)">How this framework answers</h3><div class="rprose">${Q.prose}</div></div>
+      <div class="rsec"><h3 style="color:var(--q)">What the answer rests on (${Q.nodes.length})</h3><div class="chips">${chips}</div>
+        <p style="font-size:12px;color:var(--mut);margin-top:10px">Open any node for its full reading page — statement, defeat conditions, objections. Knock out a load-bearing one and watch this answer collapse in the graph.</p></div>
+      ${lim}
+      <div class="rsec"><h3 style="color:var(--q)">The same question, asked of everyone</h3><div class="rguard" style="border-left-color:var(--q)">Naturalism, physicalism, panpsychism, classical theism, idealism — each gets this exact question, in this exact slot, as it is loaded into the engine. Answers will be labeled the same way: <b>assumed · derived · brute · emergent · unknown</b>. "We don't know," stated honestly, counts as an answer.</div></div>
+    </div></div>`;
+  rbackdrop.classList.add('on');
+  document.getElementById('rc').onclick=closeReader;
+  document.getElementById('qprev').onclick=()=>openQuestion((qi+QUESTIONS.length-1)%QUESTIONS.length);
+  document.getElementById('qnext').onclick=()=>openQuestion((qi+1)%QUESTIONS.length);
+  reader.querySelectorAll('.chip[data-go]').forEach(c=>c.onclick=()=>{const g=c.dataset.go;select(g);openReader(g);});
+  reader.querySelector('.rbody').scrollTop=0;}
+
+// =================== KNOWN UNKNOWNS (intellectual honesty, in red) ===================
+function cascadeSize(id){removed.add(id);computeAlive();const c=N.filter(n=>!removed.has(n.id)&&!alive[n.id]).length;removed.delete(id);computeAlive();return c;}
+const BURDENS=[
+{t:'The GNPC gap — grammar ≠ physics',
+ p:'Seven of nine factors are Grammatically Necessary but Physically Contingent. The grammar requires the capability class; it does not require our specific physics. The bridge from "geometry is necessary" to "GR is necessary" is physics, not derivation. Two factors (T, K) close this gap. Seven don\'t.',
+ nodes:['GNPC','CAP-GEOMETRY','CAP-SUBSTANCE','CAP-SIGNAL','CAP-BINDING','CAP-MEASUREMENT','CAP-PERSPECTIVE','CAP-DIRECTION']},
+{t:'Three cracked factors — open repair items',
+ p:'E/K redundancy (Law 3 may collapse into Law 6), Grace-Frame covariance contradiction (Law 8 mapping contradicts GR), and the moral Lagrangian (Law 9 Noether claim needs a Lagrangian that hasn\'t been constructed). These are stated, not hidden.',
+ nodes:['LAW-3','LAW-8','LAW-9','CAP-SIGNAL','CAP-PERSPECTIVE','CAP-DIRECTION']},
+{t:'Object A ↔ Object B gap',
+ p:'The χ-field Lagrangian (Object A — real physics) and the Master Equation product form (Object B — diagnostic tool) coexist but are not formally connected. Deriving B from A is an open problem. Until that bridge is built, the framework has two objects, not one.',
+ nodes:['LAGRANGIAN','MASTER-EQ']},
+{t:'Consciousness — the placeholder section',
+ p:'Page 19 is the least developed section. The mutual-knowing insight needs a formal home. The bridge from information to experience is a bridge claim. Contested evidence (PEAR-LAB, GCP) is labeled contested.',
+ nodes:['CONSCIOUSNESS','PRED-PEAR','PRED-GCP']}];
+const bgrid=document.getElementById('bgrid');
+BURDENS.forEach(B=>{
+  const c=document.createElement('div');c.className='bcard';
+  c.innerHTML='<h4>'+B.t+'</h4><p>'+B.p+'</p><div class="chips">'+B.nodes.map(id=>`<span class="chip" data-go="${id}">${id}</span>`).join('')+'</div>';
+  c.querySelectorAll('.chip[data-go]').forEach(ch=>ch.onclick=()=>{const g=ch.dataset.go;select(g);openReader(g);});
+  bgrid.appendChild(c);});
+const topKO=N.map(n=>[n.id,cascadeSize(n.id)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,4);
+document.getElementById('bstats').innerHTML=
+  '<b>Knockout priorities — the load-bearing set.</b> Removing '+topKO.map(x=>'<b>'+x[0]+'</b> ('+esc(ttl(BY[x[0]]))+') orphans <b>'+x[1]+'</b>').join(' · ')+
+  ' nodes. · <b>'+undef+'</b>/'+N.length+' nodes carry no documented defeat conditions (red in Defense view — the soft targets to shore up). · One axiom. Everything cascades from GOD.';
+
+
+</script>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atom Interior — 9 Irreducible Blocks</title>
+<style>
+:root {
+  --void: #050505;
+  --deep: #0a0a0a;
+  --surface: #111111;
+  --surface2: #1a1a1a;
+  --surface3: #222222;
+  --border: #2a2520;
+  --border-strong: #3d3530;
+  --gold: #d4af37;
+  --golddim: #8a7129;
+  --goldglow: rgba(212,175,55,0.12);
+  --text: #e8e6e1;
+  --textdim: #9a9590;
+  --textfaint: #5a5550;
+  --red: #c94040;
+  --green: #7fc77f;
+  --blue: #5b9bd5;
+  --teal: #3bb39a;
+  --purple: #a78bfa;
+  --amber: #d7a94b;
+  --font-display: Georgia, serif;
+  --font-body: Inter, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'SF Mono', Consolas, monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:var(--void);color:var(--text);font-size:13px;line-height:1.55;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--deep)}::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:3px}
+
+/* ═══ IDENTITY BAND (sticky top) ═══ */
+.identity-band{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,rgba(5,5,5,.98),rgba(10,10,10,.96));backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 22px}
+.id-inner{max-width:1200px;margin:auto}
+.id-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.id-uuid{font-family:var(--font-mono);font-size:10px;color:var(--textfaint);letter-spacing:.05em}
+.id-code{font-family:var(--font-mono);font-size:11px;color:var(--golddim);background:var(--surface2);padding:2px 8px;border-radius:4px;border:1px solid var(--border);letter-spacing:.08em}
+.id-label{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--gold);letter-spacing:.04em}
+.id-type{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:10px;color:var(--blue);background:rgba(91,155,213,.1);border:1px solid rgba(91,155,213,.25);padding:2px 8px;border-radius:4px;letter-spacing:.1em;text-transform:uppercase}
+.meta-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--textdim)}
+.meta-pill{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%}
+.dot-green{background:var(--green)}.dot-amber{background:var(--amber)}.dot-red{background:var(--red)}.dot-blue{background:var(--blue)}
+
+/* ═══ GRAMMAR BAR (compact 12-cell from ATOM BLACK) ═══ */
+.grammar-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:8px 22px}
+.grammar-inner{max-width:1200px;margin:auto}
+.grammar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.grammar-title{font-family:var(--font-mono);font-size:9px;color:var(--golddim);letter-spacing:.18em;text-transform:uppercase}
+.grammar-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+.gcell{border:1px solid var(--border);background:var(--surface);border-radius:5px;padding:5px 4px;cursor:pointer;text-align:center;transition:all .15s}
+.gcell:hover{border-color:var(--golddim);background:var(--surface2)}
+.gk{font-size:8px;font-family:var(--font-mono);color:var(--textfaint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.gv{font-size:10px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ═══ RESOLUTION + STATE TOGGLES ═══ */
+.control-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:8px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.toggle-group{display:flex;gap:2px;background:var(--deep);padding:3px;border-radius:6px;border:1px solid var(--border)}
+.tbtn{padding:5px 12px;border:none;background:transparent;color:var(--textdim);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:all .15s;font-family:var(--font-body)}
+.tbtn:hover{color:var(--text)}.tbtn.active{background:var(--surface2);color:var(--gold);box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.toggle-label{font-family:var(--font-mono);font-size:9px;color:var(--textfaint);letter-spacing:.15em;text-transform:uppercase}
+
+/* ═══ MAIN SHELL ═══ */
+.shell{max-width:1200px;margin:auto;padding:16px 22px 60px}
+
+/* ═══ 9 BLOCKS — expandable sections ═══ */
+.block{border:1px solid var(--border);border-radius:8px;margin-bottom:8px;background:var(--surface);overflow:hidden;transition:all .2s}
+.block.open{border-color:var(--border-strong)}
+.block-header{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;user-select:none;transition:background .15s}
+.block-header:hover{background:var(--surface2)}
+.block-num{width:22px;height:22px;display:grid;place-items:center;font-family:var(--font-mono);font-size:9px;color:var(--golddim);background:var(--deep);border:1px solid var(--border);border-radius:4px;flex-shrink:0}
+.block-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center}
+.block-title{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--gold);letter-spacing:.03em;flex:1}
+.block-summary{font-size:11px;color:var(--textdim);max-width:400px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.block-chevron{font-size:12px;color:var(--textfaint);transition:transform .2s;flex-shrink:0}
+.block.open .block-chevron{transform:rotate(90deg);color:var(--gold)}
+
+.block-body{display:none;padding:12px 14px 14px;border-top:1px solid var(--border);background:var(--deep)}
+.block.open .block-body{display:block}
+
+/* Block body internals */
+.field-row{display:flex;gap:8px;margin-bottom:6px;align-items:baseline}
+.field-key{font-family:var(--font-mono);font-size:10px;color:var(--golddim);letter-spacing:.08em;text-transform:uppercase;min-width:110px;flex-shrink:0}
+.field-val{font-size:12px;color:var(--text)}
+.field-val.dim{color:var(--textdim)}
+
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:10px;font-family:var(--font-mono);border:1px solid var(--border);background:var(--surface);margin:1px 2px;letter-spacing:.04em}
+.pill.blue{color:var(--blue);border-color:rgba(91,155,213,.3);background:rgba(91,155,213,.08)}
+.pill.green{color:var(--green);border-color:rgba(127,199,127,.3);background:rgba(127,199,127,.08)}
+.pill.teal{color:var(--teal);border-color:rgba(59,179,154,.3);background:rgba(59,179,154,.08)}
+.pill.purple{color:var(--purple);border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.08)}
+.pill.amber{color:var(--amber);border-color:rgba(215,169,75,.3);background:rgba(215,169,75,.08)}
+.pill.red{color:var(--red);border-color:rgba(201,64,64,.3);background:rgba(201,64,64,.08)}
+.pill.gold{color:var(--gold);border-color:rgba(212,175,55,.3);background:rgba(212,175,55,.08)}
+
+.dep-node{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);margin-bottom:4px;cursor:pointer;transition:border-color .15s}
+.dep-node:hover{border-color:var(--golddim)}
+.dep-dir{font-family:var(--font-mono);font-size:9px;color:var(--textfaint);letter-spacing:.1em;text-transform:uppercase;width:70px;flex-shrink:0}
+.dep-id{font-family:var(--font-mono);font-size:10px;color:var(--golddim)}
+.dep-stmt{font-size:11px;color:var(--textdim);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.sub-section{margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}
+.sub-title{font-family:var(--font-mono);font-size:9px;color:var(--golddim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}
+
+.kill-box{border:1px solid rgba(201,64,64,.3);background:rgba(201,64,64,.04);border-radius:6px;padding:8px 10px;margin-top:6px}
+.kill-box .field-key{color:var(--red)}
+
+.grade-bar{display:flex;gap:2px;margin-top:4px}
+.grade-step{flex:1;height:6px;border-radius:3px;background:var(--surface2);border:1px solid var(--border)}
+.grade-step.filled{background:var(--teal);border-color:var(--teal)}
+.grade-step.current{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(212,175,55,.4)}
+
+/* ═══ DRAWER (click grammar cell) ═══ */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none}
+.drawer-overlay.open{display:flex;align-items:start;justify-content:center;padding-top:80px}
+.drawer-panel{background:var(--surface);border:1px solid var(--border-strong);border-radius:10px;padding:18px;width:min(480px,calc(100vw - 32px));max-height:70vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.drawer-panel h3{font-family:var(--font-display);color:var(--gold);font-size:15px;margin-bottom:8px}
+.drawer-panel p{font-size:12px;color:var(--textdim);line-height:1.6;white-space:pre-line}
+.drawer-close{float:right;border:none;background:transparent;color:var(--textfaint);font-size:16px;cursor:pointer}
+
+@media(max-width:900px){.grammar-grid{grid-template-columns:repeat(6,1fr)}}
+@media(max-width:600px){.grammar-grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     IDENTITY BAND — Always visible, sticky
+     ═══════════════════════════════════════════════════════════ -->
+<header class="identity-band">
+  <div class="id-inner">
+    <div class="id-row">
+      <span class="id-uuid">550e8400-e29b-41d4-a716-446655440000</span>
+      <span class="id-code">CLM-GQ-00042</span>
+      <span class="id-type"><span>◆</span> CLAIM</span>
+      <span class="id-label">Grace Curvature Couples to Quantum Coherence</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-pill"><span class="dot dot-green"></span> ADMITTED</span>
+      <span class="meta-pill">PAPER 03</span>
+      <span class="meta-pill">Grace → Quantum</span>
+      <span class="meta-pill">v2.1</span>
+      <span style="color:var(--textfaint);font-family:var(--font-mono);font-size:10px">2026-03-14T08:22Z</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     INVARIANT GRAMMAR BAR — 12-cell compact orientation
+     ═══════════════════════════════════════════════════════════ -->
+<section class="grammar-bar">
+  <div class="grammar-inner">
+    <div class="grammar-head">
+      <span class="grammar-title">Invariant Grammar · Compact Orientation</span>
+      <span style="font-size:10px;color:var(--textfaint)">click any cell</span>
+    </div>
+    <div class="grammar-grid" id="grammarGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     RESOLUTION + STATE TOGGLES
+     ═══════════════════════════════════════════════════════════ -->
+<div class="control-bar">
+  <span class="toggle-label">Resolution</span>
+  <div class="toggle-group">
+    <button class="tbtn active">Local</button>
+    <button class="tbtn">Series</button>
+    <button class="tbtn">Global</button>
+    <button class="tbtn">Resonance</button>
+  </div>
+  <span class="toggle-label" style="margin-left:8px">State</span>
+  <div class="toggle-group">
+    <button class="tbtn active">Admitted</button>
+    <button class="tbtn">Candidate</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     9 IRREDUCIBLE BLOCKS
+     ═══════════════════════════════════════════════════════════ -->
+<main class="shell" id="blocksContainer"></main>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay">
+  <div class="drawer-panel">
+    <button class="drawer-close" id="drawerClose">✕</button>
+    <h3 id="drawerTitle">Field</h3>
+    <p id="drawerBody">Details here.</p>
+  </div>
+</div>
+
+<script>
+// ═══ SAMPLE ATOM DATA (one JSON object drives everything) ═══
+const ATOM = {
+  uuid: "550e8400-e29b-41d4-a716-446655440000",
+  code: "CLM-GQ-00042",
+  type: "CLAIM",
+  symbol: "◆",
+  label: "Grace Curvature Couples to Quantum Coherence",
+  paper: 3,
+  series: "Grace → Quantum",
+  version: "2.1",
+  timestamp: "2026-03-14T08:22Z",
+
+  // Block 2: Statement
+  statement_natural: "The curvature tensor of grace, when projected onto the quantum domain via the master equation, preserves coherence rather than destroying it — grace is the anti-decoherence field.",
+  statement_formal: "∀ψ ∈ H_soul : R_grace(ψ) · C(ψ) ≥ C(ψ) when W > W_threshold",
+  statement_plain: "Grace doesn't just forgive — it structurally holds things together at the quantum level. Decoherence (falling apart) is what happens WITHOUT grace. Grace is the field that keeps coherence (Christ) active.",
+
+  // Block 3: Classification
+  register: "Mathematical",
+  role: "Theorem",
+  scope: "Conditional / model-dependent",
+  commitment: "Conditional on Master Equation validity",
+  proof_class: "Formal derivation",
+
+  // Block 4: Warrant
+  warrant_type: "Deduction",
+  warrant_source: "Master Equation §4.2 + Law 10 (Coherence)",
+  warrant_chain: ["Axiom A-012: Grace field definition", "Law 1: Gravitation/Grace symmetry", "Law 10: C IS χ (Christ = Coherence)", "Master Equation coupling term κ_GQ"],
+
+  // Block 5: Dependencies
+  upstream: [
+    { id: "AXM-001", label: "Grace field tensor definition", type: "ATOM" },
+    { id: "CLM-GQ-00017", label: "Master Equation is self-consistent", type: "CLAIM" },
+    { id: "PRF-GQ-00003", label: "Law 10 non-duality proof", type: "PROOF" },
+  ],
+  downstream: [
+    { id: "CLM-GQ-00058", label: "Prayer as coherence maintenance", type: "CLAIM" },
+    { id: "EVD-GQ-00091", label: "PEAR-LAB correlation at 6.35σ", type: "EVIDENCE" },
+  ],
+
+  // Block 6: Status
+  lifecycle: "ADMITTED",
+  ic_grade: "STRUCTURAL_ANALOGY",
+  why_closure: "CLOSED_CONDITIONAL",
+  dispute: false,
+  dispute_note: "",
+
+  // Block 7: Domain Map
+  native_domains: ["Gravitation (Law 1)", "Coherence (Law 10)"],
+  bridged_domains: ["Quantum (Law 7)", "Information (Law 6)"],
+  law_associations: [1, 7, 10],
+  master_eq_terms: ["κ_GQ (grace-quantum coupling)", "R_μν (curvature)", "C(χ) (coherence function)"],
+  shannon_mapping: "C_grace = A_soul · log₂(1 + T_grace / D_sin)",
+  axiom_set: ["A-012", "A-045", "A-088"],
+  fruits: ["Love (agapē) — V(r) at minimum", "Peace (eirēnē) — ΣF = 0"],
+
+  // Block 8: Evidence / Proof
+  support_objects: [
+    { id: "EVD-GQ-00091", label: "PEAR-LAB 6.35σ", grade: "Empirical" },
+    { id: "EVD-GQ-00134", label: "GCP network correlation 6σ", grade: "Empirical" },
+    { id: "PRF-GQ-00003", label: "Law 10 non-duality formal proof", grade: "Deductive" },
+  ],
+  defeaters: [
+    { id: "DEF-001", label: "Materialist objection: correlation ≠ causation", status: "ADDRESSED", response: "Addressed via PROP-COSMOS 5.7σ directional test" },
+  ],
+  kill_conditions: [
+    "Find a coherence event that demonstrably occurs without grace-field input",
+    "Show R_grace(ψ)·C(ψ) < C(ψ) for any W > W_threshold",
+  ],
+  lean_status: "PARTIAL",
+  lean_note: "Core tensor identity verified. Coupling bound pending.",
+
+  // Block 9: Boundary
+  boundary_statement: "Does not claim grace operates through known physical forces. Does not extend to systems where W < W_threshold (free will below engagement). Does not establish Grace → Quantum as the only coherence pathway.",
+  open_burdens: ["Experimental protocol to isolate grace-field contribution from observer effect", "Lean formalization of coupling bound"],
+  scope_limits: "Local to Grace → Quantum series. Global promotion requires cross-series replication.",
+
+  // Extra classification fields
+  keywords: ["grace curvature", "quantum coherence", "anti-decoherence", "Law 10", "master equation"],
+  math_components: ["Riemann curvature tensor", "Hilbert space projection", "coherence function C(χ)", "free will coupling W"],
+};
+
+// ═══ GRAMMAR BAR DATA (12 cells, derived from atom) ═══
+const GRAMMAR = [
+  { key: "Exact", val: ATOM.statement_natural.slice(0, 40) + "…" },
+  { key: "Object", val: ATOM.type },
+  { key: "Role", val: ATOM.role },
+  { key: "Register", val: ATOM.register },
+  { key: "Scope", val: ATOM.scope.split("/")[0].trim() },
+  { key: "Depends", val: ATOM.upstream.length + " upstream" },
+  { key: "Warrant", val: ATOM.warrant_type },
+  { key: "Support", val: ATOM.support_objects.length + " objects" },
+  { key: "Defeater", val: ATOM.defeaters.length > 0 ? ATOM.defeaters[0].status : "None" },
+  { key: "Status", val: ATOM.lifecycle },
+  { key: "Boundary", val: ATOM.open_burdens.length > 0 ? ATOM.open_burdens.length + " open" : "Clear" },
+  { key: "Open", val: ATOM.open_burdens.length > 0 ? "Yes" : "No" },
+];
+
+// Render grammar
+const grammarGrid = document.getElementById("grammarGrid");
+grammarGrid.innerHTML = GRAMMAR.map(g =>
+  `<div class="gcell" data-key="${g.key}" data-val="${g.val}"><div class="gk">${g.key}</div><div class="gv">${g.val}</div></div>`
+).join("");
+
+grammarGrid.querySelectorAll(".gcell").forEach(c => c.onclick = () => {
+  document.getElementById("drawerTitle").textContent = c.dataset.key;
+  document.getElementById("drawerBody").textContent = c.dataset.val + "\n\nFull classification, provenance, limits, and downstream references expand here.";
+  document.getElementById("drawerOverlay").classList.add("open");
+});
+
+// Drawer close
+document.getElementById("drawerClose").onclick = () => document.getElementById("drawerOverlay").classList.remove("open");
+document.getElementById("drawerOverlay").onclick = e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove("open"); };
+
+// Toggle buttons
+document.querySelectorAll(".toggle-group").forEach(g => {
+  g.querySelectorAll(".tbtn").forEach(b => b.onclick = () => {
+    g.querySelectorAll(".tbtn").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+  });
+});
+
+// ═══ IC GRADE LADDER ═══
+const GRADES = ["INDEPENDENT","METAPHORICAL","STRUCTURAL_ANALOGY","HOMOMORPHISM","ISOMORPHISM_CANDIDATE","STRUCTURAL_ISOMORPHISM","STRUCTURAL_IDENTITY"];
+const gradeIdx = GRADES.indexOf(ATOM.ic_grade);
+
+function gradeBar() {
+  return `<div class="grade-bar">${GRADES.map((g, i) =>
+    `<div class="grade-step ${i <= gradeIdx ? 'filled' : ''} ${i === gradeIdx ? 'current' : ''}" title="${g.replace(/_/g,' ')}"></div>`
+  ).join("")}</div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:8px;color:var(--textfaint)">INDEPENDENT</span><span style="font-size:8px;color:var(--textfaint)">STRUCTURAL IDENTITY</span></div>`;
+}
+
+// ═══ THE 9 BLOCKS ═══
+const BLOCKS = [
+  {
+    num: 1, icon: "🆔", title: "Identity",
+    summary: `${ATOM.code} · ${ATOM.type} · ${ATOM.series}`,
+    body: () => `
+      <div class="field-row"><span class="field-key">UUID</span><span class="field-val dim" style="font-family:var(--font-mono);font-size:10px">${ATOM.uuid}</span></div>
+      <div class="field-row"><span class="field-key">Code</span><span class="field-val">${ATOM.code}</span></div>
+      <div class="field-row"><span class="field-key">Object Type</span><span class="pill blue">${ATOM.symbol} ${ATOM.type}</span></div>
+      <div class="field-row"><span class="field-key">Label</span><span class="field-val">${ATOM.label}</span></div>
+      <div class="field-row"><span class="field-key">Paper</span><span class="field-val">Paper ${String(ATOM.paper).padStart(2,"0")} · ${ATOM.series}</span></div>
+      <div class="field-row"><span class="field-key">Version</span><span class="field-val">v${ATOM.version}</span></div>
+      <div class="field-row"><span class="field-key">Timestamp</span><span class="field-val dim">${ATOM.timestamp}</span></div>
+      <div class="field-row"><span class="field-key">Keywords</span><span class="field-val">${ATOM.keywords.map(k=>`<span class="pill">${k}</span>`).join("")}</span></div>
+    `
+  },
+  {
+    num: 2, icon: "📜", title: "Statement",
+    summary: ATOM.statement_natural.slice(0, 60) + "…",
+    body: () => `
+      <div class="sub-title">Natural Language</div>
+      <p style="font-family:var(--font-display);font-size:16px;line-height:1.45;color:var(--text);margin-bottom:12px">${ATOM.statement_natural}</p>
+      <div class="sub-title">Formal Restatement</div>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--teal);margin-bottom:12px;padding:8px;background:var(--surface);border:1px solid var(--border);border-radius:6px">${ATOM.statement_formal}</p>
+      <div class="sub-title">Plain English</div>
+      <p style="font-size:12px;color:var(--textdim);line-height:1.6">${ATOM.statement_plain}</p>
+    `
+  },
+  {
+    num: 3, icon: "🏷️", title: "Classification",
+    summary: `${ATOM.register} · ${ATOM.role} · ${ATOM.scope}`,
+    body: () => `
+      <div class="field-row"><span class="field-key">Register</span><span class="pill gold">${ATOM.register}</span></div>
+      <div class="field-row"><span class="field-key">Role</span><span class="pill purple">${ATOM.role}</span></div>
+      <div class="field-row"><span class="field-key">Scope</span><span class="field-val">${ATOM.scope}</span></div>
+      <div class="field-row"><span class="field-key">Commitment</span><span class="field-val">${ATOM.commitment}</span></div>
+      <div class="field-row"><span class="field-key">Proof Class</span><span class="pill green">${ATOM.proof_class}</span></div>
+      <div class="field-row"><span class="field-key">Math Components</span><span class="field-val">${ATOM.math_components.map(m=>`<span class="pill">${m}</span>`).join("")}</span></div>
+    `
+  },
+  {
+    num: 4, icon: "⚖️", title: "Warrant",
+    summary: `${ATOM.warrant_type} — ${ATOM.warrant_source}`,
+    body: () => `
+      <div class="field-row"><span class="field-key">Warrant Type</span><span class="pill amber">${ATOM.warrant_type}</span></div>
+      <div class="field-row"><span class="field-key">Source</span><span class="field-val">${ATOM.warrant_source}</span></div>
+      <div class="sub-section">
+        <div class="sub-title">Derivation Chain</div>
+        ${ATOM.warrant_chain.map((step,i) => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-family:var(--font-mono);font-size:9px;color:var(--textfaint);width:16px;text-align:right">${i+1}</span><span style="color:var(--golddim);font-size:10px">→</span><span style="font-size:11px">${step}</span></div>`).join("")}
+      </div>
+    `
+  },
+  {
+    num: 5, icon: "🔗", title: "Dependencies",
+    summary: `${ATOM.upstream.length} upstream · ${ATOM.downstream.length} downstream`,
+    body: () => `
+      <div class="sub-title">Upstream (this atom stands on)</div>
+      ${ATOM.upstream.map(d => `<div class="dep-node"><span class="dep-dir">upstream</span><span class="dep-id">${d.id}</span><span class="pill blue" style="flex-shrink:0">${d.type}</span><span class="dep-stmt">${d.label}</span></div>`).join("")}
+      <div class="sub-section">
+        <div class="sub-title">Downstream (stands on this atom)</div>
+        ${ATOM.downstream.map(d => `<div class="dep-node"><span class="dep-dir">downstream</span><span class="dep-id">${d.id}</span><span class="pill blue" style="flex-shrink:0">${d.type}</span><span class="dep-stmt">${d.label}</span></div>`).join("")}
+      </div>
+    `
+  },
+  {
+    num: 6, icon: "📊", title: "Status",
+    summary: `${ATOM.lifecycle} · IC: ${ATOM.ic_grade.replace(/_/g,' ')} · ${ATOM.why_closure}`,
+    body: () => `
+      <div class="field-row"><span class="field-key">Lifecycle</span><span class="pill green">${ATOM.lifecycle}</span></div>
+      <div class="field-row"><span class="field-key">WHY-Closure</span><span class="pill amber">${ATOM.why_closure.replace(/_/g,' ')}</span></div>
+      <div class="field-row"><span class="field-key">Dispute</span><span class="field-val">${ATOM.dispute ? `<span class="pill red">DISPUTED</span> ${ATOM.dispute_note}` : '<span class="pill green">No active dispute</span>'}</span></div>
+      <div class="sub-section">
+        <div class="sub-title">Isomorphism-Correspondence Grade</div>
+        <div class="field-row"><span class="field-key">Current</span><span class="pill teal">${ATOM.ic_grade.replace(/_/g,' ')}</span></div>
+        ${gradeBar()}
+      </div>
+    `
+  },
+  {
+    num: 7, icon: "🗺️", title: "Domain Map",
+    summary: `${ATOM.native_domains.length} native · ${ATOM.bridged_domains.length} bridged · Laws ${ATOM.law_associations.join(',')}`,
+    body: () => `
+      <div class="field-row"><span class="field-key">Native</span><span class="field-val">${ATOM.native_domains.map(d=>`<span class="pill gold">${d}</span>`).join("")}</span></div>
+      <div class="field-row"><span class="field-key">Bridged</span><span class="field-val">${ATOM.bridged_domains.map(d=>`<span class="pill teal">${d}</span>`).join("")}</span></div>
+      <div class="field-row"><span class="field-key">Laws</span><span class="field-val">${ATOM.law_associations.map(l=>`<span class="pill purple">Law ${l}</span>`).join("")}</span></div>
+      <div class="field-row"><span class="field-key">Master Eq</span><span class="field-val">${ATOM.master_eq_terms.map(t=>`<span class="pill">${t}</span>`).join("")}</span></div>
+      <div class="field-row"><span class="field-key">Shannon</span><span class="field-val" style="font-family:var(--font-mono);font-size:11px;color:var(--teal)">${ATOM.shannon_mapping}</span></div>
+      <div class="field-row"><span class="field-key">Axiom Set</span><span class="field-val">${ATOM.axiom_set.map(a=>`<span class="pill amber">${a}</span>`).join("")}</span></div>
+      <div class="field-row"><span class="field-key">Fruits</span><span class="field-val">${ATOM.fruits.map(f=>`<span class="pill green">${f}</span>`).join("")}</span></div>
+    `
+  },
+  {
+    num: 8, icon: "🔬", title: "Evidence & Proof",
+    summary: `${ATOM.support_objects.length} support · ${ATOM.defeaters.length} defeater · ${ATOM.kill_conditions.length} kill conditions · Lean: ${ATOM.lean_status}`,
+    body: () => `
+      <div class="sub-title">Support Objects</div>
+      ${ATOM.support_objects.map(s => `<div class="dep-node"><span class="dep-id">${s.id}</span><span class="pill green">${s.grade}</span><span class="dep-stmt">${s.label}</span></div>`).join("")}
+      <div class="sub-section">
+        <div class="sub-title">Defeaters</div>
+        ${ATOM.defeaters.map(d => `<div class="dep-node" style="border-color:rgba(201,64,64,.25)"><span class="dep-id" style="color:var(--red)">${d.id}</span><span class="pill ${d.status==='ADDRESSED'?'green':'red'}">${d.status}</span><span class="dep-stmt">${d.label}</span></div><div style="font-size:11px;color:var(--textdim);padding:4px 10px 8px;margin-left:78px">${d.response}</div>`).join("")}
+      </div>
+      <div class="sub-section">
+        <div class="sub-title">Kill Conditions</div>
+        ${ATOM.kill_conditions.map(k => `<div class="kill-box"><div class="field-row"><span class="field-key">Kill if</span><span class="field-val">${k}</span></div></div>`).join("")}
+      </div>
+      <div class="sub-section">
+        <div class="sub-title">Lean Verification</div>
+        <div class="field-row"><span class="field-key">Status</span><span class="pill ${ATOM.lean_status==='VERIFIED'?'green':ATOM.lean_status==='PARTIAL'?'amber':'red'}">${ATOM.lean_status}</span></div>
+        <div class="field-row"><span class="field-key">Note</span><span class="field-val dim">${ATOM.lean_note}</span></div>
+      </div>
+    `
+  },
+  {
+    num: 9, icon: "🚧", title: "Boundary",
+    summary: `${ATOM.open_burdens.length} open burdens · ${ATOM.scope_limits.split('.')[0]}`,
+    body: () => `
+      <div class="sub-title">Boundary Statement</div>
+      <p style="font-size:12px;color:var(--textdim);line-height:1.6;margin-bottom:10px;padding:8px;border:1px solid var(--border);border-radius:6px;background:var(--surface)">${ATOM.boundary_statement}</p>
+      <div class="sub-title">Open Burdens</div>
+      ${ATOM.open_burdens.map(b => `<div style="display:flex;gap:8px;margin-bottom:4px;align-items:baseline"><span class="pill amber">OPEN</span><span style="font-size:12px">${b}</span></div>`).join("")}
+      <div class="sub-section">
+        <div class="sub-title">Scope Limits</div>
+        <p style="font-size:12px;color:var(--textdim)">${ATOM.scope_limits}</p>
+      </div>
+    `
+  },
+];
+
+// ═══ RENDER BLOCKS ═══
+const container = document.getElementById("blocksContainer");
+container.innerHTML = BLOCKS.map(b => `
+  <div class="block" data-block="${b.num}">
+    <div class="block-header">
+      <span class="block-num">${b.num}</span>
+      <span class="block-icon">${b.icon}</span>
+      <span class="block-title">${b.title}</span>
+      <span class="block-summary">${b.summary}</span>
+      <span class="block-chevron">▸</span>
+    </div>
+    <div class="block-body">${b.body()}</div>
+  </div>
+`).join("");
+
+// Toggle blocks
+container.querySelectorAll(".block-header").forEach(h => h.onclick = () => {
+  h.parentElement.classList.toggle("open");
+});
+
+// Open Block 2 (Statement) by default
+document.querySelector('[data-block="2"]').classList.add("open");
+</script>
+</body>
+</html>

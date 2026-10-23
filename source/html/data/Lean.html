@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lean 4 Atom Registry & Verification Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #11141a;
+      --elevated: #181c24;
+      --border: #232834;
+      --border-strong: #333a4c;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --text-mute: #64748b;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --gold: #d4af37;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+    }
+    .badge-verified {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: var(--green);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .badge-ai {
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: #c4b5fd;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .toolbar {
+      background: var(--elevated);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .search-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      width: 240px;
+    }
+    .filter-select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 8px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+    }
+    .btn {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn:hover {
+      background: var(--border);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .btn-gold {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+    }
+    .btn-gold:hover {
+      background: var(--gold);
+      color: #000;
+    }
+    .main-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr 420px;
+      flex: 1;
+      overflow: hidden;
+    }
+    /* LEFT RAIL */
+    .sidebar-left {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 12px;
+    }
+    .module-item {
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .module-item:hover, .module-item.active {
+      background: var(--elevated);
+      color: #fff;
+    }
+    /* CENTER SPREADSHEET */
+    .center-panel {
+      overflow-y: auto;
+      background: var(--bg);
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: var(--elevated);
+      border-bottom: 1px solid var(--border-strong);
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    table.data-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+    table.data-table tr:hover {
+      background: rgba(59, 130, 246, 0.05);
+      cursor: pointer;
+    }
+    table.data-table tr.selected {
+      background: rgba(59, 130, 246, 0.12);
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .pill-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
+    .pill-amber { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .pill-purple { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .pill-blue { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+    /* RIGHT DETAIL PANEL */
+    .sidebar-right {
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .code-box {
+      background: #050608;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #93c5fd;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+    .guardrail-box {
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .guardrail-proves {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #a7f3d0;
+    }
+    .guardrail-not-proves {
+      background: rgba(239, 68, 68, 0.06);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <span>⊢ LEAN 4 ATOM REGISTRY</span>
+      <span class="badge-verified">Build status shown per declaration</span>
+      <span class="badge-ai">AI Interpretations Guarded</span>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <button class="btn" onclick="fetchData()">⚡ Refresh</button>
+      <button class="btn btn-gold" onclick="exportSelected()">⚡ Export Selected Atom JSON</button>
+    </div>
+  </header>
+
+  <!-- TOOLBAR FILTERS -->
+  <div class="toolbar">
+    <input type="text" id="filter-search" class="search-input" placeholder="Search declarations, proofs..." oninput="applyFilters()">
+    <select id="filter-kind" class="filter-select" onchange="applyFilters()">
+      <option value="">All Kinds</option>
+      <option value="axiom">axiom</option>
+      <option value="theorem">theorem</option>
+      <option value="lemma">lemma</option>
+      <option value="def">def</option>
+      <option value="structure">structure</option>
+      <option value="class">class</option>
+      <option value="instance">instance</option>
+      <option value="inductive">inductive</option>
+    </select>
+    <select id="filter-status" class="filter-select" onchange="applyFilters()">
+      <option value="">All Build States</option>
+      <option value="PASSED">BUILT OK</option>
+      <option value="FAILED">BUILD FAILED</option>
+      <option value="NOT_BUILT">NOT BUILT</option>
+    </select>
+    <select id="filter-lane" class="filter-select" onchange="applyFilters()">
+      <option value="">All Lanes</option>
+    </select>
+    <select id="filter-trust" class="filter-select" onchange="applyFilters()">
+      <option value="">All Trust</option>
+      <option value="CLEAN">CLEAN</option>
+      <option value="CUSTOM_AXIOMS">CUSTOM_AXIOMS</option>
+      <option value="PROOF_ESCAPE">PROOF_ESCAPE</option>
+      <option value="AUDIT_REQUIRED">AUDIT_REQUIRED</option>
+    </select>
+    <span style="margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--text-mute);" id="count-label">
+      0 declarations loaded
+    </span>
+  </div>
+
+  <!-- MAIN 3-COLUMN WORKBENCH -->
+  <div class="main-layout">
+    <!-- LEFT: MODULES TREE -->
+    <aside class="sidebar-left">
+      <div class="section-title">Modules / Files</div>
+      <div id="modules-list"></div>
+    </aside>
+
+    <!-- CENTER: DECLARATION TABLE -->
+    <main class="center-panel">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Kind</th>
+            <th>Declaration Name</th>
+            <th>Namespace</th>
+            <th>Lane</th>
+            <th>Meaning (plain)</th>
+            <th>Build</th>
+            <th>Trust</th>
+            <th>Lines</th>
+          </tr>
+        </thead>
+        <tbody id="declarations-tbody"></tbody>
+      </table>
+    </main>
+
+    <!-- RIGHT: DETAIL & PROVENANCE PANEL -->
+    <aside class="sidebar-right" id="detail-panel">
+      <div style="color: var(--text-mute); text-align: center; margin-top: 40px;">
+        Select a declaration from the table to view formal verification facts and AI interpretations.
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    let allDeclarations = [];
+    let selectedDecl = null;
+    let selectedModule = null;
+
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/declarations');
+        const data = await res.json();
+        allDeclarations = data.declarations || [];
+        const lanes = [...new Set(allDeclarations.map(d => d.lane).filter(Boolean))].sort();
+        document.getElementById('filter-lane').innerHTML = '<option value="">All Lanes</option>' +
+          lanes.map(l => `<option value="${l}">${l}</option>`).join('');
+        renderModules();
+        applyFilters();
+      } catch (err) {
+        console.error("Failed to load data:", err);
+      }
+    }
+
+    function renderModules() {
+      const container = document.getElementById('modules-list');
+      const modules = new Set(allDeclarations.map(d => d.relative_path));
+      container.innerHTML = `
+        <div class="module-item ${!selectedModule ? 'active' : ''}" onclick="selectModule(null)">
+          <span>All Modules</span>
+          <span>${allDeclarations.length}</span>
+        </div>
+      `;
+      Array.from(modules).sort().forEach(mod => {
+        const count = allDeclarations.filter(d => d.relative_path === mod).length;
+        const item = document.createElement('div');
+        item.className = `module-item ${selectedModule === mod ? 'active' : ''}`;
+        item.onclick = () => selectModule(mod);
+        item.innerHTML = `<span>${mod}</span><span>${count}</span>`;
+        container.appendChild(item);
+      });
+    }
+
+    function selectModule(mod) {
+      selectedModule = mod;
+      renderModules();
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('filter-search').value.toLowerCase();
+      const kind = document.getElementById('filter-kind').value;
+      const status = document.getElementById('filter-status').value;
+      const trust = document.getElementById('filter-trust').value;
+      const lane = document.getElementById('filter-lane').value;
+
+      const filtered = allDeclarations.filter(d => {
+        if (selectedModule && d.relative_path !== selectedModule) return false;
+        if (kind && d.declaration_kind !== kind) return false;
+        if (status && (d.build_result || 'NOT_BUILT') !== status) return false;
+        if (lane && d.lane !== lane) return false;
+        if (trust && d.primary_trust_status !== trust) return false;
+        if (q) {
+          const hay = `${d.fully_qualified_name} ${d.formal_statement} ${d.namespace} ${d.meaning || ''}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById('count-label').textContent = `${filtered.length} of ${allDeclarations.length} declarations`;
+      renderTable(filtered);
+    }
+
+    function renderTable(list) {
+      const tbody = document.getElementById('declarations-tbody');
+      tbody.innerHTML = "";
+      list.forEach(d => {
+        const tr = document.createElement('tr');
+        if (selectedDecl && selectedDecl.id === d.id) tr.classList.add('selected');
+        tr.onclick = () => selectDeclaration(d);
+
+        let trustPill = `<span class="pill pill-green">CLEAN</span>`;
+        if (d.primary_trust_status === 'CUSTOM_AXIOMS') trustPill = `<span class="pill pill-amber">AXIOM</span>`;
+        else if (d.primary_trust_status === 'PROOF_ESCAPE') trustPill = `<span class="pill pill-red">SORRY/ESCAPE</span>`;
+
+        tr.innerHTML = `
+          <td><span class="pill pill-purple">${d.declaration_kind}</span></td>
+          <td style="font-family: var(--font-mono); font-weight: 600; color: #fff;">${d.declaration_name}</td>
+          <td style="font-family: var(--font-mono); font-size: 11px;">${d.namespace || '-'}</td>
+          <td>${d.lane ? `<span class="pill pill-amber">${d.lane}</span>` : '-'}</td>
+          <td style="font-size: 11px; color: var(--text-dim); max-width: 360px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${esc(d.meaning || '')}">${esc(d.meaning || '')}</td>
+          <td><span class="pill pill-blue">${d.build_result === 'PASSED' ? 'BUILT OK' : d.build_result ? 'BUILD ' + d.build_result : 'NOT BUILT'}</span></td>
+          <td>${trustPill}</td>
+          <td style="font-family: var(--font-mono); font-size: 11px;">L${d.start_line || '?'}-${d.end_line || '?'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function selectDeclaration(d) {
+      selectedDecl = d;
+      applyFilters(); // updates row selection highlight
+      const p = document.getElementById('detail-panel');
+
+      p.innerHTML = `
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+            <span class="pill pill-purple">${d.declaration_kind.toUpperCase()}</span>
+            ${d.build_result === 'PASSED' ? '<span class="badge-verified">Built by Lean</span>' : '<span class="badge-ai">Not built yet</span>'}
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: #fff;">
+            ${d.fully_qualified_name}
+          </div>
+          <div style="font-size: 11px; color: var(--text-mute); margin-top: 2px;">
+            ${d.relative_path} (Lines ${d.start_line}–${d.end_line})
+          </div>
+        </div>
+
+        ${d.meaning ? `
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div class="section-title" style="color: #c4b5fd;">What it shows (plain)</div>
+              <span class="badge-ai">Explanation, not evidence</span>
+            </div>
+            <div style="font-size: 13px; line-height: 1.5;">${esc(d.meaning)}</div>
+            ${d.brief_md ? `<button class="btn" style="margin-top: 8px;" onclick="openBrief('${d.brief_md}')">📄 Read the full brief: ${esc(d.brief_title || d.relative_path)}</button>` : ''}
+          </div>` : ''}
+
+        <div>
+          <div class="section-title">Formal Statement</div>
+          <div class="code-box">${d.formal_statement}</div>
+        </div>
+
+        ${d.proof_script ? `
+          <div>
+            <div class="section-title">Proof Body / Tactic Script</div>
+            <div class="code-box" style="color: #c4b5fd;">:= ${d.proof_script}</div>
+          </div>
+        ` : ''}
+
+        <div>
+          <div class="section-title">Links</div>
+          <div style="font-size: 11px;">
+            ${d.lane ? `<div>Lane: <span class="pill pill-amber">${d.lane}</span> <span style="color: var(--text-mute);">(inferred from names; review)</span></div>` : ''}
+            ${linkList('Uses', d.uses)}
+            ${linkList('Used by', d.used_by)}
+            <div style="color: var(--text-mute); margin-top: 4px;">Mentioned in ${d.mention_count || 0} file(s) on other nodes</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">Trust & Boundary Findings</div>
+          <div style="background: var(--elevated); border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-size: 11px;">
+            <div>Status: <strong>${d.primary_trust_status || 'NOT AUDITED'}</strong></div>
+            <div style="color: var(--text-dim); margin-top: 4px;">Sorries: ${d.sorry_count || 0} | Admits: ${d.admit_count || 0}</div>
+            <div style="color: var(--text-mute); font-family: var(--font-mono); font-size: 10px; margin-top: 4px;">
+              Receipt: ${d.receipt_hash || 'none (run verify)'}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="section-title" style="color: #c4b5fd;">Semantic Interpretation</div>
+            <span class="badge-ai">AI Proposed</span>
+          </div>
+          <div class="guardrail-box guardrail-proves" style="margin-bottom: 8px;">
+            <strong>✓ Proves (System Scope):</strong> ${d.build_result === 'PASSED' ? 'Lean accepted this derivation from its stated assumptions.' : 'Nothing yet: this declaration has not been compiled.'}
+          </div>
+          <div class="guardrail-box guardrail-not-proves">
+            <strong>✕ Does NOT Prove:</strong>
+            ${(d.brief_does_not_prove && d.brief_does_not_prove.length)
+              ? '<ul style="margin: 4px 0 0 16px;">' + d.brief_does_not_prove.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>'
+              : 'Does not establish physical instantiation, empirical cross-domain bridge, or theological canon truth.'}
+          </div>
+        </div>
+
+        <div style="margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border);">
+          <button class="btn btn-gold" style="width: 100%; justify-content: center;" onclick="exportSelected()">
+            ⚡ Export Standard Atom JSON
+          </button>
+        </div>
+      `;
+    }
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function linkList(label, ids) {
+      if (!ids || !ids.length) return `<div style="color: var(--text-mute);">${label}: none</div>`;
+      return `<div style="margin-top: 4px;">${label} (${ids.length}): ` + ids.map(id => {
+        const short = id.split('/').pop();
+        return `<a href="#" style="color: #93c5fd; font-family: var(--font-mono);" onclick="jumpTo('${id}'); return false;">${esc(short)}</a>`;
+      }).join(', ') + '</div>';
+    }
+
+    function jumpTo(nodeId) {
+      const d = allDeclarations.find(x => x.node_id === nodeId);
+      if (d) { selectedModule = null; renderModules(); selectDeclaration(d); }
+    }
+
+    async function openBrief(name) {
+      const res = await fetch(`/api/brief?name=${encodeURIComponent(name)}`);
+      const data = await res.json();
+      const w = window.open('', '_blank');
+      if (!w) { alert(data.markdown || data.error); return; }
+      w.document.write(`<title>${esc(name)}</title><body style="background:#0f1115;color:#e5e7eb;font:15px/1.6 system-ui;max-width:860px;margin:32px auto;padding:0 16px;white-space:pre-wrap">${esc(data.markdown || data.error)}</body>`);
+    }
+
+    async function exportSelected() {
+      if (!selectedDecl) {
+        alert("Please select a declaration first.");
+        return;
+      }
+      try {
+        const res = await fetch(`/api/export?id=${encodeURIComponent(selectedDecl.id)}`, { method: 'POST' });
+        const data = await res.json();
+        alert(`Exported Atom JSON successfully!\\nPath: ${data.path}`);
+      } catch (err) {
+        alert("Export failed: " + err.message);
+      }
+    }
+
+    fetchData();
+  </script>
+</body>
+</html>

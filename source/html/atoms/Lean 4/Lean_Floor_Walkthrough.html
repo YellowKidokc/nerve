@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lean Floor Walkthrough — V2</title>
+<style>
+:root{color-scheme:dark;--bg:#0f1114;--panel:#171b21;--well:#0c0e12;--line:#343b45;--ink:#eef1f4;--muted:#a3aeba;--gold:#e6c069;--gold-dim:#8a7440;--green:#8bd5ba;--red:#ff9f99;--amber:#f0b35b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.55 Georgia,"Iowan Old Style",serif}
+header{padding:16px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+h1{font-size:22px;margin:0;font-weight:400}h1 em{color:var(--gold);font-style:normal}
+h2{font-size:20px;font-weight:400;margin:0 0 4px}
+.badge{border:1px solid var(--gold-dim);border-radius:30px;padding:4px 12px;font-size:12.5px;color:var(--gold)}
+.badge.red{border-color:#7a3f3f;color:var(--red)}.badge.green{border-color:#3f6b5b;color:var(--green)}.badge.amber{border-color:#6f5630;color:var(--amber)}
+.notice{max-width:1240px;margin:18px auto 0;padding:10px 14px;border:1px solid var(--gold-dim);background:#1c1a14;font-size:14px;color:var(--muted)}
+.notice b{color:var(--ink)}
+.steps{max-width:1240px;margin:16px auto;display:grid;grid-template-columns:repeat(6,1fr);border:1px solid var(--line)}
+.steps button{all:unset;cursor:pointer;padding:12px 14px;border-right:1px solid var(--line);font-family:system-ui,sans-serif}
+.steps button:last-child{border-right:0}
+.steps small{display:block;color:var(--muted);font-size:11.5px;letter-spacing:.06em}
+.steps b{display:block;font-size:13.5px;font-weight:600;margin:2px 0}
+.steps span{font-size:12px;color:var(--muted)}
+.steps button.on{background:#1c2230;box-shadow:inset 0 -2px 0 var(--gold)}
+.steps button.done b{color:var(--green)}
+.steps button:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+main{max-width:1240px;margin:0 auto 60px;display:grid;grid-template-columns:1fr 340px;gap:20px;padding:0 20px}
+.pane{background:var(--panel);border:1px solid var(--line);padding:18px 20px}
+.pane h3{font-size:13px;letter-spacing:.08em;color:var(--gold);margin:0 0 6px;font-family:system-ui,sans-serif;font-weight:600}
+p{color:var(--muted);margin:6px 0 12px}
+label{display:block;font-size:13.5px;color:#c6cfd8;margin:10px 0;font-family:system-ui,sans-serif}
+input,textarea,select{display:block;width:100%;padding:8px 10px;border:1px solid #444e5a;border-radius:3px;background:var(--well);color:var(--ink);font:14px/1.5 ui-monospace,Menlo,monospace;margin-top:4px}
+textarea{min-height:64px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+button{padding:8px 13px;background:#262d37;border:1px solid #515c69;border-radius:3px;font:13.5px/1.4 system-ui,sans-serif;color:var(--ink);cursor:pointer}
+button:hover{background:#354050}
+button.primary{background:var(--gold);color:#141517;border-color:var(--gold);font-weight:600}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.check{border-top:1px solid var(--line);padding:12px 0}
+.check .row{display:grid;grid-template-columns:44px 1fr 170px;gap:12px;align-items:start}
+.check .id{color:var(--gold);font-family:ui-monospace,monospace;font-size:14px;padding-top:4px}
+.check .name{font-weight:600;font-family:system-ui,sans-serif;font-size:14px}
+.check .what{font-size:13.5px;color:var(--muted);margin:2px 0 0}
+.check .expect{font-size:12.5px;color:var(--amber);margin-top:2px}
+.check select{margin:0}
+.check details{margin:8px 0 0;padding:0 0 4px 56px}
+.check summary{font-size:12.5px;color:var(--muted);cursor:pointer;font-family:system-ui,sans-serif}
+.st-PASS{border-left:3px solid var(--green)}.st-FAIL{border-left:3px solid var(--red)}.st-NOT_RUN{border-left:3px solid var(--amber)}.st-NOT_APPLICABLE{border-left:3px solid var(--line)}
+.side .label{font-size:19px;padding:14px;border:1px solid var(--line);background:var(--well);margin:6px 0 10px;font-family:system-ui,sans-serif;line-height:1.35}
+.side .label.vc{border-color:#3f6b5b;color:var(--green)}.side .label.pd{border-color:#6f5630;color:var(--amber)}.side .label.cf{border-color:#7a3f3f;color:var(--red)}.side .label.cb{border-color:#7a3f3f;color:var(--red)}.side .label.dn{border-color:var(--line);color:var(--muted)}
+.side table{width:100%;border-collapse:collapse;font-size:13px;font-family:system-ui,sans-serif}
+.side td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.side td:first-child{color:var(--muted);width:44%}
+.pill{font-size:11.5px;padding:1px 7px;border:1px solid var(--line);border-radius:10px;font-family:system-ui,sans-serif}
+.pill.PASS{color:var(--green);border-color:#3f6b5b}.pill.FAIL{color:var(--red);border-color:#7a3f3f}.pill.NOT_RUN{color:var(--amber);border-color:#6f5630}.pill.NOT_APPLICABLE{color:var(--muted)}
+.bound{padding:10px 12px;border:1px solid #7a3f3f;background:#1e1517;font-size:13px;font-family:system-ui,sans-serif;margin-top:14px}
+.bound b{color:var(--red);display:block;margin-bottom:4px}
+.bound div{color:var(--muted)}
+#saved{font-size:12.5px;color:var(--green);min-height:18px;font-family:system-ui,sans-serif}
+pre{background:var(--well);border:1px solid var(--line);padding:12px;overflow:auto;font-size:12.5px;max-height:420px}
+.hidden{display:none}
+@media(max-width:900px){main{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.check .row{grid-template-columns:44px 1fr}.check .row select{grid-column:2}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Lean Floor <em>Walkthrough</em> — V2</h1><small style="color:var(--muted)">Formal packet builder · reviewer's order · human ruling required</small></div>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <span class="badge" id="lblBadge">DECLARED — NOT VERIFIED HERE</span>
+    <button id="importBtn">Import packet / harness JSON</button><input type="file" id="importFile" accept=".json" class="hidden">
+    <button id="loadDemo">Load example</button>
+  </div>
+</header>
+
+<div class="notice"><b>No verification is performed here.</b> This page records what was run, what came back, and derives the label from the record. It does not call Lean, an API, or write to any repo. Commands and exit codes are pasted in from the actual run; the receipt is only as true as what you paste.</div>
+
+<div class="steps" id="steps"></div>
+
+<main>
+<div id="content"></div>
+
+<aside class="side">
+  <div class="pane">
+    <h3>Derived label</h3>
+    <div class="label dn" id="labelBox">DECLARED — NOT VERIFIED HERE</div>
+    <p id="labelWhy" style="font-size:13px;margin:0 0 10px"></p>
+    <table id="stateTable"></table>
+    <div class="bound"><b>What this label never establishes</b><div>That the premises hold in the world · that the encoded structure is the physical or moral system named · any bridge grade · any theological identification.</div></div>
+  </div>
+  <div class="pane" style="margin-top:14px">
+    <h3>Packet</h3>
+    <div class="actions" style="justify-content:flex-start;margin-top:6px">
+      <button class="primary" id="exportMd">Export formal packet (.md)</button>
+      <button id="exportJson">Export JSON</button>
+      <button id="showMd">Preview</button>
+    </div>
+    <p id="saved"></p>
+  </div>
+</aside>
+</main>
+
+<script>
+(function(){
+'use strict';
+const KEY='leanfloor.v2.draft';
+const STATUSES=['NOT_RUN','PASS','FAIL','NOT_APPLICABLE'];
+const CHECKS=[
+ // stage index, id, name, what, expected
+ [2,'3.1','Selected module compilation','`lake build <module>` from a clean clone, module named explicitly.','Exit 0; log saved.'],
+ [2,'3.2','Declaration and premise inspection','`#check` / `#print <name>`.','Output matches the signature recorded in Stage 2.'],
+ [2,'3.3','Axiom dependency inspection','`#print axioms <name>`.','Subset of propext, Classical.choice, Quot.sound. sorryAx → PLACEHOLDER-DEPENDENT. Custom axiom → must appear in Stage 2 premises.'],
+ [2,'3.4','Proof escape audit','grep dependency closure for sorry, admit, native_decide, unsafe, partial, implemented_by, opaque, heartbeat spikes.','None present, or each occurrence explained. native_decide is compiler-trusted, not kernel-checked.'],
+ [3,'4.1','Non-vacuity witness','Construct `example : <Structure> := …` satisfying every hypothesis.','Instance type-checks. FAIL = the theorem is vacuously true.'],
+ [3,'4.2','Negative control','Swap in an absurd definition or drop the key hypothesis; rebuild.','Build FAILS as predeclared. A clean exit here is a FAIL of the control.'],
+ [3,'4.3','Definitional triviality','Read each custom definition against the conclusion.','At least one step of real deduction between premises and conclusion.'],
+ [3,'4.4','Lean semantics traps','ℕ truncated subtraction, x/0=0 on ℝ, Real.sqrt of negatives, Finset vs Set, coercions.','None load-bearing.'],
+ [3,'4.5','Converse / countermodel','Attempt the converse; seek a model of the premises where the conclusion fails.','Converse fails or is separately proved; no countermodel.'],
+ [3,'4.6','Ablation / role permutation','Remove one premise at a time; permute symmetric roles.','Proof fails without each load-bearing premise.'],
+ [3,'4.7','Independent encoding','Second formalization from the prose alone, different hand or model.','Same theorem provable, or divergence recorded.'],
+ [3,'4.8','Independence of derivation routes','Trace both proofs\' lemma trees (multi-route claims only).','No shared lemma already containing the conclusion.']
+];
+const STEPS=[
+ ['01','Find','Permalink, pin, lock'],['02','Read','Statement and symbols'],['03','Rebuild','Compile, print, audit'],['04','Break','Controls'],['05','Decide','Label and boundary'],['06','Receipt','Run record and export']];
+
+let D=blank(), step=0;
+function blank(){return {
+ find:{repo:'',commit:'',path:'',decl:'',claimId:'',sourceHash:'',toolchain:'',toolchainHash:'',manifestHash:'',disposition:'SELECTED',dispositionReason:'',related:''},
+ read:{statementLean:'',statementProse:'',symbols:[{sym:'',lean:'',type:'',source:''}],premises:'',customAxioms:'',theological:'',nonVacuityReq:''},
+ checks:Object.fromEntries(CHECKS.map(c=>[c[1],{status:'NOT_RUN',evidence:'',reason:''}])),
+ blocked:{is:false,reason:''},
+ decide:{established:'',open:'',fidelity:'',interpretive:''},
+ receipt:{runId:'',ts:'',cwd:'',commands:'',exits:'',logs:'',declsChecked:'',prior:'',reviewer:'',ai:''}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D));document.getElementById('saved').textContent='Draft saved '+new Date().toLocaleTimeString()}catch(e){}}
+function load(){try{const s=localStorage.getItem(KEY);if(s){const o=JSON.parse(s);D={...blank(),...o};D.checks={...blank().checks,...(o.checks||{})}}}catch(e){}}
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ---------- label derivation ----------
+function derive(){const c=D.checks;const ax=(c['3.3'].evidence||'');
+ if(D.blocked.is)return ['CHECK BLOCKED','cb','Compilation attempted but could not complete: '+(D.blocked.reason||'reason not given')];
+ if(c['3.1'].status==='NOT_RUN')return ['DECLARED — NOT VERIFIED HERE','dn','Compilation (3.1) has not been run. Nothing downstream can be graded.'];
+ if(c['3.1'].status==='FAIL')return ['CHECK FAILED','cf','Compilation failed. A failed check is not a refutation of the statement.'];
+ if(c['3.3'].status==='PASS'&&/sorryAx/.test(ax))return ['PLACEHOLDER-DEPENDENT','pd','#print axioms output contains sorryAx.'];
+ if(c['3.3'].status==='FAIL')return ['PLACEHOLDER-DEPENDENT','pd','Axiom inspection failed or shows an undisclosed dependency.'];
+ if(c['3.3'].status!=='PASS')return ['DECLARED — NOT VERIFIED HERE','dn','Build passed but #print axioms (3.3) not run. Build success alone does not verify the declaration.'];
+ if(c['3.4'].status==='FAIL')return ['PLACEHOLDER-DEPENDENT','pd','Proof escape audit found a trust-boundary escape.'];
+ if(c['4.1'].status==='FAIL')return ['CHECK FAILED — vacuous','cf','Hypotheses are not jointly satisfiable. The theorem may be true and still say nothing.'];
+ const pending=['3.4','4.1','4.2','4.6'].filter(k=>c[k].status==='NOT_RUN');
+ const failedCtrl=['4.2','4.3','4.4','4.5','4.6','4.7','4.8'].filter(k=>c[k].status==='FAIL');
+ let why='Compilation PASS, axioms clean, escape audit '+c['3.4'].status+'.';
+ if(failedCtrl.length)why+=' Controls FAILED: '+failedCtrl.join(', ')+' — label stands but the packet must say what the failure means.';
+ if(pending.length)why+=' Pending: '+pending.join(', ')+'. VERIFIED CONDITIONAL with controls pending is a different state from VERIFIED CONDITIONAL with controls passed.';
+ return ['VERIFIED CONDITIONAL'+(pending.length?' — controls pending':''),'vc',why]}
+function renderSide(){const [lbl,cls,why]=derive();const box=document.getElementById('labelBox');box.textContent=lbl;box.className='label '+cls;document.getElementById('labelWhy').textContent=why;
+ const b=document.getElementById('lblBadge');b.textContent=lbl;b.className='badge '+(cls==='vc'?'green':cls==='pd'?'amber':cls==='dn'?'':'red');
+ document.getElementById('stateTable').innerHTML=CHECKS.map(c=>`<tr><td>${c[1]} ${esc(c[2])}</td><td><span class="pill ${D.checks[c[1]].status}">${D.checks[c[1]].status}</span></td></tr>`).join('');
+ renderSteps()}
+function stageDone(i){const f=D.find,r=D.read,c=D.checks;
+ if(i===0)return !!(f.commit&&f.path&&f.decl&&f.toolchain);
+ if(i===1)return !!(r.statementLean&&r.statementProse);
+ if(i===2)return ['3.1','3.2','3.3','3.4'].every(k=>c[k].status!=='NOT_RUN');
+ if(i===3)return ['4.1','4.2','4.3','4.4','4.5','4.6','4.7','4.8'].every(k=>c[k].status!=='NOT_RUN');
+ if(i===4)return !!(D.decide.established&&D.decide.open);
+ if(i===5)return !!(D.receipt.runId&&D.receipt.commands);return false}
+function renderSteps(){document.getElementById('steps').innerHTML=STEPS.map((s,i)=>`<button class="${i===step?'on':''} ${stageDone(i)?'done':''}" data-i="${i}"><small>${s[0]}</small><b>${s[1]}${stageDone(i)?' ✓':''}</b><span>${s[2]}</span></button>`).join('');
+ document.querySelectorAll('#steps button').forEach(b=>b.onclick=()=>{step=+b.dataset.i;render()})}
+
+// ---------- panes ----------
+function field(obj,key,label,type,ph){const id='f_'+key;return `<label>${label}${type==='area'?`<textarea data-o="${obj}" data-k="${key}" placeholder="${esc(ph||'')}">${esc(D[obj][key])}</textarea>`:`<input data-o="${obj}" data-k="${key}" value="${esc(D[obj][key])}" placeholder="${esc(ph||'')}">`}</label>`}
+function paneFind(){return `<div class="pane"><h3>Stage 1 · Find it</h3><h2>Permalink, pin, lock</h2><p>A reviewer who cannot find the exact declaration at the exact commit in the exact toolchain stops here. Everything below is the packet §01, §03 and §06 identity fields.</p>
+ <div class="grid">${field('find','repo','Repository','','D:\\GitHub\\… or URL')}${field('find','commit','Commit hash','','40-hex')}${field('find','path','File path in repo','','Theophysics/Law9/Noether.lean')}${field('find','decl','Fully qualified declaration','','Theophysics.Law9.moralCurrentConserved')}${field('find','claimId','Claim ID (atom / CKG)','','tp:A042/L9/C1')}${field('find','sourceHash','Source file SHA-256','')}${field('find','toolchain','lean-toolchain content','','leanprover/lean4:v4.30.0')}${field('find','toolchainHash','lean-toolchain SHA-256','')}${field('find','manifestHash','lake-manifest.json SHA-256','')}
+ <label>Selection disposition<select data-o="find" data-k="disposition">${['SELECTED','EXACT_DUPLICATE','SUPERSEDED','SUPPORTING_ONLY','REVIEW_REQUIRED'].map(o=>`<option ${D.find.disposition===o?'selected':''}>${o}</option>`).join('')}</select></label>${field('find','dispositionReason','Disposition reason','area','Why this file and not its siblings; retained counterpart if any')}</div>
+ ${field('find','related','Related summaries, papers, Python artifacts, alternate proofs','area')}
+ <div class="actions"><button class="primary" data-next>Continue → Read</button></div></div>`}
+function paneRead(){return `<div class="pane"><h3>Stage 2 · Read it</h3><h2>Statement and symbols</h2><p>Paste the <code>theorem</code> signature byte-for-byte, including every section-level <code>variable</code> in scope. Then say in prose exactly what it says, no wider. The reviewer grades the Lean, not the paper sentence.</p>
+ ${field('read','statementLean','Fully qualified declaration, verbatim','area','theorem Theophysics.Law9.moralCurrentConserved (M : MoralSystem) (h : TimeTranslationInvariant M.L) : ∇ᵦ M.T = 0 := …')}
+ ${field('read','statementProse','Exact proposed statement (prose scoped to the Lean)','area','For any MoralSystem M whose Lagrangian is time-translation invariant, the divergence of M.T vanishes.')}
+ <h3 style="margin-top:14px">Symbol table</h3><p>Paper symbol → Lean identifier → Mathlib type or custom structure → source correspondence. Mark custom definitions; the triviality control needs to know which are ours.</p>
+ <div id="symTable">${D.read.symbols.map((s,i)=>`<div class="grid" style="grid-template-columns:1fr 1fr 1fr 1fr 30px;gap:8px;align-items:end"><label>Symbol<input data-sym="${i}" data-sk="sym" value="${esc(s.sym)}"></label><label>Lean identifier<input data-sym="${i}" data-sk="lean" value="${esc(s.lean)}"></label><label>Type / definition<input data-sym="${i}" data-sk="type" value="${esc(s.type)}" placeholder="ℝ (Mathlib) · custom structure"></label><label>Source<input data-sym="${i}" data-sk="source" value="${esc(s.source)}"></label><button data-symdel="${i}" title="Remove">×</button></div>`).join('')}</div>
+ <div class="actions" style="justify-content:flex-start"><button id="addSym">Add symbol</button></div>
+ <h3 style="margin-top:14px">Assumptions (§03)</h3>
+ ${field('read','premises','Explicit premises (each hypothesis in the binder list)','area')}
+ ${field('read','customAxioms','Custom axioms and mathematical dependencies','area','None, or list each `axiom` with justification')}
+ ${field('read','theological','Theological starting premises and whether/how encoded','area','e.g. God-as-axiom: not encoded; encoded as hypothesis h : …')}
+ ${field('read','nonVacuityReq','Non-vacuity requirement and reason','area','What instance must exist for the theorem to say anything')}
+ <div class="actions"><button data-prev>← Find</button><button class="primary" data-next>Continue → Rebuild</button></div></div>`}
+function checkRow(c){const s=D.checks[c[1]];return `<div class="check st-${s.status}"><div class="row"><div class="id">${c[1]}</div><div><div class="name">${esc(c[2])}</div><div class="what">${c[3]}</div><div class="expect">Expected: ${esc(c[4])}</div></div><select data-chk="${c[1]}" data-ck="status">${STATUSES.map(o=>`<option ${s.status===o?'selected':''}>${o}</option>`).join('')}</select></div>
+ <details ${s.evidence||s.reason?'open':''}><summary>Command, output, reason</summary><label>Command or evidence (paste actual output)<textarea data-chk="${c[1]}" data-ck="evidence">${esc(s.evidence)}</textarea></label><label>Interpretation / reason (required for FAIL, NOT_RUN, NOT_APPLICABLE)<input data-chk="${c[1]}" data-ck="reason" value="${esc(s.reason)}"></label></details></div>`}
+function paneRebuild(){return `<div class="pane"><h3>Stage 3 · Rebuild it</h3><h2>Compile, print, audit</h2><p>3.3 is the decisive check. A passed build (3.1) is not a completed audit; the declaration is verified only when its axiom closure is inspected and clean.</p>
+ <label class="check" style="display:flex;gap:10px;align-items:center;border:0"><input type="checkbox" id="blockedCb" ${D.blocked.is?'checked':''} style="width:auto">Compilation was attempted but could not complete (toolchain, dependencies, environment) → CHECK BLOCKED</label>
+ <label ${D.blocked.is?'':'class="hidden"'} id="blockedReason">Blocked reason<input data-o="blocked" data-k="reason" value="${esc(D.blocked.reason)}"></label>
+ ${CHECKS.filter(c=>c[0]===2).map(checkRow).join('')}
+ <div class="actions"><button data-prev>← Read</button><button class="primary" data-next>Continue → Break</button></div></div>`}
+function paneBreak(){return `<div class="pane"><h3>Stage 4 · Try to break it</h3><h2>Controls</h2><p>A negative control passes when its <em>predeclared</em> expected outcome is observed — for 4.2 that outcome is a build failure. Record NOT_APPLICABLE only with a reason; NOT_RUN is honest and stays visible in the label.</p>
+ ${CHECKS.filter(c=>c[0]===3).map(checkRow).join('')}
+ <div class="actions"><button data-prev>← Rebuild</button><button class="primary" data-next>Continue → Decide</button></div></div>`}
+function paneDecide(){const [lbl,,why]=derive();return `<div class="pane"><h3>Stage 5 · Decide what it says</h3><h2>Label and boundary</h2><p>The label is derived from Stages 3–4 and cannot be typed. What you write here is the scope: one sentence for what is established, and everything the Lean does not touch.</p>
+ <div class="label ${derive()[1]}" style="font-size:17px;padding:12px;border:1px solid var(--line);background:var(--well);font-family:system-ui">${esc(lbl)}</div><p style="font-size:13px">${esc(why)}</p>
+ ${field('decide','established','What is established under the premises (one sentence, names the premises, stops)','area')}
+ ${field('decide','open','What remains open (every NOT_RUN / NOT_APPLICABLE control with reason; every interpretive step outside the Lean)','area')}
+ ${field('decide','fidelity','Encoding-fidelity review (human judgment: does the Lean statement say what the paper sentence says?)','area')}
+ ${field('decide','interpretive','Interpretive connections and separate evidence (bridge and identification lanes — never inherited from this receipt)','area')}
+ <div class="actions"><button data-prev>← Break</button><button class="primary" data-next>Continue → Receipt</button></div></div>`}
+function paneReceipt(){return `<div class="pane"><h3>Stage 6 · Receipt</h3><h2>Run record and export</h2><p>Never overwrite a prior receipt; link it. Build success on the project is not a check on the declaration — list the declarations actually checked by name.</p>
+ <div class="grid">${field('receipt','runId','Run ID','')}${field('receipt','ts','Timestamp (ISO)','',new Date().toISOString())}${field('receipt','cwd','Working directory','')}${field('receipt','reviewer','Technical reviewer (name / Pending)','')}${field('receipt','prior','Prior receipt (link) and changes','')}${field('receipt','ai','AI model/provider if assisted, and what it did','')}</div>
+ ${field('receipt','commands','Exact commands, in order','area')}${field('receipt','exits','Exit codes','area')}${field('receipt','logs','Complete log paths','area')}${field('receipt','declsChecked','Selected declarations actually checked','area')}
+ <div class="actions"><button data-prev>← Decide</button><button class="primary" id="exportMd2">Export formal packet (.md)</button></div></div>`}
+
+function render(){const panes=[paneFind,paneRead,paneRebuild,paneBreak,paneDecide,paneReceipt];const box=document.getElementById('content');box.innerHTML=panes[step]();
+ box.querySelectorAll('[data-o]').forEach(el=>el.addEventListener('input',()=>{D[el.dataset.o][el.dataset.k]=el.value;save();renderSide()}));
+ box.querySelectorAll('[data-sym]').forEach(el=>el.addEventListener('input',()=>{D.read.symbols[+el.dataset.sym][el.dataset.sk]=el.value;save()}));
+ box.querySelectorAll('[data-symdel]').forEach(el=>el.onclick=()=>{D.read.symbols.splice(+el.dataset.symdel,1);if(!D.read.symbols.length)D.read.symbols.push({sym:'',lean:'',type:'',source:''});save();render()});
+ const add=box.querySelector('#addSym');if(add)add.onclick=()=>{D.read.symbols.push({sym:'',lean:'',type:'',source:''});save();render()};
+ box.querySelectorAll('[data-chk]').forEach(el=>el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{D.checks[el.dataset.chk][el.dataset.ck]=el.value;save();if(el.tagName==='SELECT')render();else renderSide()}));
+ const bc=box.querySelector('#blockedCb');if(bc)bc.onchange=()=>{D.blocked.is=bc.checked;save();render()};
+ box.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>{step=Math.min(5,step+1);render();window.scrollTo(0,0)});
+ box.querySelectorAll('[data-prev]').forEach(b=>b.onclick=()=>{step=Math.max(0,step-1);render();window.scrollTo(0,0)});
+ const ex=box.querySelector('#exportMd2');if(ex)ex.onclick=exportMd;
+ renderSide()}
+
+// ---------- export ----------
+function packetMd(){const f=D.find,r=D.read,c=D.checks,d=D.decide,rc=D.receipt;const [lbl,,why]=derive();const row=k=>{const x=c[k];const meta=CHECKS.find(q=>q[1]===k);return `| ${meta[2]} | ${(x.evidence||meta[3]).replace(/\|/g,'\\|').replace(/\n/g,' ')} | ${x.status} | ${(x.reason||meta[4]).replace(/\|/g,'\\|').replace(/\n/g,' ')} |`};
+ return `# Formal Packet — ${f.claimId||'{{claim ID}}'}
+
+## 01. Identity and Source Selection
+Template contract: LEAN_FLOOR_V2
+
+Source paths and SHA-256: ${f.repo} @ ${f.commit} · ${f.path} · ${f.sourceHash}
+Claim ID and Atlas/CKG ID: ${f.claimId}
+Exact source expression: ${r.statementProse}
+Selection disposition and reason: ${f.disposition} — ${f.dispositionReason}
+Related summaries, papers, Python artifacts, and alternate proofs: ${f.related}
+
+## 02. Formal Object and Reader Bridge
+Object type: theorem
+Exact proposed statement: ${r.statementProse}
+Fully qualified declaration: ${f.decl}
+Project root and module: ${f.repo} · ${f.path}
+
+\`\`\`lean
+${r.statementLean}
+\`\`\`
+
+| Symbol or term | Formal definition | Reader meaning | Source correspondence |
+|---|---|---|---|
+${r.symbols.filter(s=>s.sym||s.lean).map(s=>`| ${s.sym} | ${s.lean} : ${s.type} |  | ${s.source} |`).join('\n')}
+
+## 03. Assumptions and Dependencies
+Explicit premises: ${r.premises}
+Custom axioms and mathematical dependencies: ${r.customAxioms}
+Theological starting premises and whether/how they are encoded: ${r.theological}
+Toolchain file content and hash: ${f.toolchain} · ${f.toolchainHash}
+Dependency lock and hash: lake-manifest.json · ${f.manifestHash}
+Harness path, version, and hash: 
+Non-vacuity requirement and reason: ${r.nonVacuityReq}
+
+## 04. Verification and Controls
+| Check | Command or evidence | Status | Interpretation |
+|---|---|---|---|
+${['3.1','3.2','3.3','3.4','4.1','4.2','4.5','4.6','4.7'].map(row).join('\n')}
+${['4.3','4.4','4.8'].map(row).join('\n')}
+
+Controls use PASS, FAIL, NOT_RUN, or NOT_APPLICABLE with a reason. A negative control passes when its predeclared expected outcome is observed, not merely when a command exits successfully.${D.blocked.is?`\n\nCHECK BLOCKED — ${D.blocked.reason}`:''}
+
+## 05. Result and Boundary
+Verification status: ${lbl}
+Derivation: ${why}
+What is established under the premises: ${d.established}
+What remains open: ${d.open}
+Encoding-fidelity review: ${d.fidelity}
+Interpretive connections and separate evidence: ${d.interpretive}
+
+## 06. Reproduction Receipt
+Run ID and timestamp: ${rc.runId} · ${rc.ts}
+Source, module, harness, and configuration hashes: ${f.sourceHash} · ${f.toolchainHash} · ${f.manifestHash}
+Working directory and exact commands: ${rc.cwd}
+\`\`\`
+${rc.commands}
+\`\`\`
+Exit codes and complete log paths: ${rc.exits} · ${rc.logs}
+Selected declarations actually checked: ${rc.declsChecked}
+Prior receipt and changes: ${rc.prior}
+Technical reviewer: ${rc.reviewer}${rc.ai?` · AI-assisted: ${rc.ai}`:''}
+
+## 07. Companion and Corpus Links
+Human companion: 
+Corpus claim register: 
+Supporting summaries: 
+Routing record: 
+Canonical approval: Pending
+`}
+function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function slug(s){return (s||'packet').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function exportMd(){download('FORMAL_PACKET_'+slug(D.find.claimId)+'.md',packetMd(),'text/markdown')}
+document.getElementById('exportMd').onclick=exportMd;
+document.getElementById('exportJson').onclick=()=>download('lean-floor-'+slug(D.find.claimId)+'.json',JSON.stringify(D,null,2),'application/json');
+document.getElementById('showMd').onclick=()=>{const box=document.getElementById('content');box.innerHTML=`<div class="pane"><h3>Preview</h3><pre>${esc(packetMd())}</pre><div class="actions"><button data-back>Back to stage</button></div></div>`;box.querySelector('[data-back]').onclick=render};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const o=JSON.parse(t);
+ // accept either a full draft or a harness result {checks:{id:{status,evidence}}, find:{...}}
+ const b=blank();D={...b,...o,find:{...b.find,...(o.find||{})},read:{...b.read,...(o.read||{})},checks:{...b.checks},decide:{...b.decide,...(o.decide||{})},receipt:{...b.receipt,...(o.receipt||{})},blocked:{...b.blocked,...(o.blocked||{})}};
+ Object.entries(o.checks||{}).forEach(([k,v])=>{if(D.checks[k])D.checks[k]={...D.checks[k],...v}});if(!D.read.symbols||!D.read.symbols.length)D.read.symbols=[{sym:'',lean:'',type:'',source:''}];
+ save();step=0;render()}catch(err){alert('Not a Lean Floor JSON.')}})};
+document.getElementById('loadDemo').onclick=()=>{D=blank();Object.assign(D.find,{repo:'D:\\GitHub\\theophysics-lean',commit:'(fill from git log)',path:'Theophysics/Law9/Noether.lean',decl:'Theophysics.Law9.moralCurrentConserved',claimId:'tp:A042/L9/C1',toolchain:'leanprover/lean4:v4.30.0',disposition:'SELECTED',dispositionReason:'Only Noether-route file; Bianchi route lives in Law9/Bianchi.lean (SUPPORTING_ONLY for this packet).'});
+ Object.assign(D.read,{statementLean:'-- paste the actual declaration; this is a placeholder shape, not a proof\ntheorem Theophysics.Law9.moralCurrentConserved\n  (M : MoralSystem) (h : TimeTranslationInvariant M.L) :\n  Divergence M.T = 0 := by\n  sorry -- example only',statementProse:'For any MoralSystem M whose Lagrangian is time-translation invariant, the divergence of the moral stress tensor M.T is zero.',symbols:[{sym:'χ-domain L',lean:'MoralSystem.L',type:'custom structure field : ℝ → ℝ',source:'Law 9 canonical doc §3'},{sym:'T_αβ',lean:'MoralSystem.T',type:'custom : Matrix (Fin 4) (Fin 4) ℝ',source:'§4'},{sym:'∇β',lean:'Divergence',type:'custom def over Matrix',source:'§4'}],premises:'M : MoralSystem; h : TimeTranslationInvariant M.L',nonVacuityReq:'An instance of MoralSystem with a time-translation-invariant L must exist; otherwise h is unsatisfiable.'});
+ D.checks['3.1']={status:'PASS',evidence:'lake build Theophysics.Law9.Noether → exit 0',reason:''};D.checks['3.3']={status:'PASS',evidence:"#print axioms Theophysics.Law9.moralCurrentConserved\n'Theophysics.Law9.moralCurrentConserved' depends on axioms: [propext, Classical.choice, Quot.sound, sorryAx]",reason:'sorryAx present — placeholder in proof body'};D.checks['4.2']={status:'NOT_RUN',evidence:'',reason:'Not yet attempted. Plan: set Divergence := fun _ => 0 and rebuild; expect build to still pass, which would FAIL the control.'};
+ save();step=0;render()};
+
+load();render();
+})();
+</script>
+</body>
+</html>

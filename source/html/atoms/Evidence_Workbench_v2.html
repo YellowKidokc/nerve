@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evidence Workbench v2 — POF 2828</title>
+<style>
+:root{color-scheme:dark;--bg:#0f1114;--panel:#171b21;--well:#0c0e12;--line:#343b45;--ink:#eef1f4;--muted:#a3aeba;--gold:#e6c069;--gold-dim:#8a7440;--green:#8bd5ba;--red:#ff9f99;--amber:#f0b35b}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Georgia,"Iowan Old Style",serif}
+header{padding:22px 36px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:20px}
+h1{font-size:30px;margin:0;font-weight:400}
+h1 em{color:var(--gold);font-style:normal}
+h2{font-size:22px;margin:0;font-weight:400}
+h3{font-size:17px;font-weight:600;margin:18px 0 8px}
+.badge{border:1px solid var(--gold-dim);border-radius:30px;padding:5px 12px;font-size:13px;color:var(--gold)}
+main{max-width:1500px;margin:auto;display:grid;grid-template-columns:230px 1fr;gap:36px;padding:28px}
+aside{position:sticky;top:20px;align-self:start}
+nav{display:grid;gap:4px;margin:16px 0}
+nav a{color:var(--muted);padding:7px 8px;text-decoration:none;border-left:2px solid transparent}
+nav a:hover{color:var(--gold);border-left-color:var(--gold)}
+article{min-width:0}
+section{scroll-margin-top:20px;margin-bottom:34px;border-bottom:1px solid var(--line);padding-bottom:28px}
+.title{display:flex;gap:14px;align-items:baseline;margin-bottom:6px}
+.title>span{color:var(--gold);font-size:13px;border:1px solid var(--gold-dim);padding:2px 7px}
+p{color:var(--muted)}
+.small,small{font-size:13.5px;color:var(--muted)}
+label{display:block;font-size:14px;color:#c6cfd8;margin:10px 0}
+input,textarea,select{display:block;width:100%;padding:9px 11px;border:1px solid #444e5a;border-radius:4px;background:var(--well);color:var(--ink);font:15px/1.5 system-ui,sans-serif;margin-top:5px}
+textarea{min-height:76px;resize:vertical}
+input[type=checkbox]{width:auto;margin:0}
+.check{display:flex;align-items:center;gap:10px}
+button{padding:8px 13px;background:#262d37;border:1px solid #515c69;border-radius:4px;font:14px/1.5 system-ui,sans-serif;color:var(--ink);cursor:pointer}
+button:hover{background:#354050}
+button.primary{background:var(--gold);color:#141517;border-color:var(--gold);font-weight:600}
+button.danger{border-color:#7a3f3f;color:var(--red)}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 16px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:6px;margin:12px 0;padding:0 16px 12px}
+summary{padding:13px 0 3px;cursor:pointer;font-weight:600}
+summary small{font-weight:400;float:right}
+.board{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:18px 0}
+.metric{background:var(--panel);padding:12px 14px;border:1px solid var(--line);border-radius:6px}
+.metric strong{display:block;font-size:26px;font-weight:400}
+.metric span{font-size:12.5px;color:var(--muted)}
+.pos{color:var(--green)}.neg{color:var(--red)}.amb{color:var(--amber)}
+.verdict{padding:12px 14px;border-left:3px solid var(--gold);background:#26221a;margin:12px 0;font-size:15px}
+.verdict.gated{border-color:var(--red);background:#2c1f22}
+.verdict.unscored{border-color:var(--amber);background:#2a251c}
+.ev{padding:14px 16px;background:var(--panel);border:1px solid var(--line);margin:10px 0;border-radius:6px;overflow-wrap:anywhere}
+.ev p{white-space:pre-wrap;margin:6px 0}
+.ev .head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ev strong{color:var(--gold)}
+.tag{display:inline-block;font-size:12px;padding:1px 7px;border:1px solid var(--line);border-radius:10px;color:var(--muted);margin-right:4px}
+.tag.stale{border-color:var(--amber);color:var(--amber)}
+.tag.gate{border-color:var(--red);color:var(--red)}
+form{border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:14px;font-family:system-ui,sans-serif}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--gold);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.q{border-top:1px solid var(--line);padding:10px 0}
+.q .prev{padding:8px 12px;background:var(--well);border-left:2px solid var(--gold-dim);white-space:pre-wrap;font-size:14px;color:var(--muted)}
+.mod{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 16px 12px;margin:10px 0}
+.mod .head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.status{font-size:12.5px;padding:1px 8px;border-radius:10px;border:1px solid var(--line)}
+.status.done{color:var(--green);border-color:#3f6b5b}
+.status.na{color:var(--muted)}
+.status.open{color:var(--amber);border-color:#6f5630}
+#saved{font-size:13px;color:var(--green);min-height:20px}
+#validation{white-space:pre-wrap;font-family:system-ui,sans-serif;font-size:14px}
+.claimrow{display:grid;grid-template-columns:70px 1fr 90px 100px 60px 30px;gap:8px;align-items:start;padding:8px 0;border-bottom:1px solid var(--line)}
+.claimrow input,.claimrow select,.claimrow textarea{margin:0;font-size:14px;padding:6px 8px;min-height:0}
+.hint{font-size:13px;color:var(--muted);margin:2px 0 8px}
+@media(max-width:1100px){.board{grid-template-columns:repeat(3,1fr)}.grid3{grid-template-columns:1fr}}
+@media(max-width:760px){header{display:block;padding:18px}.badge{display:inline-block;margin-top:8px}main{display:block;padding:14px}aside{position:static}nav{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.board{grid-template-columns:1fr 1fr}.claimrow{grid-template-columns:1fr}}
+@media print{aside,.actions,button,input[type=file],form{display:none}main{display:block}body{background:#fff;color:#000}details{break-inside:avoid}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Evidence <em>Workbench</em> v2</h1><small>Theophysics / POF 2828 — candidate workspace, human ruling required</small></div>
+  <span class="badge" id="lockstate">Not a probability of truth</span>
+</header>
+
+<main>
+<aside>
+  <label for="records">Records in this browser
+    <select id="records"></select></label>
+  <div class="actions"><button id="newRec">New record</button><button id="delRec" class="danger">Delete</button></div>
+  <nav>
+    <a href="#six">The six</a>
+    <a href="#claims">Claims</a>
+    <a href="#questions">Open the question</a>
+    <a href="#evidence">Evidence balance</a>
+    <a href="#checks">Domain checks</a>
+    <a href="#na">Not applicable</a>
+    <a href="#export">Review &amp; export</a>
+  </nav>
+  <p class="small">Saves in this browser only. Export JSON to move or keep it. This page does not call an AI or write to any repo.</p>
+  <p id="saved" role="status" aria-live="polite"></p>
+</aside>
+
+<article>
+
+<section id="six">
+  <div class="title"><span>1</span><h2>The six</h2></div>
+  <p>State the claim. Everything else in the sheet hangs off what is written here.</p>
+  <label>Paper / inquiry title<input data-f="title" placeholder="Name this inquiry"></label>
+  <div class="grid">
+    <label>1 · Central claim (one sentence)<textarea data-f="central"></textarea></label>
+    <label>2 · Domain / classification (provisional until Q14)<textarea data-f="classification"></textarea></label>
+    <label>3 · Real-world physical event?<select data-f="physical"><option value="undecided">Undecided</option><option value="yes">Yes</option><option value="no">No</option></select><textarea data-f="event" placeholder="Name it, or state the non-physical scope."></textarea></label>
+    <label>4 · Cross-domain bridge<textarea data-f="bridge" placeholder="Side A → Side B; grade; what is preserved and what is lost. Blank if none."></textarea></label>
+    <label>5 · What defeats it<textarea data-f="kill" placeholder="A specific counterexample or result, with its scope."></textarea></label>
+    <label>6 · Have / need / breaks if<textarea data-f="needs"></textarea></label>
+  </div>
+  <details><summary>Source and provenance</summary>
+    <label>Raw statement, exactly as sourced (Q0 reads from here)<textarea data-f="raw"></textarea></label>
+    <label>Source reference (file, hash, page)<input data-f="sourceRef"></label>
+  </details>
+</section>
+
+<section id="claims">
+  <div class="title"><span>2</span><h2>Claims</h2></div>
+  <p>Evidence attaches to a claim, not to the paper. Mark which claims are load-bearing and what each depends on. Changing a claim's statement bumps its version and returns its evidence to unassessed.</p>
+  <div class="claimrow" style="border-bottom:1px solid var(--gold-dim);color:var(--gold);font-size:13px;font-family:system-ui"><div>ID</div><div>Statement</div><div>Register</div><div>Depends on</div><div>Load-bearing</div><div></div></div>
+  <div id="claimList"></div>
+  <div class="actions"><button id="addClaim">Add claim</button></div>
+  <p class="small">Register: NATIVE = what the domain itself establishes. BRIDGE = preserved structure across registers. IDENTIFICATION = what the theology says the structure means. Evidence in one lane never scores another.</p>
+</section>
+
+<section id="questions">
+  <div class="title"><span>3</span><h2>Open the question</h2></div>
+  <p>Q0–Q14 in order. Each answer is stored once; editing an earlier answer marks later ones for review. Coverage here feeds the coverage number in the balance.</p>
+  <div id="qList"></div>
+</section>
+
+<section id="evidence">
+  <div class="title"><span>4</span><h2>Evidence balance</h2></div>
+  <div id="verdict"></div>
+  <div class="board" id="board"></div>
+  <details><summary>Scoring rules and robustness</summary>
+    <p>Each family contributes its strongest assessed item per direction. Within a cluster, families are sorted by discriminating strength and receive marginal weights in order; the schedule below is your proposed rule (5 / 7.5 / 10 / 15 at strength 5) and is preserved as stated. Discriminating strength = raw strength × rival factor × timing factor. Balance = support − (counter multiplier × counterevidence). A live decisive counterexample gates the display regardless of balance.</p>
+    <div class="grid3">
+      <label>Marginal weights (comma separated)<input data-r="weights"></label>
+      <label>Cluster cap<input data-r="cap" type="number" step="0.5" min="1"></label>
+      <label>Counterevidence multiplier<input data-r="negMult" type="number" step="0.1" min="0.1"></label>
+      <label>Rival factor: rival predicts equally / partly / not<input data-r="rival" placeholder="0, 0.5, 1"></label>
+      <label>Timing factor: predicted / accommodated / retrodicted<input data-r="timing" placeholder="1, 0.75, 0.5"></label>
+      <label>Coverage floor (fraction) below which no score is issued<input data-r="floor" type="number" step="0.05" min="0" max="1"></label>
+    </div>
+    <div class="actions"><button id="applyRules">Apply rules</button><button id="resetRules">Reset to defaults</button></div>
+    <div id="robust" class="small"></div>
+    <p class="small">Strength: 1 weak/indirect · 2 limited · 3 moderate · 4 strong · 5 decisive within stated scope. Two items are one family if they cannot fail independently (same dataset, instrument, source document, or reanalysis). A meta-analysis is one family.</p>
+  </details>
+  <div class="grid">
+    <label>Coherence rating (separate from evidence)<select data-f="coherence"><option value="">Unassessed</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+    <label>Basis for coherence rating<textarea data-f="coherenceReason"></textarea></label>
+  </div>
+
+  <form id="evForm">
+    <h3 id="evHeading">Add evidence</h3>
+    <div class="grid">
+      <label>Finding<textarea id="evFinding" required></textarea></label>
+      <label>Source, page / timestamp, passage<textarea id="evSource" required></textarea></label>
+      <label>Claim it bears on<select id="evClaim" required></select></label>
+      <label>Evidence family<input id="evFamily" required placeholder="experiment-01 (reuse for repeated reports)"></label>
+      <label>Cluster<input id="evCluster" required placeholder="mechanism, dating, identity…"></label>
+      <label>Assessment<select id="evDir"><option value="unassessed">Unassessed</option><option value="support">Supports</option><option value="against">Against</option><option value="neutral">Neutral (assessed)</option><option value="na">Not applicable</option></select></label>
+      <label>Raw strength<select id="evStr"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+      <label>Would the strongest rival predict this equally?<select id="evRival"><option value="no">No — discriminates</option><option value="partly">Partly</option><option value="yes">Yes — rival predicts it too</option></select></label>
+      <label>Timing<select id="evTiming"><option value="predicted">Predicted before observation</option><option value="accommodated">Accommodated after</option><option value="retrodicted">Retrodicted / fitted</option></select></label>
+      <label>Assessor<input id="evAssessor" placeholder="David / Claude / Gemini / Kimi…"></label>
+      <label>Reason for rating and independence<textarea id="evReason" required></textarea></label>
+      <label class="check"><input type="checkbox" id="evDecisive">Verified counterexample defeats the exact claim as stated (gates the verdict)</label>
+    </div>
+    <div class="actions"><button class="primary" type="submit">Save evidence</button><button type="button" id="cancelEdit">Cancel edit</button></div>
+  </form>
+  <div id="evList"></div>
+  <details><summary>Per-claim balance and weakest link</summary><div id="claimTable"></div></details>
+  <details><summary>Register lanes</summary><div id="laneTable"></div></details>
+  <details><summary>Cluster contributions</summary><div id="clusterTable"></div></details>
+</section>
+
+<section id="checks">
+  <div class="title"><span>5</span><h2>Domain checks</h2></div>
+  <p>Unfinished checks stay here. A check moves to Not applicable only with a reason, and can be restored.</p>
+  <div id="modList"></div>
+</section>
+
+<section id="na">
+  <div class="title"><span>6</span><h2>Not applicable</h2></div>
+  <details><summary id="naSummary">Excluded sections</summary><div id="naList"></div></details>
+</section>
+
+<section id="export">
+  <div class="title"><span>7</span><h2>Review &amp; export</h2></div>
+  <p>Exports are candidate drafts. The completeness check reports gaps; it does not certify truth or admission to canon.</p>
+  <div class="actions">
+    <button id="validate" class="primary">Check completeness</button>
+    <button id="exMd">Export Obsidian note (.md with frontmatter)</button>
+    <button id="exJson">Export JSON backup</button>
+    <button id="demo">Load scoring example</button>
+  </div>
+  <label>Import a JSON backup<input id="import" type="file" accept=".json"></label>
+  <div id="validation" role="status"></div>
+  <details><summary>Change log</summary><div id="history"></div></details>
+</section>
+
+</article>
+</main>
+
+<script>
+(function(){
+'use strict';
+const KEY='evwb2.records', CUR='evwb2.current';
+const REGISTERS=['NATIVE','BRIDGE','IDENTIFICATION'];
+const QUESTIONS=[
+['Q0','Exact expression','What exactly was said? Separate the question from what the source asserts.'],
+['Q1','Referent','What is picked out? Real, possible, imagined, stipulated, or undecided?'],
+['Q2','Identity and distinction','What makes it this rather than not-this?'],
+['Q3','Dependency floor','Separate formulation, coherence, existence, evidence, and truth-making dependencies.'],
+['Q4','Variation and invariance','What can vary? What must remain? What destroys identity?'],
+['Q5','Capabilities and operations','What can it do, undergo, receive, produce, preserve, or forbid?'],
+['Q6','Transitions','Prior state → rule or mechanism → next state. Inputs, reversibility, cost and loss.'],
+['Q7','Constraints','What limits the possibilities and the scope of validity?'],
+['Q8','Consequences and licenses','What follows, from which premises, by which inference? What does not follow?'],
+['Q9','Representation ladder','Plain language → logic → mathematical form, only where faithful.'],
+['Q10','Preservation and loss','What does the representation preserve, lose, add, or distort?'],
+['Q11','If true','What would the model, world, or record look like?'],
+['Q12','If false / rivals','Exact negations and the strongest live alternatives.'],
+['Q13','Discriminating checks','What evidence or proof distinguishes the alternatives?'],
+['Q14','Emergent role','After analysis: definition, claim, model, theorem, interpretation, bridge, or other?']];
+const MODULES=[
+['physics','Physics','Quantity; units; dynamics; protocol; instrument; data; uncertainty; controls; fit; claim.'],
+['history','History / testimony','Event; observers; testimony; transmission; preservation; corroboration; interpretation.'],
+['theology','Theology','Source; tradition; proclamation; confession; scope. Identification is not empirical support.'],
+['philosophy','Philosophy / metaphysics','Terms; premises; inference licenses; alternatives; necessity vs possibility; grounding limits.'],
+['math','Mathematics / formal','Definitions; axioms used; theorem; derivation; proof receipt and exact scope.'],
+['bridge','Cross-domain bridge','Source and target independently defined; mapping; preserved and lost; grade; rival mappings; next test.'],
+['reverse','Reverse reconstruction B0–B8','Content → pattern → invariant → operation → constraints → dependencies → minimal structure → grounds → rivals.'],
+['why','Why-closure by level','Descriptive, mechanistic, structural, boundary, historical, grounding, purposive — each scoped.'],
+['ai','Independent AI review','Each model, prompt, first answer, disagreements, revisions. Preserve first answers before comparison.']];
+const DEFAULT_RULES={weights:'1,0.5,0.5,1',cap:15,negMult:1,rival:'0,0.5,1',timing:'1,0.75,0.5',floor:0.3};
+
+let db=load(), cur=null, editId=null;
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(db));localStorage.setItem(CUR,cur.id);flash('Saved '+new Date().toLocaleTimeString())}catch(e){flash('Could not save in this browser')}}
+function flash(t){document.getElementById('saved').textContent=t}
+function uid(){return Math.random().toString(36).slice(2,9)}
+function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(16).padStart(8,'0')}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function nums(s){return String(s).split(',').map(x=>parseFloat(x)).filter(x=>!isNaN(x))}
+
+function blank(){return {id:uid(),created:new Date().toISOString(),fields:{title:'',central:'',classification:'',physical:'undecided',event:'',bridge:'',kill:'',needs:'',raw:'',sourceRef:'',coherence:'',coherenceReason:''},
+  claims:[{id:'C1',statement:'',register:'NATIVE',dependsOn:'',loadBearing:true,version:1,hash:hash('')}],
+  questions:QUESTIONS.map(()=>({answer:'',done:false,review:false})),
+  modules:Object.fromEntries(MODULES.map(m=>[m[0],{analysis:'',done:false,na:false,reason:''}])),
+  evidence:[],rules:{...DEFAULT_RULES},log:[]}}
+function log(msg){cur.log.unshift({t:new Date().toISOString(),msg});if(cur.log.length>200)cur.log.length=200}
+
+// ---------- records ----------
+function refreshRecords(){const sel=document.getElementById('records');sel.innerHTML='';Object.values(db).sort((a,b)=>b.created.localeCompare(a.created)).forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.fields.title||('Untitled '+r.id);sel.appendChild(o)});sel.value=cur.id}
+function open(id){cur=db[id];render()}
+document.getElementById('records').onchange=e=>open(e.target.value);
+document.getElementById('newRec').onclick=()=>{const r=blank();db[r.id]=r;cur=r;log('Record created');persist();refreshRecords();render()};
+document.getElementById('delRec').onclick=()=>{if(!confirm('Delete this record from this browser?'))return;delete db[cur.id];const ids=Object.keys(db);if(!ids.length){const r=blank();db[r.id]=r}cur=db[Object.keys(db)[0]];persist();refreshRecords();render()};
+
+// ---------- fields ----------
+document.querySelectorAll('[data-f]').forEach(el=>{el.addEventListener('input',()=>{cur.fields[el.dataset.f]=el.value;if(el.dataset.f==='raw')renderQuestions();if(el.dataset.f==='title')refreshRecords();persist();score()})});
+document.querySelectorAll('[data-r]').forEach(el=>{el.addEventListener('input',()=>{cur.rules[el.dataset.r]=el.type==='number'?parseFloat(el.value):el.value})});
+document.getElementById('applyRules').onclick=()=>{log('Scoring rules changed');persist();score()};
+document.getElementById('resetRules').onclick=()=>{cur.rules={...DEFAULT_RULES};renderRules();persist();score()};
+
+// ---------- claims ----------
+function renderClaims(){const box=document.getElementById('claimList');box.innerHTML='';
+  cur.claims.forEach((c,i)=>{const row=document.createElement('div');row.className='claimrow';
+    row.innerHTML=`<input value="${esc(c.id)}" data-k="id"><div><textarea data-k="statement" placeholder="One assertion">${esc(c.statement)}</textarea><div class="hint">v${c.version} · ${c.hash}</div></div>
+    <select data-k="register">${REGISTERS.map(r=>`<option ${r===c.register?'selected':''}>${r}</option>`).join('')}</select>
+    <input data-k="dependsOn" value="${esc(c.dependsOn)}" placeholder="C1, C2">
+    <input type="checkbox" data-k="loadBearing" ${c.loadBearing?'checked':''}>
+    <button title="Remove claim" data-del="${i}">×</button>`;
+    row.querySelectorAll('[data-k]').forEach(el=>el.addEventListener('change',()=>{const k=el.dataset.k;
+      if(k==='statement'){const h=hash(el.value.trim());if(h!==c.hash){c.version++;c.hash=h;let n=0;cur.evidence.forEach(e=>{if(e.claim===c.id&&e.dir!=='unassessed'&&e.claimVersion!==c.version){e.stale=true;n++}});log(`${c.id} statement changed → v${c.version}; ${n} evidence item(s) marked stale`)}c.statement=el.value}
+      else if(k==='loadBearing')c.loadBearing=el.checked;
+      else if(k==='id'){const old=c.id;c.id=el.value.trim()||old;cur.evidence.forEach(e=>{if(e.claim===old)e.claim=c.id})}
+      else c[k]=el.value;
+      persist();renderClaims();fillClaimSelect();score()}));
+    row.querySelector('[data-del]').onclick=()=>{if(cur.evidence.some(e=>e.claim===c.id)&&!confirm('Evidence is attached to this claim. Remove anyway?'))return;cur.claims.splice(i,1);log(`Claim ${c.id} removed`);persist();renderClaims();fillClaimSelect();score()};
+    box.appendChild(row)})}
+document.getElementById('addClaim').onclick=()=>{const n=cur.claims.length+1;cur.claims.push({id:'C'+n,statement:'',register:'NATIVE',dependsOn:'',loadBearing:false,version:1,hash:hash('')});persist();renderClaims();fillClaimSelect()};
+function fillClaimSelect(){const s=document.getElementById('evClaim');const v=s.value;s.innerHTML=cur.claims.map(c=>`<option value="${esc(c.id)}">${esc(c.id)} — ${esc((c.statement||'(no statement)').slice(0,60))}</option>`).join('');if([...s.options].some(o=>o.value===v))s.value=v}
+
+// ---------- questions ----------
+function renderQuestions(){const box=document.getElementById('qList');box.innerHTML='';
+  QUESTIONS.forEach((q,i)=>{const st=cur.questions[i];const prev=i===0?(cur.fields.raw||'Not entered'):(cur.questions[i-1].answer||'Not yet entered');
+    const d=document.createElement('details');d.className='q';d.open=!st.done||st.review;
+    d.innerHTML=`<summary>${q[0]} · ${q[1]} <small class="status ${st.review?'open':st.done?'done':'open'}">${st.review?'Review':st.done?'Answered':'Unfinished'}</small></summary>
+      <p class="small">${q[2]}</p><div class="prev">${i===0?'Source wording: ':'Earlier answer: '}${esc(prev)}</div>
+      <label>Your answer<textarea>${esc(st.answer)}</textarea></label>
+      <div class="actions"><button class="primary">Save answer</button></div>`;
+    d.querySelector('button').onclick=()=>{const v=d.querySelector('textarea').value.trim();const was=st.answer;st.answer=v;st.done=!!v;st.review=false;
+      if(was&&was!==v)for(let j=i+1;j<cur.questions.length;j++)if(cur.questions[j].done)cur.questions[j].review=true;
+      log(`${q[0]} answered`);persist();renderQuestions();score()};
+    box.appendChild(d)})}
+
+// ---------- modules ----------
+function renderModules(){const box=document.getElementById('modList'),na=document.getElementById('naList');box.innerHTML='';na.innerHTML='';let ex=0;
+  MODULES.forEach(m=>{const st=cur.modules[m[0]];
+    if(st.na){ex++;const d=document.createElement('div');d.className='mod';d.innerHTML=`<div class="head"><strong>${m[1]}</strong><span class="status na">Not applicable</span></div><p class="small">Reason: ${esc(st.reason)||'(none given)'}</p><div class="actions"><button>Restore</button></div>`;d.querySelector('button').onclick=()=>{st.na=false;log(`${m[1]} restored`);persist();renderModules();score()};na.appendChild(d);return}
+    const d=document.createElement('div');d.className='mod';
+    d.innerHTML=`<div class="head"><h3>${m[1]}</h3><span class="status ${st.done?'done':'open'}">${st.done?'Done':'Unfinished'}</span></div><p class="small">${m[2]}</p>
+      <label>Analysis<textarea>${esc(st.analysis)}</textarea></label>
+      <label class="check"><input type="checkbox" ${st.done?'checked':''}> Mark complete</label>
+      <label>Reason if not applicable<input value="${esc(st.reason)}"></label>
+      <div class="actions"><button>Move to Not applicable</button></div>`;
+    const ta=d.querySelector('textarea'),cb=d.querySelector('input[type=checkbox]'),rs=d.querySelector('input:not([type=checkbox])');
+    ta.oninput=()=>{st.analysis=ta.value;persist()};cb.onchange=()=>{st.done=cb.checked;persist();renderModules();score()};rs.oninput=()=>{st.reason=rs.value;persist()};
+    d.querySelector('button').onclick=()=>{if(!st.reason.trim()){alert('Give a reason before excluding a check.');rs.focus();return}st.na=true;log(`${m[1]} excluded: ${st.reason}`);persist();renderModules();score()};
+    box.appendChild(d)});
+  document.getElementById('naSummary').textContent=`${ex} excluded section${ex===1?'':'s'} · preserved with reasons`;if(!ex)na.innerHTML='<p class="small">Nothing excluded.</p>'}
+
+// ---------- evidence ----------
+const F=id=>document.getElementById(id);
+F('evForm').onsubmit=e=>{e.preventDefault();const claim=cur.claims.find(c=>c.id===F('evClaim').value);
+  const item={id:editId||uid(),finding:F('evFinding').value,source:F('evSource').value,claim:F('evClaim').value,claimVersion:claim?claim.version:1,family:F('evFamily').value.trim(),cluster:F('evCluster').value.trim(),dir:F('evDir').value,strength:+F('evStr').value,rival:F('evRival').value,timing:F('evTiming').value,assessor:F('evAssessor').value.trim()||'unrecorded',reason:F('evReason').value,decisive:F('evDecisive').checked,stale:false,updated:new Date().toISOString()};
+  if(editId){const i=cur.evidence.findIndex(x=>x.id===editId);cur.evidence[i]=item;log(`Evidence edited: ${item.family}`)}else{cur.evidence.push(item);log(`Evidence added: ${item.family} (${item.dir})`)}
+  editId=null;F('evForm').reset();F('evHeading').textContent='Add evidence';persist();renderEvidence();score()};
+F('cancelEdit').onclick=()=>{editId=null;F('evForm').reset();F('evHeading').textContent='Add evidence'};
+function renderEvidence(){const box=F('evList');box.innerHTML='';if(!cur.evidence.length){box.innerHTML='<p class="small">No evidence yet. Every item needs a claim, a family, a cluster, and a reason.</p>';return}
+  cur.evidence.forEach(ev=>{const d=document.createElement('div');d.className='ev';const dirCls=ev.dir==='support'?'pos':ev.dir==='against'?'neg':'';
+    d.innerHTML=`<div class="head"><div><strong>${esc(ev.family)}</strong> <span class="tag">${esc(ev.cluster)}</span><span class="tag">${esc(ev.claim)} v${ev.claimVersion}</span><span class="tag">${registerOf(ev.claim)}</span>${ev.stale?'<span class="tag stale">stale — claim changed</span>':''}${ev.decisive?'<span class="tag gate">decisive counterexample</span>':''}</div>
+      <div class="${dirCls}">${ev.dir==='unassessed'?'Unassessed':ev.dir==='na'?'Not applicable':ev.dir==='neutral'?'Neutral':(ev.dir==='support'?'+':'−')+ev.strength} <span class="small">→ ${discr(ev).toFixed(2)} discr.</span></div></div>
+      <p>${esc(ev.finding)}</p><p class="small">${esc(ev.source)}</p><p class="small">Timing: ${ev.timing} · Rival predicts: ${ev.rival} · Assessor: ${esc(ev.assessor)}</p><p class="small">${esc(ev.reason)}</p>
+      <div class="actions"><button>Edit</button>${ev.stale?'<button>Reassess (clear stale)</button>':''}<button class="danger">Remove</button></div>`;
+    const b=d.querySelectorAll('button');b[0].onclick=()=>{editId=ev.id;F('evFinding').value=ev.finding;F('evSource').value=ev.source;F('evClaim').value=ev.claim;F('evFamily').value=ev.family;F('evCluster').value=ev.cluster;F('evDir').value=ev.dir;F('evStr').value=ev.strength;F('evRival').value=ev.rival;F('evTiming').value=ev.timing;F('evAssessor').value=ev.assessor;F('evReason').value=ev.reason;F('evDecisive').checked=ev.decisive;F('evHeading').textContent='Edit evidence';F('evForm').scrollIntoView()};
+    if(ev.stale){b[1].onclick=()=>{const c=cur.claims.find(x=>x.id===ev.claim);ev.stale=false;ev.claimVersion=c?c.version:ev.claimVersion;log(`Evidence reassessed against ${ev.claim} v${ev.claimVersion}`);persist();renderEvidence();score()}}
+    b[b.length-1].onclick=()=>{if(!confirm('Remove this evidence item?'))return;cur.evidence=cur.evidence.filter(x=>x.id!==ev.id);log(`Evidence removed: ${ev.family}`);persist();renderEvidence();score()};
+    box.appendChild(d)})}
+function registerOf(cid){const c=cur.claims.find(x=>x.id===cid);return c?c.register:'?'}
+function discr(ev,rules){rules=rules||cur.rules;const rv=nums(rules.rival),tm=nums(rules.timing);const rf={yes:rv[0]??0,partly:rv[1]??0.5,no:rv[2]??1}[ev.rival]??1;const tf={predicted:tm[0]??1,accommodated:tm[1]??0.75,retrodicted:tm[2]??0.5}[ev.timing]??1;return ev.strength*rf*tf}
+
+// ---------- scoring ----------
+function clusterScore(items,rules){ // items: assessed, one direction; returns {score, families}
+  const best={};items.forEach(e=>{const s=discr(e,rules);if(!(e.family in best)||s>best[e.family])best[e.family]=s});
+  const sorted=Object.values(best).sort((a,b)=>b-a);const w=nums(rules.weights);let sc=0;sorted.forEach((s,i)=>{if(i<w.length)sc+=s*w[i]});
+  return {score:Math.min(sc,rules.cap),families:Object.keys(best).length}}
+function compute(rules){rules=rules||cur.rules;const live=cur.evidence.filter(e=>!e.stale);const assessed=live.filter(e=>['support','against','neutral'].includes(e.dir));
+  const clusters={};assessed.forEach(e=>{(clusters[e.cluster]=clusters[e.cluster]||[]).push(e)});
+  const rows=Object.entries(clusters).map(([k,v])=>({cluster:k,sup:clusterScore(v.filter(e=>e.dir==='support'),rules),agn:clusterScore(v.filter(e=>e.dir==='against'),rules)}));
+  const support=rows.reduce((a,r)=>a+r.sup.score,0),against=rows.reduce((a,r)=>a+r.agn.score,0);
+  const fam=new Set(assessed.filter(e=>e.dir!=='neutral').map(e=>e.family)).size;
+  const gated=live.some(e=>e.decisive&&e.dir==='against');
+  // coverage: questions answered + applicable modules done + evidence assessed
+  const qd=cur.questions.filter(q=>q.done&&!q.review).length;const mods=Object.values(cur.modules).filter(m=>!m.na);const md=mods.filter(m=>m.done).length;
+  const evTot=cur.evidence.filter(e=>e.dir!=='na').length,evA=cur.evidence.filter(e=>['support','against','neutral'].includes(e.dir)&&!e.stale).length;
+  const parts=[[qd,QUESTIONS.length],[md,mods.length]];if(evTot)parts.push([evA,evTot]);
+  const coverage=parts.reduce((a,p)=>a+p[0],0)/Math.max(1,parts.reduce((a,p)=>a+p[1],0));
+  return {rows,support,against,balance:support-rules.negMult*against,families:fam,gated,coverage,qd,md,modsTotal:mods.length,evA,evTot,unassessed:cur.evidence.filter(e=>e.dir==='unassessed'||e.stale).length,stale:cur.evidence.filter(e=>e.stale).length}}
+function claimBalances(){const out={};cur.claims.forEach(c=>{const items=cur.evidence.filter(e=>e.claim===c.id&&!e.stale&&['support','against'].includes(e.dir));
+  const clusters={};items.forEach(e=>{(clusters[e.cluster]=clusters[e.cluster]||[]).push(e)});let s=0,a=0;Object.values(clusters).forEach(v=>{s+=clusterScore(v.filter(e=>e.dir==='support'),cur.rules).score;a+=clusterScore(v.filter(e=>e.dir==='against'),cur.rules).score});
+  out[c.id]={support:s,against:a,balance:s-cur.rules.negMult*a,n:items.length,gated:items.some(e=>e.decisive&&e.dir==='against')}});
+  // upstream propagation: a gated claim gates everything depending on it
+  let changed=true;while(changed){changed=false;cur.claims.forEach(c=>{const deps=(c.dependsOn||'').split(',').map(s=>s.trim()).filter(Boolean);if(!out[c.id].upstream&&deps.some(d=>out[d]&&(out[d].gated||out[d].upstream))){out[c.id].upstream=true;changed=true}})}
+  return out}
+function score(){const r=compute();const b=F('board');const sgn=v=>v>0?'pos':v<0?'neg':'';
+  const unscored=r.coverage<cur.rules.floor;
+  b.innerHTML=[['Support',r.support.toFixed(1),'pos'],['Counterevidence',r.against.toFixed(1),'neg'],['Balance',unscored?'—':r.balance.toFixed(1),sgn(r.balance)],['Evidence families',r.families,''],['Coverage',Math.round(r.coverage*100)+'%',r.coverage<cur.rules.floor?'amb':''],['Unassessed / stale',`${r.unassessed}`,r.unassessed?'amb':'']].map(m=>`<div class="metric"><strong class="${m[2]}">${m[1]}</strong><span>${m[0]}</span></div>`).join('');
+  const v=F('verdict');const cov=`coverage ${r.qd}/${QUESTIONS.length} questions · ${r.md}/${r.modsTotal} checks · ${r.evA}/${r.evTot} evidence`;
+  if(r.gated)v.innerHTML=`<div class="verdict gated">GATED — a verified counterexample to the exact claim is open. Balance would read ${r.balance.toFixed(1)}, but a decisive counterexample is not cancelled by accumulated support. Resolve, rescope the claim, or retire it. ${cov}.</div>`;
+  else if(unscored)v.innerHTML=`<div class="verdict unscored">UNSCORED — coverage ${Math.round(r.coverage*100)}% is below the ${Math.round(cur.rules.floor*100)}% floor. Unassessed is not zero. ${cov}.</div>`;
+  else v.innerHTML=`<div class="verdict">Support ${r.support.toFixed(1)} · Counterevidence ${r.against.toFixed(1)} · Balance ${r.balance.toFixed(1)} · ${r.families} families · ${cov} · ${robustness()}</div>`;
+  // tables
+  F('clusterTable').innerHTML=r.rows.length?`<table><tr><th>Cluster</th><th class="num">Support</th><th class="num">Families</th><th class="num">Against</th><th class="num">Families</th></tr>${r.rows.map(x=>`<tr><td>${esc(x.cluster)}</td><td class="num pos">${x.sup.score.toFixed(1)}</td><td class="num">${x.sup.families}</td><td class="num neg">${x.agn.score.toFixed(1)}</td><td class="num">${x.agn.families}</td></tr>`).join('')}</table>`:'<p class="small">No assessed evidence.</p>';
+  const cb=claimBalances();let weakest=null;cur.claims.filter(c=>c.loadBearing).forEach(c=>{const x=cb[c.id];if(!weakest||x.balance<cb[weakest].balance)weakest=c.id});
+  F('claimTable').innerHTML=`<table><tr><th>Claim</th><th>Register</th><th>Load-bearing</th><th class="num">Support</th><th class="num">Against</th><th class="num">Balance</th><th>Items</th><th>State</th></tr>${cur.claims.map(c=>{const x=cb[c.id];return `<tr><td>${esc(c.id)} <span class="small">v${c.version}</span></td><td>${c.register}</td><td>${c.loadBearing?'yes':''}</td><td class="num pos">${x.support.toFixed(1)}</td><td class="num neg">${x.against.toFixed(1)}</td><td class="num ${sgn(x.balance)}">${x.balance.toFixed(1)}</td><td class="num">${x.n}</td><td>${x.gated?'<span class="tag gate">gated</span>':x.upstream?'<span class="tag gate">upstream gated</span>':''}${c.id===weakest?'<span class="tag stale">weakest load-bearing</span>':''}</td></tr>`}).join('')}</table>`;
+  const lanes={};REGISTERS.forEach(k=>lanes[k]={s:0,a:0,n:0});cur.claims.forEach(c=>{const x=cb[c.id];lanes[c.register].s+=x.support;lanes[c.register].a+=x.against;lanes[c.register].n+=x.n});
+  F('laneTable').innerHTML=`<table><tr><th>Register</th><th class="num">Support</th><th class="num">Against</th><th class="num">Balance</th><th class="num">Items</th></tr>${REGISTERS.map(k=>{const l=lanes[k];const bl=l.s-cur.rules.negMult*l.a;return `<tr><td>${k}</td><td class="num pos">${l.s.toFixed(1)}</td><td class="num neg">${l.a.toFixed(1)}</td><td class="num ${sgn(bl)}">${bl.toFixed(1)}</td><td class="num">${l.n}</td></tr>`}).join('')}</table><p class="small">A native result does not score the identification. If IDENTIFICATION reads positive with NATIVE and BRIDGE empty, the theology is carrying itself — which may be fine, but say so.</p>`;
+  F('lockstate').textContent=r.gated?'Gated':unscored?'Unscored':'Not a probability of truth';
+  F('robust').innerHTML=robustness(true)}
+function robustness(long){const base=compute().balance;const s0=Math.sign(base);const tests=[];const R=cur.rules;const w=nums(R.weights);
+  const variants=[['weights −25%',{...R,weights:w.map(x=>x*0.75).join(',')}],['weights +25%',{...R,weights:w.map(x=>x*1.25).join(',')}],['cap −1',{...R,cap:R.cap-1}],['cap +1',{...R,cap:R.cap+1}],['counter ×0.75',{...R,negMult:R.negMult*0.75}],['counter ×1.25',{...R,negMult:R.negMult*1.25}],['timing all 1',{...R,timing:'1,1,1'}],['rival factor off',{...R,rival:'1,1,1'}]];
+  const flips=[];variants.forEach(([n,rr])=>{const b=compute(rr).balance;tests.push(`${n}: ${b.toFixed(1)}`);if(Math.sign(b)!==s0&&Math.abs(b)>0.001)flips.push(n)});
+  const line=flips.length?`verdict FLIPS under: ${flips.join(', ')}`:'verdict stable under ±25% weights, cap ±1, counter ±25%, timing and rival factors off';
+  return long?`<strong>Robustness.</strong> ${line}.<br>${tests.join(' · ')}`:line}
+
+// ---------- render all ----------
+function renderRules(){Object.keys(DEFAULT_RULES).forEach(k=>{const el=document.querySelector(`[data-r="${k}"]`);if(el)el.value=cur.rules[k]})}
+function render(){Object.keys(cur.fields).forEach(k=>{const el=document.querySelector(`[data-f="${k}"]`);if(el)el.value=cur.fields[k]});renderRules();renderClaims();fillClaimSelect();renderQuestions();renderModules();renderEvidence();score();renderHistory()}
+function renderHistory(){F('history').innerHTML=cur.log.length?`<table>${cur.log.map(l=>`<tr><td class="small">${l.t.slice(0,19).replace('T',' ')}</td><td>${esc(l.msg)}</td></tr>`).join('')}</table>`:'<p class="small">No recorded changes yet.</p>'}
+
+// ---------- validation & export ----------
+F('validate').onclick=()=>{const r=compute();const gaps=[];if(!cur.fields.central.trim())gaps.push('Central claim is empty.');if(!cur.fields.kill.trim())gaps.push('Kill condition (six #5) is empty.');
+  cur.claims.forEach(c=>{if(!c.statement.trim())gaps.push(`${c.id} has no statement.`);(c.dependsOn||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(d=>{if(!cur.claims.some(x=>x.id===d))gaps.push(`${c.id} depends on ${d}, which does not exist.`)})});
+  if(!cur.claims.some(c=>c.loadBearing))gaps.push('No claim is marked load-bearing.');
+  cur.evidence.forEach(e=>{if(!e.reason.trim())gaps.push(`Evidence ${e.family} has no reason.`);if(e.dir==='unassessed')gaps.push(`Evidence ${e.family} is unassessed.`);if(e.stale)gaps.push(`Evidence ${e.family} is stale against ${e.claim}.`);if(e.assessor==='unrecorded')gaps.push(`Evidence ${e.family} has no assessor.`)});
+  cur.questions.forEach((q,i)=>{if(!q.done)gaps.push(`${QUESTIONS[i][0]} unanswered.`);if(q.review)gaps.push(`${QUESTIONS[i][0]} needs review (earlier answer changed).`)});
+  MODULES.forEach(m=>{const s=cur.modules[m[0]];if(!s.na&&!s.done)gaps.push(`${m[1]} unfinished.`)});
+  if(cur.fields.coherence==='')gaps.push('Coherence unassessed.');
+  F('validation').textContent=(gaps.length?`${gaps.length} gap(s):\n• `+gaps.join('\n• '):'No structural gaps found.')+`\n\nCoverage ${Math.round(r.coverage*100)}% · ${r.gated?'GATED':r.coverage<cur.rules.floor?'UNSCORED':'balance '+r.balance.toFixed(1)}. This checks completeness, not truth.`;log('Completeness checked')};
+function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function slug(s){return (s||'untitled').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function yq(s){return JSON.stringify(String(s==null?'':s))}
+F('exMd').onclick=()=>{const r=compute();const cb=claimBalances();const state=r.gated?'GATED':r.coverage<cur.rules.floor?'UNSCORED':'SCORED';let weakest='';cur.claims.filter(c=>c.loadBearing).forEach(c=>{if(!weakest||cb[c.id].balance<cb[weakest].balance)weakest=c.id});const stable=!robustness().startsWith('verdict FLIPS');
+  const fm=`---
+title: ${yq(cur.fields.title)}
+type: evidence-sheet
+status: candidate
+date: ${new Date().toISOString().slice(0,10)}
+claim_central: ${yq(cur.fields.central)}
+register_lanes: [${REGISTERS.join(', ')}]
+evd_state: ${state}
+evd_support: ${r.support.toFixed(1)}
+evd_counter: ${r.against.toFixed(1)}
+evd_balance: ${state==='SCORED'?r.balance.toFixed(1):'null'}
+evd_families: ${r.families}
+evd_coverage: ${r.coverage.toFixed(2)}
+evd_gated: ${r.gated}
+evd_stable: ${stable}
+evd_weakest_claim: ${yq(weakest)}
+evd_unassessed: ${r.unassessed}
+evd_assessors: [${[...new Set(cur.evidence.map(e=>e.assessor))].map(yq).join(', ')}]
+coherence: ${cur.fields.coherence===''?'null':cur.fields.coherence}
+physical_event: ${cur.fields.physical}
+source_ref: ${yq(cur.fields.sourceRef)}
+tags: [theophysics, evidence-sheet]
+---
+`;
+  let md=fm+`# ${cur.fields.title||'Untitled'}\n\n## The six\n\n**Claim.** ${cur.fields.central}\n\n**Domain.** ${cur.fields.classification}\n\n**Physical event.** ${cur.fields.physical} — ${cur.fields.event}\n\n**Bridge.** ${cur.fields.bridge||'none'}\n\n**What defeats it.** ${cur.fields.kill}\n\n**Have / need / breaks if.** ${cur.fields.needs}\n\n`;
+  md+=`## Verdict line\n\n> ${state}${state==='SCORED'?` — Support ${r.support.toFixed(1)} · Counter ${r.against.toFixed(1)} · Balance ${r.balance.toFixed(1)}`:''} · ${r.families} families · coverage ${Math.round(r.coverage*100)}% · ${robustness()}\n\n`;
+  md+=`## Claims\n\n| ID | Version | Register | Load-bearing | Depends on | Support | Against | Balance | State |\n|---|---|---|---|---|---|---|---|---|\n`+cur.claims.map(c=>{const x=cb[c.id];return `| ${c.id} | v${c.version} | ${c.register} | ${c.loadBearing?'yes':''} | ${c.dependsOn||''} | ${x.support.toFixed(1)} | ${x.against.toFixed(1)} | ${x.balance.toFixed(1)} | ${x.gated?'gated':x.upstream?'upstream-gated':c.id===weakest?'weakest':''} |`}).join('\n')+'\n\n'+cur.claims.map(c=>`- **${c.id}** (${c.register}): ${c.statement}`).join('\n')+'\n\n';
+  md+=`## Evidence ledger\n\n| Family | Cluster | Claim | Dir | Raw | Discr. | Timing | Rival | Assessor | Finding |\n|---|---|---|---|---|---|---|---|---|---|\n`+cur.evidence.map(e=>`| ${e.family} | ${e.cluster} | ${e.claim} v${e.claimVersion}${e.stale?' (stale)':''} | ${e.dir}${e.decisive?' ⚑':''} | ${e.strength} | ${discr(e).toFixed(2)} | ${e.timing} | ${e.rival} | ${e.assessor} | ${e.finding.replace(/\|/g,'/').replace(/\n/g,' ')} |`).join('\n')+'\n\n';
+  md+=`> [!info]- Evidence reasons\n`+cur.evidence.map(e=>`> - **${e.family}** — ${e.reason.replace(/\n/g,' ')} _(${e.source.replace(/\n/g,' ')})_`).join('\n')+'\n\n';
+  md+=`## Open the question\n\n`+QUESTIONS.map((q,i)=>`> [!note]${cur.questions[i].done?'-':'+'} ${q[0]} · ${q[1]}${cur.questions[i].review?' (review)':''}\n> ${(cur.questions[i].answer||'_unanswered_').replace(/\n/g,'\n> ')}\n`).join('\n')+'\n';
+  md+=`## Domain checks\n\n`+MODULES.filter(m=>!cur.modules[m[0]].na).map(m=>`> [!abstract]- ${m[1]} — ${cur.modules[m[0]].done?'done':'unfinished'}\n> ${(cur.modules[m[0]].analysis||'_not started_').replace(/\n/g,'\n> ')}\n`).join('\n')+'\n';
+  const naM=MODULES.filter(m=>cur.modules[m[0]].na);md+=`## Not applicable\n\n> [!quote]- ${naM.length} excluded, with reasons\n`+(naM.length?naM.map(m=>`> - **${m[1]}** — ${cur.modules[m[0]].reason}`).join('\n'):'> - nothing excluded')+'\n\n';
+  md+=`## Coherence\n\n${cur.fields.coherence===''?'Unassessed':cur.fields.coherence+'/5'} — ${cur.fields.coherenceReason}\n\n---\n*POF 2828 · Evidence Workbench v2 · not a probability of truth · human ruling required*\n`;
+  download(slug(cur.fields.title)+'.md',md,'text/markdown');log('Exported Obsidian note')};
+F('exJson').onclick=()=>{download(slug(cur.fields.title)+'.workbench.json',JSON.stringify(cur,null,2),'application/json');log('Exported JSON')};
+F('import').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const r=JSON.parse(t);if(!r.fields||!r.claims)throw 0;r.id=r.id||uid();db[r.id]=r;cur=r;log('Imported from backup');persist();refreshRecords();render()}catch(err){alert('Not a Workbench v2 backup.')}})};
+F('demo').onclick=()=>{const r=blank();r.fields.title='Scoring example — Law 9 moral conservation';r.fields.central='Time-translation symmetry in the moral domain yields a conserved current; the weak-force analogue makes moral debt irreversible and conserved.';r.fields.kill='A moral event whose ledger closes with no remainder and no external source term.';r.fields.raw='ψ_whole → ψ_broken + δ + ν_loss';
+  r.claims=[{id:'C1',statement:'Noether: time-translation symmetry ⇒ conserved current, derived independently of Bianchi identities.',register:'NATIVE',dependsOn:'',loadBearing:true,version:1,hash:hash('x')},{id:'C2',statement:'Weak-force analogue: parity broken, time-translation preserved ⇒ moral debt irreversible and conserved.',register:'BRIDGE',dependsOn:'C1',loadBearing:true,version:1,hash:hash('y')},{id:'C3',statement:'The external source term satisfying the ledger is atonement.',register:'IDENTIFICATION',dependsOn:'C2',loadBearing:false,version:1,hash:hash('z')}];
+  const mk=(f,cl,c,d,s,rv,t,fi,re,dec)=>({id:uid(),finding:fi,source:'demo',claim:c,claimVersion:1,family:f,cluster:cl,dir:d,strength:s,rival:rv,timing:t,assessor:'demo',reason:re,decisive:!!dec,stale:false,updated:new Date().toISOString()});
+  r.evidence=[mk('lean-noether','derivation','C1','support',5,'no','predicted','Lean 4 receipt for the Noether step compiles zero-sorry.','Formal receipt matches theorem statement. Rival (no conservation) cannot produce it.'),
+    mk('lean-noether','derivation','C1','support',4,'no','predicted','Second write-up of the same Lean proof.','Same family — same receipt, cannot fail independently.'),
+    mk('cp-violation','physics-side','C2','support',3,'yes','accommodated','CP violation is established in the weak sector.','True, but every rival also grants standard-model CP violation; it discriminates nothing about the moral mapping.'),
+    mk('ledger-remainder','falsification','C2','against',2,'no','predicted','Candidate case where restitution appears complete.','On inspection a third party absorbed cost — not a closed ledger. Weak against.'),
+    mk('scripture-atonement','identification','C3','support',3,'partly','retrodicted','Isaiah 53 / Hebrews 9 as source-term reading.','Confessional warrant, stated as such. Retrodicted onto the formalism.'),
+    mk('unread-paper','physics-side','C2','unassessed',3,'no','accommodated','A paper someone cited on moral-injury persistence.','Not yet read. Counted as unassessed, not zero.')];
+  r.questions[0]={answer:'ψ_whole → ψ_broken + δ + ν_loss, with time-translation preserved and parity broken.',done:true,review:false};
+  r.modules.math={analysis:'Noether step formalized; scope is the encoded Lagrangian only.',done:true,na:false,reason:''};r.modules.history.na=true;r.modules.history.reason='No historical burden in this claim.';
+  db[r.id]=r;cur=r;log('Demo loaded');persist();refreshRecords();render()};
+
+// ---------- boot ----------
+if(!Object.keys(db).length){const r=blank();db[r.id]=r}
+const last=localStorage.getItem(CUR);cur=db[last]||db[Object.keys(db)[0]];refreshRecords();render();
+})();
+</script>
+</body>
+</html>

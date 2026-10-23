@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Comparative Worldview Stress-Testing Engine — Full Roster</title>
+<style>
+:root{
+  --bg:#0a0e14; --panel:#111820; --panel2:#161f2a; --ink:#e8eef4; --mut:#5a6d80;
+  --line:#1f2a38; --grid:rgba(73,180,224,.03); --accent:#49b4e0;
+  --prim:#7f93a8; --pres:#8f7fe0; --def:#d9a94a; --emp:#49b4e0; --mod:#5bbf8a;
+  --thm:#e08f6a; --bridge:#e0a34a; --meta:#c8695f; --open:#5a6d80; --kill:#c0433a;
+  --shadow:0 8px 32px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+header{max-width:1600px;margin:0 auto;padding:28px 20px 8px}
+.eyebrow{font:600 11px/1 mono;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(20px,2.6vw,30px);margin:.3em 0 .15em}
+.sub{color:var(--mut);max-width:90ch;font-size:13.5px;line-height:1.55}
+.banner{max-width:1600px;margin:12px auto 0;padding:0 20px}
+.banner .box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:10px 14px;font-size:12.5px;color:var(--mut);line-height:1.5}
+.controls{max-width:1600px;margin:12px auto 0;padding:0 20px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--panel)}
+.seg button{background:var(--panel);color:var(--mut);border:0;padding:6px 11px;font:600 11px/1 ui-sans-serif;cursor:pointer;white-space:nowrap}
+.seg button.on{color:#fff}
+.lg{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--mut)}
+.sw{width:11px;height:11px;border-radius:2px;border:1px solid rgba(255,255,255,.1)}
+.hint{margin-left:auto;font-size:11.5px;color:var(--mut)}
+.kobanner{max-width:1600px;margin:10px auto 0;padding:0 20px}
+.kobox{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--kill);border-radius:8px;padding:10px 14px;font-size:12.5px;display:none}
+.kobox.on{display:block}.kobox b{color:var(--kill)}.kobox .rest{margin-left:10px;cursor:pointer;color:var(--accent);font-weight:600;border-bottom:1px dashed var(--accent)}
+.wrap{max-width:1600px;margin:10px auto 50px;padding:0 20px}
+.stage{position:relative;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel2);box-shadow:var(--shadow);max-height:88vh}
+.canvas{position:relative;min-width:2200px;padding:16px 18px 28px}
+svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.grid{position:relative;z-index:2}
+.spine-col{position:relative;display:flex;flex-direction:column;gap:8px;min-width:190px;flex:1}
+.col-head{font:700 10px/1 mono;letter-spacing:.1em;text-transform:uppercase;padding:7px 8px;border-radius:5px;background:var(--panel);border:1px solid var(--line);text-align:center;margin-bottom:3px;white-space:nowrap}
+.tier-row{display:flex;gap:12px;align-items:stretch;margin-bottom:10px}
+.tier-label{width:95px;flex-shrink:0;font:600 9px/1.3 mono;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);display:flex;align-items:center;padding-right:6px;text-align:right;justify-content:flex-end}
+.tier-content{flex:1;display:flex;gap:12px}
+.shared-row{display:flex;gap:8px;flex-wrap:wrap;padding:14px 0 6px;border-top:1px dashed var(--line);margin-top:8px}
+.shared-label{width:100%;font:600 9px/1 mono;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+.node{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 9px 8px;cursor:pointer;border-top:3px solid var(--k);transition:transform .1s,box-shadow .1s,opacity .12s;min-height:78px}
+.node:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--k)}
+.node .id{font:700 9px/1 mono;color:var(--k);display:flex;justify-content:space-between;margin-bottom:3px}
+.node .title{font-weight:640;font-size:11px;margin:0 0 2px;line-height:1.2}
+.node .claim{font-size:10px;color:var(--mut);line-height:1.3;max-height:3.2em;overflow:hidden}
+.node .tag{margin-top:5px;font:600 8px/1 mono;color:var(--k);text-transform:uppercase;letter-spacing:.05em}
+.kx{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--mut);font:700 11px/1 mono;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .1s;z-index:4}
+.node:hover .kx{opacity:1}.kx:hover{background:var(--kill);color:#fff;border-color:var(--kill)}
+.removed{border-style:dashed!important;border-color:var(--kill)!important;opacity:.45;filter:grayscale(.45)}
+.removed .title{text-decoration:line-through}.removed .kx{opacity:1;background:var(--kill);color:#fff}
+.collapsed{opacity:.3;border-color:#8a3b34!important;filter:grayscale(.75)}
+.collapsed .title{color:#c8695f}
+.dim{opacity:.14}.hot{box-shadow:0 0 0 1px var(--k),var(--shadow)}
+.k-primitive{--k:var(--prim)}.k-presupposition{--k:var(--pres)}.k-definition{--k:var(--def)}.k-empirical{--k:var(--emp)}.k-model{--k:var(--mod)}.k-theorem{--k:var(--thm)}.k-bridge{--k:var(--bridge)}.k-metaphysical{--k:var(--meta)}.k-open{--k:var(--open)}.k-kill{--k:var(--kill)}
+footer{max-width:1600px;margin:0 auto 50px;padding:0 20px;color:var(--mut);font-size:12px;line-height:1.55}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Theophysics · Comparative Stress-Test · Full Roster</div>
+  <h1>Worldview Dependency Engine — 10 Rival Systems</h1>
+  <p class="sub">Every worldview reconstructed in its strongest form. Same node taxonomy, same shared evidence, same knockout rules. Toggle columns to isolate comparisons. Bridge claims (amber) are the load-bearing steps where interpretation enters; metaphysical commitments (red) are what collapses when the bridge is pulled.</p>
+</header>
+
+<div class="banner"><div class="box">
+  <b>How to use.</b> Toggle spines below to focus the comparison. <b>Click</b> any node to trace its upstream chain. <b>Hover + ✕</b> to knock a node out and watch the cascade. The shared evidence layer (bottom) contains observations all systems must interpret. A bridge claim is where a worldview crosses from "what the evidence says" to "what it means."
+</div></div>
+
+<div class="controls" id="toggles">
+  <span class="lg" style="margin-right:6px">Show spines:</span>
+  <!-- buttons injected by JS -->
+  <span class="hint">click = trace · ✕ = knockout · toggle buttons = show/hide columns</span>
+</div>
+
+<div class="kobanner"><div class="kobox" id="kobox"></div></div>
+
+<div class="wrap"><div class="stage"><div class="canvas" id="canvas">
+  <svg class="edges" id="edges" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="grid" id="grid"></div>
+</div></div></div>
+
+<footer id="foot"></footer>
+
+<script>
+// ==================== DATA ====================
+const SHARED=[
+  {id:'EV0',kind:'empirical',title:'Genetic inheritance',claim:'DNA transmits heritable information across generations.'},
+  {id:'EV1',kind:'empirical',title:'Fossil succession',claim:'Layered fossil record shows temporal progression of forms.'},
+  {id:'EV2',kind:'empirical',title:'Observed adaptation',claim:'Populations shift phenotype under selective pressure in real time.'},
+  {id:'EV3',kind:'empirical',title:'Quantum experiments',claim:'Double-slit, delayed-choice, Bell tests show observer-dependence / non-locality.'},
+  {id:'EV4',kind:'empirical',title:'Neural correlates',claim:'Conscious states covary with specific neural activation patterns.'},
+  {id:'EV5',kind:'empirical',title:'Fine-tuning',claim:'Physical constants sit in narrow life-permitting ranges.'},
+  {id:'EV6',kind:'empirical',title:'Cosmological expansion',claim:'Redshift and CMB indicate expanding universe from hot dense state.'},
+  {id:'EV7',kind:'empirical',title:'Information conservation',claim:'Quantum unitarity implies information is preserved in physical processes.'},
+];
+const SPINES=[
+  {key:'theo',name:'Theophysics',color:'#d9a94a',nodes:[
+    {id:'T0',kind:'primitive',title:'Existence',claim:'Something exists rather than nothing.',deps:[]},
+    {id:'T1',kind:'primitive',title:'Distinction',claim:'One thing can differ from another.',deps:['T0']},
+    {id:'T2',kind:'primitive',title:'Information',claim:'Distinguishable states constitute information.',deps:['T1']},
+    {id:'T3',kind:'definition',title:'Logos Field χ',claim:'Self-grounding informational substrate of reality.',deps:['T2']},
+    {id:'T4',kind:'model',title:'Observer Chain',claim:'Observers may be observed; chain terminates in infinite self-sustaining Observer.',deps:['T3']},
+    {id:'T5',kind:'bridge',title:'Terminal Observer = God',claim:'The infinite terminal observer is identified as God.',deps:['T4']},
+    {id:'T6',kind:'metaphysical',title:'Grace Requirement',claim:'External non-unitary operator is required for moral sign-flip.',deps:['T5']},
+    {id:'T7',kind:'theorem',title:'Soul Persistence',claim:'Information pattern of the self persists beyond physical death.',deps:['T3','T6']},
+  ]},
+  {key:'evo',name:'Evolutionary Naturalism',color:'#5bbf8a',nodes:[
+    {id:'E0',kind:'primitive',title:'Physical Reality',claim:'A mind-independent physical reality exists.',deps:[]},
+    {id:'E1',kind:'presupposition',title:'Regularities',claim:'Physical processes are governed by describable laws.',deps:['E0']},
+    {id:'E2',kind:'definition',title:'Natural Selection',claim:'Differential reproductive success changes allele frequencies.',deps:['E1']},
+    {id:'E3',kind:'model',title:'Common Descent',claim:'All life shares ancestry via branching evolutionary tree.',deps:['E2','EV0','EV1']},
+    {id:'E4',kind:'model',title:'Modern Synthesis',claim:'Genetics + selection + drift explain adaptive complexity.',deps:['E3','EV2']},
+    {id:'E5',kind:'bridge',title:'Human Cognition Evolved',claim:'Human cognitive faculties arose through biological evolution.',deps:['E4','EV4']},
+    {id:'E6',kind:'metaphysical',title:'Metaphysical Naturalism',claim:'All reality is ultimately physical; nothing beyond nature exists.',deps:['E5']},
+    {id:'E7',kind:'open',title:'Hard Problem',claim:'No reductive explanation of why there is something it is like to be.',deps:['E6']},
+  ]},
+  {key:'red',name:'Reductive Materialism',color:'#e06a5b',nodes:[
+    {id:'R0',kind:'primitive',title:'Physical Closure',claim:'The physical domain is causally closed.',deps:[]},
+    {id:'R1',kind:'presupposition',title:'Completeness',claim:'Every physical event has a sufficient physical cause.',deps:['R0']},
+    {id:'R2',kind:'definition',title:'Reduction Thesis',claim:'All properties reduce to physical properties.',deps:['R1']},
+    {id:'R3',kind:'model',title:'Neural Sufficiency',claim:'Brain states are identical to / sufficient for mental states.',deps:['R2','EV4']},
+    {id:'R4',kind:'model',title:'Eliminative Materialism',claim:'Folk psychology will be eliminated by neuroscience.',deps:['R3']},
+    {id:'R5',kind:'bridge',title:'Consciousness = Computation',claim:'Consciousness is information processing in a physical substrate.',deps:['R3','EV4']},
+    {id:'R6',kind:'metaphysical',title:'Ontological Physicalism',claim:'Only physical entities exist.',deps:['R5']},
+    {id:'R7',kind:'open',title:'Explanatory Gap',claim:'Why there is something it is like to be a physical system.',deps:['R6']},
+  ]},
+  {key:'emg',name:'Emergent Physicalism',color:'#e0a34a',nodes:[
+    {id:'M0',kind:'primitive',title:'Physical Substrate',claim:'Complex systems are built from physical components.',deps:[]},
+    {id:'M1',kind:'presupposition',title:'Complexity',claim:'Sufficient complexity enables novel properties.',deps:['M0']},
+    {id:'M2',kind:'definition',title:'Emergence',claim:'Novel properties arise from system organization.',deps:['M1']},
+    {id:'M3',kind:'model',title:'Strong Emergence',claim:'Consciousness is a strongly emergent property.',deps:['M2','EV4']},
+    {id:'M4',kind:'model',title:'Downward Causation',claim:'Emergent properties exert causal influence on components.',deps:['M3']},
+    {id:'M5',kind:'bridge',title:'Non-Reductive Physicalism',claim:'Consciousness is physical but not reducible to parts.',deps:['M3']},
+    {id:'M6',kind:'metaphysical',title:'Supervenience',claim:'Mental properties supervene on physical properties.',deps:['M5']},
+    {id:'M7',kind:'open',title:'Causal Closure Tension',claim:'How does downward causation avoid overdetermination?',deps:['M6']},
+  ]},
+  {key:'sci',name:'Scientific Realism',color:'#49b4e0',nodes:[
+    {id:'S0',kind:'primitive',title:'Mind-Independent Reality',claim:'Reality exists independently of human minds.',deps:[]},
+    {id:'S1',kind:'presupposition',title:'Testable Regularities',claim:'Nature admits regularities discoverable by empirical inquiry.',deps:['S0']},
+    {id:'S2',kind:'definition',title:'Scientific Method',claim:'Systematic observation, hypothesis, experiment, replication.',deps:['S1']},
+    {id:'S3',kind:'model',title:'Standard Model + GR',claim:'Current best-tested models of particles, forces, and spacetime.',deps:['S2','EV3','EV6']},
+    {id:'S4',kind:'theorem',title:'Empirical Adequacy',claim:'Scientific theories are judged by predictive success.',deps:['S3']},
+    {id:'S5',kind:'bridge',title:'Methodological Naturalism',claim:'Science ordinarily searches for regularities within nature.',deps:['S4']},
+    {id:'S6',kind:'metaphysical',title:'Metaphysical Agnosticism',claim:'Science does not adjudicate what may exist beyond nature.',deps:['S5']},
+    {id:'S7',kind:'open',title:'Consciousness Uncertainty',claim:'No consensus on whether consciousness is reducible or fundamental.',deps:['S6','EV4']},
+  ]},
+  {key:'hum',name:'Secular Humanism',color:'#6abfe0',nodes:[
+    {id:'H0',kind:'primitive',title:'Human Dignity',claim:'Humans possess inherent worth.',deps:[]},
+    {id:'H1',kind:'presupposition',title:'Reason & Ethics',claim:'Reason and empathy can ground ethical norms.',deps:['H0']},
+    {id:'H2',kind:'definition',title:'Flourishing',claim:'Human well-being is the measure of ethical value.',deps:['H1']},
+    {id:'H3',kind:'model',title:'Evolutionary Origins',claim:'Human moral intuitions have evolutionary origins.',deps:['H1','EV0','EV4']},
+    {id:'H4',kind:'model',title:'Social Construction',claim:'Morality is socially constructed but functionally real.',deps:['H3']},
+    {id:'H5',kind:'bridge',title:'Immanent Meaning',claim:'Meaning and purpose are achievable without transcendence.',deps:['H2','H4']},
+    {id:'H6',kind:'metaphysical',title:'Non-Theistic Morality',claim:'Objective moral facts exist without divine grounding.',deps:['H5']},
+    {id:'H7',kind:'open',title:'Grounding Problem',claim:'What ontologically grounds moral facts if not God?',deps:['H6']},
+  ]},
+  {key:'ide',name:'Idealism',color:'#a97fe0',nodes:[
+    {id:'I0',kind:'primitive',title:'Consciousness-Only',claim:'Consciousness is the sole ontological primitive.',deps:[]},
+    {id:'I1',kind:'presupposition',title:'Universal Mind',claim:'A universal mind/substrate underlies all reality.',deps:['I0']},
+    {id:'I2',kind:'definition',title:'Dissociation',claim:'Individual minds are dissociated alters of universal mind.',deps:['I1']},
+    {id:'I3',kind:'model',title:'Empirical Correlates',claim:'Brain activity is the image of a mental process, not its cause.',deps:['I2','EV4']},
+    {id:'I4',kind:'model',title:'Observers as Excitations',claim:'Individual observers are excitations of universal consciousness.',deps:['I1']},
+    {id:'I5',kind:'bridge',title:'Physical World as Image',claim:'The physical world is appearance within universal mind.',deps:['I3','I4']},
+    {id:'I6',kind:'metaphysical',title:'Ontological Idealism',claim:'Only consciousness and its contents exist.',deps:['I5']},
+    {id:'I7',kind:'open',title:'Other Minds / Solipsism',claim:'Why are there many dissociated minds rather than one?',deps:['I6']},
+  ]},
+  {key:'pan',name:'Panpsychism',color:'#8f7fe0',nodes:[
+    {id:'P0',kind:'primitive',title:'Consciousness',claim:'Consciousness is an ontological primitive.',deps:[]},
+    {id:'P1',kind:'presupposition',title:'Experience Universal',claim:'Experience-like properties exist at all levels of reality.',deps:['P0']},
+    {id:'P2',kind:'definition',title:'Integrated Information Φ',claim:'Consciousness scales with irreducible information integration.',deps:['P1']},
+    {id:'P3',kind:'model',title:'Quantum Coherence',claim:'Micro-scale coherence aggregates into macro consciousness.',deps:['P2','EV3']},
+    {id:'P4',kind:'model',title:'Complexity Gradient',claim:'Consciousness intensity increases with system complexity.',deps:['P3','EV4']},
+    {id:'P5',kind:'bridge',title:'No Terminal Observer',claim:'Consciousness is diffuse; no single infinite observer required.',deps:['P4']},
+    {id:'P6',kind:'metaphysical',title:'Impersonal Ground',claim:'The ground of reality is experiential but not personal.',deps:['P5']},
+    {id:'P7',kind:'open',title:'Combination Problem',claim:'How do micro-experiences combine into unified macro-experience?',deps:['P6']},
+  ]},
+  {key:'cth',name:'Classical Theism',color:'#e0d34a',nodes:[
+    {id:'C0',kind:'primitive',title:'Pure Actuality',claim:'God is actus purus — pure actuality without potentiality.',deps:[]},
+    {id:'C1',kind:'presupposition',title:'Divine Simplicity',claim:'God is absolutely simple, without parts.',deps:['C0']},
+    {id:'C2',kind:'definition',title:'Necessary Existence',claim:"God's existence is identical to God's essence.",deps:['C1']},
+    {id:'C3',kind:'model',title:'Cosmological Argument',claim:'Contingency of creatures points to necessary being.',deps:['C0','C2']},
+    {id:'C4',kind:'model',title:'Teleological Argument',claim:'Order in nature points to intelligent ordering.',deps:['C3','EV5']},
+    {id:'C5',kind:'bridge',title:'God as Ground',claim:'God is Being itself (ipsum esse subsistens), not a being.',deps:['C4']},
+    {id:'C6',kind:'metaphysical',title:'Transcendence',claim:'God is radically distinct from creation.',deps:['C5']},
+    {id:'C7',kind:'open',title:'Problem of Evil',claim:'How to reconcile classical attributes with suffering.',deps:['C6']},
+  ]},
+  {key:'chr',name:'Christianity',color:'#e0c34a',nodes:[
+    {id:'X0',kind:'primitive',title:'God as Trinity',claim:'One God in three co-eternal persons.',deps:[]},
+    {id:'X1',kind:'presupposition',title:'Creation ex Nihilo',claim:'God created all that is from nothing.',deps:['X0']},
+    {id:'X2',kind:'definition',title:'Incarnation',claim:'The Son became flesh in Jesus of Nazareth.',deps:['X1']},
+    {id:'X3',kind:'model',title:'Resurrection',claim:'Jesus rose bodily from the dead — historical event.',deps:['X2']},
+    {id:'X4',kind:'model',title:'Atonement',claim:"Christ's death reconciles humanity to God.",deps:['X2']},
+    {id:'X5',kind:'bridge',title:'Scripture Authority',claim:'Revealed truth in Scripture interprets natural theology.',deps:['X3','X4']},
+    {id:'X6',kind:'metaphysical',title:'Personal God',claim:'God is personal, relational, and immanent.',deps:['X0','X5']},
+    {id:'X7',kind:'open',title:'Eschatology',claim:'Final judgment, new creation, restoration of all things.',deps:['X6']},
+  ]},
+];
+const ALL=[]; SPINES.forEach(sp=>sp.nodes.forEach(n=>{n.spine=sp.key;n.spineName=sp.name;ALL.push(n);}));
+SHARED.forEach(n=>{n.spine='shared';n.spineName='Shared Evidence';ALL.push(n);});
+const BY=Object.fromEntries(ALL.map(n=>[n.id,n]));
+const tierMap={primitive:0,presupposition:0,definition:1,empirical:1,model:2,theorem:2,bridge:3,metaphysical:4,open:4,kill:4};
+const tierNames=['Tier 0 · Primitives / Presuppositions','Tier 1 · Definitions / Empirical','Tier 2 · Models / Theorems','Tier 3 · Bridge Claims','Tier 4 · Metaphysical / Open'];
+
+// ==================== UI ====================
+const canvas=document.getElementById('canvas'), edgesSvg=document.getElementById('edges'), grid=document.getElementById('grid');
+const visible=new Set(SPINES.map(s=>s.key));
+
+// Toggle buttons
+const toggles=document.getElementById('toggles');
+SPINES.forEach(sp=>{
+  const btn=document.createElement('button');
+  btn.textContent=sp.name; btn.dataset.key=sp.key;
+  btn.style.cssText='background:'+sp.color+';color:#fff;border:0;padding:5px 10px;font:600 11px/1 ui-sans-serif;cursor:pointer;opacity:1;';
+  btn.className='on';
+  btn.onclick=()=>{if(visible.has(sp.key)){visible.delete(sp.key);btn.style.opacity='.35';btn.className='';}else{visible.add(sp.key);btn.style.opacity='1';btn.className='on';}renderGrid();};
+  toggles.insertBefore(btn,toggles.querySelector('.hint'));
+});
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function mkNode(n){
+  const d=document.createElement('div');
+  d.className='node k-'+n.kind; d.id='node-'+n.id; d.dataset.id=n.id;
+  d.innerHTML=`<div class="kx" title="Knock out">✕</div>
+    <div class="id mono"><span>${n.id}</span></div>
+    <div class="title">${esc(n.title)}</div>
+    <div class="claim">${esc(n.claim)}</div>
+    <div class="tag">${n.kind}</div>`;
+  d.querySelector('.kx').addEventListener('click',e=>{e.stopPropagation();toggleKO(n.id);});
+  d.addEventListener('click',e=>{e.stopPropagation();select(n.id);});
+  return d;
+}
+
+function renderGrid(){
+  grid.innerHTML='';
+  // Header row
+  const hRow=document.createElement('div'); hRow.style.cssText='display:flex;gap:12px;margin-bottom:8px;position:relative;z-index:2;';
+  const activeSpines=SPINES.filter(s=>visible.has(s.key));
+  activeSpines.forEach(sp=>{
+    const col=document.createElement('div'); col.className='spine-col'; col.style.flex='1';
+    const head=document.createElement('div'); head.className='col-head'; head.textContent=sp.name;
+    head.style.borderTop='3px solid '+sp.color; head.style.borderLeft='3px solid '+sp.color;
+    col.appendChild(head); hRow.appendChild(col);
+  });
+  grid.appendChild(hRow);
+  // Tiers
+  for(let t=0;t<5;t++){
+    const row=document.createElement('div'); row.className='tier-row';
+    const lab=document.createElement('div'); lab.className='tier-label'; lab.textContent=tierNames[t]; row.appendChild(lab);
+    const content=document.createElement('div'); content.className='tier-content';
+    activeSpines.forEach(sp=>{
+      const col=document.createElement('div'); col.className='spine-col';
+      sp.nodes.filter(n=>tierMap[n.kind]===t).forEach(n=>col.appendChild(mkNode(n)));
+      content.appendChild(col);
+    });
+    row.appendChild(content); grid.appendChild(row);
+  }
+  // Shared
+  const sRow=document.createElement('div'); sRow.className='shared-row';
+  const sLab=document.createElement('div'); sLab.className='shared-label'; sLab.textContent='Shared Evidence Layer — all worldviews point here'; sRow.appendChild(sLab);
+  SHARED.forEach(n=>sRow.appendChild(mkNode(n)));
+  grid.appendChild(sRow);
+  requestAnimationFrame(()=>draw(null));
+  setTimeout(()=>draw(null),200);
+}
+
+// ==================== EDGES ====================
+function getCenter(el){
+  const r=el.getBoundingClientRect(), c=canvas.getBoundingClientRect();
+  return {x:r.left+r.width/2-c.left, y:r.top+r.height/2-c.top, top:r.top-c.top, bottom:r.bottom-c.top};
+}
+function draw(hot){
+  const cb=canvas.getBoundingClientRect();
+  edgesSvg.setAttribute('viewBox','0 0 '+canvas.offsetWidth+' '+canvas.offsetHeight);
+  let s='';
+  const hs=hot?anc(hot).add(hot):null;
+  for(const n of ALL){
+    if(n.spine!=='shared' && !visible.has(n.spine)) continue;
+    for(const p of (n.deps||[])){
+      const a=document.getElementById('node-'+p), b=document.getElementById('node-'+n.id);
+      if(!a||!b) continue;
+      // skip if parent is in hidden spine
+      const parentNode=BY[p];
+      if(parentNode && parentNode.spine!=='shared' && !visible.has(parentNode.spine)) continue;
+      const ca=getCenter(a), cb2=getCenter(b);
+      const x1=ca.x, y1=ca.bottom, x2=cb2.x, y2=cb2.top, my=(y1+y2)/2;
+      const on=hs&&hs.has(p)&&hs.has(n.id);
+      const dead=removed.has(p)||removed.has(n.id)||alive[p]===false||alive[n.id]===false;
+      let col='rgba(100,120,140,.18)', wd=1.1, op=1, da='';
+      if(!hs&&dead){col='var(--kill)';wd=1.3;op=.4;da='4 4';}
+      else if(on){col='var(--accent)';wd=2.2;}
+      else if(hs){op=.14;}
+      s+=`<path d="M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}" fill="none" stroke="${col}" stroke-width="${wd}" opacity="${op}"${da?' stroke-dasharray="'+da+'"':''}/>`;
+    }
+  }
+  edgesSvg.innerHTML=s;
+}
+function anc(id,a=new Set()){
+  for(const p of (BY[id].deps||[])){if(!a.has(p)){a.add(p);anc(p,a);}}
+  return a;
+}
+
+// ==================== INTERACTION ====================
+const removed=new Set(); let alive={};
+function computeAlive(){
+  alive={};
+  const al=id=>{
+    if(id in alive) return alive[id];
+    if(removed.has(id)) return alive[id]=false;
+    let ok=true;
+    for(const p of (BY[id].deps||[])){ if(!al(p)){ok=false;break;} }
+    return alive[id]=ok;
+  };
+  for(const n of ALL) al(n.id);
+}
+function applyKO(){
+  computeAlive();
+  for(const n of ALL){
+    const el=document.getElementById('node-'+n.id);
+    if(!el) continue;
+    el.classList.remove('removed','collapsed','dim','hot');
+    if(removed.has(n.id)) el.classList.add('removed');
+    else if(!alive[n.id]) el.classList.add('collapsed');
+  }
+  const rem=[...removed];
+  const col=ALL.filter(n=>!removed.has(n.id)&&!alive[n.id]);
+  const stand=ALL.filter(n=>alive[n.id]).length;
+  const box=document.getElementById('kobox');
+  if(rem.length){
+    box.classList.add('on');
+    box.innerHTML=`<b>Removed:</b> ${rem.map(id=>BY[id].title+' ('+id+')').join(', ')}. `+
+      (col.length?`<b>Cascade — ${col.length} node(s) orphaned.</b> `:`<b>No cascade.</b> `)+
+      `<b>${stand}</b>/${ALL.length} standing.<span class="rest" id="ra">↺ restore all</span>`;
+    document.getElementById('ra').addEventListener('click',e=>{e.stopPropagation();removed.clear();applyKO();});
+  } else { box.classList.remove('on'); box.innerHTML=''; }
+  draw(null);
+}
+function toggleKO(id){ removed.has(id)?removed.delete(id):removed.add(id); applyKO(); }
+function select(id){
+  const keep=anc(id); keep.add(id);
+  for(const n of ALL){ const el=document.getElementById('node-'+n.id); if(!el) continue; el.classList.toggle('dim',!keep.has(n.id)); el.classList.toggle('hot',keep.has(n.id)); }
+  draw(id); showInfo(id);
+}
+function reset(){
+  for(const n of ALL){ const el=document.getElementById('node-'+n.id); if(!el) continue; el.classList.remove('dim','hot'); if(removed.has(n.id))el.classList.add('removed'); else if(!alive[n.id])el.classList.add('collapsed'); }
+  draw(null); document.getElementById('foot').innerHTML=footBase;
+}
+function showInfo(id){
+  const n=BY[id]; const a=[...anc(id)];
+  document.getElementById('foot').innerHTML=
+    `<b>${n.id} · ${n.title}</b> — ${n.claim}<br>
+     <span class="mono" style="color:var(--${n.kind==='empirical'?'emp':n.kind==='presupposition'?'pres':n.kind})">${n.kind}</span> · ${n.spineName}.
+     Depends on ${n.deps&&n.deps.length? n.deps.map(d=>`<code>${d}</code>`).join(', '):'nothing (anchor)'}.
+     Upstream chain: ${a.length?a.length+' node(s)':'none'}.`;
+}
+const footBase = `<b>How to read it.</b> ${ALL.length} nodes across ${SPINES.length} worldviews + shared evidence. Toggle spines above to focus comparisons. <b>Bridge claims</b> (amber) are the load-bearing interpretation steps. <b>Metaphysical commitments</b> (red) exceed direct empirical adjudication. Knock out a bridge and watch what above it collapses.`;
+document.getElementById('foot').innerHTML=footBase;
+document.querySelector('.stage').addEventListener('click',reset);
+addEventListener('resize',()=>draw(null));
+
+// Init
+renderGrid();
+</script>
+</body>
+</html>

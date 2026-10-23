@@ -1,0 +1,103 @@
+{
+  "protocol_version": "ATLAS-RECORD-v1.0",
+  "uuid": "079048ec-2c27-44c3-aa23-3a768ef40322",
+  "node_id": "ATM-NODE-002",
+  "object_type": "ATOM",
+  "attached_layers": [
+    "ATOM",
+    "DEFINITION"
+  ],
+  "identity_scheme": "NERVE-NODE-v1",
+  "lane": "ATOM",
+  "standing": "CANDIDATE",
+  "claim_text": "Untitled independently reviewable atom",
+  "domains": {
+    "home": "PHYSICS",
+    "bridged": "NONE",
+    "bridge_candidate": "NO"
+  },
+  "warrant": "PROVISIONAL",
+  "why_closure": "WHY_CLOSED (Structural)",
+  "truth_predicates": [
+    "God can disclose Himself.",
+    "God is not a dependent being.",
+    "God is not explained by the world He created.",
+    "God speaks to creatures.",
+    "Discovery asks what the world requires.",
+    "Disclosure asks whom God says He is.",
+    "Christianity claims that God has disclosed Himself.",
+    "Jesus identifies Himself with the bread of life, the light of the world, and the truth.",
+    "Christianity claims that the Root entered history in Christ.",
+    "The Bible presents God as self-existent, personal, speaking, faithful, and revealed in Christ."
+  ],
+  "truth_predicates_by_lane": {},
+  "classifications_by_lane": {
+    "ATOM": {},
+    "DEFINITION": {},
+    "AXIOM": {},
+    "CLAIM": {},
+    "EVIDENCE": {},
+    "PROOF": {},
+    "MATHEMATICS": {},
+    "FORMAL": {},
+    "BRIDGE": {},
+    "SOURCE": {},
+    "DECISION": {}
+  },
+  "definition_records": [],
+  "more_definitions_likely": false,
+  "mathematics_by_lane": {},
+  "equation_records_by_lane": {},
+  "more_equations_likely_by_lane": {},
+  "universal_gate": {
+    "q15_smallest_unit": "A boundary creates marked vs unmarked states.",
+    "q16_assertion_mode": "asserted",
+    "q17_level": "OBJECT",
+    "q18_domain_ablated": "Operation μ transforms unitary state into bipartite state; invertible only through unmarking."
+  },
+  "nabla_semantic_address": {
+    "specification": "NABLA-ATLAS-v6.0-freeze-candidate",
+    "status": "CANDIDATE_CLASSIFICATION",
+    "context": "INTERNAL_CANON",
+    "filing": {
+      "domain": "THEOPHYSICS",
+      "entity": "PUBLIC_THEOLOGICAL_STORY_ESSAY",
+      "version": "P",
+      "audience": "ACADEMIC",
+      "use": "T",
+      "risk": "R2"
+    },
+    "vector": {
+      "G": 3,
+      "M": 3,
+      "E": 0,
+      "S": 3,
+      "T": 3,
+      "K": 3,
+      "R": 3,
+      "Q": 0,
+      "F": 0,
+      "C": 3
+    },
+    "confidence_by_variable": {
+      "G": 0.9,
+      "M": 0.85,
+      "E": 0.95,
+      "S": 0.9,
+      "T": 0.8,
+      "K": 0.85,
+      "R": 0.8,
+      "Q": 0.9,
+      "F": 0.9,
+      "C": 0.95
+    },
+    "truth_modes": [
+      "UNKNOWN"
+    ],
+    "assumption_load": "A4",
+    "attestation": "unknown",
+    "review_flags": [],
+    "address": "THEOPHYSICS/PUBLIC_THEOLOGICAL_STORY_ESSAY/P/ACADEMIC/T/R2 :: G3M3E0S3T3K3R3Q0F0C3 :: [C·Q][G·F][K·E][M·S][T·R]"
+  },
+  "answers": {}
+}

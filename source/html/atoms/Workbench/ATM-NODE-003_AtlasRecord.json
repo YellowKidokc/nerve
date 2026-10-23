@@ -1,0 +1,100 @@
+{
+  "protocol_version": "ATLAS-RECORD-v1.0",
+  "uuid": "3d8429d0-1223-452b-b755-518d87b0f0e4",
+  "node_id": "ATM-NODE-003",
+  "object_type": "ATOM",
+  "attached_layers": [
+    "ATOM",
+    "DEFINITION"
+  ],
+  "identity_scheme": "NERVE-NODE-v1",
+  "lane": "ATOM",
+  "standing": "CANDIDATE",
+  "claim_text": "Untitled independently reviewable atom",
+  "domains": {
+    "home": "PHYSICS",
+    "bridged": "NONE",
+    "bridge_candidate": "NO"
+  },
+  "warrant": "PROVISIONAL",
+  "why_closure": "WHY_CLOSED (Structural)",
+  "truth_predicates": [
+    "God is the root of all existence.",
+    "God can disclose Himself.",
+    "God is not a dependent being.",
+    "God is not explained by the world He created.",
+    "God speaks to creatures.",
+    "Science studies the created world.",
+    "Philosophy asks what the created world requires.",
+    "Jesus identifies Himself with the divine “I AM” in John's Gospel.",
+    "Christianity claims that God entered history in Christ.",
+    "Christianity claims that God has disclosed Himself."
+  ],
+  "truth_predicates_by_lane": {},
+  "classifications_by_lane": {
+    "ATOM": {},
+    "DEFINITION": {},
+    "AXIOM": {},
+    "CLAIM": {},
+    "EVIDENCE": {},
+    "PROOF": {},
+    "MATHEMATICS": {},
+    "FORMAL": {},
+    "BRIDGE": {},
+    "SOURCE": {},
+    "DECISION": {
+      "DECISION-Q01": "",
+      "DECISION-Q02": "",
+      "DECISION-Q03": "",
+      "DECISION-Q04": "",
+      "DECISION-Q05": "",
+      "DECISION-Q06": "",
+      "DECISION-Q07": ""
+    }
+  },
+  "definition_records": [],
+  "more_definitions_likely": false,
+  "mathematics_by_lane": {},
+  "equation_records_by_lane": {},
+  "more_equations_likely_by_lane": {},
+  "universal_gate": {
+    "q15_smallest_unit": "A boundary creates marked vs unmarked states.",
+    "q16_assertion_mode": "asserted",
+    "q17_level": "OBJECT",
+    "q18_domain_ablated": "Operation μ transforms unitary state into bipartite state; invertible only through unmarking."
+  },
+  "nabla_semantic_address": {
+    "specification": "NABLA-ATLAS-v6.0-freeze-candidate",
+    "status": "CANDIDATE_CLASSIFICATION",
+    "context": "INTERNAL_CANON",
+    "filing": {
+      "domain": "THEOPHYSICS",
+      "entity": "CONSILIENCE_ATLAS",
+      "version": "W",
+      "audience": "AI_RESEARCH",
+      "use": "T",
+      "risk": "R1"
+    },
+    "vector": {
+      "G": 0,
+      "M": 0,
+      "E": 0,
+      "S": 0,
+      "T": 0,
+      "K": 0,
+      "R": 0,
+      "Q": 0,
+      "F": 0,
+      "C": 0
+    },
+    "confidence_by_variable": {},
+    "truth_modes": [
+      "UNKNOWN"
+    ],
+    "assumption_load": "A3",
+    "attestation": "unknown",
+    "review_flags": [],
+    "address": "THEOPHYSICS/CONSILIENCE_ATLAS/W/AI_RESEARCH/T/R1 :: G0M0E0S0T0K0R0Q0F0C0 :: [E·Q][C·S][G·F][K·R][M·T]"
+  },
+  "answers": {}
+}
