@@ -11,6 +11,7 @@ mod hotkeys;
 mod hotstrings;
 mod idle;
 mod mouse;
+mod night_shift;
 mod panels;
 mod pipeline;
 mod review;
@@ -236,6 +237,13 @@ fn main() -> Result<()> {
     std::thread::spawn(move || {
         if let Err(e) = idle::engine(idle_cfg) {
             error!("Idle canon worker error: {}", e);
+        }
+    });
+
+    // Night Shift: the queue of jobs that run while the machine sits idle
+    std::thread::spawn(|| {
+        if let Err(e) = night_shift::engine() {
+            error!("Night Shift error: {}", e);
         }
     });
 
@@ -1614,6 +1622,9 @@ fn handle_ipc(
         // Station Console (hubs/station-console.html)
         t if t.starts_with("pipeline_") => handle_pipeline_ipc(panel_mgr, cfg, panel, t, &msg),
 
+        // Night Shift (system/night-shift.html)
+        t if t.starts_with("nightshift_") => handle_night_shift_ipc(panel_mgr, panel, t, &msg),
+
         // Internal: evaluate script from async callback
         "_eval" => {
             if let Some(script) = msg.get("script").and_then(|v| v.as_str()) {
@@ -1719,5 +1730,77 @@ fn handle_pipeline_ipc(
         other => {
             info!("Unknown pipeline message: '{}'", other);
         }
+    }
+}
+
+/// Night Shift messages. Replies are `onNightShift(kind, request_id, payload)`
+/// with `{ ok, ... }`; walk-through output streams as `nsOutput(task_id, text)`
+/// and ends with `nsExit(task_id, record)`.
+fn handle_night_shift_ipc(
+    panel_mgr: &mut panels::PanelManager,
+    panel: &str,
+    msg_type: &str,
+    msg: &serde_json::Value,
+) {
+    let request_id = msg.get("request_id").and_then(|v| v.as_str()).unwrap_or("").to_string();
+    let task_id = msg.get("task_id").and_then(|v| v.as_str()).unwrap_or("").to_string();
+    let proxy = panel_mgr.proxy().clone();
+    let panel_name = panel.to_string();
+    let eval = Arc::new(move |script: String| {
+        let _ = proxy.send_event(AppEvent::IpcMessage {
+            panel: panel_name.clone(),
+            body: serde_json::json!({ "type": "_eval", "script": script }).to_string(),
+        });
+    });
+    let js = |s: &str| serde_json::to_string(s).unwrap();
+    let reply = |r: anyhow::Result<serde_json::Value>| {
+        let mut v = r.unwrap_or_else(|e| serde_json::json!({ "ok": false, "error": format!("{:#}", e) }));
+        if v.get("ok").is_none() {
+            v["ok"] = serde_json::json!(true);
+        }
+        eval(format!("onNightShift({}, {}, {});", js(msg_type), js(&request_id), v));
+    };
+
+    match msg_type {
+        "nightshift_get" => reply(Ok(serde_json::json!({
+            "queue": night_shift::load_for_panel(),
+            "status": night_shift::status(),
+            "queue_path": night_shift::queue_path(),
+        }))),
+        "nightshift_save" => reply(
+            serde_json::from_value::<night_shift::Queue>(msg.get("queue").cloned().unwrap_or_default())
+                .map_err(anyhow::Error::from)
+                .and_then(night_shift::save_from_panel)
+                .map(|_| serde_json::json!({})),
+        ),
+        "nightshift_walk" => {
+            let out = Arc::clone(&eval);
+            let id = task_id.clone();
+            let emit: night_shift::Emit =
+                Arc::new(move |text: &str| out(format!("nsOutput({}, {});", js(&id), js(text))));
+            let exit = Arc::clone(&eval);
+            let id = task_id.clone();
+            let done = Box::new(move |rec: night_shift::RunRecord| {
+                exit(format!("nsExit({}, {});", js(&id), serde_json::to_string(&rec).unwrap()));
+            });
+            reply(night_shift::walk_through(&task_id, emit, done).map(|_| serde_json::json!({})));
+        }
+        "nightshift_stop" => {
+            night_shift::stop_walk(&task_id);
+            reply(Ok(serde_json::json!({})));
+        }
+        "nightshift_approve" => reply(night_shift::approve(&task_id).map(|_| serde_json::json!({}))),
+        "nightshift_read_log" => {
+            let path = msg.get("path").and_then(|v| v.as_str()).unwrap_or("");
+            let r = if path.ends_with(".log") && path.contains("night_shift") {
+                std::fs::read_to_string(path)
+                    .map(|text| serde_json::json!({ "text": text }))
+                    .map_err(anyhow::Error::from)
+            } else {
+                Err(anyhow::anyhow!("not a Night Shift log"))
+            };
+            reply(r);
+        }
+        other => info!("Unknown Night Shift message: '{}'", other),
     }
 }
