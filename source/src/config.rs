@@ -184,6 +184,14 @@ impl Default for AiConfig {
                     enabled: true,
                 },
                 AiProvider {
+                    name: "DeepSeek".into(),
+                    provider_type: "openai".into(),
+                    api_key: String::new(),
+                    endpoint: "https://api.deepseek.com/chat/completions".into(),
+                    model: "deepseek-chat".into(),
+                    enabled: true,
+                },
+                AiProvider {
                     name: "Ollama Desktop".into(),
                     provider_type: "ollama".into(),
                     api_key: String::new(),
@@ -702,6 +710,60 @@ impl Default for PipelineConfig {
     }
 }
 
+/// Select-and-fix writing assistant (the `writer_fix` hotkey).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct WriterConfig {
+    /// AI provider to call, by name (falls back to matching provider_type).
+    #[serde(default = "default_writer_provider")]
+    pub provider: String,
+    /// Optional model override; empty uses the provider's own model.
+    #[serde(default)]
+    pub model: String,
+    /// Base instruction. Remembered rules are appended beneath it.
+    #[serde(default = "default_writer_prompt")]
+    pub system_prompt: String,
+    /// Standing corrections the user has told the writer to always follow.
+    #[serde(default = "default_writer_rules")]
+    pub rules: Vec<String>,
+    /// With nothing selected, select the whole field (Ctrl+A) and fix that.
+    #[serde(default = "default_true")]
+    pub select_all_when_empty: bool,
+    #[serde(default = "default_writer_temperature")]
+    pub temperature: f64,
+}
+
+fn default_writer_provider() -> String {
+    "OpenAI".into()
+}
+fn default_writer_prompt() -> String {
+    "You are a copy editor. Fix spelling, grammar, punctuation and obvious \
+     dictation errors in the user's text. Keep the author's voice, meaning, \
+     length and formatting. Keep every specific detail exactly as written: \
+     names, places, addresses, numbers, dates and links. Do not add, remove \
+     or summarize content. Reply with the corrected text only, with no \
+     quotes, preamble or commentary."
+        .into()
+}
+fn default_writer_rules() -> Vec<String> {
+    vec!["Never remove or alter a location, place name or address.".into()]
+}
+fn default_writer_temperature() -> f64 {
+    0.2
+}
+
+impl Default for WriterConfig {
+    fn default() -> Self {
+        Self {
+            provider: default_writer_provider(),
+            model: String::new(),
+            system_prompt: default_writer_prompt(),
+            rules: default_writer_rules(),
+            select_all_when_empty: true,
+            temperature: default_writer_temperature(),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
     #[serde(default = "default_api_url")]
@@ -744,6 +806,9 @@ pub struct Config {
 
     #[serde(default)]
     pub idle_worker: IdleWorkerConfig,
+
+    #[serde(default)]
+    pub writer: WriterConfig,
 
     /// Runtime: hotkey ID → action name mapping (not persisted)
     #[serde(skip)]
@@ -810,6 +875,11 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
         HotkeyBinding {
             keys: "Ctrl+Alt+Z".into(),
             action: "toggle_night-shift".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
+            keys: "Ctrl+Space".into(),
+            action: "writer_fix".into(),
             runtime_id: None,
         },
         HotkeyBinding {
@@ -1150,6 +1220,20 @@ fn default_panels() -> Vec<PanelDef> {
             follow_cursor: false,
             open_at_startup: false,
         },
+        // Writer popup: the corrected text, accept/redo, and the feedback box.
+        PanelDef {
+            name: "writer".into(),
+            title: "Nerve Writer".into(),
+            url: to_url("system/writer.html"),
+            width: 560,
+            height: 440,
+            x: None,
+            y: None,
+            always_on_top: true,
+            decorations: false,
+            follow_cursor: true,
+            open_at_startup: false,
+        },
         PanelDef {
             name: "night-shift".into(),
             title: "Night Shift".into(),
@@ -1198,6 +1282,7 @@ impl Default for Config {
             scripts: ScriptsConfig::default(),
             pipeline: PipelineConfig::default(),
             idle_worker: IdleWorkerConfig::default(),
+            writer: WriterConfig::default(),
             hotkey_map: HashMap::new(),
         }
     }
