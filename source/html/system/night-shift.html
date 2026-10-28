@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en" data-system="NIGHT_SHIFT_V1">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Shift</title>
+<style>
+:root{color-scheme:dark;--bg:#060708;--panel:#0c0f14;--panel2:#090b0f;--line:#222a35;--text:#e7edf5;--muted:#8b97a7;--gold:#d1a922;--gold2:#f1d37a;--red:#b0413e;--green:#5f9e6a;--blue:#4a7fb5;--orange:#b5854a;--purple:#8a74c9}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,sans-serif}
+.wrap{max-width:1600px;margin:auto;padding:18px 22px;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:18px}
+.eyebrow,code,pre,.mono{font-family:ui-monospace,Consolas,monospace}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:1.5px}
+h1{font:600 26px Georgia,serif;margin:4px 0 2px}.muted{color:var(--muted)}
+header{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.panel{border:1px solid var(--line);background:var(--panel);margin-bottom:12px}
+.panel>h2{margin:0;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.panel .body{padding:12px}
+.badge{display:inline-block;border:1px solid var(--line);padding:1px 7px;border-radius:3px;font:10.5px ui-monospace,monospace;margin:1px 2px;white-space:nowrap}
+.badge.ok{border-color:var(--green);color:var(--green)}.badge.warn{border-color:var(--orange);color:var(--orange)}
+.badge.bad{border-color:var(--red);color:#e08a88}.badge.api{border-color:var(--blue);color:#9ec3e8}.badge.prop{border-color:var(--gold);color:var(--gold2)}
+.badge.ai{border-color:var(--purple);color:#b9a8ee}
+input[type=text],input[type=number],textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:3px;padding:7px 9px;font:12.5px system-ui,sans-serif}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
+textarea{resize:vertical;font-family:ui-monospace,Consolas,monospace;font-size:11.5px}
+button{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:6px 11px;border-radius:3px;cursor:pointer;font-size:12px}
+button:hover{border-color:var(--gold)}button:disabled{opacity:.45;cursor:default}
+button.gold{background:linear-gradient(135deg,rgba(209,169,34,.22),rgba(209,169,34,.08));border-color:var(--gold);color:var(--gold2);font-weight:700}
+button.gold:hover{background:var(--gold);color:#000}
+button.green{border-color:var(--green);color:var(--green)}button.red{border-color:var(--red);color:#e08a88}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.status{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{border:1px solid var(--line);background:var(--panel2);padding:8px 10px;border-radius:4px}
+.stat b{display:block;font:10px ui-monospace,monospace;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.stat span{font:600 15px ui-monospace,monospace;color:var(--gold2)}
+.switch{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12.5px}
+.switch input{accent-color:var(--gold);width:16px;height:16px}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:8px 10px;font-size:12.5px;align-items:center}
+.kv>label{color:var(--muted);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:1px}
+/* timeline */
+.tl{position:relative;height:auto;border:1px solid var(--line);background:var(--panel2);border-radius:4px;padding:28px 10px 10px}
+.tl-axis{position:absolute;top:6px;left:10px;right:10px;height:16px;font:10px ui-monospace,monospace;color:var(--muted)}
+.tl-axis span{position:absolute;transform:translateX(-50%)}
+.tl-row{position:relative;height:24px;margin:4px 0}
+.tl-bar{position:absolute;height:22px;border:1px solid var(--gold);background:linear-gradient(90deg,rgba(209,169,34,.25),rgba(209,169,34,.06));border-radius:3px;padding:2px 7px;font:11px ui-monospace,monospace;color:var(--gold2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:170px}
+.tl-bar.off{border-color:var(--line);background:transparent;color:var(--muted);border-style:dashed}
+.tl-sleep{position:absolute;top:22px;bottom:0;left:10px;border-left:1px dashed var(--blue)}
+/* tasks */
+.task{border:1px solid var(--line);background:var(--panel2);border-radius:4px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
+.task:hover{border-color:var(--gold)}
+.task.on{border-color:var(--gold);background:linear-gradient(90deg,rgba(209,169,34,.08),transparent)}
+.task .top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.task .top b{font-size:13.5px;flex:1;min-width:160px}
+.task .meta{font:11.5px ui-monospace,monospace;color:var(--muted);margin-top:3px}
+.task .last{font-size:12px;margin-top:4px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+.step{border:1px solid var(--line);border-radius:3px;padding:6px 8px;font-size:11.5px;color:var(--muted)}
+.step.done{border-color:var(--green);color:var(--green)}.step.now{border-color:var(--gold);color:var(--gold2)}
+.step b{display:block;font:10px ui-monospace,monospace;letter-spacing:1px}
+.term{background:#000;border:1px solid var(--line);border-radius:4px;padding:10px 12px;font:12px/1.45 ui-monospace,Consolas,monospace;color:#d7dde6;white-space:pre-wrap;word-break:break-word;height:300px;overflow:auto;margin:10px 0 0}
+.banner{border:1px solid var(--orange);color:var(--orange);background:rgba(181,133,74,.08);padding:8px 12px;border-radius:4px;margin-bottom:12px;font-size:12.5px}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px}
+.empty{padding:30px 10px;text-align:center}
+.side{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto}
+footer{grid-column:1/-1;color:var(--muted);font-size:11.5px;border-top:1px solid var(--line);padding-top:10px}
+@media(max-width:1100px){.wrap{grid-template-columns:1fr}.side{position:static;max-height:none}.status{grid-template-columns:repeat(2,1fr)}}
+</style></head>
+<body><div class="wrap">
+
+<header>
+  <div>
+    <div class="eyebrow">NERVE · WHILE YOU SLEEP</div>
+    <h1>Night Shift</h1>
+    <div class="muted" style="font-size:12px">Queue the work. Walk each job through once. Approve it. Then it runs whenever the machine goes idle.</div>
+  </div>
+  <div class="toolbar">
+    <label class="switch"><input type="checkbox" id="enabled" onchange="markDirty()"> Run unattended</label>
+    <button onclick="refresh()" title="Reload from disk">↻</button>
+    <button class="gold" id="saveBtn" onclick="saveQueue()">Save</button>
+  </div>
+</header>
+
+<main>
+  <div id="banner"></div>
+
+  <section class="panel"><h2>Status <span class="mono" id="queuePath" style="color:var(--muted);text-transform:none;letter-spacing:0"></span></h2>
+    <div class="body">
+      <div class="status">
+        <div class="stat"><b>Phase</b><span id="stPhase">—</span></div>
+        <div class="stat"><b>Idle for</b><span id="stIdle">—</span></div>
+        <div class="stat"><b>Running</b><span id="stRunning">—</span></div>
+        <div class="stat"><b>Done tonight</b><span id="stDone">—</span></div>
+      </div>
+      <div class="kv" style="margin-top:12px">
+        <label>Idle threshold</label>
+        <div class="toolbar"><input type="number" id="idleMinutes" min="1" style="width:90px" oninput="markDirty();drawTimeline()"> <span class="muted">minutes without keyboard or mouse opens a night session</span></div>
+        <label>Output folder</label>
+        <div><input type="text" id="outputRoot" placeholder="D:\NightShift" oninput="markDirty()"><div class="hint">Receipts, logs, change lists and Ollama reports go to <code>&lt;folder&gt;\night_shift\</code>. Keep it outside the folders you scan.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel"><h2>Tonight's plan <span class="muted" style="text-transform:none;letter-spacing:0">clock starts when input stops</span></h2>
+    <div class="body"><div class="tl" id="timeline"></div>
+      <div class="hint">Chained jobs show an estimate (they start when the job before them finishes). Dashed = not approved or not enabled — it will not run.</div>
+    </div>
+  </section>
+
+  <section class="panel"><h2>Jobs <span class="toolbar"><button onclick="addTask('change_scan')">+ Change scan</button><button onclick="addTask('command')">+ Program</button><button onclick="addTask('ollama_review')">+ Ollama</button></span></h2>
+    <div class="body" id="tasks"></div>
+  </section>
+</main>
+
+<aside class="side">
+  <section class="panel"><h2 id="edTitle">Job</h2><div class="body" id="editor"><div class="empty muted">Pick a job on the left.</div></div></section>
+</aside>
+
+<footer>Night Shift never edits your files itself. A <b>Program</b> job can — which is why nothing runs unattended until you've watched it run once. Editing what a job does voids its approval. Shutting down or sleeping stops everything: leave the PC on (screen-off is fine) for overnight runs.</footer>
+</div>
+
+<script>
+/* Bridge to Nerve: send(type, body) → onNightShift(kind, request_id, payload);
+   walk-through output streams as nsOutput(task_id, text) / nsExit(task_id, record). */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const HAS_IPC = !!(window.ipc && window.ipc.postMessage);
+let Q = null, STATUS = {}, SEL = null, DIRTY = false, seq = 0;
+const pending = {}, TERM = {}, LIVE = {};
+const KIND = {
+  change_scan:   {label:"CHANGE SCAN", cls:"api"},
+  command:       {label:"PROGRAM",     cls:"prop"},
+  ollama_review: {label:"OLLAMA",      cls:"ai"},
+};
+
+function send(type, body = {}) {
+  if (!HAS_IPC) return mock(type, body);
+  const request_id = "r" + (++seq);
+  return new Promise((resolve, reject) => {
+    pending[request_id] = {resolve, reject};
+    window.ipc.postMessage(JSON.stringify({type, request_id, ...body}));
+  });
+}
+window.onNightShift = (kind, id, payload) => {
+  const p = pending[id]; if (!p) return; delete pending[id];
+  payload && payload.ok ? p.resolve(payload) : p.reject(new Error((payload && payload.error) || kind + " failed"));
+};
+window.nsOutput = (id, text) => {
+  TERM[id] = (TERM[id] || "") + text;
+  if (SEL === id) { const t = $("#term"); if (t) { t.textContent = TERM[id]; t.scrollTop = t.scrollHeight; } }
+};
+window.nsExit = async (id, rec) => {
+  delete LIVE[id];
+  await refresh(true);
+  if (rec.outcome === "COMPLETE") banner(`<b>${esc(taskById(id)?.name)}</b> finished cleanly. Read the output — if it did what you wanted, press <b>Approve for night</b>.`, "ok");
+  else banner(`<b>${esc(taskById(id)?.name)}</b> ended ${esc(rec.outcome)}: ${esc(rec.summary)}`);
+};
+
+function banner(msg, tone) {
+  $("#banner").innerHTML = msg ? `<div class="banner" ${tone === "ok" ? 'style="border-color:var(--green);color:var(--green);background:rgba(95,158,106,.08)"' : ""}>${msg}</div>` : "";
+}
+const taskById = id => Q && Q.tasks.find(t => t.id === id);
+function markDirty() { DIRTY = true; $("#saveBtn").textContent = "Save •"; }
+
+/* Approval is checked in Rust (fingerprint of job + max_minutes); the panel
+   gets approval_current per task and flags unsaved edits itself. */
+function approvalState(t) {
+  if (!t.approved) return {label:"NEEDS WALK-THROUGH", cls:"warn"};
+  if (t._edited) return {label:"EDITED · RE-WALK", cls:"warn"};
+  if (!t.enabled) return {label:"APPROVED · PAUSED", cls:""};
+  return {label:"APPROVED", cls:"ok"};
+}
+
+async function refresh(keepSel) {
+  try {
+    const r = await send("nightshift_get");
+    Q = r.queue; STATUS = r.status || {};
+    for (const t of Q.tasks) { t._sig = JSON.stringify([t.job, t.max_minutes]); t._edited = !!t.approved && t.approval_current === false; }
+    $("#queuePath").textContent = r.queue_path || "";
+    DIRTY = false; $("#saveBtn").textContent = "Save";
+    if (!keepSel || !taskById(SEL)) SEL = SEL && taskById(SEL) ? SEL : (Q.tasks[0] || {}).id || null;
+    render();
+  } catch (e) { banner(esc(e.message)); }
+}
+
+function render() {
+  $("#enabled").checked = !!Q.enabled;
+  $("#idleMinutes").value = Q.idle_minutes;
+  $("#outputRoot").value = Q.output_root || "";
+  $("#stPhase").textContent = STATUS.phase || "—";
+  $("#stIdle").textContent = (STATUS.idle_minutes ?? 0) + " min";
+  $("#stRunning").textContent = STATUS.running || "—";
+  $("#stDone").textContent = (STATUS.finished || []).length;
+  renderTasks(); drawTimeline(); renderEditor();
+}
+
+function scheduleText(t) {
+  const s = t.schedule || {};
+  if (s.after_task) return `after “${taskById(s.after_task)?.name || s.after_task}” + ${s.gap_minutes || 0} min`;
+  return `${fmtMin(s.after_minutes || 0)} into the night`;
+}
+const fmtMin = m => m >= 60 ? `${Math.floor(m/60)}h${m%60 ? String(m%60).padStart(2,"0") : ""}` : `${m}m`;
+
+function renderTasks() {
+  if (!Q.tasks.length) { $("#tasks").innerHTML = `<div class="empty muted">No jobs yet. Add one above.</div>`; return; }
+  $("#tasks").innerHTML = Q.tasks.map(t => {
+    const k = KIND[t.job.kind] || {label:t.job.kind, cls:""}, a = approvalState(t), lr = t.last_run;
+    const last = lr ? `<div class="last"><span class="badge ${lr.outcome === "COMPLETE" ? "ok" : "bad"}">${esc(lr.outcome)}</span> <span class="muted">${esc(lr.mode)} · ${esc(lr.ended_at)}</span> — ${esc(lr.summary)}</div>` : `<div class="last muted">Never run.</div>`;
+    return `<div class="task ${SEL === t.id ? "on" : ""}" onclick="select('${esc(t.id)}')">
+      <div class="top"><b>${esc(t.name)}</b><span class="badge ${k.cls}">${k.label}</span><span class="badge ${a.cls}">${a.label}</span>${LIVE[t.id] ? '<span class="badge prop">RUNNING</span>' : ""}</div>
+      <div class="meta">${esc(scheduleText(t))} · max ${t.max_minutes}m · ${t.stop_on_return ? "stops when you return" : "finishes even if you return"}</div>
+      ${t.notes ? `<div class="muted" style="font-size:12px">${esc(t.notes)}</div>` : ""}${last}</div>`;
+  }).join("");
+}
+
+/* Estimate each job's start: fixed offsets as given; chained jobs start after
+   their parent's start + an assumed duration (its last run's length, else 10m). */
+function plan() {
+  const est = {}, dur = t => {
+    const lr = t.last_run; if (!lr) return 10;
+    const d = (Date.parse(lr.ended_at) - Date.parse(lr.started_at)) / 60000;
+    return isFinite(d) && d > 0 ? Math.max(2, Math.round(d)) : 10;
+  };
+  const start = (t, depth = 0) => {
+    if (est[t.id] != null) return est[t.id];
+    if (depth > 20) return 0;
+    const s = t.schedule || {};
+    const p = s.after_task && taskById(s.after_task);
+    est[t.id] = p ? start(p, depth + 1) + dur(p) + (s.gap_minutes || 0) : (s.after_minutes || 0);
+    return est[t.id];
+  };
+  return Q.tasks.map(t => ({t, at: start(t), len: dur(t), live: t.enabled && t.approved && !t._edited}));
+}
+
+function drawTimeline() {
+  if (!Q) return;
+  const rows = plan();
+  const idle = +$("#idleMinutes").value || Q.idle_minutes;
+  const end = Math.max(60, ...rows.map(r => r.at + r.len)) * 1.08;
+  const pct = m => (m / end * 100).toFixed(2) + "%";
+  const step = end > 480 ? 120 : end > 180 ? 60 : 30;
+  let axis = "";
+  for (let m = 0; m <= end; m += step) axis += `<span style="left:${pct(m)}${m === 0 ? ";transform:none" : ""}">${m === 0 ? "input stops" : "+" + fmtMin(m)}</span>`;
+  $("#timeline").innerHTML = `<div class="tl-axis">${axis}</div>
+    <div class="tl-sleep" style="left:calc(10px + (100% - 20px) * ${idle / end})" title="Session opens after ${idle} idle minutes"></div>` +
+    rows.map(r => `<div class="tl-row"><div class="tl-bar ${r.live ? "" : "off"}" style="left:${pct(r.at)};width:${pct(r.len)}" title="${esc(r.t.name)} · ~${fmtMin(r.at)}">${esc(r.t.name)} · ${fmtMin(r.at)}</div></div>`).join("");
+}
+
+function select(id) { SEL = id; renderTasks(); renderEditor(); }
+
+/* ── editor ─────────────────────────────────────────── */
+function field(label, html, hint) { return `<label>${label}</label><div>${html}${hint ? `<div class="hint">${hint}</div>` : ""}</div>`; }
+const inp = (k, v, ph = "") => `<input type="text" data-k="${k}" value="${esc(v)}" placeholder="${esc(ph)}" oninput="edit(this)">`;
+const num = (k, v) => `<input type="number" min="0" data-k="${k}" value="${esc(v)}" oninput="edit(this)" style="width:110px">`;
+const area = (k, v, rows = 4, ph = "") => `<textarea data-k="${k}" rows="${rows}" placeholder="${esc(ph)}" oninput="edit(this)">${esc(v)}</textarea>`;
+
+function renderEditor() {
+  const t = taskById(SEL);
+  if (!t) { $("#editor").innerHTML = `<div class="empty muted">Pick a job on the left.</div>`; $("#edTitle").textContent = "Job"; return; }
+  $("#edTitle").textContent = t.name || "Job";
+  const j = t.job, s = t.schedule || {};
+  const others = Q.tasks.filter(o => o.id !== t.id);
+  let kindFields = "";
+  if (j.kind === "change_scan") kindFields =
+    field("Folders", area("job.roots", (j.roots || []).join("\n"), 3, "O:\\_Theophysics_v5"), "One per line. Read-only — hashes only.") +
+    field("Extensions", inp("job.extensions", (j.extensions || []).join(", "), "md, html"), "Blank = every file.");
+  if (j.kind === "command") kindFields =
+    field("Program", inp("job.program", j.program, "python"), "Gets NIGHTSHIFT_CHANGES (latest change list), NIGHTSHIFT_OUTPUT, NIGHTSHIFT_RUN_ID.") +
+    field("Arguments", area("job.args", (j.args || []).join("\n"), 3, "D:\\GitHub\\david-os\\run.py\nfis-sync"), "One per line.") +
+    field("Start in", inp("job.cwd", j.cwd, "D:\\GitHub\\david-os"));
+  if (j.kind === "ollama_review") kindFields =
+    field("Model", inp("job.model", j.model, "llama3.1:8b")) +
+    field("Canon file", inp("job.canon_file", j.canon_file, "O:\\_Theophysics_v5\\00_Canonical\\CANON.md"), "Sent beside every changed file.") +
+    field("Prompt", area("job.prompt", j.prompt, 5)) +
+    field("Max files", num("job.max_files", j.max_files ?? 25)) +
+    field("Endpoint", inp("job.endpoint", j.endpoint || "http://127.0.0.1:11434/api/generate"), "Reads the latest change scan. Writes one report; changes nothing.");
+
+  const lr = t.last_run, walked = lr && lr.mode === "walkthrough" && lr.outcome === "COMPLETE" && !t._edited;
+  const approved = t.approved && !t._edited;
+  $("#editor").innerHTML = `
+    <div class="steps">
+      <div class="step ${DIRTY ? "now" : "done"}"><b>1 · DEFINE</b>${DIRTY ? "unsaved" : "saved"}</div>
+      <div class="step ${walked || approved ? "done" : DIRTY ? "" : "now"}"><b>2 · WALK THROUGH</b>${walked || approved ? "watched once" : "run it while you watch"}</div>
+      <div class="step ${approved ? "done" : walked ? "now" : ""}"><b>3 · APPROVE</b>${approved ? "runs at night" : "not yet"}</div>
+    </div>
+    <div class="kv">
+      ${field("Name", inp("name", t.name))}
+      ${field("Id", inp("id", t.id), "Other jobs chain to this.")}
+      ${field("Notes", area("notes", t.notes, 2, "What this is for"))}
+      ${kindFields}
+      ${field("Starts", `<select data-k="schedule.after_task" onchange="edit(this)"><option value="">at a fixed time into the night</option>${others.map(o => `<option value="${esc(o.id)}" ${s.after_task === o.id ? "selected" : ""}>after: ${esc(o.name)}</option>`).join("")}</select>`)}
+      ${s.after_task ? field("Gap (min)", num("schedule.gap_minutes", s.gap_minutes || 0), "e.g. 180 = three hours after that job ends.")
+                     : field("Offset (min)", num("schedule.after_minutes", s.after_minutes || 0), "Minutes after your last keystroke.")}
+      ${field("Max minutes", num("max_minutes", t.max_minutes))}
+      ${field("When you return", `<label class="switch"><input type="checkbox" data-k="stop_on_return" ${t.stop_on_return ? "checked" : ""} onchange="edit(this)"> stop it</label>`)}
+      ${field("Enabled", `<label class="switch"><input type="checkbox" data-k="enabled" ${t.enabled ? "checked" : ""} onchange="edit(this)" ${approved ? "" : "disabled"}> run at night</label>`, approved ? "" : "Unlocks after approval.")}
+    </div>
+    <div class="toolbar" style="margin-top:12px">
+      ${LIVE[t.id] ? `<button class="red" onclick="stopWalk('${esc(t.id)}')">■ Stop</button>`
+                   : `<button class="gold" onclick="walk('${esc(t.id)}')" ${DIRTY ? "disabled title='Save first'" : ""}>▶ Walk through now</button>`}
+      <button class="green" onclick="approve('${esc(t.id)}')" ${walked && !approved ? "" : "disabled"}>✓ Approve for night</button>
+      ${lr && lr.log_path ? `<button onclick="showLog('${esc(t.id)}')">Last log</button>` : ""}
+      <span style="flex:1"></span>
+      <button class="red" onclick="removeTask('${esc(t.id)}')">Delete</button>
+    </div>
+    <pre class="term" id="term">${esc(TERM[t.id] || "Output appears here while the job runs.")}</pre>`;
+}
+
+function setPath(obj, path, val) {
+  const ks = path.split("."); let o = obj;
+  for (const k of ks.slice(0, -1)) o = o[k] = o[k] || {};
+  o[ks.at(-1)] = val;
+}
+function edit(el) {
+  const t = taskById(SEL), k = el.dataset.k;
+  let v = el.type === "checkbox" ? el.checked : el.value;
+  if (el.type === "number") v = Math.max(0, parseInt(v || "0", 10));
+  if (k === "job.roots" || k === "job.args") v = v.split("\n").map(x => x.trim()).filter(Boolean);
+  if (k === "job.extensions") v = v.split(/[,\s]+/).map(x => x.replace(/^\./, "").trim()).filter(Boolean);
+  if (k === "schedule.after_task") v = v || null;
+  if (k === "id") { for (const o of Q.tasks) if (o.schedule && o.schedule.after_task === t.id) o.schedule.after_task = v; SEL = v; }
+  setPath(t, k, v);
+  t._edited = !!t.approved && (t.approval_current === false || JSON.stringify([t.job, t.max_minutes]) !== t._sig);
+  markDirty(); renderTasks(); drawTimeline();
+  if (el.tagName === "SELECT" || el.type === "checkbox") renderEditor();
+  else { $("#edTitle").textContent = t.name || "Job"; const st = document.querySelector(".steps .step"); if (st) { st.className = "step now"; st.innerHTML = "<b>1 · DEFINE</b>unsaved"; } }
+}
+
+function addTask(kind) {
+  const base = {change_scan: "scan", command: "program", ollama_review: "ollama"}[kind];
+  let id = base, n = 2; while (taskById(id)) id = base + "-" + n++;
+  const job = kind === "change_scan" ? {kind, roots: [], extensions: ["md"]}
+            : kind === "command" ? {kind, program: "python", args: [], cwd: ""}
+            : {kind, endpoint: "http://127.0.0.1:11434/api/generate", model: "llama3.1:8b", prompt: "", canon_file: "", max_files: 25};
+  Q.tasks.push({id, name: {change_scan: "Change scan", command: "New program", ollama_review: "Ollama review"}[kind], enabled: false, notes: "", job,
+                schedule: {after_minutes: 30, after_task: null, gap_minutes: 0}, max_minutes: 60, stop_on_return: true, approved: null, last_run: null});
+  SEL = id; markDirty(); render();
+}
+function removeTask(id) {
+  if (!confirm("Delete this job?")) return;
+  Q.tasks = Q.tasks.filter(t => t.id !== id);
+  for (const t of Q.tasks) if (t.schedule && t.schedule.after_task === id) t.schedule.after_task = null;
+  SEL = (Q.tasks[0] || {}).id || null; markDirty(); render();
+}
+
+async function saveQueue() {
+  Q.enabled = $("#enabled").checked;
+  Q.idle_minutes = Math.max(1, parseInt($("#idleMinutes").value || "20", 10));
+  Q.output_root = $("#outputRoot").value.trim();
+  const clean = {...Q, tasks: Q.tasks.map(({_sig, _edited, approval_current, ...t}) => t)};
+  try { await send("nightshift_save", {queue: clean}); banner(""); await refresh(true); }
+  catch (e) { banner(esc(e.message)); }
+}
+async function walk(id) {
+  TERM[id] = ""; LIVE[id] = true; renderTasks(); renderEditor(); banner("");
+  try { await send("nightshift_walk", {task_id: id}); }
+  catch (e) { delete LIVE[id]; banner(esc(e.message)); renderEditor(); }
+}
+async function stopWalk(id) { try { await send("nightshift_stop", {task_id: id}); } catch (e) { banner(esc(e.message)); } }
+async function approve(id) {
+  try { await send("nightshift_approve", {task_id: id}); banner(`Approved. <b>${esc(taskById(id)?.name)}</b> will run on its schedule whenever the machine goes idle.`, "ok"); await refresh(true); }
+  catch (e) { banner(esc(e.message)); }
+}
+async function showLog(id) {
+  try { const r = await send("nightshift_read_log", {path: taskById(id).last_run.log_path}); TERM[id] = r.text; renderEditor(); }
+  catch (e) { banner(esc(e.message)); }
+}
+
+setInterval(async () => {
+  if (DIRTY || !Q) return;
+  try { const r = await send("nightshift_get"); STATUS = r.status || {};
+        $("#stPhase").textContent = STATUS.phase || "—"; $("#stIdle").textContent = (STATUS.idle_minutes ?? 0) + " min";
+        $("#stRunning").textContent = STATUS.running || "—"; $("#stDone").textContent = (STATUS.finished || []).length; } catch (_) {}
+}, 15000);
+
+/* ── browser preview: a fake backend so the page can be opened outside Nerve ── */
+function mock(type, body) {
+  window.__mock = window.__mock || {queue: {enabled: false, idle_minutes: 20, output_root: "D:\\NightShift", tasks: [
+    {id:"scan",name:"File change scan",enabled:true,notes:"What was added, edited, moved, copied or deleted since the last scan.",job:{kind:"change_scan",roots:["O:\\_Theophysics_v5"],extensions:["md","html"]},schedule:{after_minutes:30,after_task:null,gap_minutes:0},max_minutes:60,stop_on_return:true,approved:{fingerprint:"x",at:"2026-10-27T03:10:00Z",run_id:"NS-scan-1"},last_run:{run_id:"NS-scan-1",task_id:"scan",mode:"night",started_at:"2026-10-28T04:30:00Z",ended_at:"2026-10-28T04:36:00Z",outcome:"COMPLETE",summary:"14 changes (6 added, 5 modified, 1 deleted, 2 moved, 0 copied)",log_path:"D:\\NightShift\\night_shift\\runs\\NS-scan-1.log"}},
+    {id:"david-os",name:"David OS: refresh FIS pages",enabled:false,notes:"Reads NIGHTSHIFT_CHANGES and updates the FIS HTML pages.",job:{kind:"command",program:"python",args:["D:\\GitHub\\david-os\\run.py","fis-sync"],cwd:""},schedule:{after_minutes:0,after_task:"scan",gap_minutes:1},max_minutes:60,stop_on_return:true,approved:null,last_run:null},
+    {id:"canon-check",name:"Ollama: check changes against Canon",enabled:false,notes:"Proposals only.",job:{kind:"ollama_review",endpoint:"http://127.0.0.1:11434/api/generate",model:"llama3.1:8b",prompt:"Compare this document with the canon reference…",canon_file:"",max_files:25},schedule:{after_minutes:0,after_task:"david-os",gap_minutes:180},max_minutes:90,stop_on_return:false,approved:null,last_run:null}]}};
+  const M = window.__mock;
+  if (type === "nightshift_get") return Promise.resolve({ok: true, queue: JSON.parse(JSON.stringify(M.queue)), status: {phase: "preview (not inside Nerve)", idle_minutes: 0, finished: []}, queue_path: "%APPDATA%\\clipsync-agent\\night_shift.json"});
+  if (type === "nightshift_save") { M.queue = body.queue; return Promise.resolve({ok: true}); }
+  if (type === "nightshift_walk") { let i = 0; const lines = ["── walk-through ──", "$ " + JSON.stringify(taskById(body.task_id).job), "working…", "── COMPLETE ──"];
+    const tick = setInterval(() => { nsOutput(body.task_id, lines[i++] + "\n"); if (i === lines.length) { clearInterval(tick);
+      const t = M.queue.tasks.find(x => x.id === body.task_id); t.last_run = {run_id:"NS-demo",task_id:t.id,mode:"walkthrough",started_at:new Date(Date.now()-60000).toISOString(),ended_at:new Date().toISOString(),outcome:"COMPLETE",summary:"preview run",log_path:""};
+      nsExit(body.task_id, t.last_run); } }, 400); return Promise.resolve({ok: true}); }
+  if (type === "nightshift_approve") { const t = M.queue.tasks.find(x => x.id === body.task_id); t.approved = {fingerprint:"x",at:new Date().toISOString(),run_id:"NS-demo"}; t.enabled = true; return Promise.resolve({ok: true}); }
+  return Promise.resolve({ok: true});
+}
+
+refresh();
+</script>
+</body></html>

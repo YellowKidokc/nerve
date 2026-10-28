@@ -236,7 +236,7 @@ impl Drop for RunLock {
 // Hashing and time
 // ---------------------------------------------------------------------------
 
-fn sha256_file(path: &Path) -> Result<String> {
+pub(crate) fn sha256_file(path: &Path) -> Result<String> {
     use sha2::{Digest, Sha256};
     let mut f = std::fs::File::open(path)?;
     let mut hasher = Sha256::new();
@@ -244,14 +244,14 @@ fn sha256_file(path: &Path) -> Result<String> {
     Ok(format!("{:x}", hasher.finalize()))
 }
 
-fn sha256_bytes(bytes: &[u8]) -> String {
+pub(crate) fn sha256_bytes(bytes: &[u8]) -> String {
     use sha2::{Digest, Sha256};
     let mut hasher = Sha256::new();
     hasher.update(bytes);
     format!("{:x}", hasher.finalize())
 }
 
-fn now_iso() -> String {
+pub(crate) fn now_iso() -> String {
     let secs = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap_or_default()
@@ -427,7 +427,7 @@ fn capture_file(src: &Path, root: &Path, out: &Path) -> Result<CaptureResult> {
 /// Write via a temp file and rename, so a stop mid-write cannot leave a
 /// half-parsed sidecar behind. This is the "finish only the current atomic
 /// write" clause of the stop behaviour.
-fn write_atomic(path: &Path, bytes: &[u8]) -> Result<()> {
+pub(crate) fn write_atomic(path: &Path, bytes: &[u8]) -> Result<()> {
     let tmp = path.with_extension("tmp");
     std::fs::write(&tmp, bytes)?;
     std::fs::rename(&tmp, path)?;
