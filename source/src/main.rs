@@ -395,6 +395,9 @@ fn main() -> Result<()> {
                             "toggle_research" => {
                                 let _ = proxy.send_event(AppEvent::TogglePanel("research".into()));
                             }
+                            "toggle_corpus" => {
+                                let _ = proxy.send_event(AppEvent::TogglePanel("corpus".into()));
+                            }
                             "toggle_shortcuts" => {
                                 let _ = proxy.send_event(AppEvent::TogglePanel("shortcuts".into()));
                             }

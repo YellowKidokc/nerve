@@ -908,6 +908,11 @@ fn default_hotkeys() -> Vec<HotkeyBinding> {
             runtime_id: None,
         },
         HotkeyBinding {
+            keys: "Ctrl+Alt+Y".into(),
+            action: "toggle_corpus".into(),
+            runtime_id: None,
+        },
+        HotkeyBinding {
             // F8 is taken by something else on this machine; F9 was free.
             keys: "Ctrl+Alt+F9".into(),
             action: "tts_stop".into(),
@@ -1116,6 +1121,19 @@ fn default_panels() -> Vec<PanelDef> {
             name: "lean-registry".into(),
             title: "Lean 4 Atom Registry and Verification Explorer".into(),
             url: "http://127.0.0.1:8989/".into(),
+            width: 1400,
+            height: 920,
+            x: None,
+            y: None,
+            always_on_top: false,
+            decorations: true,
+            follow_cursor: false,
+            open_at_startup: false,
+        },
+        PanelDef {
+            name: "corpus".into(),
+            title: "YouTube Apologetics Corpus Search".into(),
+            url: "http://127.0.0.1:8501/".into(),
             width: 1400,
             height: 920,
             x: None,
