@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nerve Writer</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: transparent; overflow: hidden; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #e0e0e0;
+  padding: 6px;
+  font-size: 12px;
+}
+.box {
+  background: #14141c;
+  border: 1px solid #2f2f40;
+  border-radius: 9px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  padding: 9px 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.head { display: flex; align-items: center; gap: 8px; }
+.head .title { font-weight: 600; color: #cfefff; }
+.head .status { flex: 1; color: #8a8a9e; font-size: 11px; }
+.head .status.error { color: #ff9f9f; }
+select, input[type=text], textarea {
+  background: #0d0d14; color: #e0e0e0;
+  border: 1px solid #2f2f40; border-radius: 6px;
+  font: inherit; padding: 4px 6px;
+}
+select:focus, input:focus, textarea:focus { outline: none; border-color: #2f5c8f; }
+textarea#result { flex: 1; min-height: 90px; resize: none; line-height: 1.45; font-size: 13px; }
+.diff {
+  max-height: 72px; overflow: auto; line-height: 1.45;
+  color: #8a8a9e; font-size: 11px;
+  border-left: 2px solid #2f2f40; padding-left: 7px;
+}
+.diff del { color: #ff8a8a; background: #3a1616; text-decoration: line-through; }
+.diff ins { color: #8affb0; background: #133a22; text-decoration: none; }
+.row { display: flex; gap: 6px; align-items: center; }
+.row input[type=text] { flex: 1; }
+label.always { color: #8a8a9e; font-size: 11px; display: flex; gap: 4px; align-items: center; white-space: nowrap; }
+button {
+  background: #1e1e2a; color: #e0e0e0;
+  border: 1px solid #2f2f40; border-radius: 6px;
+  font: inherit; padding: 5px 10px; cursor: pointer;
+}
+button:hover, button:focus { border-color: #2f5c8f; outline: none; }
+button.primary { background: #1f3b5c; border-color: #2f5c8f; color: #cfefff; }
+button:disabled { opacity: .45; cursor: default; }
+.key { color: #5c5c70; font-size: 10px; margin-left: 4px; }
+details { color: #8a8a9e; font-size: 11px; }
+details summary { cursor: pointer; }
+details ul { list-style: none; margin-top: 4px; max-height: 70px; overflow: auto; }
+details li { display: flex; gap: 6px; align-items: baseline; padding: 1px 0; }
+details li span { flex: 1; color: #c0c0d0; }
+details li button { padding: 0 6px; font-size: 10px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="head">
+    <span class="title">Writer</span>
+    <span class="status" id="status">Waiting…</span>
+    <select id="provider" title="AI provider"></select>
+  </div>
+
+  <textarea id="result" spellcheck="true" placeholder="Corrected text appears here"></textarea>
+  <div class="diff" id="diff" title="What changed: red was removed, green was added"></div>
+
+  <div class="row">
+    <input type="text" id="note" placeholder="What's wrong? e.g. don't take out the location">
+    <label class="always" title="Remember this for every future fix"><input type="checkbox" id="always"> Always</label>
+    <button id="redo">Redo</button>
+  </div>
+
+  <div class="row">
+    <details id="rulesBox" style="flex:1">
+      <summary id="rulesSummary">Remembered rules</summary>
+      <ul id="rules"></ul>
+    </details>
+    <button id="cancel">Cancel<span class="key">Esc</span></button>
+    <button id="accept" class="primary">Replace<span class="key">Ctrl+Enter</span></button>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+const send = (msg) => window.ipc.postMessage(JSON.stringify(msg));
+const $ = (id) => document.getElementById(id);
+
+let rules = [];
+let lastSeq = -1;
+let original = '';
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// Word-level diff (LCS). Dropped details, like a location, show up in red.
+function diff(a, b) {
+  const x = a.split(/(\s+)/), y = b.split(/(\s+)/);
+  if (x.length * y.length > 400000) return esc(b);
+  const n = x.length, m = y.length;
+  const t = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      t[i][j] = x[i] === y[j] ? t[i + 1][j + 1] + 1 : Math.max(t[i + 1][j], t[i][j + 1]);
+  let out = '', i = 0, j = 0;
+  while (i < n && j < m) {
+    if (x[i] === y[j]) { out += esc(x[i]); i++; j++; }
+    else if (t[i + 1][j] >= t[i][j + 1]) { out += '<del>' + esc(x[i++]) + '</del>'; }
+    else { out += '<ins>' + esc(y[j++]) + '</ins>'; }
+  }
+  while (i < n) out += '<del>' + esc(x[i++]) + '</del>';
+  while (j < m) out += '<ins>' + esc(y[j++]) + '</ins>';
+  return out;
+}
+
+function renderRules() {
+  $('rulesSummary').textContent = 'Remembered rules (' + rules.length + ')';
+  $('rules').innerHTML = rules.map((r, i) =>
+    '<li><span>' + esc(r) + '</span><button data-i="' + i + '" title="Forget">✕</button></li>'
+  ).join('');
+}
+
+function onWriter(p) {
+  const s = p.state || {};
+  original = s.original || '';
+  rules = p.rules || [];
+  renderRules();
+
+  const sel = $('provider');
+  sel.innerHTML = (p.providers || []).map((n) =>
+    '<option' + (n === p.provider ? ' selected' : '') + '>' + esc(n) + '</option>').join('');
+  if (p.provider && !(p.providers || []).includes(p.provider)) {
+    sel.insertAdjacentHTML('afterbegin', '<option selected>' + esc(p.provider) + '</option>');
+  }
+
+  const status = $('status');
+  status.classList.toggle('error', s.status === 'error');
+  const busy = s.status === 'working';
+  $('accept').disabled = s.status !== 'ready';
+  $('redo').disabled = busy || !s.original;
+
+  if (busy) {
+    status.textContent = s.notes && s.notes.length ? 'Redoing…' : 'Fixing ' + (s.original || '').length + ' chars…';
+    if (!s.result) { $('result').value = ''; $('diff').innerHTML = esc(s.original); }
+  } else if (s.status === 'error') {
+    status.textContent = s.error;
+  } else if (s.status === 'ready') {
+    status.textContent = 'Done via ' + (s.provider || '?') + (s.notes && s.notes.length ? ' · ' + s.notes.length + ' note(s)' : '');
+    // Only overwrite the textarea for a new answer, never a hand edit.
+    if (s.seq !== lastSeq) {
+      lastSeq = s.seq;
+      $('result').value = s.result;
+      $('diff').innerHTML = diff(s.original, s.result);
+      $('note').value = '';
+      $('accept').focus();
+    }
+  } else {
+    status.textContent = 'Select text and press the writer hotkey.';
+  }
+}
+
+function accept() {
+  if ($('accept').disabled) return;
+  send({ type: 'writer_accept', text: $('result').value });
+}
+function cancel() { send({ type: 'writer_cancel' }); }
+function redo() {
+  if ($('redo').disabled) return;
+  send({ type: 'writer_redo', note: $('note').value, remember: $('always').checked });
+  $('always').checked = false;
+}
+
+$('accept').onclick = accept;
+$('cancel').onclick = cancel;
+$('redo').onclick = redo;
+$('note').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.ctrlKey) { e.preventDefault(); redo(); }
+});
+$('result').addEventListener('input', () => {
+  $('diff').innerHTML = diff(original, $('result').value);
+});
+$('provider').onchange = (e) => send({ type: 'writer_set_provider', provider: e.target.value });
+$('rules').onclick = (e) => {
+  const i = e.target.dataset && e.target.dataset.i;
+  if (i === undefined) return;
+  rules.splice(Number(i), 1);
+  send({ type: 'writer_save_rules', rules });
+};
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+  else if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); accept(); }
+});
+
+window.addEventListener('focus', () => send({ type: 'writer_get' }));
+send({ type: 'writer_get' });
+</script>
+</body>
+</html>

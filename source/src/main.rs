@@ -23,6 +23,7 @@ mod tts;
 mod tts_engine;
 #[allow(dead_code)]
 mod window_mgmt;
+mod writer;
 
 use anyhow::Result;
 use std::sync::{Arc, Mutex};
@@ -394,6 +395,9 @@ fn main() -> Result<()> {
                             "toggle_research" => {
                                 let _ = proxy.send_event(AppEvent::TogglePanel("research".into()));
                             }
+                            "toggle_corpus" => {
+                                let _ = proxy.send_event(AppEvent::TogglePanel("corpus".into()));
+                            }
                             "toggle_shortcuts" => {
                                 let _ = proxy.send_event(AppEvent::TogglePanel("shortcuts".into()));
                             }
@@ -424,6 +428,9 @@ fn main() -> Result<()> {
                                     }
                                 });
                             }
+                            // Fix the selection (or the whole field) with AI
+                            // and show the result in the writer popup.
+                            "writer_fix" => spawn_writer_fix(&proxy, &cfg),
                             "tts_stop" => tts::stop(),
                             "tts_pause" => tts::pause_toggle(),
                             "paste_slot_1" => clipboard::paste_slot(0),
@@ -1623,6 +1630,8 @@ fn handle_ipc(
         t if t.starts_with("pipeline_") => handle_pipeline_ipc(panel_mgr, cfg, panel, t, &msg),
 
         // Night Shift (system/night-shift.html)
+        t if t.starts_with("writer_") => handle_writer_ipc(panel_mgr, cfg, t, &msg),
+
         t if t.starts_with("nightshift_") => handle_night_shift_ipc(panel_mgr, panel, t, &msg),
 
         // Internal: evaluate script from async callback
@@ -1730,6 +1739,127 @@ fn handle_pipeline_ipc(
         other => {
             info!("Unknown pipeline message: '{}'", other);
         }
+    }
+}
+
+/// Capture text for the writer, open its popup, then run the AI request.
+/// Capture blocks on clipboard round trips, so all of it runs off the event loop.
+fn spawn_writer_fix(
+    proxy: &tao::event_loop::EventLoopProxy<AppEvent>,
+    cfg: &Arc<Mutex<config::Config>>,
+) {
+    let proxy = proxy.clone();
+    let cfg = Arc::clone(cfg);
+    std::thread::spawn(move || {
+        let snapshot = { cfg.lock().unwrap().clone() };
+        if !writer::capture(&snapshot) {
+            return;
+        }
+        let _ = proxy.send_event(AppEvent::OpenPanel("writer".into()));
+        push_writer_state(&proxy, &snapshot);
+        run_writer(proxy, snapshot);
+    });
+}
+
+/// Run the writer's AI request on the current thread and push the outcome.
+fn run_writer(proxy: tao::event_loop::EventLoopProxy<AppEvent>, cfg: config::Config) {
+    let rt = tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .unwrap();
+    rt.block_on(writer::run(&cfg));
+    push_writer_state(&proxy, &cfg);
+}
+
+/// Send the writer state, remembered rules and provider names to its popup.
+fn push_writer_state(proxy: &tao::event_loop::EventLoopProxy<AppEvent>, cfg: &config::Config) {
+    let providers: Vec<&str> = cfg
+        .ai
+        .providers
+        .iter()
+        .filter(|p| p.enabled)
+        .map(|p| p.name.as_str())
+        .collect();
+    let payload = serde_json::json!({
+        "state": writer::snapshot(),
+        "rules": cfg.writer.rules,
+        "provider": cfg.writer.provider,
+        "providers": providers,
+    });
+    let _ = proxy.send_event(AppEvent::IpcMessage {
+        panel: "writer".into(),
+        body: serde_json::json!({ "type": "_eval", "script": format!("onWriter({});", payload) })
+            .to_string(),
+    });
+}
+
+/// Writer popup messages. Every reply is a full `onWriter(payload)` refresh.
+fn handle_writer_ipc(
+    panel_mgr: &mut panels::PanelManager,
+    cfg: &Arc<Mutex<config::Config>>,
+    msg_type: &str,
+    msg: &serde_json::Value,
+) {
+    let proxy = panel_mgr.proxy().clone();
+    let field = |k: &str| msg.get(k).and_then(|v| v.as_str()).unwrap_or("").to_string();
+    let save = |cfg_lock: &config::Config| {
+        if let Err(e) = cfg_lock.save() {
+            error!("writer: config save failed: {}", e);
+        }
+    };
+
+    match msg_type {
+        "writer_get" => push_writer_state(&proxy, &cfg.lock().unwrap()),
+        "writer_accept" => {
+            panel_mgr.hide("writer");
+            let text = field("text");
+            std::thread::spawn(move || writer::accept(&text));
+        }
+        "writer_cancel" => {
+            panel_mgr.hide("writer");
+            writer::cancel();
+        }
+        // { note, remember }: retry with the note; optionally keep it as a rule.
+        "writer_redo" => {
+            let note = field("note");
+            let remember = msg.get("remember").and_then(|v| v.as_bool()).unwrap_or(false);
+            let snapshot = {
+                let mut cfg_lock = cfg.lock().unwrap();
+                if remember && !note.trim().is_empty() {
+                    cfg_lock.writer.rules.push(note.trim().to_string());
+                    save(&cfg_lock);
+                }
+                cfg_lock.clone()
+            };
+            if writer::add_note(&note) {
+                push_writer_state(&proxy, &snapshot);
+                std::thread::spawn(move || run_writer(proxy, snapshot));
+            }
+        }
+        "writer_save_rules" => {
+            let rules: Vec<String> = msg
+                .get("rules")
+                .and_then(|v| v.as_array())
+                .map(|a| {
+                    a.iter()
+                        .filter_map(|r| r.as_str())
+                        .map(|r| r.trim().to_string())
+                        .filter(|r| !r.is_empty())
+                        .collect()
+                })
+                .unwrap_or_default();
+            let mut cfg_lock = cfg.lock().unwrap();
+            cfg_lock.writer.rules = rules;
+            save(&cfg_lock);
+            push_writer_state(&proxy, &cfg_lock);
+        }
+        "writer_set_provider" => {
+            let mut cfg_lock = cfg.lock().unwrap();
+            cfg_lock.writer.provider = field("provider");
+            save(&cfg_lock);
+            push_writer_state(&proxy, &cfg_lock);
+        }
+        other => info!("Unknown writer message: '{}'", other),
     }
 }
 
